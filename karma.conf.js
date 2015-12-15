@@ -32,7 +32,7 @@ module.exports = function (config) {
         return true;
       }
     }).concat([
-      'bower_components/angular-mocks/angular-mocks.js',
+      './client/bower_components/angular-mocks/angular-mocks.js',
       'app.js',
       'views/**/*.js',
       'views/**/*.html',
