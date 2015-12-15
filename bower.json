@@ -1,0 +1,17 @@
+{
+  "name": "merc",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-cookies": "~1.5.0",
+    "angular-resource": "~1.5.0",
+    "angular-sanitize": "~1.5.0",
+    "angular-animate": "~1.5.0",
+    "angular-socket-io": "^0.7.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5.0",
+    "angular-scenario": "~1.5.0"
+  }
+}
