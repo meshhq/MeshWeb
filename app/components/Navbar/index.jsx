@@ -1,13 +1,14 @@
 
 import React, { PropTypes, Component } from 'react'
-import style from './style.css'
+import style from './style.scss'
+
 
 class NavBar extends Component {
   render() {
     return (
-      <div className={style.navbar}>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
+      <div className="navbar">
+        <nav className="navbarDefault">
+          <div className="container">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span className="sr-only">Toggle navigation</span>
@@ -15,7 +16,7 @@ class NavBar extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">Brand</a>
+              <a className="navbar-brand" href="#">MeshIO</a>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

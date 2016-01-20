@@ -4,7 +4,7 @@ var ExampleImage = require('../Helpers/ExamplePicture');
 var FakeObjectDataListStore = require('../Helpers/SampleUsers');
 var FixedDataTable = require('fixed-data-table');
 var React = require('react');
-import style from './style.css'
+require('./style.css');
 
 const {Table, Column, Cell} = FixedDataTable;
 
