@@ -6,6 +6,9 @@ import { syncReduxAndRouter } from 'redux-simple-router'
 import ReactDOM from 'react-dom'
 import React from 'react'
 
+// Style Sheets
+import Style from './assets/base_assets.scss'
+
 import App from './containers/App'
 import configure from './store'
 

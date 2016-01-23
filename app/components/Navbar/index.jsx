@@ -1,7 +1,5 @@
 
 import React, { PropTypes, Component } from 'react'
-import style from './style.scss'
-
 
 class NavBar extends Component {
   render() {

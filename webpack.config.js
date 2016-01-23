@@ -1,7 +1,6 @@
 var rucksack = require('rucksack-css')
 var webpack = require('webpack')
 var path = require('path')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   context: path.join(__dirname, './app'), 
@@ -25,7 +24,7 @@ module.exports = {
       // CSS
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", 'css-loader?sourceMap&importLoaders=1')
+        loaders: ["style-loader", 'css-loader?sourceMap&importLoaders=1']
       },
       
       // SASS
@@ -54,7 +53,6 @@ module.exports = {
     })
   ],
   plugins: [
-    new ExtractTextPlugin("style.css"),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
@@ -63,5 +61,8 @@ module.exports = {
   devServer: {
     contentBase: './app',
     hot: true
+  },
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, "./assets")]
   }
 }

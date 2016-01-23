@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import SampleTable from '../../components/SampleTable'
 import Navbar from '../../components/Navbar'
 import * as TodoActions from '../../actions/todos'
-// import style from './style.css'
 
 class App extends Component {
   render() {
