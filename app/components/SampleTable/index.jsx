@@ -4,7 +4,6 @@ var ExampleImage = require('../Helpers/ExamplePicture');
 var FakeObjectDataListStore = require('../Helpers/SampleUsers');
 var FixedDataTable = require('fixed-data-table');
 var React = require('react');
-require('./style.css');
 
 const {Table, Column, Cell} = FixedDataTable;
 
@@ -74,7 +73,7 @@ class FilterExample extends React.Component {
   render() {
     var {filteredDataList} = this.state;
     return (
-      <div>
+      <div class="col-md-12">
         <input
           onChange={this._onFilterChange}
           placeholder="Filter by First Name"
@@ -84,7 +83,7 @@ class FilterExample extends React.Component {
           rowHeight={50}
           rowsCount={filteredDataList.getSize()}
           headerHeight={50}
-          width={1000}
+          
           height={5000}
           {...this.props}>
           <Column

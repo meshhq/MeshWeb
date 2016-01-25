@@ -1,5 +1,96 @@
 // Component Imports
 
+$NavBarHeight: 40px;
+
 .navbar {
-	background-color: #000;
+	background-color: $MeshBlackLight;
+	min-height: $NavBarHeight;
+	height: $NavBarHeight;
+	border-radius: 0px;
+
+	.container {
+		max-height: $NavBarHeight;
+		height:$NavBarHeight;
+
+		.navbar-header {
+			max-height: $NavBarHeight;
+			height:$NavBarHeight;
+
+			button {
+				max-height: $NavBarHeight;
+				height:$NavBarHeight;
+			}
+		}
+		.navbar-brand {
+		    float: left;
+		    height: 50px;
+		    padding: 10px 10px;
+		    font-size: 22px;
+		    font-weight: 500;
+		    line-height: 20px;
+		}
+	}
+
+	// Text Coloring
+	a {
+		color: $MeshWhite;
+	}
+
+	// Nav Items
+	.navbar-nav {
+		padding-left: 20px;
+		li {
+			padding: 0px 5px;
+			a {
+				padding: 0px 10px;
+				padding-top: 10px;
+				padding-bottom: 9px;
+				
+				font-size: 16px;
+			}
+
+			a:hover {
+				background-color: $MeshBlackLight;
+			}
+
+			a:active {
+				background-color: $MeshBlackLight;
+			}
+
+			a:focus {
+				background-color: $MeshBlackLight;
+			}
+		}
+
+		.active {
+			a {
+				border-bottom: 3px solid $MeshBlue;			
+				color: #fff;
+			}
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,11 @@ $WorkSansFont: 'Work Sans', sans-serif;
 
 // Colors
 $MeshBlack: #16181A;
+$MeshBlackLight: #222528;
 $MeshWhite: #FAFAF7;
+
+$MeshBlue: #65A8EC;
+
 
 html,
 body {
@@ -31,7 +35,6 @@ body {
   background: $MeshWhite;
   color: $MeshBlack;
   min-width: 230px;
-  max-width: 550px;
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
