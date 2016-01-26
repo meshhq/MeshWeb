@@ -33,7 +33,7 @@ $NavBarHeight: 40px;
 
 	// Text Coloring
 	a {
-		color: $MeshWhite;
+		color: $MeshWhiteDark;
 	}
 
 	// Nav Items
@@ -65,7 +65,7 @@ $NavBarHeight: 40px;
 		.active {
 			a {
 				border-bottom: 3px solid $MeshBlue;			
-				color: #fff;
+				color: $MeshWhite;
 			}
 		}
 	}

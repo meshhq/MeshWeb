@@ -72,8 +72,9 @@ class FilterExample extends React.Component {
 
   render() {
     var {filteredDataList} = this.state;
+    console.log(this.props);
     return (
-      <div class="col-md-12">
+      <div className="col-md-12 userTableWrapper">
         <input
           onChange={this._onFilterChange}
           placeholder="Filter by First Name"
@@ -83,14 +84,9 @@ class FilterExample extends React.Component {
           rowHeight={50}
           rowsCount={filteredDataList.getSize()}
           headerHeight={50}
-          
-          height={5000}
+          width={this.props.width}
+          height={500}
           {...this.props}>
-          <Column
-            cell={<ImageCell data={filteredDataList} col="avartar" />}
-            fixed={true}
-            width={50}
-          />
           <Column
             header={<Cell>First Name</Cell>}
             cell={<TextCell data={filteredDataList} col="firstName" />}
