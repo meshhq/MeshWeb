@@ -8,11 +8,11 @@ var assetsPath = path.resolve(__dirname, 'app', 'assets');
 
 // Production Build Check
 if (process.env.NODE_ENV == 'production') {
-  staticPath = path.resolve(__dirname, 'public', 'static');
+  staticPath = path.resolve(__dirname, 'public');
 }
 
 module.exports = {
-  context: appPath, 
+  context: appPath,
   entry: {
     jsx: './index.jsx',
     html: './index.html',
@@ -29,13 +29,13 @@ module.exports = {
         test: /\.html$/,
         loader: 'file?name=[name].[ext]'
       },
-        
+
       // CSS
       {
         test: /\.css$/,
         loaders: ["style-loader", 'css-loader?sourceMap&importLoaders=1']
       },
-      
+
       // SASS
       {
         test: /\.scss$/,
