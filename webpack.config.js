@@ -1,16 +1,25 @@
-var rucksack = require('rucksack-css')
-var webpack = require('webpack')
-var path = require('path')
+var rucksack = require('rucksack-css');
+var webpack = require('webpack');
+var path = require('path');
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var staticPath = path.resolve(__dirname, 'static');
+var appPath = path.resolve(__dirname, 'app');
+var assetsPath = path.resolve(__dirname, 'app', 'assets');
+
+// Production Build Check
+if (process.env.NODE_ENV == 'production') {
+  staticPath = path.resolve(__dirname, 'public', 'static');
+}
 
 module.exports = {
-  context: path.join(__dirname, './app'), 
+  context: appPath, 
   entry: {
     jsx: './index.jsx',
     html: './index.html',
     vendor: ['react']
   },
   output: {
-    path: path.join(__dirname, './static'),
+    path: staticPath,
     filename: 'bundle.js',
   },
   module: {
@@ -36,7 +45,7 @@ module.exports = {
       //JS
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: nodeModulesPath,
         loaders: [
           'react-hot',
           'babel-loader'
@@ -56,6 +65,11 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
     })
   ],
   devServer: {
@@ -63,6 +77,6 @@ module.exports = {
     hot: true
   },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, "./assets")]
+    includePaths: [assetsPath]
   }
 }
