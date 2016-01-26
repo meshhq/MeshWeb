@@ -76,6 +76,7 @@ class FilterExample extends React.Component {
     return (
       <div className="col-md-12 userTableWrapper">
         <input
+          className="inputFilter"
           onChange={this._onFilterChange}
           placeholder="Filter by First Name"
         />
