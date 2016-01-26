@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --history-api-fallback --hot --inline --progress --colors --port 3000",
-    "build": "NODE_ENV=production webpack --progress --colors"
+    "build": "NODE_ENV=production webpack --progress --colors",
+    "deploy": "git subtree push --prefix=public git@github.com:meshhq/MeshWeb.git gh-pages"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
