@@ -22,12 +22,12 @@ var buildPlugins = [
 // Production Build Check
 if (process.env.NODE_ENV == 'production') {
   staticPath = path.resolve(__dirname, 'public');
-  buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    })
-  );
+  // buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
+  //       compress: {
+  //           warnings: false
+  //       }
+  //   })
+  // );
 }
 
 module.exports = {
