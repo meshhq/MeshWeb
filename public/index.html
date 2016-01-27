@@ -2,13 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Boilerplate</title>
-
-    <!-- StyleSheets -->
-    <link rel="stylesheet" type="text/css" href="assets/stylesheets/base.css">
-    <link rel="stylesheet" type="text/css" href="assets/stylesheets/vendor/fixed-table-style.css">
-    <link rel="stylesheet" type="text/css" href="assets/bower_components/bootstrap/dist/css/bootstrap.css">
+    <title>Mesh</title>
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,200,600' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
+    <script>
+        $(document).bind('mobileinit',function(){
+            $.mobile.pushStateEnabled = false;
+        });
+    </script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
   </head>
   <body>
     <div id="root">

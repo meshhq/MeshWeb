@@ -1,3 +1,7 @@
 @import '__base';
 @import '../components/Navbar/style';
 @import '../components/UserTable/userTable';
+
+// Vendor
+@import './vendor/fixed-table-style.css';
+@import './bower_components/bootstrap/dist/css/bootstrap.min.css';

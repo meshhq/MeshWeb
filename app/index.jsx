@@ -9,6 +9,9 @@ import React from 'react'
 // Style Sheets
 import Style from './assets/base_assets.scss'
 
+// Style Sheets
+import jquery from './assets/bower_components/jquery/dist/jquery.min.js'
+
 import App from './containers/App'
 import configure from './store'
 
