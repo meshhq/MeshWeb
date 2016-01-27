@@ -9,7 +9,7 @@
     "start": "webpack-dev-server --history-api-fallback --hot --inline --progress --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors",
     "_deploy": "./bin/deploy.sh",
-    "deploy": "npm run build & npm run _deploy"
+    "deploy": "npm run build && npm run _deploy"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
