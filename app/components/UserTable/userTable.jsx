@@ -82,7 +82,7 @@ class FilterExample extends React.Component {
         />
         <br />
         <Table
-          rowHeight={50}
+          rowHeight={35}
           rowsCount={filteredDataList.getSize()}
           headerHeight={50}
           width={this.props.width}
@@ -103,7 +103,7 @@ class FilterExample extends React.Component {
           <Column
             header={<Cell>City</Cell>}
             cell={<TextCell data={filteredDataList} col="city" />}
-            width={100}
+            width={200}
           />
           <Column
             header={<Cell>Street</Cell>}
