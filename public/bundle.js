@@ -6861,7 +6861,7 @@ webpackJsonp([1],[
 	            rowsCount: filteredDataList.getSize(),
 	            headerHeight: 50,
 	            width: this.props.width,
-	            height: 500
+	            height: 1000
 	          }, this.props),
 	          React.createElement(Column, {
 	            header: React.createElement(

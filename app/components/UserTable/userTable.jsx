@@ -86,7 +86,7 @@ class FilterExample extends React.Component {
           rowsCount={filteredDataList.getSize()}
           headerHeight={50}
           width={this.props.width}
-          height={500}
+          height={1000}
           {...this.props}>
           <Column
             header={<Cell>First Name</Cell>}

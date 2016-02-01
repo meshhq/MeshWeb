@@ -15,7 +15,6 @@ import Style from './assets/base_assets.scss'
 // Style Sheets
 import jquery from './assets/bower_components/jquery/dist/jquery.min.js'
 
-
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -25,3 +24,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+
