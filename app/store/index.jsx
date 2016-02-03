@@ -1,5 +1,9 @@
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { syncHistory } from 'redux-simple-router'
+import { browserHistory } from 'react-router'
+
+import { logger } from '../middleware'
 import rootReducer from '../reducers'
 
 export default function configure(initialState) {

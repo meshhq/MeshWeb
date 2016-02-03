@@ -21,16 +21,21 @@ class NavBar extends Component {
       if (idx == this.state.navPosition) {
         item = (
           <li className="active">
-            <a href="#" onClick={_navItemWasClicked}>{title}<span className="sr-only">(current)</span></a>
+            <a href="#" onClick={_navItemWasClicked}>{title}
+              <span className="sr-only">(current)</span>
+            </a>
           </li>
         )
       } else {
         item = (
-          <li><a href="#" onClick={_navItemWasClicked}>{title}</a></li>
+          <li>
+            <a href="#" onClick={_navItemWasClicked}>{title}</a>
+          </li>
         )
       }
       navItems.push(item)
     });
+
 
     return (
       <div className="navbar">

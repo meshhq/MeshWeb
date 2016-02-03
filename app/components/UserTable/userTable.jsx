@@ -72,7 +72,6 @@ class FilterExample extends React.Component {
 
   render() {
     var {filteredDataList} = this.state;
-    console.log(this.props);
     return (
       <div className="col-md-12 userTableWrapper">
         <input
