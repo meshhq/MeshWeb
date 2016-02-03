@@ -1,6 +1,6 @@
 
-import { createAction } from 'redux-actions'
+export const ADD_USER = 'ADD_USER'
 
-export const addUser = createAction('add user')
-export const deleteUser = createAction('delete user')
-export const editUser = createAction('edit user')
+export function addUser(user) {
+	return { type: ADD_USER, user }
+}

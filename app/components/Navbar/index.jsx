@@ -1,8 +1,37 @@
 
 import React, { PropTypes, Component } from 'react'
 
+//
 class NavBar extends Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {navPosition: this.props.activeSection}
+  }
+
+  _navItemWasClicked() {
+
+  }
+
   render() {
+
+    // Build up the nav items
+    let navItems = []
+    this.props.sectionTitles.forEach(title, idx => {
+      let item
+      if (idx == this.state.navPosition) {
+        item = (
+          <li className="active">
+            <a href="#" onClick={_navItemWasClicked}>{title}<span className="sr-only">(current)</span></a>
+          </li>
+        )
+      } else {
+        item = (
+          <li><a href="#" onClick={_navItemWasClicked}>{title}</a></li>
+        )
+      }
+      navItems.push(item)
+    });
+
     return (
       <div className="navbar">
         <nav className="navbarDefault">
@@ -19,8 +48,7 @@ class NavBar extends Component {
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Users<span className="sr-only">(current)</span></a></li>
-                <li><a href="#">Integrations</a></li>
+                {navItems}
               </ul>
             </div>
           </div>
@@ -29,5 +57,13 @@ class NavBar extends Component {
     )
   }
 }
+
+// sectionTitles [Array<String>] is the section titles
+// activeSection [Number] is the current selection
+NavBar.propTypes = {
+  sectionTitles: PropTypes.array.isRequired,
+  activeSection: PropTypes.number.isRequired
+}
+
 
 export default NavBar

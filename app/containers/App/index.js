@@ -7,6 +7,8 @@ import SampleTable from '../../components/UserTable/userTable'
 import Navbar from '../../components/Navbar'
 import * as TodoActions from '../../actions/todos'
 
+const NAV_TABS = ["Users", "Integrations"];
+
 class App extends Component {
   constructor(props) {
     super(props);
