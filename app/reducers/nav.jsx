@@ -9,3 +9,5 @@ function nav(state = NavStates.USERS, action) {
 			return state
 	}
 }
+
+export default nav;

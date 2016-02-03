@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import SampleTable from '../../components/UserTable/userTable'
 import Navbar from '../../components/Navbar'
-import * as TodoActions from '../../actions/todos'
+import * as NavActions from '../../actions/nav'
+import * as UserActions from '../../actions/users'
 
 const NAV_TABS = ["Users", "Integrations"];
 
@@ -40,19 +41,21 @@ class App extends Component {
 }
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  users: PropTypes.array.isRequired,
+  nav: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    users: state.users,
+    nav: state.nav
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    navActions: bindActionCreators(NavActions, dispatch),
+    userActions: bindActionCreators(UserActions, dispatch)
   }
 }
 
