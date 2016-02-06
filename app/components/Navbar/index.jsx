@@ -1,11 +1,10 @@
 
 import React, { PropTypes, Component } from 'react'
 
-//
 class NavBar extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {navPosition: this.props.activeSection}
+    this.state = {activeNavIdx: this.props.activeSection}
   }
 
   _navItemWasClicked() {
@@ -16,20 +15,20 @@ class NavBar extends Component {
 
     // Build up the nav items
     let navItems = []
-    this.props.sectionTitles.forEach(title, idx => {
+    this.props.navTitles.forEach((title, idx) => {
       let item
-      if (idx == this.state.navPosition) {
+      if (idx == this.state.activeNavIdx) {
         item = (
-          <li className="active">
-            <a href="#" onClick={_navItemWasClicked}>{title}
+          <li className="active" key={title}>
+            <a href="#" onClick={this._navItemWasClicked}>{title}
               <span className="sr-only">(current)</span>
             </a>
           </li>
         )
       } else {
         item = (
-          <li>
-            <a href="#" onClick={_navItemWasClicked}>{title}</a>
+          <li key={title}>
+            <a href="#" onClick={this._navItemWasClicked}>{title}</a>
           </li>
         )
       }
@@ -63,11 +62,11 @@ class NavBar extends Component {
   }
 }
 
-// sectionTitles [Array<String>] is the section titles
+// navTitles [Array<String>] is the section titles
 // activeSection [Number] is the current selection
 NavBar.propTypes = {
-  sectionTitles: PropTypes.array.isRequired,
-  activeSection: PropTypes.number.isRequired
+  navTitles: PropTypes.array.isRequired,
+  activeNavIdx: PropTypes.number.isRequired
 }
 
 

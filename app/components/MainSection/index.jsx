@@ -1,7 +1,5 @@
 
-import React, { Component, PropTypes } from 'react'
-import TodoItem from '../TodoItem'
-import Footer from '../Footer'
+import { Component, PropTypes } from 'react'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../../constants/filters'
 import style from './style.css'
 

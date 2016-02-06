@@ -1,9 +1,8 @@
-"use strict";
+'use strict';
 
-var ExampleImage = require('../Helpers/ExamplePicture');
-var FakeObjectDataListStore = require('../Helpers/SampleUsers');
-var FixedDataTable = require('fixed-data-table');
-var React = require('react');
+import React, {PropTypes} from 'react'
+import ExampleImage from '../../helpers/examplePicture'
+import FixedDataTable from 'fixed-data-table'
 
 const {Table, Column, Cell} = FixedDataTable;
 
@@ -20,27 +19,32 @@ const TextCell = ({rowIndex, data, col, ...props}) => (
 );
 
 class DataListWrapper {
-  constructor(indexMap, data) {
-    this._indexMap = indexMap;
-    this._data = data;
+  constructor(data, filteredMapping) {
+    this._data = data
+    if (filteredMapping === undefined) {
+      let mapping = []
+      for (let i = 0; i < data.length; i++) {
+        mapping.push(i)
+      }
+      this._indexMapping = mapping
+    } else {
+      this._indexMapping = filteredMapping
+    }
   }
 
   getSize() {
-    return this._indexMap.length;
+    return this._indexMapping.length
   }
 
   getObjectAt(index) {
-    return this._data.getObjectAt(
-      this._indexMap[index],
-    );
+    return this._data[this._indexMapping[index]]
   }
 }
 
-class FilterExample extends React.Component {
+class UsersTable extends React.Component {
   constructor(props) {
     super(props);
-
-    this._dataList = new FakeObjectDataListStore(2000);
+    this._dataList = new DataListWrapper(this.props.users)
     this.state = {
       filteredDataList: this._dataList,
     };
@@ -66,18 +70,18 @@ class FilterExample extends React.Component {
     }
 
     this.setState({
-      filteredDataList: new DataListWrapper(filteredIndexes, this._dataList),
+      filteredDataList: new DataListWrapper(this.props.users, filteredIndexes),
     });
   }
 
   render() {
-    var {filteredDataList} = this.state;
+    var {filteredDataList} = this.state
     return (
       <div className="col-md-12 userTableWrapper">
         <input
           className="inputFilter"
-          onChange={this._onFilterChange}
           placeholder="Filter by First Name"
+          onChange={this._onFilterChange}
         />
         <br />
         <Table
@@ -120,4 +124,12 @@ class FilterExample extends React.Component {
   }
 }
 
-module.exports = FilterExample;
+UsersTable.propTypes = {
+  users: React.PropTypes.arrayOf(React.PropTypes.Object).isRequired
+}
+
+UsersTable.defaultProps = {
+  users: []
+}
+
+module.exports = UsersTable;

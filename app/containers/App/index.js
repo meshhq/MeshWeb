@@ -1,14 +1,18 @@
 
-import React, { Component, PropTypes } from 'react'
+import { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import SampleTable from '../../components/UserTable/userTable'
+import React from 'react'
 import Navbar from '../../components/Navbar'
+import UserTable from '../../components/UserTable'
+
+// Actions
 import * as NavActions from '../../actions/nav'
 import * as UserActions from '../../actions/users'
 
-const NAV_TABS = ["Users", "Integrations"];
+// Constants
+import NAV_TITLES from '../../constants/navSections'
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +20,6 @@ class App extends Component {
     this.state = {
       width: 500
     };
-
   }
 
   componentDidMount() {
@@ -26,29 +29,35 @@ class App extends Component {
   }
 
   render() {
-    const { todos, actions, children } = this.props
+    const { navTitles, activeNavIdx, users, children } = this.props
     return (
       <div className="react-root">
-        <Navbar />
+        <Navbar navTitles={navTitles} activeNavIdx={activeNavIdx}/>
         <div className="container">
           <div className="row table-wrapper">
-            <SampleTable todos={todos} actions={actions} width={this.state.width}/>
+            <UserTable users={users.users} width={this.state.width}/>
           </div>
         </div>
+        {children}
       </div>
     )
   }
 }
 
 App.propTypes = {
-  users: PropTypes.array.isRequired,
-  nav: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  navTitles: PropTypes.array.isRequired,
+  activeNavIdx: PropTypes.number.isRequired
+}
+
+App.defaultProps = {
+  navTitles: NAV_TITLES
 }
 
 function mapStateToProps(state) {
   return {
     users: state.users,
-    nav: state.nav
+    activeNavIdx: state.nav
   }
 }
 
