@@ -5,9 +5,9 @@ import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 
 export default function configureStore(initialState) {
-  // const create = window.devToolsExtension
-  //   ? window.devToolsExtension()(createStore)
-  //   : createStore
+  const create = window.devToolsExtension
+    ? window.devToolsExtension()(createStore)
+    : createStore
   
   const store = createStore(
     rootReducer,

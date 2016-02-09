@@ -1,22 +1,10 @@
 'use strict';
 
 import React, {PropTypes} from 'react'
-import ExampleImage from '../../helpers/examplePicture'
 import FixedDataTable from 'fixed-data-table'
+import TextCell from './cells/textCell'
 
 const {Table, Column, Cell} = FixedDataTable;
-
-const ImageCell = ({rowIndex, data, col, ...props}) => (
-  <ExampleImage
-    src={data.getObjectAt(rowIndex)[col]}
-  />
-);
-
-const TextCell = ({rowIndex, data, col, ...props}) => (
-  <Cell {...props}>
-    {data.getObjectAt(rowIndex)[col]}
-  </Cell>
-);
 
 class DataListWrapper {
   constructor(data, filteredMapping) {
@@ -42,20 +30,28 @@ class DataListWrapper {
 }
 
 class UsersTable extends React.Component {
+  displayName: 'Users Table';
   constructor(props) {
     super(props);
-    this._dataList = new DataListWrapper(this.props.users)
+    this._dataList = new DataListWrapper(this.props.users.users)
     this.state = {
-      filteredDataList: this._dataList,
+      filteredDataList: this._dataList
     };
 
-    this._onFilterChange = this._onFilterChange.bind(this);
+    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
   }
 
-  _onFilterChange(e) {
+  componentWillReceiveProps(nextProps) {
+    this._dataList = new DataListWrapper(nextProps.users.users)
+    this.setState({
+      filteredDataList: this._dataList
+    });
+  }
+
+  _handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
-        filteredDataList: this._dataList,
+        filteredDataList: this._dataList
       });
     }
 
@@ -70,7 +66,7 @@ class UsersTable extends React.Component {
     }
 
     this.setState({
-      filteredDataList: new DataListWrapper(this.props.users, filteredIndexes),
+      filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
     });
   }
 
@@ -80,42 +76,56 @@ class UsersTable extends React.Component {
       <div className="col-md-12 userTableWrapper">
         <input
           className="inputFilter"
+          onChange={this._handleOnFilterChange}
           placeholder="Filter by First Name"
-          onChange={this._onFilterChange}
         />
         <br />
         <Table
+          headerHeight={50}
+          height={1000}
           rowHeight={35}
           rowsCount={filteredDataList.getSize()}
-          headerHeight={50}
           width={this.props.width}
-          height={1000}
-          {...this.props}>
+          {...this.props}
+        >
           <Column
-            header={<Cell>First Name</Cell>}
-            cell={<TextCell data={filteredDataList} col="firstName" />}
-            fixed={true}
-            width={100}
+            cell={<TextCell 
+              col="first_name"
+              data={filteredDataList}  
+                  />}
+            header={<Cell>{'First Name'}</Cell>}
+            width={150}
           />
           <Column
-            header={<Cell>Last Name</Cell>}
-            cell={<TextCell data={filteredDataList} col="lastName" />}
-            fixed={true}
-            width={100}
+            cell={<TextCell 
+              col='last_name' 
+              data={filteredDataList} 
+                  />}
+            header={<Cell>{'Last Name'}</Cell>}
+            width={150}
           />
           <Column
-            header={<Cell>City</Cell>}
-            cell={<TextCell data={filteredDataList} col="city" />}
+            cell={<TextCell 
+              col="email"
+              data={filteredDataList}  
+                  />}
+            header={<Cell>{'Email'}</Cell>}
+            width={300}
+          />
+          <Column
+            cell={<TextCell 
+              col="phone" 
+              data={filteredDataList}  
+                  />}
+            header={<Cell>{'Phone'}</Cell>}
             width={200}
           />
           <Column
-            header={<Cell>Street</Cell>}
-            cell={<TextCell data={filteredDataList} col="street" />}
-            width={200}
-          />
-          <Column
-            header={<Cell>Zip Code</Cell>}
-            cell={<TextCell data={filteredDataList} col="zipCode" />}
+            cell={<TextCell 
+              col="id" 
+              data={filteredDataList}  
+                  />}
+            header={<Cell>{'ID'}</Cell>}
             width={200}
           />
         </Table>
@@ -125,11 +135,13 @@ class UsersTable extends React.Component {
 }
 
 UsersTable.propTypes = {
-  users: React.PropTypes.arrayOf(React.PropTypes.Object).isRequired
+  users: PropTypes.object.isRequired,
+  width: PropTypes.number.isRequired
 }
 
 UsersTable.defaultProps = {
-  users: []
+  users: [],
+  width: 0
 }
 
 module.exports = UsersTable;

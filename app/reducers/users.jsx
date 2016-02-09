@@ -12,7 +12,7 @@ const defaultState = {
 function users(state = defaultState, action) {
 	switch(action.type) {
 		case ADD_USER:
-			Object.assign({}, state, {
+			return Object.assign({}, state, {
 				users: [
 					...state,
 					{
@@ -22,16 +22,16 @@ function users(state = defaultState, action) {
 				]
 			})
 		case REFRESH_USER_LIST:
-			return Object.assing({}, state, {
+			return Object.assign({}, state, {
 				didInvalidate: true
 			})
 		case REQUEST_USERS:
-			return Object.assing({}, state, {
+			return Object.assign({}, state, {
 				didInvalidate: false,
 				isFetching: true
 			})
 		case RECEIVE_USERS:
-			return Object.assing({}, state, {
+			return Object.assign({}, state, {
 				didInvalidate: false,
 				isFetching: false,
 				users: action.users,

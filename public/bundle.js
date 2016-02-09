@@ -5858,8 +5858,6 @@ webpackJsonp([1],[
 	  function App(props) {
 	    (0, _classCallCheck3.default)(this, App);
 
-	    console.log(props);
-
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(App).call(this, props));
 
 	    _this.state = {
@@ -5888,22 +5886,26 @@ webpackJsonp([1],[
 	      var navTitles = _props.navTitles;
 	      var activeNavIdx = _props.activeNavIdx;
 	      var users = _props.users;
-	      var children = _props.children;
 
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'react-root' },
-	        _react2.default.createElement(_Navbar2.default, { navTitles: navTitles, activeNavIdx: activeNavIdx }),
+	        _react2.default.createElement(_Navbar2.default, {
+	          activeNavIdx: activeNavIdx,
+	          navTitles: navTitles
+	        }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'container' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'row table-wrapper' },
-	            _react2.default.createElement(_UserTable2.default, { users: users.users, width: this.state.width })
+	            _react2.default.createElement(_UserTable2.default, {
+	              users: users,
+	              width: this.state.width
+	            })
 	          )
-	        ),
-	        children
+	        )
 	      );
 	    }
 	  }]);
@@ -7231,50 +7233,23 @@ webpackJsonp([1],[
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
 
-	var _objectWithoutProperties2 = __webpack_require__(287);
-
-	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
-
 	var _react = __webpack_require__(4);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _examplePicture = __webpack_require__(288);
-
-	var _examplePicture2 = _interopRequireDefault(_examplePicture);
-
-	var _fixedDataTable = __webpack_require__(289);
+	var _fixedDataTable = __webpack_require__(287);
 
 	var _fixedDataTable2 = _interopRequireDefault(_fixedDataTable);
+
+	var _textCell = __webpack_require__(337);
+
+	var _textCell2 = _interopRequireDefault(_textCell);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Table = _fixedDataTable2.default.Table;
 	var Column = _fixedDataTable2.default.Column;
 	var Cell = _fixedDataTable2.default.Cell;
-
-
-	var ImageCell = function ImageCell(_ref) {
-	  var rowIndex = _ref.rowIndex;
-	  var data = _ref.data;
-	  var col = _ref.col;
-	  var props = (0, _objectWithoutProperties3.default)(_ref, ['rowIndex', 'data', 'col']);
-	  return _react2.default.createElement(_examplePicture2.default, {
-	    src: data.getObjectAt(rowIndex)[col]
-	  });
-	};
-
-	var TextCell = function TextCell(_ref2) {
-	  var rowIndex = _ref2.rowIndex;
-	  var data = _ref2.data;
-	  var col = _ref2.col;
-	  var props = (0, _objectWithoutProperties3.default)(_ref2, ['rowIndex', 'data', 'col']);
-	  return _react2.default.createElement(
-	    Cell,
-	    props,
-	    data.getObjectAt(rowIndex)[col]
-	  );
-	};
 
 	var DataListWrapper = function () {
 	  function DataListWrapper(data, filteredMapping) {
@@ -7314,18 +7289,26 @@ webpackJsonp([1],[
 
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(UsersTable).call(this, props));
 
-	    _this._dataList = new DataListWrapper(_this.props.users);
+	    _this._dataList = new DataListWrapper(_this.props.users.users);
 	    _this.state = {
 	      filteredDataList: _this._dataList
 	    };
 
-	    _this._onFilterChange = _this._onFilterChange.bind(_this);
+	    _this._handleOnFilterChange = _this._handleOnFilterChange.bind(_this);
 	    return _this;
 	  }
 
 	  (0, _createClass3.default)(UsersTable, [{
-	    key: '_onFilterChange',
-	    value: function _onFilterChange(e) {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this._dataList = new DataListWrapper(nextProps.users.users);
+	      this.setState({
+	        filteredDataList: this._dataList
+	      });
+	    }
+	  }, {
+	    key: '_handleOnFilterChange',
+	    value: function _handleOnFilterChange(e) {
 	      if (!e.target.value) {
 	        this.setState({
 	          filteredDataList: this._dataList
@@ -7359,64 +7342,77 @@ webpackJsonp([1],[
 	        { className: 'col-md-12 userTableWrapper' },
 	        _react2.default.createElement('input', {
 	          className: 'inputFilter',
-	          placeholder: 'Filter by First Name',
-	          onChange: this._onFilterChange
+	          onChange: this._handleOnFilterChange,
+	          placeholder: 'Filter by First Name'
 	        }),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          Table,
 	          (0, _extends3.default)({
+	            headerHeight: 50,
+	            height: 1000,
 	            rowHeight: 35,
 	            rowsCount: filteredDataList.getSize(),
-	            headerHeight: 50,
-	            width: this.props.width,
-	            height: 1000
+	            width: this.props.width
 	          }, this.props),
 	          _react2.default.createElement(Column, {
+	            cell: _react2.default.createElement(_textCell2.default, {
+	              col: 'first_name',
+	              data: filteredDataList
+	            }),
 	            header: _react2.default.createElement(
 	              Cell,
 	              null,
 	              'First Name'
 	            ),
-	            cell: _react2.default.createElement(TextCell, { data: filteredDataList, col: 'firstName' }),
-	            fixed: true,
-	            width: 100
+	            width: 150
 	          }),
 	          _react2.default.createElement(Column, {
+	            cell: _react2.default.createElement(_textCell2.default, {
+	              col: 'last_name',
+	              data: filteredDataList
+	            }),
 	            header: _react2.default.createElement(
 	              Cell,
 	              null,
 	              'Last Name'
 	            ),
-	            cell: _react2.default.createElement(TextCell, { data: filteredDataList, col: 'lastName' }),
-	            fixed: true,
-	            width: 100
+	            width: 150
 	          }),
 	          _react2.default.createElement(Column, {
+	            cell: _react2.default.createElement(_textCell2.default, {
+	              col: 'email',
+	              data: filteredDataList
+	            }),
 	            header: _react2.default.createElement(
 	              Cell,
 	              null,
-	              'City'
+	              'Email'
 	            ),
-	            cell: _react2.default.createElement(TextCell, { data: filteredDataList, col: 'city' }),
+	            width: 300
+	          }),
+	          _react2.default.createElement(Column, {
+	            cell: _react2.default.createElement(_textCell2.default, {
+	              col: 'phone',
+	              data: filteredDataList
+	            }),
+	            header: _react2.default.createElement(
+	              Cell,
+	              null,
+	              'Phone'
+	            ),
 	            width: 200
 	          }),
 	          _react2.default.createElement(Column, {
+	            cell: _react2.default.createElement(_textCell2.default, {
+	              col: 'id',
+	              data: filteredDataList
+	            }),
 	            header: _react2.default.createElement(
 	              Cell,
 	              null,
-	              'Street'
+	              'ID'
 	            ),
-	            cell: _react2.default.createElement(TextCell, { data: filteredDataList, col: 'street' }),
-	            width: 200
-	          }),
-	          _react2.default.createElement(Column, {
-	            header: _react2.default.createElement(
-	              Cell,
-	              null,
-	              'Zip Code'
-	            ),
-	            cell: _react2.default.createElement(TextCell, { data: filteredDataList, col: 'zipCode' }),
 	            width: 200
 	          })
 	        )
@@ -7427,11 +7423,13 @@ webpackJsonp([1],[
 	}(_react2.default.Component);
 
 	UsersTable.propTypes = {
-	  users: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.Object).isRequired
+	  users: _react.PropTypes.object.isRequired,
+	  width: _react.PropTypes.number.isRequired
 	};
 
 	UsersTable.defaultProps = {
-	  users: []
+	  users: [],
+	  width: 0
 	};
 
 	module.exports = UsersTable;
@@ -7528,110 +7526,13 @@ webpackJsonp([1],[
 
 /***/ },
 /* 287 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	module.exports = __webpack_require__(288);
 
-	exports.__esModule = true;
-
-	exports.default = function (obj, keys) {
-	  var target = {};
-
-	  for (var i in obj) {
-	    if (keys.indexOf(i) >= 0) continue;
-	    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-	    target[i] = obj[i];
-	  }
-
-	  return target;
-	};
 
 /***/ },
 /* 288 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
-
-	'use strict';
-
-	var React = __webpack_require__(4);
-
-	var PendingPool = {};
-	var ReadyPool = {};
-
-	var ExampleImage = React.createClass({
-	  displayName: 'ExampleImage',
-
-	  propTypes: {
-	    src: React.PropTypes.string.isRequired
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      ready: false
-	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    this._load(this.props.src);
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (nextProps.src !== this.props.src) {
-	      this.setState({ src: null });
-	      this._load(nextProps.src);
-	    }
-	  },
-	  render: function render() {
-	    var style = this.state.src ? { backgroundImage: 'url(' + this.state.src + ')' } : undefined;
-
-	    return React.createElement('div', { className: 'exampleImage', style: style });
-	  },
-	  _load: function _load( /*string*/src) {
-	    if (ReadyPool[src]) {
-	      this.setState({ src: src });
-	      return;
-	    }
-
-	    if (PendingPool[src]) {
-	      PendingPool[src].push(this._onLoad);
-	      return;
-	    }
-
-	    PendingPool[src] = [this._onLoad];
-
-	    var img = new Image();
-	    img.onload = function () {
-	      PendingPool[src].forEach( /*function*/function (callback) {
-	        callback(src);
-	      });
-	      delete PendingPool[src];
-	      img.onload = null;
-	      src = undefined;
-	    };
-	    img.src = src;
-	  },
-	  _onLoad: function _onLoad( /*string*/src) {
-	    ReadyPool[src] = true;
-	    if (this.isMounted() && src === this.props.src) {
-	      this.setState({
-	        src: src
-	      });
-	    }
-	  }
-	});
-
-	module.exports = ExampleImage;
-
-	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "examplePicture.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
-
-/***/ },
-/* 289 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(290);
-
-
-/***/ },
-/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7647,10 +7548,10 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var FixedDataTable = __webpack_require__(291);
-	var FixedDataTableCellDefault = __webpack_require__(328);
-	var FixedDataTableColumn = __webpack_require__(326);
-	var FixedDataTableColumnGroup = __webpack_require__(325);
+	var FixedDataTable = __webpack_require__(289);
+	var FixedDataTableCellDefault = __webpack_require__(326);
+	var FixedDataTableColumn = __webpack_require__(324);
+	var FixedDataTableColumnGroup = __webpack_require__(323);
 
 	var FixedDataTableRoot = {
 	  Cell: FixedDataTableCellDefault,
@@ -7662,7 +7563,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableRoot;
 
 /***/ },
-/* 291 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7688,19 +7589,19 @@ webpackJsonp([1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	var ReactChildren = React.Children;
 
 	var PropTypes = React.PropTypes;
 
 	// New Table API
-	var Table = __webpack_require__(293);
-	var Column = __webpack_require__(336);
-	var ColumnGroup = __webpack_require__(337);
+	var Table = __webpack_require__(291);
+	var Column = __webpack_require__(334);
+	var ColumnGroup = __webpack_require__(335);
 
 	// Transition Cell
-	var TransitionCell = __webpack_require__(338);
+	var TransitionCell = __webpack_require__(336);
 
 	var NEXT_VERSION = '0.7.0';
 	var DOCUMENTATION_URL = 'https://fburl.com/FixedDataTable-v0.6';
@@ -8184,7 +8085,7 @@ webpackJsonp([1],[
 	module.exports = TransitionTable;
 
 /***/ },
-/* 292 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8203,7 +8104,7 @@ webpackJsonp([1],[
 	module.exports = __webpack_require__(4);
 
 /***/ },
-/* 293 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8225,23 +8126,23 @@ webpackJsonp([1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(292);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(294);
-	var ReactWheelHandler = __webpack_require__(295);
-	var Scrollbar = __webpack_require__(303);
-	var FixedDataTableBufferedRows = __webpack_require__(316);
-	var FixedDataTableColumnResizeHandle = __webpack_require__(330);
-	var FixedDataTableRow = __webpack_require__(321);
-	var FixedDataTableScrollHelper = __webpack_require__(331);
-	var FixedDataTableWidthHelper = __webpack_require__(333);
+	var React = __webpack_require__(290);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(292);
+	var ReactWheelHandler = __webpack_require__(293);
+	var Scrollbar = __webpack_require__(301);
+	var FixedDataTableBufferedRows = __webpack_require__(314);
+	var FixedDataTableColumnResizeHandle = __webpack_require__(328);
+	var FixedDataTableRow = __webpack_require__(319);
+	var FixedDataTableScrollHelper = __webpack_require__(329);
+	var FixedDataTableWidthHelper = __webpack_require__(331);
 
-	var cx = __webpack_require__(310);
-	var debounceCore = __webpack_require__(334);
-	var emptyFunction = __webpack_require__(296);
-	var invariant = __webpack_require__(315);
-	var joinClasses = __webpack_require__(329);
-	var shallowEqual = __webpack_require__(335);
-	var translateDOMPositionXY = __webpack_require__(311);
+	var cx = __webpack_require__(308);
+	var debounceCore = __webpack_require__(332);
+	var emptyFunction = __webpack_require__(294);
+	var invariant = __webpack_require__(313);
+	var joinClasses = __webpack_require__(327);
+	var shallowEqual = __webpack_require__(333);
+	var translateDOMPositionXY = __webpack_require__(309);
 
 	var PropTypes = React.PropTypes;
 
@@ -9163,7 +9064,7 @@ webpackJsonp([1],[
 	// avaialble
 
 /***/ },
-/* 294 */
+/* 292 */
 /***/ function(module, exports) {
 
 	/**
@@ -9239,7 +9140,7 @@ webpackJsonp([1],[
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 295 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9263,9 +9164,9 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var emptyFunction = __webpack_require__(296);
-	var normalizeWheel = __webpack_require__(297);
-	var requestAnimationFramePolyfill = __webpack_require__(301);
+	var emptyFunction = __webpack_require__(294);
+	var normalizeWheel = __webpack_require__(295);
+	var requestAnimationFramePolyfill = __webpack_require__(299);
 
 	var ReactWheelHandler = (function () {
 	  /**
@@ -9349,7 +9250,7 @@ webpackJsonp([1],[
 	module.exports = ReactWheelHandler;
 
 /***/ },
-/* 296 */
+/* 294 */
 /***/ function(module, exports) {
 
 	/**
@@ -9392,7 +9293,7 @@ webpackJsonp([1],[
 	module.exports = emptyFunction;
 
 /***/ },
-/* 297 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9409,9 +9310,9 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var UserAgent_DEPRECATED = __webpack_require__(298);
+	var UserAgent_DEPRECATED = __webpack_require__(296);
 
-	var isEventSupported = __webpack_require__(299);
+	var isEventSupported = __webpack_require__(297);
 
 	// Reasonable defaults
 	var PIXEL_STEP = 10;
@@ -9593,7 +9494,7 @@ webpackJsonp([1],[
 	module.exports = normalizeWheel;
 
 /***/ },
-/* 298 */
+/* 296 */
 /***/ function(module, exports) {
 
 	/**
@@ -9876,7 +9777,7 @@ webpackJsonp([1],[
 	module.exports = UserAgent_DEPRECATED;
 
 /***/ },
-/* 299 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9892,7 +9793,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(300);
+	var ExecutionEnvironment = __webpack_require__(298);
 
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -9941,7 +9842,7 @@ webpackJsonp([1],[
 	module.exports = isEventSupported;
 
 /***/ },
-/* 300 */
+/* 298 */
 /***/ function(module, exports) {
 
 	/**
@@ -9984,7 +9885,7 @@ webpackJsonp([1],[
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 301 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -10000,8 +9901,8 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(296);
-	var nativeRequestAnimationFrame = __webpack_require__(302);
+	var emptyFunction = __webpack_require__(294);
+	var nativeRequestAnimationFrame = __webpack_require__(300);
 
 	var lastTime = 0;
 
@@ -10025,7 +9926,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 302 */
+/* 300 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -10047,7 +9948,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 303 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10064,17 +9965,17 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var DOMMouseMoveTracker = __webpack_require__(304);
-	var Keys = __webpack_require__(307);
-	var React = __webpack_require__(292);
-	var ReactDOM = __webpack_require__(308);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(294);
-	var ReactWheelHandler = __webpack_require__(295);
+	var DOMMouseMoveTracker = __webpack_require__(302);
+	var Keys = __webpack_require__(305);
+	var React = __webpack_require__(290);
+	var ReactDOM = __webpack_require__(306);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(292);
+	var ReactWheelHandler = __webpack_require__(293);
 
-	var cssVar = __webpack_require__(309);
-	var cx = __webpack_require__(310);
-	var emptyFunction = __webpack_require__(296);
-	var translateDOMPositionXY = __webpack_require__(311);
+	var cssVar = __webpack_require__(307);
+	var cx = __webpack_require__(308);
+	var emptyFunction = __webpack_require__(294);
+	var translateDOMPositionXY = __webpack_require__(309);
 
 	var PropTypes = React.PropTypes;
 
@@ -10488,7 +10389,7 @@ webpackJsonp([1],[
 	// pass
 
 /***/ },
-/* 304 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10516,10 +10417,10 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var EventListener = __webpack_require__(305);
+	var EventListener = __webpack_require__(303);
 
-	var cancelAnimationFramePolyfill = __webpack_require__(306);
-	var requestAnimationFramePolyfill = __webpack_require__(301);
+	var cancelAnimationFramePolyfill = __webpack_require__(304);
+	var requestAnimationFramePolyfill = __webpack_require__(299);
 
 	var DOMMouseMoveTracker = (function () {
 	  /**
@@ -10652,7 +10553,7 @@ webpackJsonp([1],[
 	module.exports = DOMMouseMoveTracker;
 
 /***/ },
-/* 305 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10669,7 +10570,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(296);
+	var emptyFunction = __webpack_require__(294);
 
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -10734,7 +10635,7 @@ webpackJsonp([1],[
 	module.exports = EventListener;
 
 /***/ },
-/* 306 */
+/* 304 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -10760,7 +10661,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 307 */
+/* 305 */
 /***/ function(module, exports) {
 
 	/**
@@ -10802,7 +10703,7 @@ webpackJsonp([1],[
 	};
 
 /***/ },
-/* 308 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10821,7 +10722,7 @@ webpackJsonp([1],[
 	module.exports = __webpack_require__(217);
 
 /***/ },
-/* 309 */
+/* 307 */
 /***/ function(module, exports) {
 
 	/**
@@ -10865,7 +10766,7 @@ webpackJsonp([1],[
 	module.exports = cssVar;
 
 /***/ },
-/* 310 */
+/* 308 */
 /***/ function(module, exports) {
 
 	/**
@@ -10924,7 +10825,7 @@ webpackJsonp([1],[
 	module.exports = cx;
 
 /***/ },
-/* 311 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -10941,9 +10842,9 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var BrowserSupportCore = __webpack_require__(312);
+	var BrowserSupportCore = __webpack_require__(310);
 
-	var getVendorPrefixedName = __webpack_require__(313);
+	var getVendorPrefixedName = __webpack_require__(311);
 
 	var TRANSFORM = getVendorPrefixedName('transform');
 	var BACKFACE_VISIBILITY = getVendorPrefixedName('backfaceVisibility');
@@ -10978,7 +10879,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 312 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10994,7 +10895,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var getVendorPrefixedName = __webpack_require__(313);
+	var getVendorPrefixedName = __webpack_require__(311);
 
 	var BrowserSupportCore = {
 	  /**
@@ -11028,7 +10929,7 @@ webpackJsonp([1],[
 	module.exports = BrowserSupportCore;
 
 /***/ },
-/* 313 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11045,10 +10946,10 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(300);
+	var ExecutionEnvironment = __webpack_require__(298);
 
-	var camelize = __webpack_require__(314);
-	var invariant = __webpack_require__(315);
+	var camelize = __webpack_require__(312);
+	var invariant = __webpack_require__(313);
 
 	var memoized = {};
 	var prefixes = ['Webkit', 'ms', 'Moz', 'O'];
@@ -11085,7 +10986,7 @@ webpackJsonp([1],[
 	module.exports = getVendorPrefixedName;
 
 /***/ },
-/* 314 */
+/* 312 */
 /***/ function(module, exports) {
 
 	/**
@@ -11122,7 +11023,7 @@ webpackJsonp([1],[
 	module.exports = camelize;
 
 /***/ },
-/* 315 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11176,7 +11077,7 @@ webpackJsonp([1],[
 	module.exports = invariant;
 
 /***/ },
-/* 316 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11193,14 +11094,14 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
-	var FixedDataTableRowBuffer = __webpack_require__(317);
-	var FixedDataTableRow = __webpack_require__(321);
+	var React = __webpack_require__(290);
+	var FixedDataTableRowBuffer = __webpack_require__(315);
+	var FixedDataTableRow = __webpack_require__(319);
 
-	var cx = __webpack_require__(310);
-	var emptyFunction = __webpack_require__(296);
-	var joinClasses = __webpack_require__(329);
-	var translateDOMPositionXY = __webpack_require__(311);
+	var cx = __webpack_require__(308);
+	var emptyFunction = __webpack_require__(294);
+	var joinClasses = __webpack_require__(327);
+	var translateDOMPositionXY = __webpack_require__(309);
 
 	var PropTypes = React.PropTypes;
 
@@ -11329,7 +11230,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableBufferedRows;
 
 /***/ },
-/* 317 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11350,10 +11251,10 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var IntegerBufferSet = __webpack_require__(318);
+	var IntegerBufferSet = __webpack_require__(316);
 
-	var clamp = __webpack_require__(320);
-	var invariant = __webpack_require__(315);
+	var clamp = __webpack_require__(318);
+	var invariant = __webpack_require__(313);
 	var MIN_BUFFER_ROWS = 3;
 	var MAX_BUFFER_ROWS = 6;
 
@@ -11457,7 +11358,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableRowBuffer;
 
 /***/ },
-/* 318 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11478,9 +11379,9 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var Heap = __webpack_require__(319);
+	var Heap = __webpack_require__(317);
 
-	var invariant = __webpack_require__(315);
+	var invariant = __webpack_require__(313);
 
 	// Data structure that allows to store values and assign positions to them
 	// in a way to minimize changing positions of stored values when new ones are
@@ -11641,7 +11542,7 @@ webpackJsonp([1],[
 	module.exports = IntegerBufferSet;
 
 /***/ },
-/* 319 */
+/* 317 */
 /***/ function(module, exports) {
 
 	/**
@@ -11824,7 +11725,7 @@ webpackJsonp([1],[
 	module.exports = Heap;
 
 /***/ },
-/* 320 */
+/* 318 */
 /***/ function(module, exports) {
 
 	/**
@@ -11861,7 +11762,7 @@ webpackJsonp([1],[
 	module.exports = clamp;
 
 /***/ },
-/* 321 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11880,12 +11781,12 @@ webpackJsonp([1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(292);
-	var FixedDataTableCellGroup = __webpack_require__(322);
+	var React = __webpack_require__(290);
+	var FixedDataTableCellGroup = __webpack_require__(320);
 
-	var cx = __webpack_require__(310);
-	var joinClasses = __webpack_require__(329);
-	var translateDOMPositionXY = __webpack_require__(311);
+	var cx = __webpack_require__(308);
+	var joinClasses = __webpack_require__(327);
+	var translateDOMPositionXY = __webpack_require__(309);
 
 	var PropTypes = React.PropTypes;
 
@@ -12107,7 +12008,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableRow;
 
 /***/ },
-/* 322 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12128,12 +12029,12 @@ webpackJsonp([1],[
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var FixedDataTableHelper = __webpack_require__(323);
-	var React = __webpack_require__(292);
-	var FixedDataTableCell = __webpack_require__(327);
+	var FixedDataTableHelper = __webpack_require__(321);
+	var React = __webpack_require__(290);
+	var FixedDataTableCell = __webpack_require__(325);
 
-	var cx = __webpack_require__(310);
-	var translateDOMPositionXY = __webpack_require__(311);
+	var cx = __webpack_require__(308);
+	var translateDOMPositionXY = __webpack_require__(309);
 
 	var PropTypes = React.PropTypes;
 
@@ -12312,7 +12213,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableCellGroup;
 
 /***/ },
-/* 323 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12329,10 +12230,10 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var Locale = __webpack_require__(324);
-	var React = __webpack_require__(292);
-	var FixedDataTableColumnGroup = __webpack_require__(325);
-	var FixedDataTableColumn = __webpack_require__(326);
+	var Locale = __webpack_require__(322);
+	var React = __webpack_require__(290);
+	var FixedDataTableColumnGroup = __webpack_require__(323);
+	var FixedDataTableColumn = __webpack_require__(324);
 
 	var DIR_SIGN = Locale.isRTL() ? -1 : +1;
 	// A cell up to 5px outside of the visible area will still be considered visible
@@ -12419,7 +12320,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableHelper;
 
 /***/ },
-/* 324 */
+/* 322 */
 /***/ function(module, exports) {
 
 	/**
@@ -12448,7 +12349,7 @@ webpackJsonp([1],[
 	module.exports = Locale;
 
 /***/ },
-/* 325 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12472,7 +12373,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	var TransitionColumnGroup = React.createClass({
 	  displayName: 'TransitionColumnGroup',
@@ -12491,7 +12392,7 @@ webpackJsonp([1],[
 	module.exports = TransitionColumnGroup;
 
 /***/ },
-/* 326 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12515,7 +12416,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	var TransitionColumn = React.createClass({
 	  displayName: 'TransitionColumn',
@@ -12535,7 +12436,7 @@ webpackJsonp([1],[
 	module.exports = TransitionColumn;
 
 /***/ },
-/* 327 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12554,11 +12455,11 @@ webpackJsonp([1],[
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var FixedDataTableCellDefault = __webpack_require__(328);
-	var FixedDataTableHelper = __webpack_require__(323);
-	var React = __webpack_require__(292);
-	var cx = __webpack_require__(310);
-	var joinClasses = __webpack_require__(329);
+	var FixedDataTableCellDefault = __webpack_require__(326);
+	var FixedDataTableHelper = __webpack_require__(321);
+	var React = __webpack_require__(290);
+	var cx = __webpack_require__(308);
+	var joinClasses = __webpack_require__(327);
 
 	var DIR_SIGN = FixedDataTableHelper.DIR_SIGN;
 
@@ -12705,7 +12606,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableCell;
 
 /***/ },
-/* 328 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12726,10 +12627,10 @@ webpackJsonp([1],[
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
-	var cx = __webpack_require__(310);
-	var joinClasses = __webpack_require__(329);
+	var cx = __webpack_require__(308);
+	var joinClasses = __webpack_require__(327);
 
 	var PropTypes = React.PropTypes;
 
@@ -12817,7 +12718,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableCellDefault;
 
 /***/ },
-/* 329 */
+/* 327 */
 /***/ function(module, exports) {
 
 	/**
@@ -12861,7 +12762,7 @@ webpackJsonp([1],[
 	module.exports = joinClasses;
 
 /***/ },
-/* 330 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12882,13 +12783,13 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var DOMMouseMoveTracker = __webpack_require__(304);
-	var Locale = __webpack_require__(324);
-	var React = __webpack_require__(292);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(294);
+	var DOMMouseMoveTracker = __webpack_require__(302);
+	var Locale = __webpack_require__(322);
+	var React = __webpack_require__(290);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(292);
 
-	var clamp = __webpack_require__(320);
-	var cx = __webpack_require__(310);
+	var clamp = __webpack_require__(318);
+	var cx = __webpack_require__(308);
 
 	var PropTypes = React.PropTypes;
 
@@ -13022,7 +12923,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableColumnResizeHandle;
 
 /***/ },
-/* 331 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13043,8 +12944,8 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var PrefixIntervalTree = __webpack_require__(332);
-	var clamp = __webpack_require__(320);
+	var PrefixIntervalTree = __webpack_require__(330);
+	var clamp = __webpack_require__(318);
 
 	var BUFFER_ROWS = 5;
 	var NO_ROWS_SCROLL_RESULT = {
@@ -13323,7 +13224,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableScrollHelper;
 
 /***/ },
-/* 332 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -13345,7 +13246,7 @@ webpackJsonp([1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(315);
+	var invariant = __webpack_require__(313);
 
 	var parent = function parent(node) {
 	  return Math.floor(node / 2);
@@ -13587,7 +13488,7 @@ webpackJsonp([1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 333 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13604,7 +13505,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	function getTotalWidth( /*array*/columns) /*number*/{
 	  var totalWidth = 0;
@@ -13721,7 +13622,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableWidthHelper;
 
 /***/ },
-/* 334 */
+/* 332 */
 /***/ function(module, exports) {
 
 	/**
@@ -13793,7 +13694,7 @@ webpackJsonp([1],[
 	module.exports = debounce;
 
 /***/ },
-/* 335 */
+/* 333 */
 /***/ function(module, exports) {
 
 	/**
@@ -13848,7 +13749,7 @@ webpackJsonp([1],[
 	module.exports = shallowEqual;
 
 /***/ },
-/* 336 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13865,7 +13766,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	var PropTypes = React.PropTypes;
 
@@ -14029,7 +13930,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableColumn;
 
 /***/ },
-/* 337 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14046,7 +13947,7 @@ webpackJsonp([1],[
 
 	'use strict';
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 
 	var PropTypes = React.PropTypes;
 
@@ -14106,7 +14007,7 @@ webpackJsonp([1],[
 	module.exports = FixedDataTableColumnGroup;
 
 /***/ },
-/* 338 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14132,14 +14033,14 @@ webpackJsonp([1],[
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var React = __webpack_require__(292);
+	var React = __webpack_require__(290);
 	var PropTypes = React.PropTypes;
 
-	var cx = __webpack_require__(310);
-	var joinClasses = __webpack_require__(329);
-	var shallowEqual = __webpack_require__(335);
+	var cx = __webpack_require__(308);
+	var joinClasses = __webpack_require__(327);
+	var shallowEqual = __webpack_require__(333);
 
-	var CellDefault = __webpack_require__(328);
+	var CellDefault = __webpack_require__(326);
 
 	var TransitionCell = React.createClass({
 	  displayName: 'TransitionCell',
@@ -14302,6 +14203,73 @@ webpackJsonp([1],[
 
 	module.exports = TransitionCell;
 	// footer
+
+/***/ },
+/* 337 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _objectWithoutProperties2 = __webpack_require__(338);
+
+	var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _fixedDataTable = __webpack_require__(287);
+
+	var _fixedDataTable2 = _interopRequireDefault(_fixedDataTable);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Cell = _fixedDataTable2.default.Cell;
+
+
+	var TextCell = function TextCell(_ref) {
+	  var rowIndex = _ref.rowIndex;
+	  var data = _ref.data;
+	  var col = _ref.col;
+	  var props = (0, _objectWithoutProperties3.default)(_ref, ['rowIndex', 'data', 'col']);
+	  return _react2.default.createElement(
+	    Cell,
+	    props,
+	    data.getObjectAt(rowIndex)[col]
+	  );
+	};
+
+	TextCell.displayName = 'Text Cell';
+
+	exports.default = TextCell;
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "textCell.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+/* 338 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.__esModule = true;
+
+	exports.default = function (obj, keys) {
+	  var target = {};
+
+	  for (var i in obj) {
+	    if (keys.indexOf(i) >= 0) continue;
+	    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+	    target[i] = obj[i];
+	  }
+
+	  return target;
+	};
 
 /***/ },
 /* 339 */
@@ -15303,6 +15271,7 @@ webpackJsonp([1],[
 	exports.requestUsers = requestUsers;
 	exports.receivedUsers = receivedUsers;
 	exports.getUsers = getUsers;
+	exports.getUsers = getUsers;
 
 	var _isomorphicFetch = __webpack_require__(353);
 
@@ -15323,45 +15292,57 @@ webpackJsonp([1],[
 	// This action is to indicate the desired
 	// refresh of the user table
 	var REFRESH_USER_LIST = exports.REFRESH_USER_LIST = 'REFRESH_USER_LIST';
-	function refreshUserList(app_id) {
+	function refreshUserList(appId) {
 		return {
 			type: REFRESH_USER_LIST,
-			app_id: app_id
+			appId: appId
 		};
 	}
 
 	// This function is to indicate that the
 	// network request action has begun
 	var REQUEST_USERS = exports.REQUEST_USERS = 'REQUEST_USERS';
-	function requestUsers(app_id) {
+	function requestUsers(appId) {
 		return {
 			type: REQUEST_USERS,
-			app_id: app_id
+			appId: appId
 		};
 	}
 
 	var RECEIVE_USERS = exports.RECEIVE_USERS = 'RECEIVE_USERS';
-	function receivedUsers(app_id, json) {
+	function receivedUsers(appId, json) {
 		return {
 			type: RECEIVE_USERS,
-			app_id: app_id,
-			users: json.data.children.map(function (child) {
-				return child.data;
-			}),
+			appId: appId,
+			users: json,
 			receivedAt: Date.now()
 		};
 	}
 
 	// Thunk Network Call
-	function getUsers(app_id) {
+	function getUsers() {}
+	function getUsers() {
 		return function (dispatch, getState) {
-			return (0, _isomorphicFetch2.default)((0, _api.URLWithPath)('applications')).then(function (response) {
-				return response.json();
-			}).then(function (json) {
-				var appInfo = json[0];
-				var appId = appInfo['production_id'];
-			});
+			fetchFirstAppId(dispatch, getState);
 		};
+	}
+
+	function fetchFirstAppId(dispatch, getState) {
+		return (0, _isomorphicFetch2.default)((0, _api.URLWithPath)('applications')).then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			var appInfo = json[0];
+			var appId = appInfo['production_id'];
+			fetchUsersWithAppId(dispatch, getState, appId);
+		});
+	}
+
+	function fetchUsersWithAppId(dispatch, getState, appId) {
+		(0, _isomorphicFetch2.default)((0, _api.URLWithPath)('apps/' + appId + '/users')).then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			dispatch(receivedUsers(appId, json));
+		});
 	}
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/Taylor/Code/ReactDev/MeshWeb/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "users.jsx" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -15859,9 +15840,7 @@ webpackJsonp([1],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function configureStore(initialState) {
-	  // const create = window.devToolsExtension
-	  //   ? window.devToolsExtension()(createStore)
-	  //   : createStore
+	  var create = window.devToolsExtension ? window.devToolsExtension()(_redux.createStore) : _redux.createStore;
 
 	  var store = (0, _redux.createStore)(_reducers2.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()));
 
@@ -16198,23 +16177,23 @@ webpackJsonp([1],[
 
 		switch (action.type) {
 			case _users.ADD_USER:
-				(0, _assign2.default)({}, state, {
+				return (0, _assign2.default)({}, state, {
 					users: [].concat((0, _toConsumableArray3.default)(state), [{
 						firstName: action.firstName,
 						lastName: action.lastName
 					}])
 				});
 			case _users.REFRESH_USER_LIST:
-				return Object.assing({}, state, {
+				return (0, _assign2.default)({}, state, {
 					didInvalidate: true
 				});
 			case _users.REQUEST_USERS:
-				return Object.assing({}, state, {
+				return (0, _assign2.default)({}, state, {
 					didInvalidate: false,
 					isFetching: true
 				});
 			case _users.RECEIVE_USERS:
-				return Object.assing({}, state, {
+				return (0, _assign2.default)({}, state, {
 					didInvalidate: false,
 					isFetching: false,
 					users: action.users,

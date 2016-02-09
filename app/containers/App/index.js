@@ -17,7 +17,6 @@ import NAV_TITLES from '../../constants/navSections'
 class App extends Component {
   displayName: "Main App Component";
   constructor(props) {
-    console.log(props)
     super(props);
     this.state = {
       width: 500
@@ -36,16 +35,21 @@ class App extends Component {
   }
 
   render() {
-    const { navTitles, activeNavIdx, users, children } = this.props
+    const { navTitles, activeNavIdx, users } = this.props
     return (
       <div className="react-root">
-        <Navbar navTitles={navTitles} activeNavIdx={activeNavIdx}/>
+        <Navbar 
+          activeNavIdx={activeNavIdx}
+          navTitles={navTitles} 
+        />
         <div className="container">
           <div className="row table-wrapper">
-            <UserTable users={users.users} width={this.state.width}/>
+            <UserTable 
+              users={users} 
+              width={this.state.width}
+            />
           </div>
         </div>
-        {children}
       </div>
     )
   }
