@@ -4,6 +4,8 @@ import {URLWithPath} from '../helpers/api'
 
 export const ADD_USER = 'ADD_USER'
 
+// Network Calls
+
 export function addUser(user) {
 	return { type: ADD_USER, user }
 }
@@ -39,13 +41,16 @@ export function receivedUsers(app_id, json) {
 }
 
 // Thunk Network Call
-export function getUsers() {
-	return (dispatch) => {
+export function getUsers(app_id) {
+	return (dispatch, getState) => {
 		return fetch(URLWithPath('applications'))
 			.then(function(response) {
-				console.log(response);
-				dispatch(receivedUsers())
+				return response.json()
+			}).then(function(json) {
+				let appInfo = json[0]
+				let appId = appInfo['production_id']
 			}
 		)
 	}
 }
+

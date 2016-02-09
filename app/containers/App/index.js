@@ -15,7 +15,9 @@ import * as UserActions from '../../actions/users'
 import NAV_TITLES from '../../constants/navSections'
 
 class App extends Component {
+  displayName: "Main App Component";
   constructor(props) {
+    console.log(props)
     super(props);
     this.state = {
       width: 500
@@ -23,8 +25,13 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this._getWindowWidth()
+    this.props.userActions.getUsers()
+  }
+
+  _getWindowWidth() {
     let dom = ReactDOM.findDOMNode(this);
-    let width = dom.querySelectorAll('div.table-wrapper')[0].clientWidth - 15;
+    const width = dom.querySelectorAll('div.table-wrapper')[0].clientWidth - 15;    
     this.setState({width: width});
   }
 
@@ -45,9 +52,11 @@ class App extends Component {
 }
 
 App.propTypes = {
-  users: PropTypes.object.isRequired,
-  navTitles: PropTypes.array.isRequired,
-  activeNavIdx: PropTypes.number.isRequired
+  activeNavIdx: PropTypes.number.isRequired,
+  navActions: PropTypes.object.isRequired,
+  navTitles: PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  userActions: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired  
 }
 
 App.defaultProps = {

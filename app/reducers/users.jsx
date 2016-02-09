@@ -1,16 +1,18 @@
+import FakeObjectDataListStore from '../helpers/sampleUsers'
+import { ADD_USER, REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS } from '../actions/users'
 
-import { REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS, ADD_USER } from '../actions/users'
+const seededDataList = new FakeObjectDataListStore(2000);
 
 const defaultState = {
 	isFetching: false,
 	didInvalidate: false,
-	users: [{firstName: 'T$'}]
+	users: []
 }
 
 function users(state = defaultState, action) {
 	switch(action.type) {
 		case ADD_USER:
-			return Object.assign({}, state, {
+			Object.assign({}, state, {
 				users: [
 					...state,
 					{

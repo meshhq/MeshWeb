@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 
 import App from './containers/App'
-import configure from './store'
+import configureStore from './store'
 
-const store = configure()
+const store = configureStore()
 
 // Style Sheets
 import './assets/base_assets.scss'
