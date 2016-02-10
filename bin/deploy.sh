@@ -1,10 +1,10 @@
-echo -e "\033[0;32mDeploying updates to GitHubPages...\033[0m"
+echo -e "\n  🌎🌎\033[0;32mDeploying updates to GitHubPages...\033[0m 🌎🌎"
 
 # Add changes to git.
 git add -A
 
 # Commit changes.
-msg="Deploying Mesh to GHPages @`date`"
+msg="\n🌎🌎  Deploying Mesh to GHPages @`date` 🌎🌎"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
