@@ -5,7 +5,7 @@ var ReadyPool = {};
 
 var ExampleImage = React.createClass({
   propTypes: {
-    src: React.PropTypes.string.isRequired,
+    src: React.PropTypes.string.isRequired
   },
 
   getInitialState() {

@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       width: 500
     };
+    this.handleNavBarClick = this._handleNavBarClick.bind(this)
   }
 
   componentDidMount() {
@@ -34,6 +35,12 @@ class App extends Component {
     this.setState({width: width});
   }
 
+  _handleNavBarClick(navIdx) {
+    if (navIdx != this.props.activeNavIdx) {
+      this.props.navActions.setNavSelection(navIdx)
+    }
+  }
+
   render() {
     const { navTitles, activeNavIdx, users } = this.props
     return (
@@ -41,6 +48,7 @@ class App extends Component {
         <Navbar 
           activeNavIdx={activeNavIdx}
           navTitles={navTitles} 
+          onNavChange={this.handleNavBarClick}
         />
         <div className="container">
           <div className="row table-wrapper">
