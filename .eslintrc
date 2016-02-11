@@ -1,24 +1,23 @@
 {
-  "extends": "eslint:recommended",
-  "parser": "babel-eslint",
+  "extends": "airbnb",
   "globals": {
     "jQuery": true,
     "$": true,
     "window": true,
     "document": true
   },
-  "plugins": [
-    "react"
-  ],
   "env": {
     "commonjs": true,
     "node": true
   },
   "rules": {
+    "semi": 0,
+    "no-var": 2,
     "quotes": [2, "single"],
+    "comma-dangle": [2, "never"],
 
     // JSX Rules
-    "react/display-name": 1,
+    "react/display-name": [1, { "acceptTranspilerName": true }],
     "react/forbid-prop-types": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-closing-bracket-location": 1,

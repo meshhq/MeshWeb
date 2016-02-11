@@ -42,6 +42,7 @@ class App extends Component {
   }
 
   render() {
+    var something
     const { navTitles, activeNavIdx, users } = this.props
     return (
       <div className="react-root">
