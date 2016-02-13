@@ -1,7 +1,6 @@
 {
   "name": "Mesh",
   "description": "Mesh Web App",
-  "directory": "client",
   "main": "index.js",
   "authors": [
     "Taylor Halliday <taylor.halliday@gmail.com>",

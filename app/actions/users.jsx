@@ -13,61 +13,43 @@ export function addUser(user) {
 // This action is to indicate the desired
 // refresh of the user table
 export const REFRESH_USER_LIST = 'REFRESH_USER_LIST'
-export function refreshUserList(appId) {
+export function refreshUserList() {
 	return {
-		type: REFRESH_USER_LIST,
-		appId
+		type: REFRESH_USER_LIST
 	}
 }
 
 // This function is to indicate that the 
 // network request action has begun
 export const REQUEST_USERS = 'REQUEST_USERS'
-export function requestUsers(appId) {
+export function requestedUsers() {
 	return {
-		type: REQUEST_USERS,
-		appId
+		type: REQUEST_USERS
 	}
 }
 
 export const RECEIVE_USERS = 'RECEIVE_USERS'
-export function receivedUsers(appId, json) {
+export function receivedUsers(json) {
 	return {
 		type: RECEIVE_USERS,
-		appId,
 		users: json,
 		receivedAt: Date.now()
 	}
 }
 
-// Thunk Network Call
-export function getUsers() {
-
-}
-export function getUsers() {
+export function refreshUsers() {
 	return (dispatch, getState) => {
-		fetchFirstAppId(dispatch, getState)
-	}
-}
-
-function fetchFirstAppId(dispatch, getState) {
-	return fetch(URLWithPath('applications'))
-		.then(function(response) {
-			return response.json()
-		}).then(function(json) {
-			let appInfo = json[0]
-			let appId = appInfo['production_id']
-			fetchUsersWithAppId(dispatch, getState, appId)
+		if (getState().app.id) {
+			dispatch(requestedUsers())
+			const appId = getState().app.id
+			fetch(URLWithPath(`apps/${appId}/users`))
+				.then(function(response){
+					return response.json()
+				}).then(function(json){
+					dispatch(receivedUsers(json))
+				}
+			)				
 		}
-	)
-}
-
-function fetchUsersWithAppId(dispatch, getState, appId) {
-	fetch(URLWithPath(`apps/${appId}/users`))
-		.then(function(response){
-			return response.json()
-		}).then(function(json){
-			dispatch(receivedUsers(appId, json))
-		})
+	}
 }
 

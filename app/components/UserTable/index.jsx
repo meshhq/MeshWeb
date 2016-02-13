@@ -1,16 +1,15 @@
-'use strict';
 
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from './cells/textCell'
 
-const {Table, Column, Cell} = FixedDataTable;
+const { Table, Column, Cell } = FixedDataTable;
 
 class DataListWrapper {
   constructor(data, filteredMapping) {
     this._data = data
     if (filteredMapping === undefined) {
-      let mapping = []
+      const mapping = []
       for (let i = 0; i < data.length; i++) {
         mapping.push(i)
       }
@@ -30,7 +29,6 @@ class DataListWrapper {
 }
 
 class UsersTable extends React.Component {
-  displayName: 'Users Table';
   constructor(props) {
     super(props);
     this._dataList = new DataListWrapper(this.props.users.users)
@@ -71,64 +69,66 @@ class UsersTable extends React.Component {
   }
 
   render() {
-    var {filteredDataList} = this.state
+    const { filteredDataList } = this.state
     return (
-      <div className="col-md-12 userTableWrapper">
-        <input
-          className="inputFilter"
-          onChange={this._handleOnFilterChange}
-          placeholder="Filter by First Name"
-        />
-        <br />
-        <Table
-          headerHeight={50}
-          height={1000}
-          rowHeight={35}
-          rowsCount={filteredDataList.getSize()}
-          width={this.props.width}
-          {...this.props}
-        >
-          <Column
-            cell={<TextCell 
-              col="first_name"
-              data={filteredDataList}  
-                  />}
-            header={<Cell>{'First Name'}</Cell>}
-            width={150}
+      <div className="row table-wrapper">
+        <div className="col-md-12 userTableWrapper">
+          <input
+            className="inputFilter"
+            onChange={this._handleOnFilterChange}
+            placeholder="Filter by First Name"
           />
-          <Column
-            cell={<TextCell 
-              col='last_name' 
-              data={filteredDataList} 
-                  />}
-            header={<Cell>{'Last Name'}</Cell>}
-            width={150}
-          />
-          <Column
-            cell={<TextCell 
-              col="email"
-              data={filteredDataList}  
-                  />}
-            header={<Cell>{'Email'}</Cell>}
-            width={300}
-          />
-          <Column
-            cell={<TextCell 
-              col="phone" 
-              data={filteredDataList}  
-                  />}
-            header={<Cell>{'Phone'}</Cell>}
-            width={200}
-          />
-          <Column
-            cell={<TextCell 
-              col="id" 
-              data={filteredDataList}  
-                  />}
-            header={<Cell>{'ID'}</Cell>}
-            width={200}
-          />
-        </Table>
+          <br />
+          <Table
+            headerHeight={50}
+            height={1000}
+            rowHeight={35}
+            rowsCount={filteredDataList.getSize()}
+            width={this.props.width}
+            {...this.props}
+          >
+            <Column
+              cell={<TextCell
+                col="first_name"
+                data={filteredDataList}
+                    />}
+              header={<Cell>{'First Name'}</Cell>}
+              width={150}
+            />
+            <Column
+              cell={<TextCell
+                col="last_name"
+                data={filteredDataList}
+                    />}
+              header={<Cell>{'Last Name'}</Cell>}
+              width={150}
+            />
+            <Column
+              cell={<TextCell
+                col="email"
+                data={filteredDataList}
+                    />}
+              header={<Cell>{'Email'}</Cell>}
+              width={300}
+            />
+            <Column
+              cell={<TextCell
+                col="phone"
+                data={filteredDataList}
+                    />}
+              header={<Cell>{'Phone'}</Cell>}
+              width={200}
+            />
+            <Column
+              cell={<TextCell
+                col="id"
+                data={filteredDataList}
+                    />}
+              header={<Cell>{'ID'}</Cell>}
+              width={200}
+            />
+          </Table>
+        </div>
       </div>
     );
   }
@@ -144,4 +144,4 @@ UsersTable.defaultProps = {
   width: 0
 }
 
-module.exports = UsersTable;
+export default UsersTable

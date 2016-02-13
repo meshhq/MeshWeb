@@ -1,12 +1,16 @@
 
 import React, { PropTypes } from 'react'
+import Switch from 'react-bootstrap-switch'
 
-const ProviderCell = ({ onToggle, providerName, providerDescription }) => (
-		<div className="col-md-1 providerCell"> 
-			{providerName}<br />
-
-		</div>
-	)
+const ProviderCell = ({ onToggle, providerName, providerDescription }) => {
+  return (
+      <div className="col-md-4 providerCell">
+        {providerName}<br />
+        {providerDescription}<br />
+        <Switch />
+      </div>
+    )
+}
 
 ProviderCell.displayName = 'Provider Cell'
 

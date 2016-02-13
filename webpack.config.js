@@ -13,9 +13,9 @@ var buildPlugins = [
     'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
   }),
   new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery"
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
   })
 ]
 
@@ -39,7 +39,7 @@ module.exports = {
   },
   output: {
     path: staticPath,
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
@@ -52,7 +52,7 @@ module.exports = {
       // CSS
       {
         test: /\.css$/,
-        loaders: ["style-loader", 'css-loader?sourceMap&importLoaders=1']
+        loaders: ['style-loader', 'css-loader?sourceMap&importLoaders=1']
       },
 
       // SASS
@@ -71,20 +71,22 @@ module.exports = {
         ]
       },
 
+      // JQuery
+      { test: require.resolve('jquery'), loader: 'imports?jQuery=jquery' },
+
       // Assets
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
-      ,
-    ],
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-        jquery: "jquery/src/jquery"
+        jquery: 'jquery/src/jquery'
     }
   },
   externals: {
-    "jquery": "jQuery"
+    'jquery': 'jQuery'
   },
   postcss: [
     rucksack({

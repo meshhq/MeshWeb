@@ -1,20 +1,35 @@
 {
-  "extends": "airbnb",
+  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "globals": {
     "jQuery": true,
     "$": true,
     "window": true,
     "document": true
   },
+  "plugins": [
+    "react"
+  ],
   "env": {
     "commonjs": true,
     "node": true
   },
   "rules": {
+    // General JS / ES6
     "semi": 0,
     "no-var": 2,
     "quotes": [2, "single"],
     "comma-dangle": [2, "never"],
+    "arrow-body-style": [2, "always"],
+    "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions (off by default)
+    "object-curly-spacing": [2, "always"],
+    "strict": 0,
+    
+    //
+    // Strict Mode
+    //
+    // These rules relate to using strict mode.
+    //
 
     // JSX Rules
     "react/display-name": [1, { "acceptTranspilerName": true }],

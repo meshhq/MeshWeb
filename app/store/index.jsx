@@ -15,12 +15,12 @@ export default function configureStore(initialState) {
     applyMiddleware(thunk, createLogger())
   )
 
-  // if (module.hot) {
-  //   module.hot.accept('../reducers', () => {
-  //     const nextReducer = require('../reducers')
-  //     store.replaceReducer(nextReducer)
-  //   })
-  // }
+  if (module.hot) {
+    module.hot.accept('../reducers', () => {
+      const nextReducer = require('../reducers')
+      store.replaceReducer(nextReducer)
+    })
+  }
 
   return store
 }
