@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors",
     "_deploy": "./bin/deploy.sh",
     "deploy": "npm run build && npm run _deploy"
@@ -44,6 +44,7 @@
     "history": "^1.17.0",
     "imports-loader": "^0.6.5",
     "isomorphic-fetch": "^2.2.1",
+    "jquery": "^2.2.0",
     "react": "^0.14.0",
     "react-bootstrap-switch": "^3.4.2",
     "react-dom": "^0.14.0",

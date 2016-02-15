@@ -1,6 +1,7 @@
 
 import React, { PropTypes } from 'react'
 import Switch from 'react-bootstrap-switch'
+import 'react-bootstrap-switch/dist/css/bootstrap3/react-bootstrap-switch.css'
 
 const ProviderCell = ({ onToggle, providerName, providerDescription }) => {
   return (

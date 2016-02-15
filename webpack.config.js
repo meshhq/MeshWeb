@@ -81,12 +81,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    root: [path.resolve('./app'), path.resolve('./app/assets/bowerComponents')],
+    moduleDirectories: [path.resolve('./node_modules'), path.resolve('./app/assets/bowerComponents')],
     alias: {
-        jquery: 'jquery/src/jquery'
+        jquery: 'jquery/dist/jquery.min.js'
     }
-  },
-  externals: {
-    'jquery': 'jQuery'
   },
   postcss: [
     rucksack({
