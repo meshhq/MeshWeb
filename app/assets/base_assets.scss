@@ -2,6 +2,10 @@
 @import '../components/Navbar/style';
 @import '../components/UserTable/style';
 
+// Providers
+@import '../components/Providers/style';
+@import '../components/Providers/ProviderCells/style';
+
 // Vendor
 @import './vendor/fixed-table-style.css';
 @import './bowerComponents/bootstrap/dist/css/bootstrap.min.css';

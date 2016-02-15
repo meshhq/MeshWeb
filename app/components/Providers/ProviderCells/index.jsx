@@ -6,9 +6,15 @@ import 'react-bootstrap-switch/dist/css/bootstrap3/react-bootstrap-switch.css'
 const ProviderCell = ({ onToggle, providerName, providerDescription }) => {
   return (
       <div className="col-md-4 providerCell">
-        {providerName}<br />
-        {providerDescription}<br />
-        <Switch />
+        <div className="row">
+          <div className="col-xs-8">
+            {providerName}<br />
+            {providerDescription}<br />
+          </div>
+          <div className="col-xs-4">
+            <Switch />
+          </div>
+        </div>
       </div>
     )
 }
