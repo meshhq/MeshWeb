@@ -42,7 +42,7 @@ export function refreshUsers() {
 		if (getState().app.id) {
 			dispatch(requestedUsers())
 			const appId = getState().app.id
-			fetch(URLWithPath(`apps/${appId}/users`))
+			return fetch(URLWithPath(`apps/${appId}/users`))
 				.then(function(response){
 					return response.json()
 				}).then(function(json){

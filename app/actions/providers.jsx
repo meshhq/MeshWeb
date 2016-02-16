@@ -34,7 +34,7 @@ export function refreshProviders() {
 		if (getState().app.id) {
 			dispatch(requestedProviders())
 			const appId = getState().app.id
-			fetch(URLWithPath(`providers`))
+			return fetch(URLWithPath(`providers`))
 				.then(function(response){
 					return response.json()
 				}).then(function(json){

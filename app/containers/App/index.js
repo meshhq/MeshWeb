@@ -33,7 +33,11 @@ class App extends Component {
   
   componentDidMount() {
     this._getWindowWidth()
-    this.props.appActions.fetchAppIdIfNeeded()
+    this.props.appActions.fetchAppIdIfNeeded().then((something) => {
+      console.log("App Initial Sync Success")
+    }, () => {
+      console.log("App Initial Sync Failure")
+    })
   }
 
   /**
@@ -98,6 +102,23 @@ class App extends Component {
     }
   }
 
+  /**
+   * We use this to determine whether the app is 
+   * still loading its content. We display a loading hud if not
+   * @return {[JSX HTML]} [App Main Content]
+   */
+  _contentForApp() {
+    // if () {
+      
+    // } else {
+    //   return (
+    //     <div className="container">
+    //       {this._appComponentForNavIdx(activeNavIdx)}
+    //     </div>
+    //   )
+    // }
+  }
+
   render() {
     const { navTitles, activeNavIdx } = this.props
     return (
@@ -107,9 +128,7 @@ class App extends Component {
           navTitles={navTitles} 
           onNavChange={this.handleNavBarClick}
         />
-        <div className="container">
-          {this._appComponentForNavIdx(activeNavIdx)}
-        </div>
+        {this._contentForApp}
       </div>
     )
   }

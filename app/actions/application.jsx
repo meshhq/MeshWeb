@@ -32,8 +32,9 @@ function fetchFirstAppId(dispatch, getState) {
 
 			// After a app id is resolved, dispatch refreshes of all
 			// user, providers, etc
-			dispatch(refreshUsers())
-			dispatch(refreshProviders())
+			const userFetchPromise = dispatch(refreshUsers())
+			const providerFetchPromise = dispatch(refreshProviders())
+			return Promise.all([userFetchPromise, providerFetchPromise])
 		}
 	)
 }
@@ -41,7 +42,9 @@ function fetchFirstAppId(dispatch, getState) {
 export function fetchAppIdIfNeeded() {
 	return (dispatch, getState) => {
 		if (shouldFetchAppId(getState())) {
-			fetchFirstAppId(dispatch, getState)
+			return fetchFirstAppId(dispatch, getState)
+		} else {
+			return Promise.resolve();
 		}
 	}
 }
