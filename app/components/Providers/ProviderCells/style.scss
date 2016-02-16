@@ -5,7 +5,13 @@ $ProviderCellHeight: 2em;
 	font-size: 4em;
 }
 
-.switch {
+.provider-row {
 	display: flex;
 	align-items: center;
+	margin-bottom: 1.0em;
+}
+
+.switch-container {
+	margin-top: 0.5em;
+
 }

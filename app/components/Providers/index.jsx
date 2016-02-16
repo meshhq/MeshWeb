@@ -9,7 +9,7 @@ class Providers extends Component {
   }
 
   _stubbedHipsterLorem() {
-    return 'Chillwave vice sriracha hella cliche forage. Thundercats artisan iphone, butcher +1 next level keffiyeh fixie narwhal. Lomo banh mi godard mustache cardigan, ennui truffaut pop-up craft beer. Blog yr 3 wolf moon cred occupy, polaroid shoreditch lomo tattooed. Hella bicycle rights terry richardson, retro semiotics street art wes anderson mcsweeneys beard aesthetic irony kogi occupy. Kogi DIY banksy, photo booth whatever authentic truffaut. Fanny pack high life iphone, ennui shoreditch DIY etsy occupy photo booth farm-to-table mustache hoodie stumptown.'
+    return 'Chillwave vice sriracha hella cliche forage. Thundercats artisan iphone, butcher +1 next level keffiyeh fixie narwhal.'
   }
 
   _providerWasToggled(providerId, on) {
@@ -61,7 +61,10 @@ class Providers extends Component {
     // Layout the providers in a row
     return (
       <div className="row provider-wrapper" key="provider">
-        {providerRowHTML}
+        <h1>Mesh Integrations</h1>
+        <div className="integrations-container">
+          {providerRowHTML}
+        </div>
       </div>
     )
   }

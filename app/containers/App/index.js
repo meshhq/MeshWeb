@@ -84,14 +84,14 @@ class App extends Component {
   _appComponentForNavIdx(navIdx) {
     const { userState, providerState } = this.props
     switch(navIdx) {
-      case 1:
+      case 0:
         return (
           <UserTable 
             users={userState} 
             width={this.state.width}
           />
           )
-      case 0:
+      case 1:
         return (
           <Providers providerState={providerState}/>
           )
