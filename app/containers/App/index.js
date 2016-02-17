@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
 import Navbar from '../../components/Navbar'
@@ -25,7 +26,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 500
+      width: 500,
+      initialLoad: false,
+      loadError: false
     };
 
     // Binding these to the current class
@@ -34,10 +37,18 @@ class App extends Component {
   
   componentDidMount() {
     this._getWindowWidth()
-    this.props.appActions.fetchAppIdIfNeeded().then((something) => {
-      console.log("App Initial Sync Success")
+    this._performInitialSyncWithMesh()
+  }
+
+  /**
+   * Helper for determining the viewport width after 
+   * component mount. Needed for the FB table to calc correctly
+   */
+  _performInitialSyncWithMesh() {
+    this.props.appActions.fetchAppIdIfNeeded().then(() => {
+      this.setState({ initialLoad: true })
     }, () => {
-      console.log("App Initial Sync Failure")
+      this.setState({ initialLoad: false, loadError: true })
     })
   }
 
@@ -86,9 +97,9 @@ class App extends Component {
    * @param  {Integer} navIdx 
    * @return {[JSX HTML]} HTML for container
    */
-  _appComponentForNavIdx(navIdx) {
-    const { userState, providerState } = this.props
-    switch(navIdx) {
+  _appComponentForCurrentNavIdx() {
+    const { userState, providerState, activeNavIdx } = this.props
+    switch(activeNavIdx) {
       case 0:
         return (
           <UserTable 
@@ -109,19 +120,22 @@ class App extends Component {
    * @return {[JSX HTML]} [App Main Content]
    */
   _contentForApp() {
-    // if () {
-      
-    // } else {
-    //   return (
-    //     <div className="container">
-    //       {this._appComponentForNavIdx(activeNavIdx)}
-    //     </div>
-    //   )
-    // }
+    if (this.state.initialLoad == false) {
+      return (
+        <ProgressView loadError={this.state.loadError}/>
+      )
+    } else {
+      return (
+        <div className="container">
+          {this._appComponentForCurrentNavIdx()}
+        </div>
+      )
+    }
   }
 
   render() {
     const { navTitles, activeNavIdx } = this.props
+    const appContent = this._contentForApp()
     return (
       <div className="react-root">
         <Navbar 
@@ -129,7 +143,7 @@ class App extends Component {
           navTitles={navTitles} 
           onNavChange={this.handleNavBarClick}
         />
-        <ProgressView />
+        {appContent}
       </div>
     )
   }
