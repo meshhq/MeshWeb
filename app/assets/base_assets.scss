@@ -1,11 +1,14 @@
+// Vendor
+@import './vendor/fixed-table-style.css';
+@import './bowerComponents/bootstrap/dist/css/bootstrap.min.css';
+@import './bowerComponents/SpinKit/scss/spinners/9-cube-grid.scss';
+
+// Package
 @import '__base';
 @import '../components/Navbar/style';
 @import '../components/UserTable/style';
+@import '../components/Shared/ProgressView/style';
 
 // Providers
 @import '../components/Providers/style';
 @import '../components/Providers/ProviderCells/style';
-
-// Vendor
-@import './vendor/fixed-table-style.css';
-@import './bowerComponents/bootstrap/dist/css/bootstrap.min.css';

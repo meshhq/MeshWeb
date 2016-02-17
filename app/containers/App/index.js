@@ -9,6 +9,7 @@ import React from 'react'
 import Navbar from '../../components/Navbar'
 import UserTable from '../../components/UserTable'
 import Providers from '../../components/Providers'
+import ProgressView from '../../components/Shared/ProgressView'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -128,7 +129,7 @@ class App extends Component {
           navTitles={navTitles} 
           onNavChange={this.handleNavBarClick}
         />
-        {this._contentForApp}
+        <ProgressView />
       </div>
     )
   }
