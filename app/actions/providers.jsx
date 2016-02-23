@@ -1,6 +1,5 @@
 
-import fetch from 'isomorphic-fetch'
-import { URLWithPath } from '../helpers/api'
+import { GET } from '../helpers/api'
 
 // This action is to indicate the desired
 // refresh of the user table
@@ -34,14 +33,12 @@ export function refreshProviders() {
 		if (getState().app.id) {
 			dispatch(requestedProviders())
 			const appId = getState().app.id
-			return fetch(URLWithPath(`providers`))
-				.then(function(response){
-					return response.json()
-				}).then(function(json){
-					dispatch(receivedProviders(json))
-				}
-			)	
-		}		
+			return GET(`providers`)
+					.then(function(response){
+						return response.json()
+					}
+				)
+			}		
 	}
 }
 

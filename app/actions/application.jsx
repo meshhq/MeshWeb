@@ -1,6 +1,5 @@
 
-import fetch from 'isomorphic-fetch'
-import { URLWithPath } from '../helpers/api'
+import { GET } from '../helpers/api'
 import { refreshUsers } from './users'
 import { refreshProviders } from './providers'
 
@@ -21,11 +20,9 @@ function shouldFetchAppId(state) {
 	return false
 }
 
-function fetchFirstAppId(dispatch, getState) {
-	return fetch(URLWithPath('applications'))
-		.then(function(response) {
-			return response.json()
-		}).then(function(json) {
+function fetchFirstAppId(dispatch) {
+	return GET('applications').then(function(json) {
+			console.log(json)	
 			let appInfo = json[0]
 			let appId = appInfo['production_id']
 			dispatch(resolvedAppId(appId))

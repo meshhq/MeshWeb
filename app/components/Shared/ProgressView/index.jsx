@@ -43,7 +43,6 @@ class Spinner extends Component {
 
   render() {
     const content = this._contentForComponent()
-    console.log(content)
     return (
       content
     )  

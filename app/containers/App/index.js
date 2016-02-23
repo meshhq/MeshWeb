@@ -143,7 +143,9 @@ class App extends Component {
           navTitles={navTitles} 
           onNavChange={this.handleNavBarClick}
         />
-        {appContent}
+        <ReactCSSTransitionGroup transitionName="example" transitionName="example" transitionAppear={true} transitionAppearTimeout={500}>
+          {appContent}
+        </ReactCSSTransitionGroup>
       </div>
     )
   }

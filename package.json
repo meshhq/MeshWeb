@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors",
-    "_deploy": "./bin/deploy.sh",
+    "_deploy": "./lib/deploy.sh",
     "deploy": "npm run build && npm run _deploy"
   },
   "devDependencies": {
@@ -43,8 +43,9 @@
     "classnames": "^2.1.2",
     "fixed-data-table": "^0.6.0",
     "history": "^1.17.0",
+    "immutable": "^3.7.6",
     "imports-loader": "^0.6.5",
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "https://github.com/meshhq/isomorphic-fetch",
     "jquery": "^2.2.0",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.7",
@@ -57,6 +58,7 @@
     "react-spinkit": "^1.1.4",
     "redux": "^3.0.2",
     "redux-actions": "^0.9.0",
-    "redux-thunk": "^1.0.3"
+    "redux-thunk": "^1.0.3",
+    "urijs": "^1.17.0"
   }
 }

@@ -1,6 +1,5 @@
 
-import fetch from 'isomorphic-fetch'
-import {URLWithPath} from '../helpers/api'
+import { GET } from '../helpers/api'
 
 export const ADD_USER = 'ADD_USER'
 
@@ -42,10 +41,8 @@ export function refreshUsers() {
 		if (getState().app.id) {
 			dispatch(requestedUsers())
 			const appId = getState().app.id
-			return fetch(URLWithPath(`apps/${appId}/users`))
-				.then(function(response){
-					return response.json()
-				}).then(function(json){
+			return GET(`apps/${appId}/users`)
+			.then(function(json){
 					dispatch(receivedUsers(json))
 				}
 			)				
