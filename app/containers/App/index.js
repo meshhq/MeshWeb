@@ -45,8 +45,10 @@ class App extends Component {
    */
   _performInitialSyncWithMesh() {
     this.props.appActions.fetchAppIdIfNeeded().then(() => {
+      console.log("success")
       this.setState({ initialLoad: true })
-    }, () => {
+    }, (error) => {
+      console.log(error);
       this.setState({ initialLoad: false, loadError: true })
     })
   }

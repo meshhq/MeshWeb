@@ -39,7 +39,6 @@ export function receivedUsers(json) {
 export function refreshUsers() {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
-			console.log("Requested")
 			dispatch(requestedUsers())
 			const appId = getState().app.id
 			return GET(`apps/${appId}/users`)

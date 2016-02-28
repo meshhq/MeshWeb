@@ -37,15 +37,12 @@ function performFetch(request) {
 	return Fetch(request).then((response) => {
 		if (response.ok) {
 			return response.json()
-		} else if (response.status == 401) {
-			console.log("auth error")
-			return Promise.reject(response)
 		} else {
-			console.log("some error")
-			return Promise.reject(response)
+			return response.json().then((resp) => {
+				return Promise.reject(resp)
+			})
 		}
 	}, (error) => {
-		console.log("some error")
 		return Promise.reject(error)
 	})
 }
@@ -111,7 +108,8 @@ function defaultHeaders() {
 function appendAuthentication(headers) {
 	const authHeader = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
 	if (authHeader) {
-		headers.set(AUTHORIZATION_HEADER_KEY, authHeader)
+		const bearerHeader = "Bearer " + authHeader
+		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
 }
 
@@ -119,14 +117,14 @@ function appendAuthentication(headers) {
  * Sets the Auth token for the app
  * @param {String} token
  */
-function setAuthToken(token) {
+export function setAuthToken(token) {
 	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, token)
 }
 
 /**
  * Clears the auth token
  */
-function clearAuthToken() {
+ export function clearAuthToken() {
 	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, null)
 }
 
