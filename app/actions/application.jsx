@@ -22,13 +22,13 @@ function shouldFetchAppId(state) {
 
 function fetchFirstAppId(dispatch) {
 	return GET('applications').then(function(json) {
-			console.log(json)	
 			let appInfo = json[0]
 			let appId = appInfo['production_id']
 			dispatch(resolvedAppId(appId))
 
 			// After a app id is resolved, dispatch refreshes of all
 			// user, providers, etc
+			console.log("Dispatching others")
 			const userFetchPromise = dispatch(refreshUsers())
 			const providerFetchPromise = dispatch(refreshProviders())
 			return Promise.all([userFetchPromise, providerFetchPromise])

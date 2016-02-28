@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
+    "local": "URL=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "build": "NODE_ENV=production webpack --progress --colors",
     "_deploy": "./lib/deploy.sh",
     "deploy": "npm run build && npm run _deploy"

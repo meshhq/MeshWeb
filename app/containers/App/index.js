@@ -30,7 +30,6 @@ class App extends Component {
       initialLoad: false,
       loadError: false
     };
-
     // Binding these to the current class
     this.handleNavBarClick = this._handleNavBarClick.bind(this)
   }

@@ -10,7 +10,10 @@ var assetsPath = path.resolve(__dirname, 'app', 'assets');
 var buildPlugins = [
   new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   new webpack.DefinePlugin({
-    'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+    'process.env': { 
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      URL: JSON.stringify(process.env.URL || 'remote')
+    },
   }),
   new webpack.ProvidePlugin({
       $: 'jquery',

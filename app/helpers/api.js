@@ -35,15 +35,17 @@ export function GET(path, params) {
  */
 function performFetch(request) {
 	return Fetch(request).then((response) => {
-		console.log(response)
 		if (response.ok) {
 			return response.json()
 		} else if (response.status == 401) {
+			console.log("auth error")
 			return Promise.reject(response)
 		} else {
+			console.log("some error")
 			return Promise.reject(response)
 		}
 	}, (error) => {
+		console.log("some error")
 		return Promise.reject(error)
 	})
 }

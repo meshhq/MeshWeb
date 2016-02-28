@@ -1,0 +1,1 @@
+NODE_ENV=production webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000
