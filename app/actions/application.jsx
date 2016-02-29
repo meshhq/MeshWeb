@@ -2,6 +2,7 @@
 import { GET, setAuthToken } from '../helpers/api'
 import { refreshUsers } from './users'
 import { refreshProviders } from './providers'
+import { refreshLists } from './lists'
 
 // This action is to indicate the desired
 // refresh of the user table
@@ -27,11 +28,13 @@ function fetchFirstAppId(dispatch) {
 			let auth_token = appInfo['application_secret']
 			setAuthToken(auth_token)
 			dispatch(resolvedAppId(appId))
+			
 			// After a app id is resolved, dispatch refreshes of all
 			// user, providers, etc
 			const userFetchPromise = dispatch(refreshUsers())
 			const providerFetchPromise = dispatch(refreshProviders())
-			return Promise.all([userFetchPromise, providerFetchPromise])
+			const listsFetchPromise = dispatch(refreshLists())
+			return Promise.all([userFetchPromise, providerFetchPromise, listsFetchPromise])
 		}
 	)
 }

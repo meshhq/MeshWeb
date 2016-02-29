@@ -7,13 +7,15 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
+import Lists from '../../components/Lists'
 import Navbar from '../../components/Navbar'
-import UserTable from '../../components/UserTable'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
+import UserTable from '../../components/UserTable'
 
 // Actions
 import * as AppActions from '../../actions/application'
+import * as ListActions from '../../actions/lists'
 import * as NavActions from '../../actions/nav'
 import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
@@ -45,10 +47,8 @@ class App extends Component {
    */
   _performInitialSyncWithMesh() {
     this.props.appActions.fetchAppIdIfNeeded().then(() => {
-      console.log("success")
       this.setState({ initialLoad: true })
-    }, (error) => {
-      console.log(error);
+    }, () => {
       this.setState({ initialLoad: false, loadError: true })
     })
   }
@@ -99,7 +99,7 @@ class App extends Component {
    * @return {[JSX HTML]} HTML for container
    */
   _appComponentForCurrentNavIdx() {
-    const { userState, providerState, activeNavIdx } = this.props
+    const { userState, providerState, activeNavIdx, listState } = this.props
     switch(activeNavIdx) {
       case 0:
         return (
@@ -111,6 +111,10 @@ class App extends Component {
       case 1:
         return (
           <Providers providerState={providerState}/>
+          )
+      case 2:
+        return (
+          <Lists lists={listState.lists}/>
           )
     }
   }
@@ -144,7 +148,12 @@ class App extends Component {
           navTitles={navTitles} 
           onNavChange={this.handleNavBarClick}
         />
-        <ReactCSSTransitionGroup transitionName="example" transitionName="example" transitionAppear={true} transitionAppearTimeout={500}>
+        <ReactCSSTransitionGroup 
+          transitionLeaveTimeout={500}
+          transitionAppearTimeout={500}
+          transitionEnterTimeout={1000}
+          transitionName="appear_main"
+        >
           {appContent}
         </ReactCSSTransitionGroup>
       </div>
@@ -155,6 +164,8 @@ class App extends Component {
 App.propTypes = {
   activeNavIdx: PropTypes.number.isRequired,
   appActions: PropTypes.object.isRequired,
+  listActions: PropTypes.object.isRequired,
+  listState: PropTypes.object.isRequired,
   navActions: PropTypes.object.isRequired,
   navTitles: PropTypes.arrayOf(React.PropTypes.string).isRequired,
   providerActions: PropTypes.object.isRequired,
@@ -172,6 +183,7 @@ function mapStateToProps(state) {
   return {
     activeNavIdx: state.nav,
     appState: state.app,
+    listState: state.lists,
     providerState: state.providers,
     userState: state.users
   }
@@ -180,6 +192,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     appActions: bindActionCreators(AppActions, dispatch),
+    listActions: bindActionCreators(ListActions, dispatch),
     navActions: bindActionCreators(NavActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)

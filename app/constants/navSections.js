@@ -1,3 +1,3 @@
 
 // Nav Titles for the app
-export default ["Users", "Integrations"]
+export default ['Users', 'Integrations', 'Lists']

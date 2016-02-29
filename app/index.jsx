@@ -11,6 +11,7 @@ const store = configureStore()
 
 // Style Sheets
 import './assets/base_assets.scss'
+import './assets/base_scripts'
 
 ReactDOM.render(
   <Provider store={store}>

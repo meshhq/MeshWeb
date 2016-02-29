@@ -4,12 +4,14 @@ import nav from './nav'
 import users from './users'
 import app from './application'
 import providers from './providers'
+import lists from './lists'
 
 const meshApp = combineReducers({
 	app,
   nav,
   providers,
-  users
+  users,
+  lists
 })
 
 export default meshApp
