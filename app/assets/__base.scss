@@ -8,7 +8,7 @@ $MeshBlack: #16181A;
 $MeshBlackLight: #222528;
 
 $MeshWhiteLight: #FCFCFA;
-$MeshWhite: #FAFAF7;
+$MeshWhite: #FAFAFA;
 $MeshWhiteDark: #E7E7E4;
 
 $MeshGrey: #808080;
@@ -101,6 +101,9 @@ $MeshBlue: #65A8EC;
        url('/assets/fonts/Work-Sans-600/Work-Sans-600.woff') format('woff'),
        url('/assets/fonts/Work-Sans-600/Work-Sans-600.ttf') format('truetype'),
        url('/assets/fonts/Work-Sans-600/Work-Sans-600.svg#WorkSans') format('svg');
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: $WorkSansFont;
 }
 
 // Base CSS
