@@ -6046,7 +6046,11 @@ webpackJsonp([1],[
 	            transitionEnterTimeout: 1000,
 	            transitionName: 'appear_main'
 	          },
-	          appContent
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'container-wrapper' },
+	            appContent
+	          )
 	        )
 	      );
 	    }
@@ -8168,70 +8172,70 @@ webpackJsonp([1],[
 	              null,
 	              'Lists are derrived from your integrations.'
 	            )
-	          ),
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-12 integration-selector' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-12' },
+	            { className: 'company-selector' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'company-selector' },
+	              { className: 'btn-group integration-selector' },
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'btn-group integration-selector' },
+	                'button',
+	                { type: 'button', className: 'btn integration-selector' },
+	                'Select An Integration'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { type: 'button', className: 'btn integration-selector dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                _react2.default.createElement('span', { className: 'caret' }),
 	                _react2.default.createElement(
-	                  'button',
-	                  { type: 'button', className: 'btn integration-selector' },
-	                  'Select An Integration'
-	                ),
+	                  'span',
+	                  { className: 'sr-only' },
+	                  'Toggle Dropdown'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'ul',
+	                { className: 'dropdown-menu' },
 	                _react2.default.createElement(
-	                  'button',
-	                  { type: 'button', className: 'btn integration-selector dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	                  _react2.default.createElement('span', { className: 'caret' }),
+	                  'li',
+	                  null,
 	                  _react2.default.createElement(
-	                    'span',
-	                    { className: 'sr-only' },
-	                    'Toggle Dropdown'
+	                    'a',
+	                    { href: '#' },
+	                    'Action'
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'ul',
-	                  { className: 'dropdown-menu' },
+	                  'li',
+	                  null,
 	                  _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                      'a',
-	                      { href: '#' },
-	                      'Action'
-	                    )
-	                  ),
+	                    'a',
+	                    { href: '#' },
+	                    'Another action'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
 	                  _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                      'a',
-	                      { href: '#' },
-	                      'Another action'
-	                    )
-	                  ),
+	                    'a',
+	                    { href: '#' },
+	                    'Something else here'
+	                  )
+	                ),
+	                _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
+	                _react2.default.createElement(
+	                  'li',
+	                  null,
 	                  _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                      'a',
-	                      { href: '#' },
-	                      'Something else here'
-	                    )
-	                  ),
-	                  _react2.default.createElement('li', { role: 'separator', className: 'divider' }),
-	                  _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                      'a',
-	                      { href: '#' },
-	                      'Separated link'
-	                    )
+	                    'a',
+	                    { href: '#' },
+	                    'Separated link'
 	                  )
 	                )
 	              )
@@ -26780,85 +26784,107 @@ webpackJsonp([1],[
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row table-wrapper' },
+	        { className: 'users-table' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-12 userTableWrapper' },
-	          _react2.default.createElement('input', {
-	            className: 'inputFilter',
-	            onChange: this._handleOnFilterChange,
-	            placeholder: 'Filter by First Name'
-	          }),
-	          _react2.default.createElement('br', null),
+	          { className: 'header row' },
 	          _react2.default.createElement(
-	            Table,
-	            (0, _extends3.default)({
-	              headerHeight: 50,
-	              height: 1000,
-	              rowHeight: 35,
-	              rowsCount: filteredDataList.getSize(),
-	              width: this.props.width
-	            }, this.props),
-	            _react2.default.createElement(Column, {
-	              cell: _react2.default.createElement(_textCell2.default, {
-	                col: 'first_name',
-	                data: filteredDataList
-	              }),
-	              header: _react2.default.createElement(
-	                Cell,
-	                null,
-	                'First Name'
-	              ),
-	              width: 150
+	            'div',
+	            { className: 'col-md-12' },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Users Table'
+	            ),
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Master users table listing.'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row table-wrapper' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-12 userTableWrapper' },
+	            _react2.default.createElement('input', {
+	              className: 'inputFilter',
+	              onChange: this._handleOnFilterChange,
+	              placeholder: 'Filter by First Name'
 	            }),
-	            _react2.default.createElement(Column, {
-	              cell: _react2.default.createElement(_textCell2.default, {
-	                col: 'last_name',
-	                data: filteredDataList
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              Table,
+	              (0, _extends3.default)({
+	                headerHeight: 50,
+	                height: 1000,
+	                rowHeight: 35,
+	                rowsCount: filteredDataList.getSize(),
+	                width: this.props.width
+	              }, this.props),
+	              _react2.default.createElement(Column, {
+	                cell: _react2.default.createElement(_textCell2.default, {
+	                  col: 'first_name',
+	                  data: filteredDataList
+	                }),
+	                header: _react2.default.createElement(
+	                  Cell,
+	                  null,
+	                  'First Name'
+	                ),
+	                width: 150
 	              }),
-	              header: _react2.default.createElement(
-	                Cell,
-	                null,
-	                'Last Name'
-	              ),
-	              width: 150
-	            }),
-	            _react2.default.createElement(Column, {
-	              cell: _react2.default.createElement(_textCell2.default, {
-	                col: 'email',
-	                data: filteredDataList
+	              _react2.default.createElement(Column, {
+	                cell: _react2.default.createElement(_textCell2.default, {
+	                  col: 'last_name',
+	                  data: filteredDataList
+	                }),
+	                header: _react2.default.createElement(
+	                  Cell,
+	                  null,
+	                  'Last Name'
+	                ),
+	                width: 150
 	              }),
-	              header: _react2.default.createElement(
-	                Cell,
-	                null,
-	                'Email'
-	              ),
-	              width: 300
-	            }),
-	            _react2.default.createElement(Column, {
-	              cell: _react2.default.createElement(_textCell2.default, {
-	                col: 'phone',
-	                data: filteredDataList
+	              _react2.default.createElement(Column, {
+	                cell: _react2.default.createElement(_textCell2.default, {
+	                  col: 'email',
+	                  data: filteredDataList
+	                }),
+	                header: _react2.default.createElement(
+	                  Cell,
+	                  null,
+	                  'Email'
+	                ),
+	                width: 300
 	              }),
-	              header: _react2.default.createElement(
-	                Cell,
-	                null,
-	                'Phone'
-	              ),
-	              width: 200
-	            }),
-	            _react2.default.createElement(Column, {
-	              cell: _react2.default.createElement(_textCell2.default, {
-	                col: 'id',
-	                data: filteredDataList
+	              _react2.default.createElement(Column, {
+	                cell: _react2.default.createElement(_textCell2.default, {
+	                  col: 'phone',
+	                  data: filteredDataList
+	                }),
+	                header: _react2.default.createElement(
+	                  Cell,
+	                  null,
+	                  'Phone'
+	                ),
+	                width: 200
 	              }),
-	              header: _react2.default.createElement(
-	                Cell,
-	                null,
-	                'ID'
-	              ),
-	              width: 200
-	            })
+	              _react2.default.createElement(Column, {
+	                cell: _react2.default.createElement(_textCell2.default, {
+	                  col: 'id',
+	                  data: filteredDataList
+	                }),
+	                header: _react2.default.createElement(
+	                  Cell,
+	                  null,
+	                  'ID'
+	                ),
+	                width: 200
+	              })
+	            )
 	          )
 	        )
 	      );
@@ -98942,7 +98968,7 @@ webpackJsonp([1],[
 	exports.i(__webpack_require__(1327), "");
 
 	// module
-	exports.push([module.id, "/*\n *  Usage:\n *\n      <div class=\"sk-cube-grid\">\n        <div class=\"sk-cube sk-cube1\"></div>\n        <div class=\"sk-cube sk-cube2\"></div>\n        <div class=\"sk-cube sk-cube3\"></div>\n        <div class=\"sk-cube sk-cube4\"></div>\n        <div class=\"sk-cube sk-cube5\"></div>\n        <div class=\"sk-cube sk-cube6\"></div>\n        <div class=\"sk-cube sk-cube7\"></div>\n        <div class=\"sk-cube sk-cube8\"></div>\n        <div class=\"sk-cube sk-cube9\"></div>\n      </div>\n *\n */\n.sk-cube-grid {\n  width: 40px;\n  height: 40px;\n  margin: 40px auto;\n  /*\n   * Spinner positions\n   * 1 2 3\n   * 4 5 6\n   * 7 8 9\n   */ }\n  .sk-cube-grid .sk-cube {\n    width: 33.33%;\n    height: 33.33%;\n    background-color: #333;\n    float: left;\n    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }\n  .sk-cube-grid .sk-cube1 {\n    animation-delay: 0.2s; }\n  .sk-cube-grid .sk-cube2 {\n    animation-delay: 0.3s; }\n  .sk-cube-grid .sk-cube3 {\n    animation-delay: 0.4s; }\n  .sk-cube-grid .sk-cube4 {\n    animation-delay: 0.1s; }\n  .sk-cube-grid .sk-cube5 {\n    animation-delay: 0.2s; }\n  .sk-cube-grid .sk-cube6 {\n    animation-delay: 0.3s; }\n  .sk-cube-grid .sk-cube7 {\n    animation-delay: 0.0s; }\n  .sk-cube-grid .sk-cube8 {\n    animation-delay: 0.1s; }\n  .sk-cube-grid .sk-cube9 {\n    animation-delay: 0.2s; }\n\n@keyframes sk-cubeGridScaleDelay {\n  0%, 70%, 100% {\n    transform: scale3D(1, 1, 1); }\n  35% {\n    transform: scale3D(0, 0, 1); } }\n\n@font-face {\n  font-family: 'Roboto';\n  font-weight: 400;\n  font-style: normal;\n  src: url(\"/assets/fonts/Roboto-regular/Roboto-regular.eot\");\n  src: url(\"/assets/fonts/Roboto-regular/Roboto-regular.eot?#iefix\") format(\"embedded-opentype\"), local(\"Roboto\"), local(\"Roboto-regular\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.woff2\") format(\"woff2\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.woff\") format(\"woff\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.ttf\") format(\"truetype\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.svg#Roboto\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Roboto';\n  font-weight: 300;\n  font-style: italic;\n  src: url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.eot\");\n  src: url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.eot?#iefix\") format(\"embedded-opentype\"), local(\"Roboto Light Italic\"), local(\"Roboto-300italic\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.woff2\") format(\"woff2\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.woff\") format(\"woff\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.ttf\") format(\"truetype\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.svg#Roboto\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 200;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.eot\");\n  src: url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans ExtraLight\"), local(\"Work-Sans-200\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 300;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.eot\");\n  src: url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans Light\"), local(\"Work-Sans-300\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 400;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.eot\");\n  src: url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans\"), local(\"Work-Sans-regular\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 600;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.eot\");\n  src: url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans SemiBold\"), local(\"Work-Sans-600\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.svg#WorkSans\") format(\"svg\"); }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Work Sans\", sans-serif; }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0; }\n\nbutton {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  background: none;\n  font-size: 100%;\n  vertical-align: baseline;\n  font-family: inherit;\n  font-weight: inherit;\n  color: inherit;\n  appearance: none;\n  font-smoothing: antialiased; }\n\nbody {\n  font: 14px \"Work Sans\", sans-serif;\n  line-height: 1.4em;\n  background: #FAFAFA;\n  color: #16181A;\n  min-width: 230px;\n  margin: 0 auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-font-smoothing: antialiased;\n  -ms-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  font-weight: 300; }\n\nbutton,\ninput[type=\"checkbox\"] {\n  outline: none; }\n\n.normal {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1); }\n\n.normal input::-webkit-input-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal input::-moz-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal input::input-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal h1 {\n  position: absolute;\n  top: -155px;\n  width: 100%;\n  font-size: 100px;\n  font-weight: 100;\n  text-align: center;\n  color: rgba(175, 47, 47, 0.15);\n  -webkit-text-rendering: optimizeLegibility;\n  -moz-text-rendering: optimizeLegibility;\n  -ms-text-rendering: optimizeLegibility;\n  text-rendering: optimizeLegibility; }\n\n/**\n * FixedDataTable v0.6.0 \n *\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n */\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule Scrollbar\n *\n */\n/**\n * Scrollbars.\n */\n/* Touching the scroll-track directly makes the scroll-track bolder */\n.public_Scrollbar_main.public_Scrollbar_mainActive,\n.public_Scrollbar_main:hover {\n  background-color: rgba(255, 255, 255, 0.8); }\n\n.public_Scrollbar_mainOpaque,\n.public_Scrollbar_mainOpaque.public_Scrollbar_mainActive,\n.public_Scrollbar_mainOpaque:hover {\n  background-color: #fff; }\n\n.public_Scrollbar_face:after {\n  background-color: #c2c2c2; }\n\n.public_Scrollbar_main:hover .public_Scrollbar_face:after,\n.public_Scrollbar_mainActive .public_Scrollbar_face:after,\n.public_Scrollbar_faceActive:after {\n  background-color: #7d7d7d; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTable\n *\n */\n/**\n * Table.\n */\n.public_fixedDataTable_main {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_header,\n.public_fixedDataTable_hasBottomBorder {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_header .public_fixedDataTableCell_main {\n  font-weight: bold; }\n\n.public_fixedDataTable_header,\n.public_fixedDataTable_header .public_fixedDataTableCell_main {\n  background-color: #f6f7f8;\n  background-image: -webkit-linear-gradient(#fff, #efefef);\n  background-image: linear-gradient(#fff, #efefef); }\n\n.public_fixedDataTable_footer .public_fixedDataTableCell_main {\n  background-color: #f6f7f8;\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_topShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAF0lEQVR4AWPUkNeSBhHCjJoK2twgFisAFagCCp3pJlAAAAAASUVORK5CYII=) repeat-x; }\n\n.public_fixedDataTable_bottomShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAHElEQVQI12MwNjZmZdAT1+Nm0JDWEGZQk1GTBgAWkwIeAEp52AAAAABJRU5ErkJggg==) repeat-x; }\n\n.public_fixedDataTable_horizontalScrollbar .public_Scrollbar_mainHorizontal {\n  background-color: #fff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCell\n */\n/**\n * Table cell.\n */\n.public_fixedDataTableCell_main {\n  background-color: #fff;\n  border-color: #d3d3d3; }\n\n.public_fixedDataTableCell_highlighted {\n  background-color: #f4f4f4; }\n\n.public_fixedDataTableCell_cellContent {\n  padding: 8px; }\n\n.public_fixedDataTableCell_columnResizerKnob {\n  background-color: #0284ff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableColumnResizerLine\n *\n */\n/**\n * Column resizer line.\n */\n.public_fixedDataTableColumnResizerLine_main {\n  border-color: #0284ff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableRow\n */\n/**\n * Table row.\n */\n.public_fixedDataTableRow_main {\n  background-color: #fff; }\n\n.public_fixedDataTableRow_highlighted,\n.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {\n  background-color: #f6f7f8; }\n\n.public_fixedDataTableRow_fixedColumnsDivider {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTableRow_columnsShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==) repeat-y; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule ScrollbarLayout\n */\n.ScrollbarLayout_main {\n  box-sizing: border-box;\n  outline: none;\n  overflow: hidden;\n  position: absolute;\n  -webkit-transition-duration: 250ms;\n  transition-duration: 250ms;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.ScrollbarLayout_mainVertical {\n  bottom: 0;\n  right: 0;\n  top: 0;\n  -webkit-transition-property: background-color width;\n  transition-property: background-color width;\n  width: 15px; }\n\n.ScrollbarLayout_mainVertical.public_Scrollbar_mainActive,\n.ScrollbarLayout_mainVertical:hover {\n  width: 17px; }\n\n.ScrollbarLayout_mainHorizontal {\n  bottom: 0;\n  height: 15px;\n  left: 0;\n  -webkit-transition-property: background-color height;\n  transition-property: background-color height; }\n\n/* Touching the scroll-track directly makes the scroll-track bolder */\n.ScrollbarLayout_mainHorizontal.public_Scrollbar_mainActive,\n.ScrollbarLayout_mainHorizontal:hover {\n  height: 17px; }\n\n.ScrollbarLayout_face {\n  left: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: 1; }\n\n/**\n * This selector renders the \"nub\" of the scrollface. The nub must\n * be rendered as pseudo-element so that it won't receive any UI events then\n * we can get the correct `event.offsetX` and `event.offsetY` from the\n * scrollface element while dragging it.\n */\n.ScrollbarLayout_face:after {\n  border-radius: 6px;\n  content: '';\n  display: block;\n  position: absolute;\n  -webkit-transition: background-color 250ms ease;\n  transition: background-color 250ms ease; }\n\n.ScrollbarLayout_faceHorizontal {\n  bottom: 0;\n  left: 0;\n  top: 0; }\n\n.ScrollbarLayout_faceHorizontal:after {\n  bottom: 4px;\n  left: 0;\n  top: 4px;\n  width: 100%; }\n\n.ScrollbarLayout_faceVertical {\n  left: 0;\n  right: 0;\n  top: 0; }\n\n.ScrollbarLayout_faceVertical:after {\n  height: 100%;\n  left: 4px;\n  right: 4px;\n  top: 0; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCellGroupLayout\n */\n.fixedDataTableCellGroupLayout_cellGroup {\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  left: 0;\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  white-space: nowrap; }\n\n.fixedDataTableCellGroupLayout_cellGroup > .public_fixedDataTableCell_main {\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal; }\n\n.fixedDataTableCellGroupLayout_cellGroupWrapper {\n  position: absolute;\n  top: 0; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCellLayout\n */\n.fixedDataTableCellLayout_main {\n  border-right-style: solid;\n  border-right-width: 1px;\n  border-width: 0 1px 0 0;\n  box-sizing: border-box;\n  display: block;\n  overflow: hidden;\n  position: absolute;\n  white-space: normal; }\n\n.fixedDataTableCellLayout_lastChild {\n  border-width: 0 1px 1px 0; }\n\n.fixedDataTableCellLayout_alignRight {\n  text-align: right; }\n\n.fixedDataTableCellLayout_alignCenter {\n  text-align: center; }\n\n.fixedDataTableCellLayout_wrap1 {\n  display: table; }\n\n.fixedDataTableCellLayout_wrap2 {\n  display: table-row; }\n\n.fixedDataTableCellLayout_wrap3 {\n  display: table-cell;\n  vertical-align: middle; }\n\n.fixedDataTableCellLayout_columnResizerContainer {\n  position: absolute;\n  right: 0px;\n  width: 6px;\n  z-index: 1; }\n\n.fixedDataTableCellLayout_columnResizerContainer:hover {\n  cursor: ew-resize; }\n\n.fixedDataTableCellLayout_columnResizerContainer:hover .fixedDataTableCellLayout_columnResizerKnob {\n  visibility: visible; }\n\n.fixedDataTableCellLayout_columnResizerKnob {\n  position: absolute;\n  right: 0px;\n  visibility: hidden;\n  width: 4px; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableColumnResizerLineLayout\n */\n.fixedDataTableColumnResizerLineLayout_mouseArea {\n  cursor: ew-resize;\n  position: absolute;\n  right: -5px;\n  width: 12px; }\n\n.fixedDataTableColumnResizerLineLayout_main {\n  border-right-style: solid;\n  border-right-width: 1px;\n  box-sizing: border-box;\n  position: absolute;\n  z-index: 10; }\n\nbody[dir=\"rtl\"] .fixedDataTableColumnResizerLineLayout_main {\n  /* the resizer line is in the wrong position in RTL with no easy fix.\n   * Disabling is more useful than displaying it.\n   * #167 (github) should look into this and come up with a permanent fix.\n   */\n  display: none !important; }\n\n.fixedDataTableColumnResizerLineLayout_hiddenElem {\n  display: none !important; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableLayout\n */\n.fixedDataTableLayout_main {\n  border-style: solid;\n  border-width: 1px;\n  box-sizing: border-box;\n  overflow: hidden;\n  position: relative; }\n\n.fixedDataTableLayout_header,\n.fixedDataTableLayout_hasBottomBorder {\n  border-bottom-style: solid;\n  border-bottom-width: 1px; }\n\n.fixedDataTableLayout_footer .public_fixedDataTableCell_main {\n  border-top-style: solid;\n  border-top-width: 1px; }\n\n.fixedDataTableLayout_topShadow,\n.fixedDataTableLayout_bottomShadow {\n  height: 4px;\n  left: 0;\n  position: absolute;\n  right: 0;\n  z-index: 1; }\n\n.fixedDataTableLayout_bottomShadow {\n  margin-top: -4px; }\n\n.fixedDataTableLayout_rowsContainer {\n  overflow: hidden;\n  position: relative; }\n\n.fixedDataTableLayout_horizontalScrollbar {\n  bottom: 0;\n  position: absolute; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableRowLayout\n */\n.fixedDataTableRowLayout_main {\n  box-sizing: border-box;\n  overflow: hidden;\n  position: absolute;\n  top: 0; }\n\n.fixedDataTableRowLayout_body {\n  left: 0;\n  position: absolute;\n  top: 0; }\n\n.fixedDataTableRowLayout_fixedColumnsDivider {\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  border-left-style: solid;\n  border-left-width: 1px;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 0; }\n\n.fixedDataTableRowLayout_columnsShadow {\n  width: 4px; }\n\n.fixedDataTableRowLayout_rowWrapper {\n  position: absolute;\n  top: 0; }\n\n.navbar {\n  background-color: #222528;\n  min-height: 40px;\n  height: 40px;\n  border-radius: 0px; }\n  .navbar .container {\n    max-height: 40px;\n    height: 40px; }\n    .navbar .container .navbar-header {\n      max-height: 40px;\n      height: 40px; }\n      .navbar .container .navbar-header button {\n        max-height: 40px;\n        height: 40px; }\n    .navbar .container .navbar-brand {\n      float: left;\n      height: 50px;\n      padding: 10px 10px;\n      font-size: 22px;\n      font-weight: 500;\n      line-height: 20px; }\n  .navbar a {\n    color: #E7E7E4; }\n  .navbar .navbar-nav {\n    padding-left: 20px; }\n    .navbar .navbar-nav li {\n      padding: 0px 5px; }\n      .navbar .navbar-nav li a {\n        padding: 0px 10px;\n        padding-top: 10px;\n        padding-bottom: 9px;\n        font-size: 16px; }\n      .navbar .navbar-nav li a:hover {\n        background-color: #222528; }\n      .navbar .navbar-nav li a:active {\n        background-color: #222528; }\n      .navbar .navbar-nav li a:focus {\n        background-color: #222528; }\n    .navbar .navbar-nav .active a {\n      border-bottom: 3px solid #65A8EC;\n      color: #FAFAFA;\n      font-weight: 400; }\n\n.userTableWrapper {\n  overflow: scroll; }\n  .userTableWrapper .fixedDataTableLayout_main {\n    width: 100%;\n    background-color: transparent;\n    border-style: none; }\n    .userTableWrapper .fixedDataTableLayout_main .fixedDataTableLayout_rowsContainer {\n      background: transparent; }\n    .userTableWrapper .fixedDataTableLayout_main .public_fixedDataTableCell_cellContent {\n      color: #16181A; }\n    .userTableWrapper .fixedDataTableLayout_main .public_fixedDataTableCell_main {\n      font: WorkSansFont; }\n  .userTableWrapper .fixedDataTableCellLayout_main {\n    background-color: transparent; }\n  .userTableWrapper .public_fixedDataTableCell_main {\n    background-image: none; }\n  .userTableWrapper .public_fixedDataTable_header {\n    background-image: linear-gradient(#FAFAFA, #FAFAFA); }\n    .userTableWrapper .public_fixedDataTable_header .public_fixedDataTableCell_cellContent {\n      font-weight: bold;\n      color: #222528; }\n  .userTableWrapper .public_fixedDataTableRow_highlighted {\n    background-color: transparent; }\n  .userTableWrapper .public_fixedDataTableRow_highlighted {\n    background-color: transparent; }\n  .userTableWrapper .public_fixedDataTableCell_main {\n    background-color: transparent;\n    border-left: none;\n    border-right: none; }\n  .userTableWrapper .public_fixedDataTableRow_main {\n    background-color: transparent; }\n  .userTableWrapper .fixedDataTableRowLayout_rowWrapper {\n    border-bottom-style: solid;\n    border-bottom-color: #CCCCCC;\n    border-bottom-width: 1px; }\n  .userTableWrapper .inputFilter {\n    display: block;\n    width: 100%;\n    height: 35px;\n    padding: 6px 12px;\n    font-size: 14px;\n    line-height: 1.5;\n    color: #ffffff;\n    background-color: #999;\n    background-image: none;\n    border: none;\n    border-radius: 4px;\n    box-shadow: none;\n    transition: none;\n    width: 300px;\n    outline-style: none; }\n  .userTableWrapper input::-webkit-input-placeholder {\n    /* WebKit, Blink, Edge */\n    color: #FAFAFA;\n    font-size: 1em;\n    font-weight: 400; }\n  .userTableWrapper input:-moz-placeholder {\n    /* Mozilla Firefox 4 to 18 */\n    color: #FAFAFA;\n    font-size: 1em;\n    font-weight: 400;\n    opacity: 1; }\n  .userTableWrapper input::-moz-placeholder {\n    /* Mozilla Firefox 19+ */\n    color: #FAFAFA;\n    font-size: 1em;\n    font-weight: 400;\n    opacity: 1; }\n  .userTableWrapper input:-ms-input-placeholder {\n    /* Internet Explorer 10-11 */\n    color: #FAFAFA;\n    font-size: 1em;\n    font-weight: 400; }\n\nh1, h4 {\n  font-weight: 300;\n  margin-left: 20px; }\n\nh1 {\n  margin-top: 0px; }\n\nh4 {\n  margin-bottom: 20px; }\n\n.panel {\n  margin-bottom: 5px;\n  border: 0px;\n  background-color: none; }\n  .panel .panel-default {\n    border: 0px;\n    background-color: none; }\n\n.header-container {\n  text-align: center;\n  border-bottom: medium solid #808080;\n  margin-left: 20px;\n  margin-right: 20px; }\n  .header-container h3 {\n    margin-bottom: 5px; }\n\n.header-block {\n  margin-bottom: 1em; }\n\n.company-selector {\n  float: left;\n  margin-left: 20px; }\n\n.integration-selector {\n  border-color: #808080; }\n  .integration-selector button:focus {\n    outline: none;\n    box-shadow: none; }\n  .integration-selector button:active {\n    outline: none;\n    box-shadow: none; }\n\n.action-selector {\n  text-align: center;\n  padding-right: 20px; }\n  .action-selector .btn-group button:focus {\n    outline: none;\n    box-shadow: none; }\n  .action-selector .btn-group button:active {\n    outline: none;\n    box-shadow: none; }\n\n.list-content {\n  margin-top: 1em; }\n  .list-content .name-column {\n    text-align: left;\n    font-size: 1.25em;\n    font-weight: 400;\n    padding-left: 3em; }\n  .list-content .user-column {\n    text-align: center;\n    font-size: 1.25em; }\n  .list-content .action-column .action-selector {\n    margin: auto; }\n\n.list-wrapper {\n  background: #FAFAFA;\n  padding: 1em; }\n\ntr {\n  border: 0px;\n  background-color: none; }\n\n.loading-text {\n  display: block;\n  text-align: center;\n  margin-top: 2em;\n  font-family: 'Roboto', sans-serif;\n  font-style: italic;\n  font-weight: 100; }\n\n.loading-error {\n  display: block;\n  text-align: center;\n  margin-top: 2em;\n  font-family: 'Roboto', sans-serif;\n  font-weight: 300; }\n\n.sk-cube-grid {\n  margin-top: 10em;\n  height: 10em;\n  width: 10em; }\n\n.integrations-container {\n  margin-top: 2em; }\n\n.provider-cell {\n  color: #fff;\n  font-size: 4em; }\n\n.provider-row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 1.0em; }\n\n.switch-container {\n  margin-top: 0.5em; }\n", ""]);
+	exports.push([module.id, "/*\n *  Usage:\n *\n      <div class=\"sk-cube-grid\">\n        <div class=\"sk-cube sk-cube1\"></div>\n        <div class=\"sk-cube sk-cube2\"></div>\n        <div class=\"sk-cube sk-cube3\"></div>\n        <div class=\"sk-cube sk-cube4\"></div>\n        <div class=\"sk-cube sk-cube5\"></div>\n        <div class=\"sk-cube sk-cube6\"></div>\n        <div class=\"sk-cube sk-cube7\"></div>\n        <div class=\"sk-cube sk-cube8\"></div>\n        <div class=\"sk-cube sk-cube9\"></div>\n      </div>\n *\n */\n.sk-cube-grid {\n  width: 40px;\n  height: 40px;\n  margin: 40px auto;\n  /*\n   * Spinner positions\n   * 1 2 3\n   * 4 5 6\n   * 7 8 9\n   */ }\n  .sk-cube-grid .sk-cube {\n    width: 33.33%;\n    height: 33.33%;\n    background-color: #333;\n    float: left;\n    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }\n  .sk-cube-grid .sk-cube1 {\n    animation-delay: 0.2s; }\n  .sk-cube-grid .sk-cube2 {\n    animation-delay: 0.3s; }\n  .sk-cube-grid .sk-cube3 {\n    animation-delay: 0.4s; }\n  .sk-cube-grid .sk-cube4 {\n    animation-delay: 0.1s; }\n  .sk-cube-grid .sk-cube5 {\n    animation-delay: 0.2s; }\n  .sk-cube-grid .sk-cube6 {\n    animation-delay: 0.3s; }\n  .sk-cube-grid .sk-cube7 {\n    animation-delay: 0.0s; }\n  .sk-cube-grid .sk-cube8 {\n    animation-delay: 0.1s; }\n  .sk-cube-grid .sk-cube9 {\n    animation-delay: 0.2s; }\n\n@keyframes sk-cubeGridScaleDelay {\n  0%, 70%, 100% {\n    transform: scale3D(1, 1, 1); }\n  35% {\n    transform: scale3D(0, 0, 1); } }\n\n@font-face {\n  font-family: 'Roboto';\n  font-weight: 400;\n  font-style: normal;\n  src: url(\"/assets/fonts/Roboto-regular/Roboto-regular.eot\");\n  src: url(\"/assets/fonts/Roboto-regular/Roboto-regular.eot?#iefix\") format(\"embedded-opentype\"), local(\"Roboto\"), local(\"Roboto-regular\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.woff2\") format(\"woff2\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.woff\") format(\"woff\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.ttf\") format(\"truetype\"), url(\"/assets/fonts/Roboto-regular/Roboto-regular.svg#Roboto\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Roboto';\n  font-weight: 300;\n  font-style: italic;\n  src: url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.eot\");\n  src: url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.eot?#iefix\") format(\"embedded-opentype\"), local(\"Roboto Light Italic\"), local(\"Roboto-300italic\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.woff2\") format(\"woff2\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.woff\") format(\"woff\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.ttf\") format(\"truetype\"), url(\"/assets/fonts/Roboto-300italic/Roboto-300italic.svg#Roboto\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 200;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.eot\");\n  src: url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans ExtraLight\"), local(\"Work-Sans-200\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-200/Work-Sans-200.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 300;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.eot\");\n  src: url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans Light\"), local(\"Work-Sans-300\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-300/Work-Sans-300.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 400;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.eot\");\n  src: url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans\"), local(\"Work-Sans-regular\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-regular/Work-Sans-regular.svg#WorkSans\") format(\"svg\"); }\n\n@font-face {\n  font-family: 'Work Sans';\n  font-weight: 600;\n  font-style: normal;\n  src: url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.eot\");\n  src: url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.eot?#iefix\") format(\"embedded-opentype\"), local(\"Work Sans SemiBold\"), local(\"Work-Sans-600\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.woff2\") format(\"woff2\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.woff\") format(\"woff\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.ttf\") format(\"truetype\"), url(\"/assets/fonts/Work-Sans-600/Work-Sans-600.svg#WorkSans\") format(\"svg\"); }\n\nh1, h2, h3, h4, h5, h6 {\n  font-family: \"Work Sans\", sans-serif; }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  background-color: #D6D8DB; }\n\nbutton {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  background: none;\n  font-size: 100%;\n  vertical-align: baseline;\n  font-family: inherit;\n  font-weight: inherit;\n  color: inherit;\n  appearance: none;\n  font-smoothing: antialiased; }\n\nbody {\n  font: 14px \"Work Sans\", sans-serif;\n  line-height: 1.4em;\n  background: #D6D8DB;\n  color: #16181A;\n  min-width: 230px;\n  margin: 0 auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-font-smoothing: antialiased;\n  -ms-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  font-weight: 300; }\n\nbutton,\ninput[type=\"checkbox\"] {\n  outline: none; }\n\n.normal {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1); }\n\n.normal input::-webkit-input-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal input::-moz-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal input::input-placeholder {\n  font-style: italic;\n  font-weight: 300;\n  color: #e6e6e6; }\n\n.normal h1 {\n  position: absolute;\n  top: -155px;\n  width: 100%;\n  font-size: 100px;\n  font-weight: 100;\n  text-align: center;\n  color: rgba(175, 47, 47, 0.15);\n  -webkit-text-rendering: optimizeLegibility;\n  -moz-text-rendering: optimizeLegibility;\n  -ms-text-rendering: optimizeLegibility;\n  text-rendering: optimizeLegibility; }\n\n/**\n * FixedDataTable v0.6.0 \n *\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n */\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule Scrollbar\n *\n */\n/**\n * Scrollbars.\n */\n/* Touching the scroll-track directly makes the scroll-track bolder */\n.public_Scrollbar_main.public_Scrollbar_mainActive,\n.public_Scrollbar_main:hover {\n  background-color: rgba(255, 255, 255, 0.8); }\n\n.public_Scrollbar_mainOpaque,\n.public_Scrollbar_mainOpaque.public_Scrollbar_mainActive,\n.public_Scrollbar_mainOpaque:hover {\n  background-color: #fff; }\n\n.public_Scrollbar_face:after {\n  background-color: #c2c2c2; }\n\n.public_Scrollbar_main:hover .public_Scrollbar_face:after,\n.public_Scrollbar_mainActive .public_Scrollbar_face:after,\n.public_Scrollbar_faceActive:after {\n  background-color: #7d7d7d; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTable\n *\n */\n/**\n * Table.\n */\n.public_fixedDataTable_main {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_header,\n.public_fixedDataTable_hasBottomBorder {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_header .public_fixedDataTableCell_main {\n  font-weight: bold; }\n\n.public_fixedDataTable_header,\n.public_fixedDataTable_header .public_fixedDataTableCell_main {\n  background-color: #f6f7f8;\n  background-image: -webkit-linear-gradient(#fff, #efefef);\n  background-image: linear-gradient(#fff, #efefef); }\n\n.public_fixedDataTable_footer .public_fixedDataTableCell_main {\n  background-color: #f6f7f8;\n  border-color: #d3d3d3; }\n\n.public_fixedDataTable_topShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAF0lEQVR4AWPUkNeSBhHCjJoK2twgFisAFagCCp3pJlAAAAAASUVORK5CYII=) repeat-x; }\n\n.public_fixedDataTable_bottomShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAECAYAAABP2FU6AAAAHElEQVQI12MwNjZmZdAT1+Nm0JDWEGZQk1GTBgAWkwIeAEp52AAAAABJRU5ErkJggg==) repeat-x; }\n\n.public_fixedDataTable_horizontalScrollbar .public_Scrollbar_mainHorizontal {\n  background-color: #fff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCell\n */\n/**\n * Table cell.\n */\n.public_fixedDataTableCell_main {\n  background-color: #fff;\n  border-color: #d3d3d3; }\n\n.public_fixedDataTableCell_highlighted {\n  background-color: #f4f4f4; }\n\n.public_fixedDataTableCell_cellContent {\n  padding: 8px; }\n\n.public_fixedDataTableCell_columnResizerKnob {\n  background-color: #0284ff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableColumnResizerLine\n *\n */\n/**\n * Column resizer line.\n */\n.public_fixedDataTableColumnResizerLine_main {\n  border-color: #0284ff; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableRow\n */\n/**\n * Table row.\n */\n.public_fixedDataTableRow_main {\n  background-color: #fff; }\n\n.public_fixedDataTableRow_highlighted,\n.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {\n  background-color: #f6f7f8; }\n\n.public_fixedDataTableRow_fixedColumnsDivider {\n  border-color: #d3d3d3; }\n\n.public_fixedDataTableRow_columnsShadow {\n  background: 0 0 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==) repeat-y; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule ScrollbarLayout\n */\n.ScrollbarLayout_main {\n  box-sizing: border-box;\n  outline: none;\n  overflow: hidden;\n  position: absolute;\n  -webkit-transition-duration: 250ms;\n  transition-duration: 250ms;\n  -webkit-transition-timing-function: ease;\n  transition-timing-function: ease;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.ScrollbarLayout_mainVertical {\n  bottom: 0;\n  right: 0;\n  top: 0;\n  -webkit-transition-property: background-color width;\n  transition-property: background-color width;\n  width: 15px; }\n\n.ScrollbarLayout_mainVertical.public_Scrollbar_mainActive,\n.ScrollbarLayout_mainVertical:hover {\n  width: 17px; }\n\n.ScrollbarLayout_mainHorizontal {\n  bottom: 0;\n  height: 15px;\n  left: 0;\n  -webkit-transition-property: background-color height;\n  transition-property: background-color height; }\n\n/* Touching the scroll-track directly makes the scroll-track bolder */\n.ScrollbarLayout_mainHorizontal.public_Scrollbar_mainActive,\n.ScrollbarLayout_mainHorizontal:hover {\n  height: 17px; }\n\n.ScrollbarLayout_face {\n  left: 0;\n  overflow: hidden;\n  position: absolute;\n  z-index: 1; }\n\n/**\n * This selector renders the \"nub\" of the scrollface. The nub must\n * be rendered as pseudo-element so that it won't receive any UI events then\n * we can get the correct `event.offsetX` and `event.offsetY` from the\n * scrollface element while dragging it.\n */\n.ScrollbarLayout_face:after {\n  border-radius: 6px;\n  content: '';\n  display: block;\n  position: absolute;\n  -webkit-transition: background-color 250ms ease;\n  transition: background-color 250ms ease; }\n\n.ScrollbarLayout_faceHorizontal {\n  bottom: 0;\n  left: 0;\n  top: 0; }\n\n.ScrollbarLayout_faceHorizontal:after {\n  bottom: 4px;\n  left: 0;\n  top: 4px;\n  width: 100%; }\n\n.ScrollbarLayout_faceVertical {\n  left: 0;\n  right: 0;\n  top: 0; }\n\n.ScrollbarLayout_faceVertical:after {\n  height: 100%;\n  left: 4px;\n  right: 4px;\n  top: 0; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCellGroupLayout\n */\n.fixedDataTableCellGroupLayout_cellGroup {\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  left: 0;\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  white-space: nowrap; }\n\n.fixedDataTableCellGroupLayout_cellGroup > .public_fixedDataTableCell_main {\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal; }\n\n.fixedDataTableCellGroupLayout_cellGroupWrapper {\n  position: absolute;\n  top: 0; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableCellLayout\n */\n.fixedDataTableCellLayout_main {\n  border-right-style: solid;\n  border-right-width: 1px;\n  border-width: 0 1px 0 0;\n  box-sizing: border-box;\n  display: block;\n  overflow: hidden;\n  position: absolute;\n  white-space: normal; }\n\n.fixedDataTableCellLayout_lastChild {\n  border-width: 0 1px 1px 0; }\n\n.fixedDataTableCellLayout_alignRight {\n  text-align: right; }\n\n.fixedDataTableCellLayout_alignCenter {\n  text-align: center; }\n\n.fixedDataTableCellLayout_wrap1 {\n  display: table; }\n\n.fixedDataTableCellLayout_wrap2 {\n  display: table-row; }\n\n.fixedDataTableCellLayout_wrap3 {\n  display: table-cell;\n  vertical-align: middle; }\n\n.fixedDataTableCellLayout_columnResizerContainer {\n  position: absolute;\n  right: 0px;\n  width: 6px;\n  z-index: 1; }\n\n.fixedDataTableCellLayout_columnResizerContainer:hover {\n  cursor: ew-resize; }\n\n.fixedDataTableCellLayout_columnResizerContainer:hover .fixedDataTableCellLayout_columnResizerKnob {\n  visibility: visible; }\n\n.fixedDataTableCellLayout_columnResizerKnob {\n  position: absolute;\n  right: 0px;\n  visibility: hidden;\n  width: 4px; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableColumnResizerLineLayout\n */\n.fixedDataTableColumnResizerLineLayout_mouseArea {\n  cursor: ew-resize;\n  position: absolute;\n  right: -5px;\n  width: 12px; }\n\n.fixedDataTableColumnResizerLineLayout_main {\n  border-right-style: solid;\n  border-right-width: 1px;\n  box-sizing: border-box;\n  position: absolute;\n  z-index: 10; }\n\nbody[dir=\"rtl\"] .fixedDataTableColumnResizerLineLayout_main {\n  /* the resizer line is in the wrong position in RTL with no easy fix.\n   * Disabling is more useful than displaying it.\n   * #167 (github) should look into this and come up with a permanent fix.\n   */\n  display: none !important; }\n\n.fixedDataTableColumnResizerLineLayout_hiddenElem {\n  display: none !important; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableLayout\n */\n.fixedDataTableLayout_main {\n  border-style: solid;\n  border-width: 1px;\n  box-sizing: border-box;\n  overflow: hidden;\n  position: relative; }\n\n.fixedDataTableLayout_header,\n.fixedDataTableLayout_hasBottomBorder {\n  border-bottom-style: solid;\n  border-bottom-width: 1px; }\n\n.fixedDataTableLayout_footer .public_fixedDataTableCell_main {\n  border-top-style: solid;\n  border-top-width: 1px; }\n\n.fixedDataTableLayout_topShadow,\n.fixedDataTableLayout_bottomShadow {\n  height: 4px;\n  left: 0;\n  position: absolute;\n  right: 0;\n  z-index: 1; }\n\n.fixedDataTableLayout_bottomShadow {\n  margin-top: -4px; }\n\n.fixedDataTableLayout_rowsContainer {\n  overflow: hidden;\n  position: relative; }\n\n.fixedDataTableLayout_horizontalScrollbar {\n  bottom: 0;\n  position: absolute; }\n\n/**\n * Copyright (c) 2015, Facebook, Inc.\n * All rights reserved.\n *\n * This source code is licensed under the BSD-style license found in the\n * LICENSE file in the root directory of this source tree. An additional grant\n * of patent rights can be found in the PATENTS file in the same directory.\n *\n * @providesModule fixedDataTableRowLayout\n */\n.fixedDataTableRowLayout_main {\n  box-sizing: border-box;\n  overflow: hidden;\n  position: absolute;\n  top: 0; }\n\n.fixedDataTableRowLayout_body {\n  left: 0;\n  position: absolute;\n  top: 0; }\n\n.fixedDataTableRowLayout_fixedColumnsDivider {\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  border-left-style: solid;\n  border-left-width: 1px;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 0; }\n\n.fixedDataTableRowLayout_columnsShadow {\n  width: 4px; }\n\n.fixedDataTableRowLayout_rowWrapper {\n  position: absolute;\n  top: 0; }\n\n.react-root {\n  background-color: transparent; }\n\n.container-wrapper {\n  background-color: #F9F9FA;\n  margin-right: 1em;\n  margin-left: 1em;\n  padding: 1em;\n  border-radius: 10px;\n  border: 1px solid #ADADAD;\n  -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.15);\n  -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.15);\n  box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.15); }\n\n.navbar {\n  background-color: #222528;\n  min-height: 40px;\n  height: 40px;\n  border-radius: 0px; }\n  .navbar .container {\n    max-height: 40px;\n    height: 40px; }\n    .navbar .container .navbar-header {\n      max-height: 40px;\n      height: 40px; }\n      .navbar .container .navbar-header button {\n        max-height: 40px;\n        height: 40px; }\n    .navbar .container .navbar-brand {\n      float: left;\n      height: 50px;\n      padding: 10px 10px;\n      font-size: 22px;\n      font-weight: 500;\n      line-height: 20px; }\n  .navbar a {\n    color: #D6D8DB; }\n  .navbar .navbar-nav {\n    padding-left: 20px; }\n    .navbar .navbar-nav li {\n      padding: 0px 5px; }\n      .navbar .navbar-nav li a {\n        padding: 0px 10px;\n        padding-top: 10px;\n        padding-bottom: 9px;\n        font-size: 16px; }\n      .navbar .navbar-nav li a:hover {\n        background-color: #222528; }\n      .navbar .navbar-nav li a:active {\n        background-color: #222528; }\n      .navbar .navbar-nav li a:focus {\n        background-color: #222528; }\n    .navbar .navbar-nav .active a {\n      border-bottom: 3px solid #65A8EC;\n      color: #F9F9FA;\n      font-weight: 400; }\n\n.users-table .header {\n  margin-bottom: 1.5em; }\n  .users-table .header h1, .users-table .header h2, .users-table .header h3, .users-table .header h4 {\n    margin: 0px;\n    margin-top: 0.25em;\n    margin-bottom: 5px;\n    font-weight: 300; }\n\n.users-table .userTableWrapper {\n  overflow: scroll; }\n  .users-table .userTableWrapper .fixedDataTableLayout_main {\n    width: 100%;\n    background-color: transparent;\n    border-style: none; }\n    .users-table .userTableWrapper .fixedDataTableLayout_main .fixedDataTableLayout_rowsContainer {\n      background: transparent; }\n    .users-table .userTableWrapper .fixedDataTableLayout_main .public_fixedDataTableCell_cellContent {\n      color: #16181A; }\n    .users-table .userTableWrapper .fixedDataTableLayout_main .public_fixedDataTableCell_main {\n      font: WorkSansFont; }\n  .users-table .userTableWrapper .fixedDataTableCellLayout_main {\n    background-color: transparent; }\n  .users-table .userTableWrapper .public_fixedDataTableCell_main {\n    background-image: none; }\n  .users-table .userTableWrapper .public_fixedDataTable_header {\n    background-image: linear-gradient(#F9F9FA, #F9F9FA); }\n    .users-table .userTableWrapper .public_fixedDataTable_header .public_fixedDataTableCell_cellContent {\n      font-weight: bold;\n      color: #222528; }\n  .users-table .userTableWrapper .public_fixedDataTableRow_highlighted {\n    background-color: transparent; }\n  .users-table .userTableWrapper .public_fixedDataTableRow_highlighted {\n    background-color: transparent; }\n  .users-table .userTableWrapper .public_fixedDataTableCell_main {\n    background-color: transparent;\n    border-left: none;\n    border-right: none; }\n  .users-table .userTableWrapper .public_fixedDataTableRow_main {\n    background-color: transparent; }\n  .users-table .userTableWrapper .fixedDataTableRowLayout_rowWrapper {\n    border-bottom-style: solid;\n    border-bottom-color: #CCCCCC;\n    border-bottom-width: 1px; }\n  .users-table .userTableWrapper .inputFilter {\n    display: block;\n    width: 100%;\n    height: 35px;\n    padding: 6px 12px;\n    font-size: 14px;\n    line-height: 1.5;\n    color: #ffffff;\n    background-color: #999;\n    background-image: none;\n    border: none;\n    border-radius: 4px;\n    box-shadow: none;\n    transition: none;\n    width: 300px;\n    outline-style: none; }\n  .users-table .userTableWrapper input::-webkit-input-placeholder {\n    /* WebKit, Blink, Edge */\n    color: #F9F9FA;\n    font-size: 1em;\n    font-weight: 400; }\n  .users-table .userTableWrapper input:-moz-placeholder {\n    /* Mozilla Firefox 4 to 18 */\n    color: #F9F9FA;\n    font-size: 1em;\n    font-weight: 400;\n    opacity: 1; }\n  .users-table .userTableWrapper input::-moz-placeholder {\n    /* Mozilla Firefox 19+ */\n    color: #F9F9FA;\n    font-size: 1em;\n    font-weight: 400;\n    opacity: 1; }\n  .users-table .userTableWrapper input:-ms-input-placeholder {\n    /* Internet Explorer 10-11 */\n    color: #F9F9FA;\n    font-size: 1em;\n    font-weight: 400; }\n\n.list-wrapper .header {\n  margin-bottom: 1.5em; }\n  .list-wrapper .header h1, .list-wrapper .header h2, .list-wrapper .header h3, .list-wrapper .header h4 {\n    margin-top: 0.25em;\n    font-weight: 300;\n    margin-left: 20px;\n    margin: 0px;\n    margin-bottom: 5px; }\n  .list-wrapper .header h1 {\n    margin-top: 0px; }\n  .list-wrapper .header h4 {\n    margin-bottom: 20px; }\n\n.list-wrapper .panel {\n  margin-bottom: 5px;\n  border: 0px;\n  background-color: none; }\n  .list-wrapper .panel .panel-default {\n    border: 0px;\n    background-color: none; }\n\n.list-wrapper .header-container {\n  text-align: center;\n  border-bottom: medium solid #808080;\n  margin-left: 20px;\n  margin-right: 20px; }\n  .list-wrapper .header-container h3 {\n    margin-bottom: 5px; }\n\n.list-wrapper .header-block {\n  margin-bottom: 1.0em; }\n\n.list-wrapper .integration-selector {\n  padding-left: 0px; }\n  .list-wrapper .integration-selector button {\n    padding-left: 12px; }\n  .list-wrapper .integration-selector .company-selector {\n    float: left;\n    margin-left: 0px; }\n\n.list-wrapper .integration-selector {\n  border-color: #808080; }\n\n.list-wrapper .list-content {\n  margin-top: 1em; }\n  .list-wrapper .list-content .name-column {\n    text-align: left;\n    font-size: 1.25em;\n    font-weight: 400;\n    padding-left: 3em; }\n  .list-wrapper .list-content .user-column {\n    text-align: center;\n    font-size: 1.25em; }\n  .list-wrapper .list-content .action-column .action-selector {\n    text-align: center;\n    margin: auto; }\n\n.list-wrapper .list-wrapper {\n  background: #F9F9FA;\n  padding: 1em; }\n\n.list-wrapper tr {\n  border: 0px;\n  background-color: none; }\n\n.loading-text {\n  display: block;\n  text-align: center;\n  margin-top: 2em;\n  font-family: 'Roboto', sans-serif;\n  font-style: italic;\n  font-weight: 100; }\n\n.loading-error {\n  display: block;\n  text-align: center;\n  margin-top: 2em;\n  font-family: 'Roboto', sans-serif;\n  font-weight: 300; }\n\n.sk-cube-grid {\n  margin-top: 10em;\n  height: 10em;\n  width: 10em; }\n\n.integrations-container {\n  margin-top: 2em; }\n\n.provider-cell {\n  color: #fff;\n  font-size: 4em; }\n\n.provider-row {\n  display: flex;\n  align-items: center;\n  margin-bottom: 1.0em; }\n\n.switch-container {\n  margin-top: 0.5em; }\n", ""]);
 
 	// exports
 
