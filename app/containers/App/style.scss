@@ -1,0 +1,15 @@
+.react-root {
+	background-color: transparent;
+}
+
+.container-wrapper {
+	background-color: $MeshWhite;
+	margin-right: 1em;
+	margin-left: 1em;
+	padding:1em;
+	border-radius: 10px;
+	border: 1px solid $MeshGreyLight;
+	-webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.15);
+	-moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.15);
+	box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.15);
+}

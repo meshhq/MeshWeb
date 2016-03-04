@@ -53,11 +53,11 @@ class UsersTable extends React.Component {
       });
     }
 
-    var filterBy = e.target.value.toLowerCase();
-    var size = this._dataList.getSize();
-    var filteredIndexes = [];
-    for (var index = 0; index < size; index++) {
-      var {firstName} = this._dataList.getObjectAt(index);
+    let filterBy = e.target.value.toLowerCase();
+    let size = this._dataList.getSize();
+    let filteredIndexes = [];
+    for (let index = 0; index < size; index++) {
+      let { firstName } = this._dataList.getObjectAt(index);
       if (firstName.toLowerCase().indexOf(filterBy) !== -1) {
         filteredIndexes.push(index);
       }
@@ -71,63 +71,71 @@ class UsersTable extends React.Component {
   render() {
     const { filteredDataList } = this.state
     return (
-      <div className="row table-wrapper">
-        <div className="col-md-12 userTableWrapper">
-          <input
-            className="inputFilter"
-            onChange={this._handleOnFilterChange}
-            placeholder="Filter by First Name"
-          />
-          <br />
-          <Table
-            headerHeight={50}
-            height={1000}
-            rowHeight={35}
-            rowsCount={filteredDataList.getSize()}
-            width={this.props.width}
-            {...this.props}
-          >
-            <Column
-              cell={<TextCell
-                col="first_name"
-                data={filteredDataList}
-                    />}
-              header={<Cell>{'First Name'}</Cell>}
-              width={150}
+      <div className="users-table">
+        <div className="header row">
+          <div className="col-md-12">
+            <h1>{'Users Table'}</h1>
+            <h4>{'Master users table listing.'}</h4>
+          </div>
+        </div>
+        <div className="row table-wrapper">
+          <div className="col-md-12 userTableWrapper">
+            <input
+              className="inputFilter"
+              onChange={this._handleOnFilterChange}
+              placeholder="Filter by First Name"
             />
-            <Column
-              cell={<TextCell
-                col="last_name"
-                data={filteredDataList}
-                    />}
-              header={<Cell>{'Last Name'}</Cell>}
-              width={150}
-            />
-            <Column
-              cell={<TextCell
-                col="email"
-                data={filteredDataList}
-                    />}
-              header={<Cell>{'Email'}</Cell>}
-              width={300}
-            />
-            <Column
-              cell={<TextCell
-                col="phone"
-                data={filteredDataList}
-                    />}
-              header={<Cell>{'Phone'}</Cell>}
-              width={200}
-            />
-            <Column
-              cell={<TextCell
-                col="id"
-                data={filteredDataList}
-                    />}
-              header={<Cell>{'ID'}</Cell>}
-              width={200}
-            />
-          </Table>
+            <br />
+            <Table
+              headerHeight={50}
+              height={1000}
+              rowHeight={35}
+              rowsCount={filteredDataList.getSize()}
+              width={this.props.width}
+              {...this.props}
+            >
+              <Column
+                cell={<TextCell
+                  col="first_name"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'First Name'}</Cell>}
+                width={150}
+              />
+              <Column
+                cell={<TextCell
+                  col="last_name"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Last Name'}</Cell>}
+                width={150}
+              />
+              <Column
+                cell={<TextCell
+                  col="email"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Email'}</Cell>}
+                width={300}
+              />
+              <Column
+                cell={<TextCell
+                  col="phone"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Phone'}</Cell>}
+                width={200}
+              />
+              <Column
+                cell={<TextCell
+                  col="id"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'ID'}</Cell>}
+                width={200}
+              />
+            </Table>
+          </div>
         </div>
       </div>
     );

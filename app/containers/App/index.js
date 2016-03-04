@@ -154,7 +154,9 @@ class App extends Component {
           transitionEnterTimeout={1000}
           transitionName="appear_main"
         >
-          {appContent}
+          <div className="container-wrapper">
+            {appContent}
+          </div>
         </ReactCSSTransitionGroup>
       </div>
     )

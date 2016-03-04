@@ -1,114 +1,127 @@
-.userTableWrapper {
-	overflow: scroll;
+.users-table {
+	.header {
+		margin-bottom: 1.5em;
 
-	.fixedDataTableLayout_main {
-		width: 100%;
-		background-color: transparent;
-		border-style: none;
-
-		.fixedDataTableLayout_rowsContainer {
-			background: transparent;
-	
+		h1, h2, h3, h4 {
+			margin: 0px;
+			margin-top: 0.25em;
+			margin-bottom: 5px;
+			font-weight: 300;
 		}
+	}
 
-		.public_fixedDataTableCell_cellContent {
-			color: $MeshBlack;
+	.userTableWrapper {
+		overflow: scroll;
 
+		.fixedDataTableLayout_main {
+			width: 100%;
+			background-color: transparent;
+			border-style: none;
+
+			.fixedDataTableLayout_rowsContainer {
+				background: transparent;
+		
+			}
+
+			.public_fixedDataTableCell_cellContent {
+				color: $MeshBlack;
+
+			}
+
+			.public_fixedDataTableCell_main {
+				font: WorkSansFont;
+			}
+		}	
+
+		.fixedDataTableCellLayout_main {
+			background-color: transparent;
 		}
 
 		.public_fixedDataTableCell_main {
-			font: WorkSansFont;
+			background-image: none;
 		}
-	}	
 
-	.fixedDataTableCellLayout_main {
-		background-color: transparent;
-	}
+		.public_fixedDataTable_header {
+			background-image: linear-gradient($MeshWhite, $MeshWhite);
+			.public_fixedDataTableCell_cellContent {
+				font-weight: bold;
+				color: $MeshBlackLight;
+			}	
+		}
 
-	.public_fixedDataTableCell_main {
-		background-image: none;
-	}
+		.public_fixedDataTableRow_highlighted {
+			background-color: transparent;
+		}
 
-	.public_fixedDataTable_header {
-		background-image: linear-gradient($MeshWhite, $MeshWhite);
-		.public_fixedDataTableCell_cellContent {
-			font-weight: bold;
-			color: $MeshBlackLight;
-		}	
-	}
+		.public_fixedDataTableRow_highlighted {
+			background-color: transparent;
+		}
 
-	.public_fixedDataTableRow_highlighted {
-		background-color: transparent;
-	}
+		.public_fixedDataTableCell_main {
+			background-color: transparent;
+			border-left: none;
+			border-right: none;
+		}
 
-	.public_fixedDataTableRow_highlighted {
-		background-color: transparent;
-	}
+		.public_fixedDataTableRow_main {
+			background-color: transparent;
+		}
 
-	.public_fixedDataTableCell_main {
-		background-color: transparent;
-		border-left: none;
-		border-right: none;
-	}
+		.fixedDataTableRowLayout_rowWrapper {
+			// border: 2px solid #3A5FCD;
+			border-bottom-style: solid;
+			border-bottom-color: $MeshGreyUltraLight;	
+			border-bottom-width: 1px;
+		}
 
-	.public_fixedDataTableRow_main {
-		background-color: transparent;
-	}
+		// Input Styling
+		
+		.inputFilter {
+			display: block;
+	    width: 100%;
+	    height: 35px;
+	    padding: 6px 12px;
+	    font-size: 14px;
+	    line-height: 1.5;
+	    color: #ffffff;
+	    background-color: #999;
+	    background-image: none;
+	    border: none;
+	    border-radius: 4px;
+	    box-shadow: none;
+	    transition: none;
+	    width: 300px;
+	    outline-style: none;
+		}
 
-	.fixedDataTableRowLayout_rowWrapper {
-		// border: 2px solid #3A5FCD;
-		border-bottom-style: solid;
-		border-bottom-color: $MeshGreyUltraLight;	
-		border-bottom-width: 1px;
-	}
+		input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+		    color: $MeshWhite;
+		    font-size: 1em;
+		    font-weight: 400;
+		}
 
-	// Input Styling
-	
-	.inputFilter {
-		display: block;
-    width: 100%;
-    height: 35px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #ffffff;
-    background-color: #999;
-    background-image: none;
-    border: none;
-    border-radius: 4px;
-    box-shadow: none;
-    transition: none;
-    width: 300px;
-    outline-style: none;
-	}
+		input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		   color: $MeshWhite;
+		   font-size: 1em;
+		   font-weight: 400;
 
-	input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-	    color: $MeshWhite;
-	    font-size: 1em;
-	    font-weight: 400;
-	}
+		   opacity:  1;
+		}
 
-	input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	   color: $MeshWhite;
-	   font-size: 1em;
-	   font-weight: 400;
+		input::-moz-placeholder { /* Mozilla Firefox 19+ */
+		   color: $MeshWhite;
+		   font-size: 1em;
+		   font-weight: 400;
+		   opacity:  1;
+		}
 
-	   opacity:  1;
-	}
+		input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		   color: $MeshWhite;
+		   font-size: 1em;
+		   font-weight: 400;
 
-	input::-moz-placeholder { /* Mozilla Firefox 19+ */
-	   color: $MeshWhite;
-	   font-size: 1em;
-	   font-weight: 400;
-	   opacity:  1;
-	}
-
-	input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-	   color: $MeshWhite;
-	   font-size: 1em;
-	   font-weight: 400;
+		}
 
 	}
 
 }
-

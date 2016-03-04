@@ -7,9 +7,9 @@ $WorkSansFontLight: 'Work Sans', sans-serif;
 $MeshBlack: #16181A;
 $MeshBlackLight: #222528;
 
-$MeshWhiteLight: #FCFCFA;
-$MeshWhite: #FAFAFA;
-$MeshWhiteDark: #E7E7E4;
+$MeshWhiteLight: #FFF;
+$MeshWhite: #F9F9FA;
+$MeshWhiteDark: #D6D8DB;
 
 $MeshGrey: #808080;
 $MeshGreyLight: #ADADAD;
@@ -111,6 +111,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background-color: $MeshWhiteDark;
 }
 
 button {
@@ -130,7 +131,7 @@ button {
 body {
   font: 14px $WorkSansFont;
   line-height: 1.4em;
-  background: $MeshWhite;
+  background: $MeshWhiteDark;
   color: $MeshBlack;
   min-width: 230px;
   margin: 0 auto;
