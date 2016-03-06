@@ -17,7 +17,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route
-        component={App} 
+        component={App}
         path="/" 
       />
     </Router>
