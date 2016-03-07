@@ -116,7 +116,10 @@ class App extends Component {
           )
       case 1:
         return (
-          <Organizations organizations={organizationState.organizations}/>
+          <Organizations 
+            organizations={organizationState.organizations} 
+            providers={providerState.providers}
+          />
           )
       case 2:
         return (

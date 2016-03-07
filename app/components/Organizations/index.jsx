@@ -4,10 +4,13 @@ import React, { Component, PropTypes } from 'react'
 class Organizations extends Component {
   constructor(props, context) {
     super(props, context)
-        
+            
   }
 
   render() {
+
+    const { organizations } = this.props
+    console.log(organizations)
     return (
       <div className="organizations-container">
         
@@ -47,10 +50,6 @@ class Organizations extends Component {
       </div>
     )
   }
-}
-
-Organizations.defaultProps = {
-  
 }
 
 Organizations.propTypes = {

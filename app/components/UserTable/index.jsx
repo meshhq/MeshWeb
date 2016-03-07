@@ -75,7 +75,7 @@ class UsersTable extends React.Component {
         <div className="header row">
           <div className="col-md-12">
             <h1>{'Users Table'}</h1>
-            <h4>{'Master users table listing.'}</h4>
+            <h4>{'Master users table listing'}</h4>
           </div>
         </div>
         <div className="row table-wrapper">
