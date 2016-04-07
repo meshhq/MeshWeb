@@ -1,6 +1,6 @@
 // Fonts
-$WorkSansFont: 'Work Sans', sans-serif;
-$WorkSansFontLight: 'Work Sans', sans-serif;
+$WorkSansFont: 'Lato', sans-serif;
+$WorkSansFontLight: 'Lato', sans-serif;
 
 
 // Colors
@@ -17,6 +17,13 @@ $MeshGreyUltraLight: #CCCCCC;
 $MeshGreyDark: #6B6B6B;
 
 $MeshBlue: #65A8EC;
+
+// Fonts
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  src: url('https://fonts.googleapis.com/css?family=Lato:400,700,300,100,900');
+}
 
 // Fonts
 @font-face {

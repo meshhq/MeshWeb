@@ -43,7 +43,6 @@ class NavBar extends Component {
 
 
     return (
-      <div className="navbar">
         <nav className="navbarDefault">
           <div className="container">
             <div className="navbar-header">
@@ -53,28 +52,18 @@ class NavBar extends Component {
                 data-toggle="collapse"
                 type="button"
               >
-                <span className="sr-only">{'Toggle navigation'}</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand"
-                href="#"
-              >
-              {'MeshIO'}
+              <a className="navbar-header-brand" href="#">
+                {'MESH'}
               </a>
             </div>
-
-            <div className="collapse navbar-collapse"
-              id="bs-example-navbar-collapse-1"
-            >
-              <ul className="nav navbar-nav">
-                {navItems}
-              </ul>
-            </div>
+            <ul className="nav navbar-nav navbar-right">
+              <li><a href="#">DOCUMENTATION</a></li>
+              <li><a href="#">SUPPORT</a></li>
+              <li><a href="#">KEVIN COLEMAN</a></li>
+            </ul>
           </div>
         </nav>
-      </div>
     )
   }
 }

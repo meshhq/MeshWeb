@@ -15,10 +15,10 @@ class NavPane extends Component {
   render() {
     return (
       <div className="navpane">
-        <NavItem title="Users"/>
-        <NavItem title="Organizations"/>
-        <NavItem title="Lists"/>
-        <NavItem title="Integrations"/>
+        <NavItem title="USERS"/>
+        <NavItem title="ORGANIZATIONS"/>
+        <NavItem title="LISTS"/>
+        <NavItem title="INTEGRATIONS"/>
       </div>
     )
   }

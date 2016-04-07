@@ -55,6 +55,11 @@ h4 {
 		// Top Row Columns
 		.fixedDataTableLayout_main {
 			width: 100%;
+			background-color: transparent;
+
+			.fixedDataTableLayout_rowsContainer {
+				background: transparent;
+			}
 
 			.public_fixedDataTableCell_cellContent {
 				color: $MeshBlack;
@@ -66,6 +71,22 @@ h4 {
 		}
 
 		.fixedDataTableCellLayout_main {
+			background-color: transparent;
+		}
+
+		.public_fixedDataTableCell_main {
+			background-image: none;
+		}
+
+		.public_fixedDataTable_header {
+			background-image: linear-gradient(white, white);
+			.public_fixedDataTableCell_cellContent {
+				font-weight: bold;
+				color: $MeshBlackLight;
+			}
+		}
+
+		.public_fixedDataTableRow_highlighted {
 			background-color: transparent;
 		}
 

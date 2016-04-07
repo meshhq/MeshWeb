@@ -168,16 +168,9 @@ class App extends Component {
            onNavChange={this.handleNavBarClick}
          />
         <NavPane />
-        <ReactCSSTransitionGroup
-          transitionAppearTimeout={500}
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={500}
-          transitionName='appear_main'
-        >
         <div className="container-wrapper">
           {appContent}
         </div>
-        </ReactCSSTransitionGroup>
       </div>
     )
   }

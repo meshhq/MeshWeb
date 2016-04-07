@@ -202,8 +202,8 @@ class DropdownButton extends Component {
   render() {
     return (
       <div className="btn-group">
-        <button type="button" className="btn btn-success">{this.props.title}</button>
-        <button type="button" className="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" className="btn btn-default">{this.props.title}</button>
+        <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span className="caret"></span>
           <span className="sr-only">Toggle Dropdown</span>
         </button>
