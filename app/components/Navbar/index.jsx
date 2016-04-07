@@ -18,8 +18,7 @@ class NavBar extends Component {
       const boundClick = this._handleNavItemWasClicked.bind(this, idx)
       if (idx === this.props.activeNavIdx) {
         item = (
-          <li className="active"
-            key={title}
+          <li className="active" key={title}
           >
             <a href="#"
               onClick={boundClick}
