@@ -7,10 +7,11 @@
 @import '__base';
 @import '../containers/App/style';
 @import '../components/Navbar/style';
-@import '../components/UserTable/style';
+@import '../components/Users/style';
 @import '../components/Lists/style';
 @import '../components/Organizations/style';
 @import '../components/Shared/ProgressView/style';
+@import '../components/Shared/DataTableCells/TextCell/style';
 
 // Providers
 @import '../components/Providers/style';

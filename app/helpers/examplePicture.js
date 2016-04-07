@@ -1,41 +1,44 @@
-var React = require('react');
 
-var PendingPool = {};
-var ReadyPool = {};
+import React, { PropTypes, Component } from 'react'
 
-var ExampleImage = React.createClass({
-  propTypes: {
-    src: React.PropTypes.string.isRequired,
-  },
+let PendingPool = {};
+let ReadyPool = {};
+
+class ExampleImage extends Component {
+
+  constructor(props, context) {
+    super(props, context)
+  }
 
   getInitialState() {
     return {
-      ready: false,
+      ready: false
     };
-  },
+  }
 
   componentWillMount() {
     this._load(this.props.src);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      this.setState({src: null});
+      this.setState({ src: null });
       this._load(nextProps.src);
     }
-  },
+  }
 
-  render() {
-    var style = this.state.src ?
-      { backgroundImage : 'url(' + this.state.src + ')'} :
-      undefined;
-
-    return <div className="exampleImage" style={style} />;
-  },
+  _onLoad(/*string*/ src) {
+    ReadyPool[src] = true;
+    if (src === this.props.src) {
+      this.setState({
+        src: src
+      });
+    }
+  }
 
   _load(/*string*/ src) {
     if (ReadyPool[src]) {
-      this.setState({src: src});
+      this.setState({ src: src });
       return;
     }
 
@@ -46,7 +49,7 @@ var ExampleImage = React.createClass({
 
     PendingPool[src] = [this._onLoad];
 
-    var img = new Image();
+    let img = new Image();
     img.onload = () => {
       PendingPool[src].forEach(/*function*/ callback => {
         callback(src);
@@ -56,17 +59,23 @@ var ExampleImage = React.createClass({
       src = undefined;
     };
     img.src = src;
-  },
+  }
 
-  _onLoad(/*string*/ src) {
-    ReadyPool[src] = true;
-    if (this.isMounted() && src === this.props.src) {
-      this.setState({
-        src: src,
-      });
-    }
-  },
-});
+  render() {
+    let style = this.state.src ?
+      { backgroundImage : 'url(' + this.state.src + ')' } :
+      undefined;
 
+    return (
+      <div 
+        className="exampleImage" 
+        style={style} 
+      />);
+  }
+}
+
+ExampleImage.propTypes = {
+  src: PropTypes.string.isRequired
+}
 
 module.exports = ExampleImage;

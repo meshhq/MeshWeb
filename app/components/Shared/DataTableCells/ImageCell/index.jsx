@@ -1,12 +1,12 @@
 
 import React from 'react'
-import ExampleImage from '../../helpers/examplePicture'
+import ExampleImage from '../../../helpers/examplePicture'
 
 const ImageCell = ({ rowIndex, data, col }) => {
   return (  
-      <ExampleImage
-        src={data.getObjectAt(rowIndex)[col]}
-      /> 
+    <ExampleImage
+      src={data.getObjectAt(rowIndex)[col]}
+    /> 
   )
 }
 

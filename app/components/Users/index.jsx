@@ -1,23 +1,24 @@
 
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 
 const { Table, Column, Cell } = FixedDataTable;
 
-class Organizations extends Component {
+class UsersTable extends React.Component {
   constructor(props) {
     super(props);
-    this._dataList = new DataListWrapper(this.props.organizations)
+    this._dataList = new DataListWrapper(this.props.users.users)
     this.state = {
       filteredDataList: this._dataList
     };
+
     this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this._dataList = new DataListWrapper(nextProps.organizations)
+    this._dataList = new DataListWrapper(nextProps.users.users)
     this.setState({
       filteredDataList: this._dataList
     });
@@ -34,36 +35,40 @@ class Organizations extends Component {
     let size = this._dataList.getSize();
     let filteredIndexes = [];
     for (let index = 0; index < size; index++) {
-      let { name } = this._dataList.getObjectAt(index);
-      if (name.toLowerCase().indexOf(filterBy) !== -1) {
+      let { firstName } = this._dataList.getObjectAt(index);
+      if (firstName.toLowerCase().indexOf(filterBy) !== -1) {
         filteredIndexes.push(index);
       }
     }
 
     this.setState({
-      filteredDataList: new DataListWrapper(this.props.organizations, filteredIndexes)
+      filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
     });
   }
 
   render() {
     const { filteredDataList } = this.state
     return (
-      <div className="organizations-container">
+      <div className="users-container">
         <div className="data-table">
           <div className="header row">
             <div className="col-md-12">
-              <h1>{'Organizations'}</h1>
-              <h4>{'The organizations that your users below to'}</h4>
+              <h1>{'Users'}</h1>
+              <h4>{'Master users table listing'}</h4>
             </div>
           </div>
-          <div className="row table-wrapper">
-            <div className="col-md-12 dataTableWrapper">
+          <div className="row action-wrapper">
+            <div className="col-md-6 col-xs-12 dataTableWrapper">
               <input
                 className="inputFilter"
                 onChange={this._handleOnFilterChange}
-                placeholder="Filter by Organization Name"
+                placeholder="Filter by First Name"
               />
               <br />
+            </div>
+          </div>
+          <div className="row table-row">
+            <div className="col-md-12 dataTableWrapper">
               <Table
                 headerHeight={50}
                 height={1000}
@@ -74,42 +79,42 @@ class Organizations extends Component {
               >
                 <Column
                   cell={<TextCell
-                    col="name"
+                    col="first_name"
                     data={filteredDataList}
                         />}
-                  header={<Cell>{'Name'}</Cell>}
+                  header={<Cell>{'First Name'}</Cell>}
                   width={150}
                 />
                 <Column
                   cell={<TextCell
-                    col="description"
+                    col="last_name"
                     data={filteredDataList}
                         />}
-                  header={<Cell>{'Description'}</Cell>}
-                  width={400}
+                  header={<Cell>{'Last Name'}</Cell>}
+                  width={150}
                 />
                 <Column
                   cell={<TextCell
-                    col="size"
+                    col="email"
                     data={filteredDataList}
                         />}
-                  header={<Cell>{'Size'}</Cell>}
-                  width={50}
+                  header={<Cell>{'Email'}</Cell>}
+                  width={300}
                 />
                 <Column
                   cell={<TextCell
-                    col="industry"
+                    col="phone"
                     data={filteredDataList}
                         />}
-                  header={<Cell>{'Industry'}</Cell>}
+                  header={<Cell>{'Phone'}</Cell>}
                   width={200}
                 />
                 <Column
                   cell={<TextCell
-                    col="website"
+                    col="id"
                     data={filteredDataList}
                         />}
-                  header={<Cell>{'Website'}</Cell>}
+                  header={<Cell>{'ID'}</Cell>}
                   width={200}
                 />
               </Table>
@@ -117,18 +122,18 @@ class Organizations extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-Organizations.defaultProps = {
-  organizations: [],
-  width: 0
-}
-
-Organizations.propTypes = {
-  organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+UsersTable.propTypes = {
+  users: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }
 
-export default Organizations
+UsersTable.defaultProps = {
+  users: [],
+  width: 0
+}
+
+export default UsersTable

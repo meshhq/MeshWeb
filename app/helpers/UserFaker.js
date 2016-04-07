@@ -1,4 +1,4 @@
-var faker = require('faker');
+import faker from 'faker'
 
 class FakeObjectDataListStore {
   constructor(/*number*/ size){
@@ -21,7 +21,7 @@ class FakeObjectDataListStore {
       catchPhrase: faker.company.catchPhrase(),
       companyName: faker.company.companyName(),
       words: faker.lorem.words(),
-      sentence: faker.lorem.sentence(),
+      sentence: faker.lorem.sentence()
     };
   }
 
@@ -37,7 +37,7 @@ class FakeObjectDataListStore {
 
   getAll() {
     if (this._cache.length < this.size) {
-      for (var i = 0; i < this.size; i++) {
+      for (let i = 0; i < this.size; i++) {
         this.getObjectAt(i);
       }
     }

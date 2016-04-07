@@ -38,8 +38,12 @@ function performFetch(request) {
 		if (response.ok) {
 			return response.json()
 		} else {
-			return response.json().then((resp) => {
-				return Promise.reject(resp)
+			return response.json().then((respJSON) => {
+				// Look for 401s
+				if (response.status == 401) {
+					clearAuthToken()
+				}
+				return Promise.reject(respJSON)
 			})
 		}
 	}, (error) => {
@@ -108,7 +112,7 @@ function defaultHeaders() {
 function appendAuthentication(headers) {
 	const authHeader = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
 	if (authHeader) {
-		const bearerHeader = "Bearer " + authHeader
+		const bearerHeader = 'Bearer ' + authHeader
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
 }

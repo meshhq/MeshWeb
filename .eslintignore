@@ -1,0 +1,6 @@
+app/assets/*
+lib/**
+node_modules/**
+public/**
+static/**
+webpack.config.js

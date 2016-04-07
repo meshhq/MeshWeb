@@ -5,14 +5,17 @@
     "jQuery": true,
     "$": true,
     "window": true,
-    "document": true
+    "document": true,
+    // This is included by babel
+    "Promise": true
   },
   "plugins": [
     "react"
   ],
   "env": {
     "commonjs": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
   "rules": {
     // General JS / ES6
@@ -24,6 +27,7 @@
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions (off by default)
     "object-curly-spacing": [2, "always"],
     "strict": 0,
+    "jsx-quotes": [0, "prefer-single"],
     
     //
     // Strict Mode
@@ -48,7 +52,6 @@
     "react/jsx-no-literals": 1,
     "react/jsx-no-undef": 1,
     "react/jsx-pascal-case": 1,
-    "react/jsx-quotes": 1,
     "react/jsx-sort-prop-types": 1,
     "react/jsx-sort-props": 1,
     "react/jsx-uses-react": 1,

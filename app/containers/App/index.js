@@ -12,7 +12,7 @@ import Navbar from '../../components/Navbar'
 import Organizations from '../../components/Organizations'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
-import UserTable from '../../components/UserTable'
+import UserTable from '../../components/Users'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -32,6 +32,7 @@ class App extends Component {
     this.state = {
       width: 500,
       initialLoad: false,
+      showLogin: false,
       loadError: false
     };
     // Binding these to the current class
@@ -119,6 +120,7 @@ class App extends Component {
           <Organizations 
             organizations={organizationState.organizations} 
             providers={providerState.providers}
+            width={this.state.width}
           />
           )
       case 2:
@@ -146,7 +148,7 @@ class App extends Component {
       )
     } else {
       return (
-        <div className="container">
+        <div className='container'>
           {this._appComponentForCurrentNavIdx()}
         </div>
       )
@@ -157,7 +159,7 @@ class App extends Component {
     const { navTitles, activeNavIdx } = this.props
     const appContent = this._contentForApp()
     return (
-      <div className="react-root">
+      <div className='react-root'>
         <Navbar 
           activeNavIdx={activeNavIdx}
           navTitles={navTitles} 
@@ -167,9 +169,9 @@ class App extends Component {
           transitionAppearTimeout={500}
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={500}
-          transitionName="appear_main"
+          transitionName='appear_main'
         >
-          <div className="container-wrapper">
+          <div className='container-wrapper'>
             {appContent}
           </div>
         </ReactCSSTransitionGroup>

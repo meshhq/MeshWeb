@@ -8,12 +8,13 @@ import _ from 'underscore'
 class Lists extends Component {
   constructor(props, context) {
     super(props, context)
-    const providerIdsPresentInLists = _.pluck(this.props.providers, 'id')
-    const uniqProviderIdsPresentInLists = _.uniq(providerIdsPresentInLists)
+    const providerTypesPresentInLists = _.pluck(this.props.lists, 'origin_provider')
+    const uniqProviderTypesPresentInLists = _.uniq(providerTypesPresentInLists)
     const filteredProviders = _.filter(this.props.providers, (provider) => { 
-      return _.indexOf(uniqProviderIdsPresentInLists, provider.id) != -1
+      return _.indexOf(uniqProviderTypesPresentInLists, provider.type) != -1
     })
-    this.state = { filteredProviders: filteredProviders, selectedProvider: filteredProviders[0] }
+    filteredProviders.push(this._meshProvider())
+    this.state = { filteredProviders: filteredProviders, selectedProvider: _.last(filteredProviders) }
   }
 
   _listsFilteredByCurrentIntegration() {
@@ -25,23 +26,32 @@ class Lists extends Component {
     this.setState({ selectedProvider: provider })
   }
 
-  render() {
+  /**
+   * Synthetic provider injected into the provider selection list
+   */
+  _meshProvider() {
+    return {
+      name: 'Mesh',
+      type: 0
+    }
+  }
 
+  render() {
     // MAKE PANELS
     const providersForDropdown = _.filter(this.state.filteredProviders, (provider) => { 
-      return provider.id != this.state.selectedProvider.id
+      return provider.type != this.state.selectedProvider.type
     })
-
+    
     // Building the drop down top left sort
     let providerSortList = []
     for (let i = 0; i < providersForDropdown.length; i++) {
       const provider = providersForDropdown[i]
-      const companyClicked = this._providerSelected.bind(this, provider)
+      const providerClicked = this._providerSelected.bind(this, provider)
       providerSortList.push(
         <li>
           <a href="#"
             key={provider.name}
-            onClick={companyClicked} 
+            onClick={providerClicked} 
           >
           {provider.name}
           </a>
@@ -52,7 +62,7 @@ class Lists extends Component {
     // Building the drop down top left sort
     const filteredLists = _.filter(this.props.lists, (list) => { 
       const hasName = list.hasOwnProperty('name')
-      const isCurrentProvider = list.origin_provdier == this.state.selectedProvider.id
+      const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
       return hasName && isCurrentProvider
     })
 
