@@ -8,11 +8,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
 import Lists from '../../components/Lists'
-import Navbar from '../../components/Navbar'
+import NavBar from '../../components/Navbar'
+import NavPane from '../../components/Navpane'
 import Organizations from '../../components/Organizations'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
-import UserTable from '../../components/Users'
+import UserTable from '../../components/UserTable'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -38,14 +39,14 @@ class App extends Component {
     // Binding these to the current class
     this.handleNavBarClick = this._handleNavBarClick.bind(this)
   }
-  
+
   componentDidMount() {
     this._getWindowWidth()
     this._performInitialSyncWithMesh()
   }
 
   /**
-   * Helper for determining the viewport width after 
+   * Helper for determining the viewport width after
    * component mount. Needed for the FB table to calc correctly
    */
   _performInitialSyncWithMesh() {
@@ -57,7 +58,7 @@ class App extends Component {
   }
 
   /**
-   * Helper for determining the viewport width after 
+   * Helper for determining the viewport width after
    * component mount. Needed for the FB table to calc correctly
    */
   _getWindowWidth() {
@@ -82,8 +83,8 @@ class App extends Component {
 
   /**
    * CB for a provider cell switch toggle
-   * @param  {String} providerId 
-   * @param  {Bool}   on         
+   * @param  {String} providerId
+   * @param  {Bool}   on
    */
   _providerWasToggled(providerId, on) {
     let foundProvider = null
@@ -94,15 +95,15 @@ class App extends Component {
         break
       }
     }
-    
+
     if (foundProvider != null || on) {
-      // TODO - ADJUST INTEGRATION 
+      // TODO - ADJUST INTEGRATION
     }
   }
 
   /**
    * Main window component switch
-   * @param  {Integer} navIdx 
+   * @param  {Integer} navIdx
    * @return {[JSX HTML]} HTML for container
    */
   _appComponentForCurrentNavIdx() {
@@ -137,7 +138,7 @@ class App extends Component {
   }
 
   /**
-   * We use this to determine whether the app is 
+   * We use this to determine whether the app is
    * still loading its content. We display a loading hud if not
    * @return {[JSX HTML]} [App Main Content]
    */
@@ -148,7 +149,7 @@ class App extends Component {
       )
     } else {
       return (
-        <div className='container'>
+        <div>
           {this._appComponentForCurrentNavIdx()}
         </div>
       )
@@ -159,21 +160,23 @@ class App extends Component {
     const { navTitles, activeNavIdx } = this.props
     const appContent = this._contentForApp()
     return (
-      <div className='react-root'>
-        <Navbar 
-          activeNavIdx={activeNavIdx}
-          navTitles={navTitles} 
-          onNavChange={this.handleNavBarClick}
-        />
-        <ReactCSSTransitionGroup 
+      <div className="react-root">
+        <NavBar
+           activeNavIdx={activeNavIdx}
+           navTitles={navTitles}
+           navTitles={navTitles}
+           onNavChange={this.handleNavBarClick}
+         />
+        <NavPane />
+        <ReactCSSTransitionGroup
           transitionAppearTimeout={500}
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={500}
           transitionName='appear_main'
         >
-          <div className='container-wrapper'>
-            {appContent}
-          </div>
+        <div className="container-wrapper">
+          {appContent}
+        </div>
         </ReactCSSTransitionGroup>
       </div>
     )

@@ -1,6 +1,6 @@
 // Component Imports
 
-$NavBarHeight: 40px;
+$NavBarHeight: 60px;
 
 .navbar {
 	background-color: $MeshBlackLight;
@@ -45,7 +45,7 @@ $NavBarHeight: 40px;
 				padding: 0px 10px;
 				padding-top: 10px;
 				padding-bottom: 9px;
-				
+
 				font-size: 16px;
 			}
 
@@ -64,34 +64,10 @@ $NavBarHeight: 40px;
 
 		.active {
 			a {
-				border-bottom: 3px solid $MeshBlue;			
+				border-bottom: 3px solid $MeshBlue;
 				color: $MeshWhite;
 				font-weight: 400;
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

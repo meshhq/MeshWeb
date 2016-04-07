@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Mesh Web App",
-  "main": "index.js",
+  "main": "index.js",       
   "scripts": {
     "test": "echo \"TH to setup tests soon 😱\" && exit 0",
     "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",

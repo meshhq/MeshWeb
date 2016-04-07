@@ -1,0 +1,93 @@
+.action-bar {
+	display: inline-block;
+	width: 100%;
+	height: 40px;
+}
+
+.selection-box {
+	float: left;
+	border: 1px solid black;
+	width: 40px;
+	height: 40px;
+	margin-top: 6px;
+	background-color: white;
+}
+
+.search-bar {
+	float: right;
+	.input-group {
+		width: 400px;
+	}
+}
+
+.action-button {
+	vertical-align: center;
+	font-size: 1.0em;
+	float: left;
+	border: 1px solid black;
+	width: 100px;
+	height: 40px;
+	margin-left: 10px;
+	background-color: white;
+}
+
+.action-button:hover {
+		border: 2px solid black;
+}
+
+h4 {
+	margin-top: 0;
+}
+
+.users-table {
+	.header {
+		margin-bottom: 1.5em;
+
+		h1, h2, h3, h4 {
+			margin-top: 0px;
+			font-weight: 300;
+		}
+	}
+
+	.userTableWrapper {
+		overflow: scroll;
+
+		// Top Row Columns
+		.fixedDataTableLayout_main {
+			width: 100%;
+
+			.public_fixedDataTableCell_cellContent {
+				color: $MeshBlack;
+
+			}
+			.public_fixedDataTableCell_main {
+				font: WorkSansFont;
+			}
+		}
+
+		.fixedDataTableCellLayout_main {
+			background-color: transparent;
+		}
+
+
+		.public_fixedDataTableRow_highlighted {
+			background-color: transparent;
+		}
+
+		.public_fixedDataTableCell_main {
+			background-color: transparent;
+		}
+
+		// Commenting out will give the rows an alternating color
+		.public_fixedDataTableRow_main {
+			background-color: transparent;
+		}
+
+		.fixedDataTableRowLayout_rowWrapper {
+			border: 1px solid #black;
+			border-bottom-style: solid;
+			border-bottom-color: $MeshGreyUltraLight;
+			border-bottom-width: 1px;
+		}
+	}
+}

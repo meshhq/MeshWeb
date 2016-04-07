@@ -1,0 +1,27 @@
+// Component Imports
+
+$NavBarHeight: 40px;
+
+.item {
+	background-color: #3399ff;
+	width: 100%;
+	margin-bottom: 1px;
+	height: 80px;
+	border-bottom: 1px solid #0066cc;
+}
+
+.navpane {
+	background-color: #3399ff;;
+	float: left;
+	width: 250px;
+	height: 500px;
+
+	h4 {
+		color: white;
+		font-size: 22px;
+		padding-top: 26px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		margin-left: 20px;
+	}
+}
