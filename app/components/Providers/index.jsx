@@ -12,9 +12,9 @@ class Providers extends Component {
     return 'Chillwave vice sriracha hella cliche forage. Thundercats artisan iphone, butcher +1 next level keffiyeh fixie narwhal.'
   }
 
-  _providerWasToggled(providerId, on) {
-    // Nada for now
-  }
+  // _providerWasToggled(providerId, on) {
+  //   // Nada for now
+  // }
 
   render() {
     const providersSections = _.map(this.props.providerState.providers, (provider) => {
@@ -61,7 +61,9 @@ class Providers extends Component {
 
     // Layout the providers in a row
     return (
-      <div className="row provider-wrapper" key="provider">
+      <div className="row provider-wrapper" 
+        key="provider"
+      >
         <div className="header row">
           <div className="col-md-12">
             <h1>{'Mesh Integrations'}</h1>
@@ -88,5 +90,7 @@ Providers.defaultProps = {
 Providers.propTypes = {
   providerState: PropTypes.object.isRequired
 }
+
+Providers.displayName = 'Providers List'
 
 export default Providers

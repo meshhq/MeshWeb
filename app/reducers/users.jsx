@@ -1,7 +1,5 @@
-import FakeObjectDataListStore from '../helpers/sampleUsers'
-import { ADD_USER, REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS } from '../actions/users'
 
-const seededDataList = new FakeObjectDataListStore(2000);
+import { ADD_USER, REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS } from '../actions/users'
 
 const defaultState = {
 	isFetching: false,

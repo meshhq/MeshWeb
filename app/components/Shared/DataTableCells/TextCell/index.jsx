@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 
 const { Cell } = FixedDataTable;
@@ -14,6 +14,13 @@ const TextCell = ({ rowIndex, data, col, ...props }) => {
       </Cell> 
     </div>
     )
+}
+
+TextCell.propTypes = {
+	col: PropTypes.number.isRequired,
+	data: PropTypes.object.isRequired,
+	props: PropTypes.array.isRequired,
+  rowIndex: PropTypes.number.isRequired
 }
 
 TextCell.displayName = 'Text Cell'

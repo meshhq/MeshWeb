@@ -32,7 +32,7 @@ export function refreshProviders() {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(requestedProviders())
-			return GET(`providers`)
+			return GET('providers')
 					.then(function(json){
 						dispatch(receivedProviders(json))
 					}
