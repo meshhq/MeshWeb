@@ -5,7 +5,7 @@
   "description": "Mesh Web App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"TH to setup tests 😱\" && exit 0",
     "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "local": "URL=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "build": "NODE_ENV=production webpack --progress --colors",
