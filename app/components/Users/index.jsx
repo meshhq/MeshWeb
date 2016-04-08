@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
+import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 
 const { Table, Column, Cell } = FixedDataTable;
@@ -10,11 +11,13 @@ class UsersTable extends React.Component {
   constructor(props) {
     super(props);
     this._dataList = new DataListWrapper(this.props.users.users)
+    this._selectedList = {}
     this.state = {
-      filteredDataList: this._dataList
+      filteredDataList: this._dataList,
+      selectedList: {}
     };
-
-    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
+    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this._handleToggleAll = this._handleToggleAll.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +27,11 @@ class UsersTable extends React.Component {
     });
   }
 
-  handleOnFilterChange(e) {
+  /**
+   * _handleOnFilterChange is the callback for all changes to the text filter
+   * @param  {[type]} e The Event
+   */
+  _handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
         filteredDataList: this._dataList
@@ -46,8 +53,33 @@ class UsersTable extends React.Component {
     });
   }
 
+  /**
+   * _handleToggleAll takes care of handling the event where all users are toggles
+   * @param  {[type]} e The event
+   */
+  _handleToggleAll(e) {
+    // If the input is toggled off, then wipe the selected list
+    if (!e.target.checked) {
+      this.setState({
+        selectedList: {}
+      });
+    } else {
+      // Copy over all IDs
+      let selectedList = {}
+      for (let idx in this.props.users.users) {
+        const id = this.props.users.users[idx].id
+        selectedList[id] = true
+      }
+
+      // Set new State
+      this.setState({
+        selectedList: selectedList
+      });      
+    }
+  }
+
   render() {
-    const { filteredDataList } = this.state
+    const { filteredDataList, selectedList } = this.state
     return (
       <div className="users-container">
         <div className="data-table">
@@ -61,7 +93,7 @@ class UsersTable extends React.Component {
             <div className="col-md-6 col-xs-12 dataTableWrapper">
               <input
                 className="inputFilter"
-                onChange={this.handleOnFilterChange}
+                onChange={this._handleOnFilterChange}
                 placeholder="Filter by First Name"
               />
               <br />
@@ -77,6 +109,24 @@ class UsersTable extends React.Component {
                 width={this.props.width}
                 {...this.props}
               >
+                <Column
+                  cell={<RadioCell
+                    col="radio"
+                    data={filteredDataList}
+                    selectedList={selectedList}
+                        />}
+                  header={
+                    <div className="input-group">
+                      <span className="input-group-addon">
+                        <input 
+                          aria-label="..." 
+                          onChange={this._handleToggleAll}
+                          type="checkbox"
+                        />
+                      </span>
+                    </div>}
+                  width={40}
+                />              
                 <Column
                   cell={<TextCell
                     col="first_name"

@@ -1,3 +1,18 @@
 .users-container {
 	
+	// Top bar selector button
+	.input-group {
+		position: initial;
+		span {
+			background: none;
+			border: none;
+		}
+
+		input {
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);			
+		}
+	}
 }
