@@ -2,27 +2,45 @@
 
 $NavBarHeight: 40px;
 
-.item {
-	background-color: #295185;
+.nav-item {
+	background-color: transparent;
 	width: 100%;
 	margin-bottom: 1px;
-	height: 60px;
-	border-bottom: 1px solid #0066cc;
-	border-left: 6px solid #3399ff;
+	height: 72px;
+}
+
+.nav-item-selected {
+	background-color: $MeshNavMediumBlue;
+	width: 100%;
+	margin-bottom: 1px;
+	height: 72px;
+}
+
+.nav-item-container {
+	display: block;
+	padding-top: 28px;
+	margin-left: 24px;
+	background-color: transparent;
+}
+
+.glyphicon {
+	float: left;
+	margin-top: 1px;
+	color: white;
 }
 
 .navpane {
-	background-color: #295185;;
+	background-color: $MeshNavDarkBlue;;
 	float: left;
 	width: 250px;
 	height:1000px;
 
 	h4 {
+		float: left;
 		color: white;
 		font-size: 18px;
-		padding-top: 20px;
 		margin-top: 0px;
 		margin-bottom: 0px;
-		margin-left: 24px;
+		margin-left: 14px;
 	}
 }

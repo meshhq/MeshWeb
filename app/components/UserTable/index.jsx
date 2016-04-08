@@ -154,10 +154,23 @@ class ActionBar extends Component {
   }
 }
 
+class SelectionBox extends Component {
+  render() {
+    return (
+      <div className="selection-box">
+        <button type="button" className="btn btn-default">
+            <input type="checkbox" />
+        </button>
+      </div>
+    )
+  }
+}
+
 class Actions extends Component {
   render() {
     return (
-      <div className="btn-group">
+      <div className="actions">
+        <button type="button" className="btn btn-default">New</button>
         <button type="button" className="btn btn-default">Merge</button>
         <button type="button" className="btn btn-default">Publish</button>
         <DropdownButton title="More" />
@@ -166,15 +179,6 @@ class Actions extends Component {
   }
 }
 
-class SelectionBox extends Component {
-  render() {
-    return (
-      <button type="button" className="btn btn-default">
-          <input type="checkbox" />
-      </button>
-    )
-  }
-}
 
 class ActionButton extends Component {
   render() {
@@ -191,7 +195,7 @@ class SearchBar extends Component {
     return (
       <div className="search-bar">
         <div className="input-group">
-          <input type="text" className="form-control" placeholder="Username" aria-describedby="basic-addon1" />
+          <input type="text" className="form-control" placeholder="Filter" aria-describedby="basic-addon1" />
         </div>
       </div>
     )
@@ -202,8 +206,8 @@ class DropdownButton extends Component {
   render() {
     return (
       <div className="btn-group">
-        <button type="button" className="btn btn-default">{this.props.title}</button>
         <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {this.props.title}
           <span className="caret"></span>
           <span className="sr-only">Toggle Dropdown</span>
         </button>

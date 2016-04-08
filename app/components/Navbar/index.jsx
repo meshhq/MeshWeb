@@ -58,9 +58,9 @@ class NavBar extends Component {
               </a>
             </div>
             <ul className="nav navbar-nav navbar-right">
-              <li><a href="#">DOCUMENTATION</a></li>
-              <li><a href="#">SUPPORT</a></li>
-              <li><a href="#">KEVIN COLEMAN</a></li>
+              <li><a className="light" href="#">DOCUMENTATION</a></li>
+              <li><a className="light"href="#">SUPPORT</a></li>
+              <li><a className="bold" href="#">KEVIN COLEMAN</a></li>
             </ul>
           </div>
         </nav>

@@ -3,7 +3,7 @@
 $NavBarHeight: 60px;
 
 .navbarDefault {
-	background-color: #3399ff;
+	background-color: $MeshNavBlue;
 	border-bottom: 2px solid #295185;
 	min-height: $NavBarHeight;
 	height: $NavBarHeight;
@@ -29,6 +29,13 @@ $NavBarHeight: 60px;
 	// Text Coloring
 	a {
 		color: white;
+	}
+	a.bold {
+		font-weight: 700;
+	}
+
+	a.light {
+		font-weight: 500;
 	}
 
 	a.navbar-header-brand {
