@@ -78,4 +78,6 @@ ExampleImage.propTypes = {
   src: PropTypes.string.isRequired
 }
 
+ExampleImage.displayName = 'Example Image'
+
 module.exports = ExampleImage;
