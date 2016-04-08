@@ -17,7 +17,7 @@ const TextCell = ({ rowIndex, data, col, ...props }) => {
 }
 
 TextCell.propTypes = {
-	col: PropTypes.number.isRequired,
+	col: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
 	props: PropTypes.array.isRequired,
   rowIndex: PropTypes.number.isRequired
