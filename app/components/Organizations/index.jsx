@@ -13,7 +13,7 @@ class Organizations extends Component {
     this.state = {
       filteredDataList: this._dataList
     };
-    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,7 +23,7 @@ class Organizations extends Component {
     });
   }
 
-  _handleOnFilterChange(e) {
+  handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
         filteredDataList: this._dataList
@@ -60,7 +60,7 @@ class Organizations extends Component {
             <div className="col-md-12 dataTableWrapper">
               <input
                 className="inputFilter"
-                onChange={this._handleOnFilterChange}
+                onChange={this.handleOnFilterChange}
                 placeholder="Filter by Organization Name"
               />
               <br />
@@ -130,5 +130,8 @@ Organizations.propTypes = {
   organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   width: PropTypes.number.isRequired
 }
+
+// Display Name
+Organizations.displayName = 'Organizations'
 
 export default Organizations

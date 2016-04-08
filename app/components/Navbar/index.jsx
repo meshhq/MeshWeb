@@ -18,7 +18,7 @@ class NavBar extends Component {
       const boundClick = this._handleNavItemWasClicked.bind(this, idx)
       if (idx === this.props.activeNavIdx) {
         item = (
-          <li className="active"
+          <li className="active" 
             key={title}
           >
             <a href="#"
@@ -87,5 +87,7 @@ NavBar.propTypes = {
   onNavChange: PropTypes.func.isRequired
 }
 
+// Display Name
+NavBar.displayName = 'NavBar'
 
 export default NavBar

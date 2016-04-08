@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ExampleImage from '../../../helpers/examplePicture'
 
 const ImageCell = ({ rowIndex, data, col }) => {
@@ -8,6 +8,12 @@ const ImageCell = ({ rowIndex, data, col }) => {
       src={data.getObjectAt(rowIndex)[col]}
     /> 
   )
+}
+
+ImageCell.propTypes = {
+	col: PropTypes.number.isRequired,
+	data: PropTypes.object.isRequired,
+  rowIndex: PropTypes.number.isRequired
 }
 
 ImageCell.displayName = 'Profile Image Cell'

@@ -14,7 +14,7 @@ class UsersTable extends React.Component {
       filteredDataList: this._dataList
     };
 
-    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +24,7 @@ class UsersTable extends React.Component {
     });
   }
 
-  _handleOnFilterChange(e) {
+  handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
         filteredDataList: this._dataList
@@ -61,7 +61,7 @@ class UsersTable extends React.Component {
             <div className="col-md-6 col-xs-12 dataTableWrapper">
               <input
                 className="inputFilter"
-                onChange={this._handleOnFilterChange}
+                onChange={this.handleOnFilterChange}
                 placeholder="Filter by First Name"
               />
               <br />
@@ -135,5 +135,7 @@ UsersTable.defaultProps = {
   users: [],
   width: 0
 }
+
+UsersTable.displayName = 'Users Table'
 
 export default UsersTable

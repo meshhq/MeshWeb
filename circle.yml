@@ -4,4 +4,4 @@ machine:
 
 test:
   pre:
-    - eslint ./
+    - eslint . --ext=jsx --ext=js
