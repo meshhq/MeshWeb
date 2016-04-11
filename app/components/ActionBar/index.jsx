@@ -18,8 +18,8 @@ class ActionBar extends Component {
   render() {
     return (
       <div className="action-bar">
-        <ActionGroup onActionClick={this.handleActionClick}/>
         <SearchBar onSearch={this._handleSearchInput}/>
+        <ActionGroup onActionClick={this.handleActionClick}/>
       </div>
     )
   }

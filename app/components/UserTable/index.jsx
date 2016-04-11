@@ -1,33 +1,12 @@
 
 import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
-import TextCell from './cells/textCell'
+import TextCell from '../Shared/DataTableCells/TextCell'
+import RadioCell from '../Shared/DataTableCells/RadioCell'
+import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 
 const { Table, Column, Cell } = FixedDataTable;
-
-class DataListWrapper {
-  constructor(data, filteredMapping) {
-    this._data = data
-    if (filteredMapping === undefined) {
-      const mapping = []
-      for (let i = 0; i < data.length; i++) {
-        mapping.push(i)
-      }
-      this._indexMapping = mapping
-    } else {
-      this._indexMapping = filteredMapping
-    }
-  }
-
-  getSize() {
-    return this._indexMapping.length
-  }
-
-  getObjectAt(index) {
-    return this._data[this._indexMapping[index]]
-  }
-}
 
 class UsersTable extends React.Component {
   constructor(props) {
@@ -106,6 +85,24 @@ class UsersTable extends React.Component {
               width={this.props.width}
               {...this.props}
             >
+              <Column
+                cell={<RadioCell
+                  col="radio"
+                  data={filteredDataList}
+                  selectedList={[]}
+                      />}
+                header={
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <input
+                        aria-label="..."
+                        onChange={this._handleToggleAll}
+                        type="checkbox"
+                      />
+                    </span>
+                  </div>}
+                width={40}
+              />
               <Column
                 cell={<TextCell col="first_name"
                   data={filteredDataList}

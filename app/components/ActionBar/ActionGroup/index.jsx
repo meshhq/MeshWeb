@@ -19,7 +19,6 @@ class ActionGroup extends Component {
 
     return (
       <div className="action-group">
-        <RadioButton onClick={onRadioClick} />
         <ActionButton onButtonClick={onNewClick}
           title="New"
         />
