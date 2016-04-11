@@ -1,43 +1,58 @@
-
-import React, { Component } from 'react'
-
-class NavItem extends Component {
-  render() {
-    return (
-      <div className="nav-item">
-        <div className="nav-item-container">
-          <span className={this.props.glyph} aria-hidden="true"></span>
-          <h4>{this.props.title}</h4>
-        </div>
-      </div>
-    )
-  }
-}
-
-class NavItemSelected extends Component {
-  render() {
-    return (
-      <div className="nav-item-selected">
-        <div className="nav-item-container">
-          <span className={this.props.glyph} aria-hidden="true"></span>
-          <h4>{this.props.title}</h4>
-        </div>
-      </div>
-    )
-  }
-}
+import React, { PropTypes, Component } from 'react'
+import NavItem from './NavItem'
 
 class NavPane extends Component {
+  constructor(props, context) {
+    super(props, context)
+  }
+
+  _handleNavItemWasClicked(idx) {
+    this.props.onNavChange(idx)
+  }
+
   render() {
+    const userClick = this._handleNavItemWasClicked.bind(this, 0)
+    const users = (
+      <NavItem glyph="glyphicon glyphicon-user"
+        onClick={userClick}
+        title="USERS"
+      />
+    )
+    const organizationsClick = this._handleNavItemWasClicked.bind(this, 1)
+    const organizations = (
+      <NavItem glyph="glyphicon glyphicon-th-large"
+        onClick={organizationsClick}
+        title="ORGANIZATIONS"
+      />
+    )
+    const listsClick = this._handleNavItemWasClicked.bind(this, 2)
+    const lists = (
+      <NavItem glyph="glyphicon glyphicon-th-list"
+        onClick={listsClick}
+        title="LISTS"
+      />
+    )
+    const integrationsClick = this._handleNavItemWasClicked.bind(this, 3)
+    const integrations = (
+      <NavItem glyph="glyphicon glyphicon-ok"
+        onClick={integrationsClick}
+        title="INTEGRATIONS"
+      />
+    )
     return (
       <div className="navpane">
-        <NavItemSelected glyph="glyphicon glyphicon-user" title="USERS"/>
-        <NavItem glyph="glyphicon glyphicon-th-large" title="ORGANIZATIONS"/>
-        <NavItem glyph="glyphicon glyphicon-th-list" title="LISTS"/>
-        <NavItem glyph="glyphicon glyphicon-ok" title="INTEGRATIONS"/>
+        {users}
+        {organizations}
+        {lists}
+        {integrations}
       </div>
     )
   }
+}
+
+NavPane.propTypes = {
+  activeNavIdx: PropTypes.number.isRequired,
+  onNavChange: PropTypes.func.isRequired
 }
 
 export default NavPane

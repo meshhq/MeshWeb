@@ -9,7 +9,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 // Components
 import Lists from '../../components/Lists'
 import NavBar from '../../components/Navbar'
-import NavPane from '../../components/Navpane'
+import NavPane from '../../components/NavPane'
 import Organizations from '../../components/Organizations'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
@@ -19,6 +19,7 @@ import UserTable from '../../components/UserTable'
 import * as AppActions from '../../actions/application'
 import * as ListActions from '../../actions/lists'
 import * as NavActions from '../../actions/nav'
+import * as NavPaneActions from '../../actions/NavPane'
 import * as OrgActions from '../../actions/organizations'
 import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
@@ -36,8 +37,10 @@ class App extends Component {
       showLogin: false,
       loadError: false
     };
+
     // Binding these to the current class
     this.handleNavBarClick = this._handleNavBarClick.bind(this)
+    this.handleNavPaneClick = this._handleNavPaneClick.bind(this)
   }
 
   componentDidMount() {
@@ -78,6 +81,16 @@ class App extends Component {
   _handleNavBarClick(navIdx) {
     if (navIdx != this.props.activeNavIdx) {
       this.props.navActions.setNavSelection(navIdx)
+    }
+  }
+
+  /**
+   * Handling a nav pane click
+   * @param  {Integer} navIdx
+   */
+  _handleNavPaneClick(navIdx) {
+    if (navIdx != this.props.activeNavIdx) {
+      this.props.navPaneActions.setNavSelection(navIdx)
     }
   }
 
@@ -162,12 +175,14 @@ class App extends Component {
     return (
       <div className="react-root">
         <NavBar
-           activeNavIdx={activeNavIdx}
-           navTitles={navTitles}
-           navTitles={navTitles}
-           onNavChange={this.handleNavBarClick}
-         />
-        <NavPane />
+          activeNavIdx={activeNavIdx}
+          navTitles={navTitles}
+          onNavChange={this._handleNavBarClick}
+        />
+        <NavPane
+          activeNavIdx={activeNavIdx}
+          onNavChange={this._handleNavPaneClick}
+        />
         <div className="container-wrapper">
           {appContent}
         </div>
@@ -182,6 +197,7 @@ App.propTypes = {
   listActions: PropTypes.object.isRequired,
   listState: PropTypes.object.isRequired,
   navActions: PropTypes.object.isRequired,
+  navPaneActions: PropTypes.object.isRequired,
   navTitles: PropTypes.arrayOf(React.PropTypes.string).isRequired,
   organizationActions: PropTypes.object.isRequired,
   organizationState: PropTypes.object.isRequired,
@@ -212,6 +228,7 @@ function mapDispatchToProps(dispatch) {
     appActions: bindActionCreators(AppActions, dispatch),
     listActions: bindActionCreators(ListActions, dispatch),
     navActions: bindActionCreators(NavActions, dispatch),
+    navPaneActions: bindActionCreators(NavPaneActions, dispatch),
     organizationActions: bindActionCreators(OrgActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
