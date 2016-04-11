@@ -1,6 +1,12 @@
 import React, { PropTypes, Component } from 'react'
 import NavItem from './NavItem'
 
+// Nav Item Titles
+const titles = ['USERS', 'ORGANIZATIONS', 'LISTS', 'INTEGRATIONS']
+
+// Nav Item Glyphs
+const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large', 'glyphicon glyphicon-th-list', 'glyphicon glyphicon-ok']
+
 class NavPane extends Component {
   constructor(props, context) {
     super(props, context)
@@ -11,46 +17,42 @@ class NavPane extends Component {
   }
 
   render() {
-    const userClick = this._handleNavItemWasClicked.bind(this, 0)
-    const users = (
-      <NavItem glyph="glyphicon glyphicon-user"
-        onClick={userClick}
-        title="USERS"
-      />
-    )
-    const organizationsClick = this._handleNavItemWasClicked.bind(this, 1)
-    const organizations = (
-      <NavItem glyph="glyphicon glyphicon-th-large"
-        onClick={organizationsClick}
-        title="ORGANIZATIONS"
-      />
-    )
-    const listsClick = this._handleNavItemWasClicked.bind(this, 2)
-    const lists = (
-      <NavItem glyph="glyphicon glyphicon-th-list"
-        onClick={listsClick}
-        title="LISTS"
-      />
-    )
-    const integrationsClick = this._handleNavItemWasClicked.bind(this, 3)
-    const integrations = (
-      <NavItem glyph="glyphicon glyphicon-ok"
-        onClick={integrationsClick}
-        title="INTEGRATIONS"
-      />
-    )
+
+    const navItems = []
+    for(let count = 0; count < 4; count++) {
+      let title = titles[count]
+      let glyph = glyphs[count]
+      let onClick = this._handleNavItemWasClicked.bind(this, count)
+
+      let item
+      if (count == this.props.activeNavIdx) {
+        item = (
+          <NavItem glyph={glyph}
+            onClick={onClick}
+            title={title}
+          />
+        )
+      } else {
+        item = (
+          <NavItem glyph={glyph}
+            onClick={onClick}
+            title={title}
+          />
+        )
+      }
+      navItems.push(item)
+    }
+
     return (
       <div className="navpane">
-        {users}
-        {organizations}
-        {lists}
-        {integrations}
+        {navItems}
       </div>
     )
   }
 }
 
 NavPane.displayName = 'Navigation Pane';
+
 NavPane.propTypes = {
   activeNavIdx: PropTypes.number.isRequired,
   onNavChange: PropTypes.func.isRequired

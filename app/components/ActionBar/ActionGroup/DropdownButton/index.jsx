@@ -34,7 +34,7 @@ class DropdownButton extends Component {
 DropdownButton.displayName = 'Dropdown Button';
 
 DropdownButton.propTypes = {
-  onButtonClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 }
 

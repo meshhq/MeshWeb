@@ -1,21 +1,46 @@
 
-import React, { Component } from 'react'
-import Button from './Button'
+import React, { Component, PropTypes } from 'react'
+import ActionButton from './ActionButton'
 import DropdownButton from './DropdownButton'
+import RadioButton from './RadioButton'
 
 class ActionGroup extends Component {
+  _handleActionItemWasClicked(idx) {
+    this.props.onActionClick(idx)
+  }
+
   render() {
+
+    let onRadioClick = this._handleActionItemWasClicked.bind(this, 0)
+    let onNewClick = this._handleActionItemWasClicked.bind(this, 1)
+    let onMergeClick = this._handleActionItemWasClicked.bind(this, 2)
+    let onPublishClick = this._handleActionItemWasClicked.bind(this, 3)
+    let onDropdownClick = this._handleActionItemWasClicked.bind(this, 4)
+
     return (
       <div className="action-group">
-        <Button title="New"/>
-        <Button title="Merge"/>
-        <Button title="Publish"/>
-        <DropdownButton title="More" />
+        <RadioButton onClick={onRadioClick} />
+        <ActionButton onButtonClick={onNewClick}
+          title="New"
+        />
+        <ActionButton onButtonClick={onMergeClick}
+          title="Merge"
+        />
+        <ActionButton onButtonClick={onPublishClick}
+          title="Publish"
+        />
+        <DropdownButton onClick={onDropdownClick}
+          title="More"
+        />
       </div>
     )
   }
 }
 
 ActionGroup.displayName = 'Action Group';
+
+ActionGroup.propTypes = {
+  onActionClick: PropTypes.func.isRequired
+}
 
 export default ActionGroup

@@ -38,6 +38,7 @@ class UsersTable extends React.Component {
     };
 
     this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleActionClick = this._handleActionClick.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +46,26 @@ class UsersTable extends React.Component {
     this.setState({
       filteredDataList: this._dataList
     });
+  }
+
+  _handleActionClick(idx) {
+    switch(idx) {
+    case 0:
+        // Select All
+        break;
+    case 1:
+        // New
+        break;
+    case 2:
+        // Publish
+        break;
+    case 3:
+        // Merge
+        break;
+    case 4:
+        // Mote
+        break;
+      }
   }
 
   _handleOnFilterChange(e) {
@@ -76,7 +97,7 @@ class UsersTable extends React.Component {
       <div className="users-table">
         <div className="row table-wrapper">
           <div className="col-md-12 userTableWrapper">
-            <ActionBar />
+            <ActionBar onActionClick={this.handleActionClick}/>
             <Table
               headerHeight={50}
               height={1000}

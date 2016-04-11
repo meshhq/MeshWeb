@@ -8,7 +8,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
 import Lists from '../../components/Lists'
-import NavBar from '../../components/Navbar'
+import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
 import Organizations from '../../components/Organizations'
 import Providers from '../../components/Providers'
@@ -90,7 +90,7 @@ class App extends Component {
    */
   _handleNavPaneClick(navIdx) {
     if (navIdx != this.props.activeNavIdx) {
-      this.props.navPaneActions.setNavSelection(navIdx)
+      this.props.navPaneActions.setNavPaneSelection(navIdx)
     }
   }
 
@@ -124,15 +124,15 @@ class App extends Component {
     switch(activeNavIdx) {
       case 0:
         return (
-          <UserTable 
-            users={userState} 
+          <UserTable
+            users={userState}
             width={this.state.width}
           />
           )
       case 1:
         return (
-          <Organizations 
-            organizations={organizationState.organizations} 
+          <Organizations
+            organizations={organizationState.organizations}
             providers={providerState.providers}
             width={this.state.width}
           />
@@ -175,13 +175,14 @@ class App extends Component {
     return (
       <div className="react-root">
         <NavBar
+          accountName="KEVIN COLEMAN"
           activeNavIdx={activeNavIdx}
           navTitles={navTitles}
           onNavChange={this._handleNavBarClick}
         />
         <NavPane
           activeNavIdx={activeNavIdx}
-          onNavChange={this._handleNavPaneClick}
+          onNavChange={this.handleNavPaneClick}
         />
         <div className="container-wrapper">
           {appContent}
