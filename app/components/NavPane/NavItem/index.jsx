@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 class NavItem extends Component {
   render() {
@@ -14,6 +14,14 @@ class NavItem extends Component {
       </div>
     )
   }
+}
+
+NavItem.displayName = 'Navigation Item';
+
+NavItem.propTypes = {
+  glyph: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default NavItem

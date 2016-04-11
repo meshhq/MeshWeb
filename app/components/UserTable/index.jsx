@@ -172,6 +172,8 @@ class UsersTable extends React.Component {
   }
 }
 
+UsersTable.displayName = 'Users Table';
+
 UsersTable.propTypes = {
   users: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired

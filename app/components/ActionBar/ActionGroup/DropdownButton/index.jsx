@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 class DropdownButton extends Component {
   render() {
@@ -29,6 +29,13 @@ class DropdownButton extends Component {
       </div>
     )
   }
+}
+
+DropdownButton.displayName = 'Dropdown Button';
+
+DropdownButton.propTypes = {
+  onButtonClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default DropdownButton

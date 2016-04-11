@@ -50,6 +50,7 @@ class NavPane extends Component {
   }
 }
 
+NavPane.displayName = 'Navigation Pane';
 NavPane.propTypes = {
   activeNavIdx: PropTypes.number.isRequired,
   onNavChange: PropTypes.func.isRequired

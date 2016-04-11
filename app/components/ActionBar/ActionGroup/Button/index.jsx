@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 
 class Button extends Component {
@@ -13,6 +13,13 @@ class Button extends Component {
       </button>
     )
   }
+}
+
+Button.displayName = 'Button';
+
+Button.propTypes = {
+  onButtonClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired
 }
 
 export default Button

@@ -16,4 +16,6 @@ class ActionGroup extends Component {
   }
 }
 
+ActionGroup.displayName = 'Action Group';
+
 export default ActionGroup

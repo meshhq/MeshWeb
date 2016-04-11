@@ -15,4 +15,6 @@ class SelectionBox extends Component {
   }
 }
 
+SelectionBox.displayName = 'Selection Box';
+
 export default SelectionBox

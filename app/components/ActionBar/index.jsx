@@ -9,11 +9,13 @@ class ActionBar extends Component {
     return (
       <div className="action-bar">
         <SelectionBox />
-        <ActionGroup title="More"/>
+        <ActionGroup />
         <SearchBar />
       </div>
     )
   }
 }
+
+ActionBar.displayName = 'Action Bar';
 
 export default ActionBar
