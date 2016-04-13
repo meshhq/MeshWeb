@@ -74,7 +74,7 @@ class UsersTable extends React.Component {
       // Set new State
       this.setState({
         selectedList: selectedList
-      });      
+      });
     }
   }
 
@@ -118,15 +118,15 @@ class UsersTable extends React.Component {
                   header={
                     <div className="input-group">
                       <span className="input-group-addon">
-                        <input 
-                          aria-label="..." 
+                        <input
+                          aria-label="..."
                           onChange={this._handleToggleAll}
                           type="checkbox"
                         />
                       </span>
                     </div>}
                   width={40}
-                />              
+                />
                 <Column
                   cell={<TextCell
                     col="first_name"

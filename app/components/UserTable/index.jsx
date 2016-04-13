@@ -10,8 +10,8 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
-import UserForm from '../Forms/UserForm'
 import TableColumn from './columns'
+import UserForm from '../Forms/UserForm'
 
 // Actions
 import * as UserActions from '../../actions/users'
@@ -21,19 +21,23 @@ const { Table, Column, Cell } = FixedDataTable;
 class UsersTable extends React.Component {
   constructor(props) {
     super(props);
-    this._dataList = new DataListWrapper(this.props.users.users)
+    this.dataList = new DataListWrapper(this.props.users.users)
+    console.log(this.dataList)
     this.state = {
-      filteredDataList: this._dataList
+      filteredDataList: this.dataList,
+      selectedList: {},
+      userFormDisplayed: false
     };
 
-    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
     this.handleActionClick = this._handleActionClick.bind(this)
+    this.handleToggleAll = this._handleToggleAll.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this._dataList = new DataListWrapper(nextProps.users.users)
+    this.dataList = new DataListWrapper(nextProps.users.users)
     this.setState({
-      filteredDataList: this._dataList
+      filteredDataList: this.dataList
     });
   }
 
@@ -42,14 +46,11 @@ class UsersTable extends React.Component {
     case 0:
         // Select All
         break;
-    case 1: // Throw up modal
-      ReactDOM.render(<UserForm />, this);
-
-      this.props.userActions.addUser().then(() => {
-        //
-      }, () => {
-        //
-      })
+    case 1:
+      console.log(this.state.userFormDisplayed)
+        this.setState({
+          userFormDisplayed: true
+        });
         break;
     case 2:
 
@@ -63,36 +64,69 @@ class UsersTable extends React.Component {
       }
   }
 
+  /**
+   * _handleOnFilterChange is the callback for all changes to the text filter
+   * @param  {[type]} e The Event
+   */
   _handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
-        filteredDataList: this._dataList
+        filteredDataList: this.dataList
       });
     }
 
     let filterBy = e.target.value.toLowerCase();
-    let size = this._dataList.getSize();
+    let size = this.dataList.getSize();
     let filteredIndexes = [];
     for (let index = 0; index < size; index++) {
-      let { firstName } = this._dataList.getObjectAt(index);
-      if (firstName.toLowerCase().indexOf(filterBy) !== -1) {
+      let { first_name } = this.dataList.getObjectAt(index);
+      if (first_name.toLowerCase().indexOf(filterBy) !== -1) {
         filteredIndexes.push(index);
       }
     }
 
     this.setState({
-      filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
+      filteredDataList: new DataListWrapper(this.props.users.users, filteredIndexes)
     });
   }
 
+  /**
+   * _handleToggleAll takes care of handling the event where all users are toggles
+   * @param  {[type]} e The event
+   */
+  _handleToggleAll(e) {
+    // If the input is toggled off, then wipe the selected list
+    if (!e.target.checked) {
+      this.setState({
+        selectedList: {}
+      });
+    } else {
+      // Copy over all IDs
+      let selectedList = {}
+      for (let idx in this.props.users.users) {
+        const id = this.props.users.users[idx].id
+        selectedList[id] = true
+      }
+
+      // Set new State
+      this.setState({
+        selectedList: selectedList
+      });
+    }
+  }
+
   render() {
-    const { filteredDataList } = this.state
+    const { filteredDataList, selectedList  } = this.state
     return (
 
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ActionBar onActionClick={this.handleActionClick}/>
+            <ActionBar
+              onActionClick={this.handleActionClick}
+              onSearchInput={this.handleOnFilterChange}
+            />
+            <UserForm displayed={this.state.userFormDisplayed} />
             <Table
               headerHeight={50}
               height={1000}
@@ -105,15 +139,15 @@ class UsersTable extends React.Component {
                 cell={<RadioCell
                   col="radio"
                   data={filteredDataList}
-                  selectedList={[]}
+                  selectedList={selectedList}
                       />}
                 header={<Cell>
                   <div className="input-group">
-                      <input
-                        aria-label="..."
-                        onChange={this._handleToggleAll}
-                        type="checkbox"
-                      />
+                    <input
+                      aria-label="..."
+                      onChange={this.handleToggleAll}
+                      type="checkbox"
+                    />
                   </div></Cell>}
                 width={32}
               />
