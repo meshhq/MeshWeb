@@ -49,62 +49,61 @@ class Organizations extends Component {
   render() {
     const { filteredDataList } = this.state
     return (
-        <div className="data-table">
-          <div className="row table-wrapper">
-            <div className="col-md-12 dataTableWrapper">
-              <ActionBar onActionClick={this.handleActionClick}/>
-              <Table
-                headerHeight={50}
-                height={1000}
-                rowHeight={35}
-                rowsCount={filteredDataList.getSize()}
-                width={this.props.width}
-                {...this.props}
-              >
-                <Column
-                  cell={<TextCell
-                    col="name"
-                    data={filteredDataList}
-                        />}
-                  header={<Cell>{'Name'}</Cell>}
-                  width={150}
-                />
-                <Column
-                  cell={<TextCell
-                    col="description"
-                    data={filteredDataList}
-                        />}
-                  header={<Cell>{'Description'}</Cell>}
-                  width={400}
-                />
-                <Column
-                  cell={<TextCell
-                    col="size"
-                    data={filteredDataList}
-                        />}
-                  header={<Cell>{'Size'}</Cell>}
-                  width={50}
-                />
-                <Column
-                  cell={<TextCell
-                    col="industry"
-                    data={filteredDataList}
-                        />}
-                  header={<Cell>{'Industry'}</Cell>}
-                  width={200}
-                />
-                <Column
-                  cell={<TextCell
-                    col="website"
-                    data={filteredDataList}
-                        />}
-                  header={<Cell>{'Website'}</Cell>}
-                  width={200}
-                />
-              </Table>
-            </div>
+      <div className="data-table">
+        <div className="row table-wrapper">
+          <div className="col-md-12 dataTableWrapper">
+            <Table
+              headerHeight={50}
+              height={1000}
+              rowHeight={35}
+              rowsCount={filteredDataList.getSize()}
+              width={this.props.width}
+              {...this.props}
+            >
+              <Column
+                cell={<TextCell
+                  col="name"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Name'}</Cell>}
+                width={150}
+              />
+              <Column
+                cell={<TextCell
+                  col="description"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Description'}</Cell>}
+                width={400}
+              />
+              <Column
+                cell={<TextCell
+                  col="size"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Size'}</Cell>}
+                width={50}
+              />
+              <Column
+                cell={<TextCell
+                  col="industry"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Industry'}</Cell>}
+                width={200}
+              />
+              <Column
+                cell={<TextCell
+                  col="website"
+                  data={filteredDataList}
+                      />}
+                header={<Cell>{'Website'}</Cell>}
+                width={200}
+              />
+            </Table>
           </div>
         </div>
+      </div>
     )
   }
 }
