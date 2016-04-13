@@ -1,8 +1,8 @@
 
 import { GET, POST, PUT, DELETE } from '../helpers/api'
+export const ADD_USER = 'ADD_USER'
 
 // Network Calls
-export const ADD_USER = 'ADD_USER'
 export function addUser(user) {
 	return { type: ADD_USER, user }
 }
@@ -11,34 +11,6 @@ export const ADDED_USER = 'ADDED_USER'
 export function addedUser(json) {
 	return {
 		type: ADDED_USER,
-		users: json,
-		receivedAt: Date.now()
-	}
-}
-
-export const UPDATE_USER = 'UPDATE_USER'
-export function updateUser(user) {
-	return { type: UPDATE_USER, user }
-}
-
-export const UPDATED_USER = 'UPDATED_USER'
-export function updatedUser(json) {
-	return {
-		type: UPDATED_USER,
-		users: json,
-		receivedAt: Date.now()
-	}
-}
-
-export const DELETE_USER = 'DELETE_USER'
-export function deleteUser(user) {
-	return { type: UPDATE_USER, user }
-}
-
-export const DELETED_USER = 'DELETED_USER'
-export function deletedUser(json) {
-	return {
-		type: DELETED_USER,
 		users: json,
 		receivedAt: Date.now()
 	}
@@ -94,36 +66,6 @@ export function addUser() {
 			return POST(`apps/${appID}/users/${userID}`)
 			.then(function(json){
 					dispatch(addedUser(json))
-				}
-			)
-		}
-	}
-}
-
-export function updateUser() {
-	return (dispatch, getState) => {
-		if (getState().app.id) {
-			dispatch(requestedUsers())
-			const appID = getState().app.id
-			const userID = getState().user.id
-			return PUT(`apps/${appID}/users/${userID}`)
-			.then(function(json){
-					dispatch(updatedUser(json))
-				}
-			)
-		}
-	}
-}
-
-export function deleteUser() {
-	return (dispatch, getState) => {
-		if (getState().app.id) {
-			dispatch(requestedUsers())
-			const appID = getState().app.id
-			const userID = getState().user.id
-			return DELETE(`apps/${appID}/users/${userID}`)
-			.then(function(json){
-					dispatch(deletedUser(json))
 				}
 			)
 		}
