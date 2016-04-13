@@ -10,8 +10,6 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
-import TableColumn from './columns'
-import UserForm from '../Forms/UserForm'
 
 // Actions
 import * as UserActions from '../../actions/users'
@@ -22,11 +20,9 @@ class UsersTable extends React.Component {
   constructor(props) {
     super(props);
     this.dataList = new DataListWrapper(this.props.users.users)
-    console.log(this.dataList)
     this.state = {
       filteredDataList: this.dataList,
-      selectedList: {},
-      userFormDisplayed: false
+      selectedList: {}
     };
 
     this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
@@ -47,10 +43,7 @@ class UsersTable extends React.Component {
         // Select All
         break;
     case 1:
-      console.log(this.state.userFormDisplayed)
-        this.setState({
-          userFormDisplayed: true
-        });
+        // Show form
         break;
     case 2:
 
@@ -126,7 +119,6 @@ class UsersTable extends React.Component {
               onActionClick={this.handleActionClick}
               onSearchInput={this.handleOnFilterChange}
             />
-            <UserForm displayed={this.state.userFormDisplayed} />
             <Table
               headerHeight={50}
               height={1000}
