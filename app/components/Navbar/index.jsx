@@ -4,9 +4,6 @@ import React, { PropTypes, Component } from 'react'
 // Nav Item Titles
 const titles = ['DOCUMENTATION', 'SUPPORT']
 
-// Nav Item Glyphs
-const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large']
-
 class NavBar extends Component {
   constructor(props, context) {
     super(props, context)

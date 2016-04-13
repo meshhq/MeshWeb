@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
 import Lists from '../../components/Lists'

@@ -1,5 +1,5 @@
 
-import { GET, POST, PUT, DELETE } from '../helpers/api'
+import { GET } from '../helpers/api'
 export const ADD_USER = 'ADD_USER'
 
 // Network Calls
@@ -51,21 +51,6 @@ export function refreshUsers() {
 			return GET(`apps/${appId}/users`)
 			.then(function(json){
 					dispatch(receivedUsers(json))
-				}
-			)
-		}
-	}
-}
-
-export function addUser() {
-	return (dispatch, getState) => {
-		if (getState().app.id) {
-			dispatch(requestedUsers())
-			const appID = getState().app.id
-			const userID = getState().user.id
-			return POST(`apps/${appID}/users/${userID}`)
-			.then(function(json){
-					dispatch(addedUser(json))
 				}
 			)
 		}
