@@ -9,7 +9,7 @@ class SearchBar extends Component {
           <input
             aria-describedby="basic-addon1"
             className="form-control"
-            placeholder="Filter"
+            placeholder="Search"
             type="text"
           />
         </div>

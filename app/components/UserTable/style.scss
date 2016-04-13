@@ -2,13 +2,7 @@
 
 	// Top bar selector button
 	.input-group {
-		margin-left: 0px;
-
-		span {
-			background: none;
-			border: none;
-		}
-
+		width: 100%;
 		input {
 			margin: 0;
 			position: absolute;
@@ -16,7 +10,7 @@
 	}
 }
 
-.users-table {
+.data-table {
 	.header {
 		margin-bottom: 1.5em;
 
@@ -26,12 +20,11 @@
 		}
 	}
 
-	.userTableWrapper {
+	.dataTableWrapper {
 		overflow: scroll;
 
 		// Top Row Columns
 		.fixedDataTableLayout_main {
-			width: 100%;
 			background-color: transparent;
 
 			.fixedDataTableLayout_rowsContainer {

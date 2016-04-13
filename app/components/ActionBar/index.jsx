@@ -8,7 +8,12 @@ class ActionBar extends Component {
     super(props);
 
     // Binding these to the current class
+    this.handleSearchInput = this._handleSearchInput.bind(this)
     this.handleActionClick = this._handleActionClick.bind(this)
+  }
+
+  _handleSearchInput(text) {
+    this.props.onSearchInput(text)
   }
 
   _handleActionClick(idx) {
@@ -18,7 +23,7 @@ class ActionBar extends Component {
   render() {
     return (
       <div className="action-bar">
-        <SearchBar onSearch={this._handleSearchInput}/>
+        <SearchBar onSearchInput={this.handleSearchInput}/>
         <ActionGroup onActionClick={this.handleActionClick}/>
       </div>
     )
@@ -28,7 +33,8 @@ class ActionBar extends Component {
 ActionBar.displayName = 'Action Bar';
 
 ActionBar.propTypes = {
-  onActionClick: PropTypes.func.isRequired
+  onActionClick: PropTypes.func.isRequired,
+  onSearchInput: PropTypes.func.isRequired
 }
 
 export default ActionBar

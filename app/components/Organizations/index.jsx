@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import DataListWrapper from '../Shared/DataListWrapper'
+import ActionBar from '../ActionBar'
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -48,22 +49,10 @@ class Organizations extends Component {
   render() {
     const { filteredDataList } = this.state
     return (
-      <div className="organizations-container">
         <div className="data-table">
-          <div className="header row">
-            <div className="col-md-12">
-              <h1>{'Organizations'}</h1>
-              <h4>{'The organizations that your users below to'}</h4>
-            </div>
-          </div>
           <div className="row table-wrapper">
             <div className="col-md-12 dataTableWrapper">
-              <input
-                className="inputFilter"
-                onChange={this.handleOnFilterChange}
-                placeholder="Filter by Organization Name"
-              />
-              <br />
+              <ActionBar onActionClick={this.handleActionClick}/>
               <Table
                 headerHeight={50}
                 height={1000}
@@ -116,7 +105,6 @@ class Organizations extends Component {
             </div>
           </div>
         </div>
-      </div>
     )
   }
 }

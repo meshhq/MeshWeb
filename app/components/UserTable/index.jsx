@@ -1,10 +1,20 @@
 
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+// Components
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import UserForm from '../Forms/UserForm'
+import TableColumn from './columns'
+
+// Actions
+import * as UserActions from '../../actions/users'
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -32,17 +42,23 @@ class UsersTable extends React.Component {
     case 0:
         // Select All
         break;
-    case 1:
-        // New
+    case 1: // Throw up modal
+      ReactDOM.render(<UserForm />, this);
+
+      this.props.userActions.addUser().then(() => {
+        //
+      }, () => {
+        //
+      })
         break;
     case 2:
-        // Publish
+
         break;
     case 3:
         // Merge
         break;
     case 4:
-        // Mote
+        // More
         break;
       }
   }
@@ -73,9 +89,9 @@ class UsersTable extends React.Component {
     const { filteredDataList } = this.state
     return (
 
-      <div className="users-table">
+      <div className="data-table">
         <div className="row table-wrapper">
-          <div className="col-md-12 userTableWrapper">
+          <div className="col-md-12 dataTableWrapper">
             <ActionBar onActionClick={this.handleActionClick}/>
             <Table
               headerHeight={50}
@@ -91,17 +107,15 @@ class UsersTable extends React.Component {
                   data={filteredDataList}
                   selectedList={[]}
                       />}
-                header={
+                header={<Cell>
                   <div className="input-group">
-                    <span className="input-group-addon">
                       <input
                         aria-label="..."
                         onChange={this._handleToggleAll}
                         type="checkbox"
                       />
-                    </span>
-                  </div>}
-                width={40}
+                  </div></Cell>}
+                width={32}
               />
               <Column
                 cell={<TextCell col="first_name"
@@ -142,46 +156,6 @@ class UsersTable extends React.Component {
                 header={<Cell>{'ID'}</Cell>}
                 width={200}
               />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
             </Table>
           </div>
         </div>
@@ -202,5 +176,14 @@ UsersTable.defaultProps = {
   width: 0
 }
 
-export default ActionBar
+function mapDispatchToProps(dispatch) {
+  return {
+    userActions: bindActionCreators(UserActions, dispatch)
+  }
+}
+
+export default connect(
+  mapDispatchToProps
+)(UsersTable)
+
 export default UsersTable

@@ -30,5 +30,11 @@
 .container-wrapper {
 	background-color: white;
 	float: left;
+
+	// Todo, change to $NavPaneWidth
+	width: calc(100% - 220px);
+
+	// Todo, change to $NavBarHeight;
+	height: calc(100% - 60px);
 	padding:1em;
 }

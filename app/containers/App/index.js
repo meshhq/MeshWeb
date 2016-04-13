@@ -90,7 +90,7 @@ class App extends Component {
    */
   _handleNavPaneClick(navIdx) {
     if (navIdx != this.props.activeNavIdx) {
-      this.props.navPaneActions.setNavPaneSelection(navIdx)
+      this.props.navActions.setNavSelection(navIdx)
     }
   }
 
@@ -139,14 +139,15 @@ class App extends Component {
           )
       case 2:
         return (
-          <Providers providerState={providerState}/>
-          )
-      case 3:
-        return (
           <Lists lists={listState.lists}
             providers={providerState.providers}
           />
           )
+      case 3:
+        return (
+          <Providers providerState={providerState}/>
+          )
+
     }
   }
 

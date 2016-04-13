@@ -9,7 +9,7 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
   let inputUI
   if (selectedList[user.id] == true) {
     inputUI = (
-      <input 
+      <input
         aria-label="..."
         checked
         type="checkbox"
@@ -17,8 +17,8 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
     )
   } else {
     inputUI = (
-      <input 
-        aria-label="..." 
+      <input
+        aria-label="..."
         type="checkbox"
       />
     )
@@ -28,11 +28,9 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
     <div className={'radio-cell ' + rowIndex + '_' + col}>
       <Cell {...props}>
         <div className="input-group">
-          <span className="input-group-addon">
-            {inputUI}
-          </span>
+          {inputUI}
         </div>
-      </Cell> 
+      </Cell>
     </div>
     )
 }
