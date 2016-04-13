@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import DataListWrapper from '../Shared/DataListWrapper'
-import ActionBar from '../ActionBar'
 
 const { Table, Column, Cell } = FixedDataTable;
 

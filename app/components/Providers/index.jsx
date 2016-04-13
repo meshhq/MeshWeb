@@ -21,7 +21,7 @@ class Providers extends Component {
       const providerToggled = this._providerWasToggled.bind(this, provider.id)
       return (
         <ProviderCell key={provider.id}
-          logoSrc={"test"}
+          logoSrc={provider.logo_url}
           onToggle={providerToggled}
           providerDescription={this._stubbedHipsterLorem()}
           providerName={provider.name}

@@ -38,3 +38,30 @@
 	height: calc(100% - 60px);
 	padding:1em;
 }
+
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+     color: $MeshWhite;
+     font-size: 1em;
+     font-weight: 400;
+ }
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $MeshWhite;
+    font-size: 1em;
+    font-weight: 400;
+   	opacity:  1;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	    color: $MeshWhite;
+    font-size: 1em;
+    font-weight: 400;
+    opacity:  1;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $MeshWhite;
+    font-size: 1em;
+    font-weight: 400;
+
+}

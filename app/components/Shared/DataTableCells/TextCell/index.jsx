@@ -5,16 +5,11 @@ import FixedDataTable from 'fixed-data-table'
 const { Cell } = FixedDataTable;
 
 const TextCell = ({ rowIndex, data, col, ...props }) => {
-  let user = data.getObjectAt(rowIndex)
-  if (!user) {
-    return <div/>
-  }
-
   return (
     <div className="text-cell">
       <Cell {...props}>
         <p>
-          {user[col]}
+          {data.getObjectAt(rowIndex)[col]}
         </p>
       </Cell>
     </div>
