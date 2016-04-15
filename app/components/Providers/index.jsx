@@ -23,7 +23,7 @@ class Providers extends Component {
         <ProviderCell key={provider.id}
           logoSrc={provider.logo_url}
           onToggle={providerToggled}
-          providerDescription={this._stubbedHipsterLorem()} 
+          providerDescription={this._stubbedHipsterLorem()}
           providerName={provider.name}
         />
         )
@@ -50,7 +50,7 @@ class Providers extends Component {
       const pr = providerRows[i]
       const onToggle = this._providerWasToggled.bind(this, pr.id)
       providerRowHTML.push(
-        <div className="row provider-row" 
+        <div className="row provider-row"
           key={i}
           onToggle={onToggle}
         >
@@ -61,15 +61,9 @@ class Providers extends Component {
 
     // Layout the providers in a row
     return (
-      <div className="row provider-wrapper" 
+      <div className="provider-wrapper"
         key="provider"
       >
-        <div className="header row">
-          <div className="col-md-12">
-            <h1>{'Mesh Integrations'}</h1>
-            <h4>{'Integratons we offer'}</h4>
-          </div>
-        </div>
         <div className="integrations-container">
           {providerRowHTML}
         </div>

@@ -16,17 +16,23 @@ export function GET(path, params) {
 	return performFetch(request)
 }
 
-// export function POST(path, params) {
-// 	// TODO
-// }
+export function POST(path, params) {
+	const url = URLWithPath(path, params)
+	const request = baseRequest('POST', url)
+	return executeRequest(request)
+}
 
-// export function PUT(path, params) {
-// 	// TODO
-// }
+export function PUT(path, params) {
+		const url = URLWithPath(path, params)
+		const request = baseRequest('UPDATE', url)
+		return executeRequest(request)
+}
 
-// export function DELETE(path, params) {
-// 	// TODO
-// }
+export function DELETE(path, params) {
+	const url = URLWithPath(path, params)
+	const request = baseRequest('DELETE', url)
+	return executeRequest(request)
+}
 
 /**
  * Performs the Fetch for the given request
@@ -52,6 +58,29 @@ function performFetch(request) {
 }
 
 /**
+ * Performs the request for the given request
+ * @param  {[type]} request Base Request
+ * @return {[type]} Result Proimise
+ */
+function executeRequest(request) {
+	return Fetch(request).then((response) => {
+		if (response.ok) {
+			return response.json()
+		} else {
+			return response.json().then((respJSON) => {
+				// Look for 401s
+				if (response.status == 401) {
+					clearAuthToken()
+				}
+				return Promise.reject(respJSON)
+			})
+		}
+	}, (error) => {
+		return Promise.reject(error)
+	})
+}
+
+/**
  * Creates the base request object for the operation
  * @param  {String} method HTTP Method
  * @param  {String} URL    URL For Req
@@ -59,7 +88,7 @@ function performFetch(request) {
  */
 function baseRequest(method, url) {
 	const headersForRequest = defaultHeaders()
-	const init = { 
+	const init = {
 		method: method,
 		headers: headersForRequest,
 		mode: 'cors',
@@ -131,4 +160,3 @@ export function setAuthToken(token) {
  export function clearAuthToken() {
 	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, null)
 }
-

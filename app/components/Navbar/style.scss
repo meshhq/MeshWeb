@@ -1,14 +1,17 @@
 // Component Imports
 
-$NavBarHeight: 40px;
+$NavBarHeight: 60px;
 
-.navbar {
-	background-color: $MeshBlackLight;
+.navbarDefault {
+	background-color: $MeshGreen;
+	border-bottom: 2px solid $MeshGreenLight;
 	min-height: $NavBarHeight;
 	height: $NavBarHeight;
 	border-radius: 0px;
+	margin-left: 0px;
 
 	.container {
+		width:100%;
 		max-height: $NavBarHeight;
 		height:$NavBarHeight;
 
@@ -21,77 +24,66 @@ $NavBarHeight: 40px;
 				height:$NavBarHeight;
 			}
 		}
-		.navbar-brand {
-		    float: left;
-		    height: 50px;
-		    padding: 10px 10px;
-		    font-size: 22px;
-		    font-weight: 500;
-		    line-height: 20px;
-		}
 	}
 
 	// Text Coloring
 	a {
-		color: $MeshWhiteDark;
+		color: white;
+	}
+	a.bold {
+		font-weight: 700;
+	}
+
+	a.light {
+		font-weight: 500;
+	}
+
+	a.navbar-header-brand {
+		color: white;
+		float: left;
+		height: 50px;
+		padding: 15px 15px;
+		line-height: 20px;
+		font-size: 26px;
+		font-weight: 700;
+	}
+
+	ul {
+		margin-top: 16px;
+		height: 100%;
 	}
 
 	// Nav Items
-	.navbar-nav {
-		padding-left: 20px;
-		li {
-			padding: 0px 5px;
-			a {
-				padding: 0px 10px;
-				padding-top: 10px;
-				padding-bottom: 9px;
-				
-				font-size: 16px;
-			}
+	li {
+		padding: 0px 5px;
 
-			a:hover {
-				background-color: $MeshBlackLight;
-			}
-
-			a:active {
-				background-color: $MeshBlackLight;
-			}
-
-			a:focus {
-				background-color: $MeshBlackLight;
-			}
+		a {
+			font-weight: 700;
+			padding: 0px 10px;
+			height: 100%;
+			font-size: 14px;
 		}
 
-		.active {
-			a {
-				border-bottom: 3px solid $MeshBlue;			
-				color: $MeshWhite;
-				font-weight: 400;
-			}
+
+		a:hover {
+			border-bottom: 2px solid white;
+			background-color: #3399ff;
+		}
+
+		a:active {
+			background-color: #3399ff;
+		}
+
+		a:focus {
+			background-color: #3399ff;
+		}
+	}
+
+	.active {
+		a {
+			border-bottom: 3px solid $MeshBlue;
+			color: $MeshWhite;
+			font-weight: 400;
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

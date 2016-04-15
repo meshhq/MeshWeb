@@ -4,20 +4,21 @@ import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 // Components
 import Lists from '../../components/Lists'
-import Navbar from '../../components/Navbar'
+import NavBar from '../../components/NavBar'
+import NavPane from '../../components/NavPane'
 import Organizations from '../../components/Organizations'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
-import UserTable from '../../components/Users'
+import UserTable from '../../components/UserTable'
 
 // Actions
 import * as AppActions from '../../actions/application'
 import * as ListActions from '../../actions/lists'
 import * as NavActions from '../../actions/nav'
+import * as NavPaneActions from '../../actions/NavPane'
 import * as OrgActions from '../../actions/organizations'
 import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
@@ -35,17 +36,19 @@ class App extends Component {
       showLogin: false,
       loadError: false
     };
+
     // Binding these to the current class
     this.handleNavBarClick = this._handleNavBarClick.bind(this)
+    this.handleNavPaneClick = this._handleNavPaneClick.bind(this)
   }
-  
+
   componentDidMount() {
     this._getWindowWidth()
     this._performInitialSyncWithMesh()
   }
 
   /**
-   * Helper for determining the viewport width after 
+   * Helper for determining the viewport width after
    * component mount. Needed for the FB table to calc correctly
    */
   _performInitialSyncWithMesh() {
@@ -57,7 +60,7 @@ class App extends Component {
   }
 
   /**
-   * Helper for determining the viewport width after 
+   * Helper for determining the viewport width after
    * component mount. Needed for the FB table to calc correctly
    */
   _getWindowWidth() {
@@ -81,9 +84,19 @@ class App extends Component {
   }
 
   /**
+   * Handling a nav pane click
+   * @param  {Integer} navIdx
+   */
+  _handleNavPaneClick(navIdx) {
+    if (navIdx != this.props.activeNavIdx) {
+      this.props.navActions.setNavSelection(navIdx)
+    }
+  }
+
+  /**
    * CB for a provider cell switch toggle
-   * @param  {String} providerId 
-   * @param  {Bool}   on         
+   * @param  {String} providerId
+   * @param  {Bool}   on
    */
   _providerWasToggled(providerId, on) {
     let foundProvider = null
@@ -94,15 +107,15 @@ class App extends Component {
         break
       }
     }
-    
+
     if (foundProvider != null || on) {
-      // TODO - ADJUST INTEGRATION 
+      // TODO - ADJUST INTEGRATION
     }
   }
 
   /**
    * Main window component switch
-   * @param  {Integer} navIdx 
+   * @param  {Integer} navIdx
    * @return {[JSX HTML]} HTML for container
    */
   _appComponentForCurrentNavIdx() {
@@ -110,34 +123,35 @@ class App extends Component {
     switch(activeNavIdx) {
       case 0:
         return (
-          <UserTable 
-            users={userState} 
+          <UserTable
+            users={userState}
             width={this.state.width}
           />
           )
       case 1:
         return (
-          <Organizations 
-            organizations={organizationState.organizations} 
+          <Organizations
+            organizations={organizationState.organizations}
             providers={providerState.providers}
             width={this.state.width}
           />
           )
       case 2:
         return (
-          <Providers providerState={providerState}/>
-          )
-      case 3:
-        return (
           <Lists lists={listState.lists}
             providers={providerState.providers}
           />
           )
+      case 3:
+        return (
+          <Providers providerState={providerState}/>
+          )
+
     }
   }
 
   /**
-   * We use this to determine whether the app is 
+   * We use this to determine whether the app is
    * still loading its content. We display a loading hud if not
    * @return {[JSX HTML]} [App Main Content]
    */
@@ -148,7 +162,7 @@ class App extends Component {
       )
     } else {
       return (
-        <div className='container'>
+        <div>
           {this._appComponentForCurrentNavIdx()}
         </div>
       )
@@ -159,22 +173,20 @@ class App extends Component {
     const { navTitles, activeNavIdx } = this.props
     const appContent = this._contentForApp()
     return (
-      <div className='react-root'>
-        <Navbar 
+      <div className="react-root">
+        <NavBar
+          accountName="KEVIN COLEMAN"
           activeNavIdx={activeNavIdx}
-          navTitles={navTitles} 
-          onNavChange={this.handleNavBarClick}
+          navTitles={navTitles}
+          onNavChange={this._handleNavBarClick}
         />
-        <ReactCSSTransitionGroup 
-          transitionAppearTimeout={500}
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={500}
-          transitionName='appear_main'
-        >
-          <div className='container-wrapper'>
-            {appContent}
-          </div>
-        </ReactCSSTransitionGroup>
+        <NavPane
+          activeNavIdx={activeNavIdx}
+          onNavChange={this.handleNavPaneClick}
+        />
+        <div className="container-wrapper">
+          {appContent}
+        </div>
       </div>
     )
   }
@@ -186,6 +198,7 @@ App.propTypes = {
   listActions: PropTypes.object.isRequired,
   listState: PropTypes.object.isRequired,
   navActions: PropTypes.object.isRequired,
+  navPaneActions: PropTypes.object.isRequired,
   navTitles: PropTypes.arrayOf(React.PropTypes.string).isRequired,
   organizationActions: PropTypes.object.isRequired,
   organizationState: PropTypes.object.isRequired,
@@ -216,6 +229,7 @@ function mapDispatchToProps(dispatch) {
     appActions: bindActionCreators(AppActions, dispatch),
     listActions: bindActionCreators(ListActions, dispatch),
     navActions: bindActionCreators(NavActions, dispatch),
+    navPaneActions: bindActionCreators(NavPaneActions, dispatch),
     organizationActions: bindActionCreators(OrgActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)

@@ -11,16 +11,16 @@ const ProviderCell = ({ onToggle, providerName, providerDescription, logoSrc }) 
           <h3>{providerName}</h3>
         </div>
         <div className="col-xs-4 switch-container">
-          <Switch className="provider-switch" 
+          <Switch className="provider-switch"
             onChange={onToggle}
-            size="small" 
+            size="small"
             state={false}
           />
         </div>
       </div>
       <div className="row provider-row">
         <div className="col-xs-2 logo">
-          <img className="logo-img" 
+          <img className="logo-img"
             src={logoSrc}
           />
         </div>

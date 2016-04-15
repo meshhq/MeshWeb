@@ -1,6 +1,9 @@
 
 import React, { PropTypes, Component } from 'react'
 
+// Nav Item Titles
+const titles = ['DOCUMENTATION', 'SUPPORT']
+
 class NavBar extends Component {
   constructor(props, context) {
     super(props, context)
@@ -11,70 +14,54 @@ class NavBar extends Component {
   }
 
   render() {
-    // Build up the nav items
-    const navItems = []
-    this.props.navTitles.forEach((title, idx) => {
-      let item
-      const boundClick = this._handleNavItemWasClicked.bind(this, idx)
-      if (idx === this.props.activeNavIdx) {
-        item = (
-          <li className="active" 
-            key={title}
-          >
-            <a href="#"
-              onClick={boundClick}
-            >
-              {title}
-              <span className="sr-only">{'(current)'}</span>
-            </a>
-          </li>
-        )
-      } else {
-        item = (
-          <li key={title}>
-            <a href="#"
-              onClick={boundClick}
-            >{title}</a>
-          </li>
-        )
-      }
-      navItems.push(item)
-    });
 
+    const navItems = []
+    for(let count = 0; count < 2; count++) {
+      let title = titles[count]
+      // let glyph = glyphs[count]
+      let onClick = this._handleNavItemWasClicked.bind(this, count)
+      let item = (
+        <li>
+          <a className="light"
+            href="#"
+            onClick={onClick}
+          >
+          {title}
+          </a>
+        </li>
+      )
+      navItems.push(item)
+    }
 
     return (
-      <div className="navbar">
-        <nav className="navbarDefault">
-          <div className="container">
-            <div className="navbar-header">
-              <button aria-expanded="false"
-                className="navbar-toggle collapsed"
-                data-target="#bs-example-navbar-collapse-1"
-                data-toggle="collapse"
-                type="button"
-              >
-                <span className="sr-only">{'Toggle navigation'}</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
-              <a className="navbar-brand"
+      <nav className="navbarDefault">
+        <div className="container">
+          <div className="navbar-header">
+            <button aria-expanded="false"
+              className="navbar-toggle collapsed"
+              data-target="#bs-example-navbar-collapse-1"
+              data-toggle="collapse"
+              type="button"
+            >
+            </button>
+            <a className="navbar-header-brand"
+              href="#"
+            >
+              {'MESH'}
+            </a>
+          </div>
+          <ul className="nav navbar-nav navbar-right">
+            {navItems}
+            <li>
+              <a className="bold"
                 href="#"
               >
-              {'MeshIO'}
+                {this.props.accountName}
               </a>
-            </div>
-
-            <div className="collapse navbar-collapse"
-              id="bs-example-navbar-collapse-1"
-            >
-              <ul className="nav navbar-nav">
-                {navItems}
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
     )
   }
 }
@@ -82,6 +69,7 @@ class NavBar extends Component {
 // navTitles [Array<String>] is the section titles
 // activeSection [Number] is the current selection
 NavBar.propTypes = {
+  accountName: PropTypes.string.isRequired,
   activeNavIdx: PropTypes.number.isRequired,
   navTitles: PropTypes.array.isRequired,
   onNavChange: PropTypes.func.isRequired

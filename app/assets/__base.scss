@@ -1,11 +1,14 @@
 // Fonts
-$WorkSansFont: 'Work Sans', sans-serif;
-$WorkSansFontLight: 'Work Sans', sans-serif;
+$WorkSansFont: 'Lato', sans-serif;
+$WorkSansFontLight: 'Lato', sans-serif;
 
 
 // Colors
 $MeshBlack: #16181A;
 $MeshBlackLight: #222528;
+$MeshNavBlue: #4D72A0;
+$MeshNavMediumBlue: #2B415C;
+$MeshNavDarkBlue: #243447;
 
 $MeshWhiteLight: #FFF;
 $MeshWhite: #F9F9FA;
@@ -16,7 +19,20 @@ $MeshGreyLight: #ADADAD;
 $MeshGreyUltraLight: #CCCCCC;
 $MeshGreyDark: #6B6B6B;
 
+$MeshGreen: #5FB085;
+$MeshGreenLight: #569C77;
+
 $MeshBlue: #65A8EC;
+
+// Dimensions
+$NavPaneWidth: 220px;
+
+// Fonts
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  src: url('https://fonts.googleapis.com/css?family=Lato:400,700,300,100,900');
+}
 
 // Fonts
 @font-face {
@@ -130,7 +146,6 @@ button {
 
 body {
   font: 14px $WorkSansFont;
-  line-height: 1.4em;
   background: $MeshWhiteDark;
   color: $MeshBlack;
   min-width: 230px;
@@ -188,7 +203,7 @@ input[type="checkbox"] {
 }
 
 /**
- * FixedDataTable v0.6.0 
+ * FixedDataTable v0.6.0
  *
  * Copyright (c) 2015, Facebook, Inc.
  * All rights reserved.

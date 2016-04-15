@@ -1,0 +1,11 @@
+// Component Imports
+
+$NavPaneWidth: 220px;
+$NavPaneHeight: 1000px;
+
+.navpane {
+	background-color: $MeshWhite;
+	float: left;
+	width: $NavPaneWidth;
+	height:$NavPaneHeight;
+}

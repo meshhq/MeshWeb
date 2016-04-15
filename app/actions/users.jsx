@@ -1,12 +1,19 @@
 
 import { GET } from '../helpers/api'
-
 export const ADD_USER = 'ADD_USER'
 
 // Network Calls
-
 export function addUser(user) {
 	return { type: ADD_USER, user }
+}
+
+export const ADDED_USER = 'ADDED_USER'
+export function addedUser(json) {
+	return {
+		type: ADDED_USER,
+		users: json,
+		receivedAt: Date.now()
+	}
 }
 
 // This action is to indicate the desired
@@ -18,7 +25,7 @@ export function refreshUserList() {
 	}
 }
 
-// This function is to indicate that the 
+// This function is to indicate that the
 // network request action has begun
 export const REQUEST_USERS = 'REQUEST_USERS'
 export function requestedUsers() {
@@ -45,8 +52,7 @@ export function refreshUsers() {
 			.then(function(json){
 					dispatch(receivedUsers(json))
 				}
-			)				
+			)
 		}
 	}
 }
-

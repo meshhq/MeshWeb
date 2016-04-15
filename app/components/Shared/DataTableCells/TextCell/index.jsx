@@ -11,7 +11,7 @@ const TextCell = ({ rowIndex, data, col, ...props }) => {
         <p>
           {data.getObjectAt(rowIndex)[col]}
         </p>
-      </Cell> 
+      </Cell>
     </div>
     )
 }

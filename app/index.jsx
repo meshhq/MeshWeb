@@ -16,13 +16,10 @@ import './assets/base_scripts'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route
-        component={App}
-        path="/" 
+      <Route component={App}
+        path="/"
       />
     </Router>
   </Provider>,
   document.getElementById('root')
 )
-
-
