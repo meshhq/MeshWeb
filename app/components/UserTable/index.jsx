@@ -9,6 +9,7 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import UserForm from '../Forms/UserForm'
 
 
 // Actions
@@ -41,8 +42,14 @@ class UsersTable extends React.Component {
     // Setup our state.
     this.state = {
       filteredDataList: this.dataList,
-      selectedList: {}
+      selectedList: {},
+      userFormDisplayed: false
+
     };
+
+    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleActionClick = this._handleActionClick.bind(this)
+    this.handleToggleAll = this._handleToggleAll.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,7 +70,11 @@ class UsersTable extends React.Component {
         // Select All
         break;
     case 1:
-        // Show form
+        this.setState({
+          userFormDisplayed: true
+        });
+        // New User
+
         break;
     case 2:
 
@@ -221,6 +232,7 @@ class UsersTable extends React.Component {
               actions={actions}
               onSearchInput={this.handleOnFilterChange}
             />
+            <UserForm displayed={this.state.userFormDisplayed} />
             <Table
               headerHeight={40}
               height={800}
@@ -246,7 +258,6 @@ class UsersTable extends React.Component {
                   </div></Cell>}
                 width={32}
               />
-
               <Column
                 cell={<TextCell col="first_name"
                   data={filteredDataList}
@@ -254,7 +265,6 @@ class UsersTable extends React.Component {
                 header={<Cell>{'First Name'}</Cell>}
                 width={150}
               />
-              <TextColumn data={filteredDataList}/>
               <Column
                 cell={<TextCell
                   col="last_name"
