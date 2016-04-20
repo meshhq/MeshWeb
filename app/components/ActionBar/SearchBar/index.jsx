@@ -19,6 +19,8 @@ class SearchBar extends Component {
   }
 }
 
+SearchBar.displayName = 'Search Bar';
+
 SearchBar.propTypes = {
   onSearchInput: PropTypes.func.isRequired
 }

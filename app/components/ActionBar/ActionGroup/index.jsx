@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import ActionButton from './ActionButton'
 import DropdownButton from './DropdownButton'
-import RadioButton from './RadioButton'
 
 class ActionGroup extends Component {
   _handleActionItemWasClicked(idx) {
@@ -11,7 +10,6 @@ class ActionGroup extends Component {
 
   render() {
 
-    let onRadioClick = this._handleActionItemWasClicked.bind(this, 0)
     let onNewClick = this._handleActionItemWasClicked.bind(this, 1)
     let onMergeClick = this._handleActionItemWasClicked.bind(this, 2)
     let onPublishClick = this._handleActionItemWasClicked.bind(this, 3)
