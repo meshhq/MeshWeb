@@ -51,6 +51,7 @@ class Organizations extends Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ActionBar onActionClick={this.handleActionClick}/>
             <Table
               headerHeight={50}
               height={1000}

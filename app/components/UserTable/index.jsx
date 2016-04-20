@@ -8,6 +8,8 @@ import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
+import ActionBar from '../ActionBar'
+
 
 // Actions
 import * as UserActions from '../../actions/users'
@@ -121,6 +123,10 @@ class UsersTable extends React.Component {
               width={this.props.width}
               {...this.props}
             >
+              <ActionBar
+                onActionClick={this.handleActionClick}
+                onSearchInput={this.handleOnFilterChange}
+              />
               <Column
                 cell={<RadioCell
                   col="radio"
