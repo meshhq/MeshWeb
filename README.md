@@ -38,4 +38,49 @@ To deploy the app, simply run
 $ npm deploy
 ```
 
-The app will be availalbe shortly at our remote hosting site.
+The app will be available shortly at our remote hosting site.
+
+# Todo
+
+## Users
+- As a user, I need a `User View` which allows me to see a table of my Mesh users.
+- As a user, I need a `User Detail View` which allows me to see all of the data on an individual user.
+  - User resource data.
+  - List memberships
+  - Integrations in which the user resides
+
+## Organizations
+- As a user, I need an `Organization View` which allows me to see a table of my Mesh organizations.
+- As a user, I need am `Organization Detail View` which allows me to see all of the data on an individual organization.
+  - Organization resource data
+  - Users belonging to the organization
+  - List memberships
+  - Integrations in which the organization resides
+
+## Lists
+- As a user, I need a `List View` which allows me to see a table of my Mesh lists.
+- As a user, I need a `List Detail View` which allows me to see all of the data on an individual list.
+  - List resource data
+  - Items
+  - Integrations in which the list resides
+
+## Action Bar
+- As a user, I need a `New` button which allows me to create a new record (Users, Organizations, Lists).
+- As a user, I need a `Merge` button which allows me to merge multiple records (Users, Organizations).
+- As a user, I need a `Delete` button which allows me to delete records (Users, Organizations, Lists).
+- As a user, I need a `Publish` button which allows me to publish records to my integrations (Users, Organizations, Providers).
+- As a user, I need an `Add To` button which allows me to add Users to Lists or Organizations.
+
+## Publication
+- As a user, I need a `Publication View` which allows me to select all of the integrations to which I want to publish data.
+
+## Activation
+- As a user, I need all of my users sync'ed from my activated integration.
+- As a user, I need all of my organizations sync'ed from my activated integration.
+- As a user, I need all of my lists sync'ed from my activated integration.
+- As a user, I need all of my organizations's users sync'ed from my activated integration.
+- As a user, I need all of my list's users sync'ed from my activated integration.
+
+## Uniqueness Constraints
+- User - Email key only for Mesh origin users.
+- Organization - Domain key only for Mesh origin organizations.
