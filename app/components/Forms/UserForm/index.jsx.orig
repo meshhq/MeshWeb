@@ -1,0 +1,117 @@
+
+import React, { Component, PropTypes } from 'react'
+import { Button, Modal, Input, Col } from 'react-bootstrap'
+
+class UserForm extends Component {
+  constructor(props) {
+    super(props);
+    this.handleCloseClick = this._close.bind(this)
+    this.handleOpenClick = this._open.bind(this)
+  }
+
+  _close() {
+    this.setState({ displayed: false });
+  }
+
+  _open() {
+    this.setState({ displayed: true });
+  }
+
+  render() {
+    return (
+      <div>
+        <Modal
+          onHide={this.handleCloseClick}
+          show={this.props.displayed}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {"New User"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Col md={6}>
+              <Input
+                placeholder="K Name"
+<<<<<<< 52a65ca1a57aaac7b501a59bd09b734f3c3d3821
+=======
+                ref="input"
+>>>>>>> Updating form lint
+                type="text"
+              />
+              <Input
+                placeholder="Last Name"
+<<<<<<< 52a65ca1a57aaac7b501a59bd09b734f3c3d3821
+                type="text"
+              />
+            </ Col>
+
+            <Col md={6}>
+              <Input
+                placeholder="First Name"
+                type="text"
+              />
+              <Input
+                placeholder="Email Address"
+=======
+                ref="input"
+>>>>>>> Updating form lint
+                type="text"
+              />
+            </ Col>
+
+<<<<<<< 52a65ca1a57aaac7b501a59bd09b734f3c3d3821
+            <Col md={12}>
+              <Input
+                placeholder="Last Name"
+=======
+            <Col md={6}>
+              <Input
+                placeholder="First Name"
+                ref="input"
+>>>>>>> Updating form lint
+                type="text"
+              />
+              <Input
+                placeholder="Email Address"
+<<<<<<< 52a65ca1a57aaac7b501a59bd09b734f3c3d3821
+=======
+                ref="input"
+                type="text"
+              />
+            </ Col>
+
+            <Col md={12}>
+              <Input
+                placeholder="Last Name"
+                ref="input"
+                type="text"
+              />
+              <Input
+                placeholder="Email Address"
+                ref="input"
+>>>>>>> Updating form lint
+                type="text"
+              />
+            </Col>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleCloseClick}>{"Close"}</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+<<<<<<< 52a65ca1a57aaac7b501a59bd09b734f3c3d3821
+UserForm.propTypes = {
+  displayed: PropTypes.bool.isRequired
+}
+
+
+=======
+>>>>>>> Updating form lint
+UserForm.displayName = 'User Form';
+
+export default UserForm
