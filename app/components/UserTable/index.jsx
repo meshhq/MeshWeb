@@ -115,6 +115,10 @@ class UsersTable extends React.Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ActionBar
+              onActionClick={this.handleActionClick}
+              onSearchInput={this.handleOnFilterChange}
+            />
             <Table
               headerHeight={50}
               height={1000}
@@ -123,10 +127,6 @@ class UsersTable extends React.Component {
               width={this.props.width}
               {...this.props}
             >
-              <ActionBar
-                onActionClick={this.handleActionClick}
-                onSearchInput={this.handleOnFilterChange}
-              />
               <Column
                 cell={<RadioCell
                   col="radio"
