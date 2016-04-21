@@ -120,7 +120,7 @@ class UsersTable extends React.Component {
               onSearchInput={this.handleOnFilterChange}
             />
             <Table
-              headerHeight={50}
+              headerHeight={40}
               height={1000}
               rowHeight={35}
               rowsCount={filteredDataList.getSize()}
