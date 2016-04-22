@@ -43,11 +43,18 @@ The app will be available shortly at our remote hosting site.
 # Todo
 
 ## Users
-- As a user, I need a `User View` which allows me to see a table of my Mesh users.
-- As a user, I need a `User Detail View` which allows me to see all of the data on an individual user.
+-  As a user, I need a `User View` which allows me to see a table of my Mesh users.
+-   As a user, I need a `User Detail View` which allows me to see all of the data on an individual user.
   - User resource data.
   - List memberships
   - Integrations in which the user resides
+
+## Users Action Bar
+- As a user, I need a `New` button which allows me to create a new record.
+- As a user, I need a `Merge` button which allows me to merge multiple records.
+- As a user, I need a `Delete` button which allows me to delete records.
+- As a user, I need a `Publish` button which allows me to publish records to my integrations.
+- As a user, I need an `Add To` button which allows me to add Users to Lists or Organizations.
 
 ## Organizations
 - As a user, I need an `Organization View` which allows me to see a table of my Mesh organizations.
@@ -57,6 +64,12 @@ The app will be available shortly at our remote hosting site.
   - List memberships
   - Integrations in which the organization resides
 
+## Organization Action Bar
+- As a user, I need a `New` button which allows me to create a new record.
+- As a user, I need a `Merge` button which allows me to merge multiple records.
+- As a user, I need a `Delete` button which allows me to delete records.
+- As a user, I need a `Publish` button which allows me to publish records to my integrations.
+
 ## Lists
 - As a user, I need a `List View` which allows me to see a table of my Mesh lists.
 - As a user, I need a `List Detail View` which allows me to see all of the data on an individual list.
@@ -64,12 +77,10 @@ The app will be available shortly at our remote hosting site.
   - Items
   - Integrations in which the list resides
 
-## Action Bar
-- As a user, I need a `New` button which allows me to create a new record (Users, Organizations, Lists).
-- As a user, I need a `Merge` button which allows me to merge multiple records (Users, Organizations).
-- As a user, I need a `Delete` button which allows me to delete records (Users, Organizations, Lists).
-- As a user, I need a `Publish` button which allows me to publish records to my integrations (Users, Organizations, Providers).
-- As a user, I need an `Add To` button which allows me to add Users to Lists or Organizations.
+## Lists Action Bar
+- As a user, I need a `New` button which allows me to create a new record.
+- As a user, I need a `Delete` button which allows me to delete records.
+- As a user, I need a `Publish` button which allows me to publish records to my integrations.
 
 ## Publication
 - As a user, I need a `Publication View` which allows me to select all of the integrations to which I want to publish data.

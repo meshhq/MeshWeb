@@ -93,6 +93,10 @@ class Organizations extends Component {
      */
   }
 
+  //****************************************************************************
+  // Organization Filtering
+  //****************************************************************************
+
   handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({

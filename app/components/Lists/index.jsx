@@ -95,7 +95,7 @@ class Lists extends Component {
   }
 
   //****************************************************************************
-  // Provider Filtering Handlers
+  // List Filtering
   //****************************************************************************
 
   _listsFilteredByCurrentIntegration() {
