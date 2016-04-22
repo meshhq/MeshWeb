@@ -28,7 +28,8 @@
     "object-curly-spacing": [2, "always"],
     "strict": 0,
     "jsx-quotes": [0, "prefer-single"],
-    
+    "jsx-max-props-per-line": [1, { "maximum": 5 }],
+
     //
     // Strict Mode
     //

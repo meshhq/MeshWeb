@@ -2,21 +2,17 @@
 import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import Pill from '../../Pill'
-import Helper from '../../../../helpers/providers.js'
 
 const { Cell } = FixedDataTable;
 
-const { PROVIDERS, PROVIDER_COLORS } = Helper;
+const PROVIDERS = {}
+const PROVIDER_COLORS = {}
 
 const PillCell = ({ rowIndex, data, col, ...props }) => {
 
-  let color = PROVIDER_COLORS[0]
-  let title = PROVIDERS[0]
+  let color = PROVIDER_COLORS[data.getObjectAt(rowIndex)[col]]
+  let title = PROVIDERS[data.getObjectAt(rowIndex)[col]]
 
-  let test = PROVIDER_COLORS[data.getObjectAt(rowIndex)[col]]
-  console.log(test)
-
-  // let title = PROVIDERS[data.getObjectAt(rowIndex)[col]]
   return (
     <div className="pill-cell">
       <Cell {...props}>

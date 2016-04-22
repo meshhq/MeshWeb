@@ -16,6 +16,16 @@ import * as UserActions from '../../actions/users'
 
 const { Table, Column, Cell } = FixedDataTable;
 
+const TextColumn = ({ data, ...props }) => {
+  this.displayName = 'TextColumn'
+  let cell = <TextCell {...props} col="test" data={data}/>
+  let headerCell = <Cell {...props}>{'Test'}</Cell>
+
+  return (
+    <Column cell={cell} header={headerCell} width={150}/>
+  )
+}
+
 class UsersTable extends React.Component {
   constructor(props) {
     super(props);
@@ -219,6 +229,7 @@ class UsersTable extends React.Component {
               width={this.props.width}
               {...this.props}
             >
+              <TextColumn data={filteredDataList}/>
               <Column
                 cell={<RadioCell
                   col="radio"
@@ -235,6 +246,7 @@ class UsersTable extends React.Component {
                   </div></Cell>}
                 width={32}
               />
+
               <Column
                 cell={<TextCell col="first_name"
                   data={filteredDataList}
@@ -242,6 +254,7 @@ class UsersTable extends React.Component {
                 header={<Cell>{'First Name'}</Cell>}
                 width={150}
               />
+              <TextColumn data={filteredDataList}/>
               <Column
                 cell={<TextCell
                   col="last_name"
