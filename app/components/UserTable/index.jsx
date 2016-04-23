@@ -50,6 +50,9 @@ class UsersTable extends React.Component {
     this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
     this.handleActionClick = this._handleActionClick.bind(this)
     this.handleToggleAll = this._handleToggleAll.bind(this);
+
+    this.onCancel = this._onCancel.bind(this)
+    this.onSave = this._onSave.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -194,6 +197,10 @@ class UsersTable extends React.Component {
    * @param  {[type]} e The event
    */
   _handleToggleAll(e) {
+    this.setState({
+      userFormDisplayed: !this.state.userFormDisplayed
+    });
+
     // If the input is toggled off, then wipe the selected list
     if (!e.target.checked) {
       this.setState({
@@ -212,6 +219,20 @@ class UsersTable extends React.Component {
         selectedList: selectedList
       });
     }
+  }
+
+  _onCancel(e, test) {
+    console.log(test)
+    this.setState({
+      userFormDisplayed: false
+    });
+  }
+
+  _onSave(e, test) {
+    console.log(test)
+    this.setState({
+      userFormDisplayed: false
+    });
   }
 
   render() {
@@ -233,6 +254,7 @@ class UsersTable extends React.Component {
               onSearchInput={this.handleOnFilterChange}
             />
             <UserForm displayed={this.state.userFormDisplayed} />
+            <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
             <Table
               headerHeight={40}
               height={800}
