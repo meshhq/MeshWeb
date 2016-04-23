@@ -47,12 +47,18 @@ class Organizations extends Component {
   }
 
   render() {
+    // Setting up our action bar.
+    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
+    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
+    let actions = [newAction, publishAction, deleteAction];
+
     const { filteredDataList } = this.state
     return (
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ActionBar onActionClick={this.handleActionClick}/>
+            <ActionBar actions={actions} onActionClick={this.handleActionClick}/>
             <Table
               headerHeight={50}
               height={1000}

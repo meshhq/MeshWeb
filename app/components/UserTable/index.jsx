@@ -128,7 +128,7 @@ class UsersTable extends React.Component {
             />
             <Table
               headerHeight={40}
-              height={1000}
+              height={800}
               rowHeight={35}
               rowsCount={filteredDataList.getSize()}
               width={this.props.width}
