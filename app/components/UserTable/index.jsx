@@ -109,6 +109,13 @@ class UsersTable extends React.Component {
   }
 
   render() {
+    // Setting up our action bar.
+    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
+    let addAction = { handler: this.handleActionClick, title: 'Add To', type: 0 };
+    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
+    let actions = [newAction, publishAction, addAction, deleteAction];
+
     const { filteredDataList, selectedList  } = this.state
     return (
 
@@ -116,7 +123,7 @@ class UsersTable extends React.Component {
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
             <ActionBar
-              onActionClick={this.handleActionClick}
+              actions={actions}
               onSearchInput={this.handleOnFilterChange}
             />
             <Table
