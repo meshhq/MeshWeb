@@ -1,10 +1,10 @@
 
 import { BASE_URL } from '../constants/api'
 import { Fetch, Headers, Request } from 'isomorphic-fetch'
+import { getAuthToken, clearAuthToken } from './session'
 import URI from 'urijs'
 
 const AUTHORIZATION_HEADER_KEY = 'Authorization'
-const AUTHORIZATION_STOAGE_KEY = 'mesh_key'
 
 /**
  * INTERFACE METHODS
@@ -17,22 +17,23 @@ export function GET(path, params) {
 }
 
 export function POST(path, params) {
-	const url = URLWithPath(path, params)
-	const request = baseRequest('POST', url)
-	return executeRequest(request)
+	const url = URLWithPath(path)
+	const request = baseRequest('POST', url, params)
+	return performFetch(request)
 }
 
 export function PUT(path, params) {
 		const url = URLWithPath(path, params)
-		const request = baseRequest('UPDATE', url)
-		return executeRequest(request)
+		const request = baseRequest('PUT', url, params)
+		return performFetch(request)
 }
 
 export function DELETE(path, params) {
 	const url = URLWithPath(path, params)
 	const request = baseRequest('DELETE', url)
-	return executeRequest(request)
+	return performFetch(request)
 }
+
 
 /**
  * Performs the Fetch for the given request
@@ -56,43 +57,21 @@ function performFetch(request) {
 		return Promise.reject(error)
 	})
 }
-
-/**
- * Performs the request for the given request
- * @param  {[type]} request Base Request
- * @return {[type]} Result Proimise
- */
-function executeRequest(request) {
-	return Fetch(request).then((response) => {
-		if (response.ok) {
-			return response.json()
-		} else {
-			return response.json().then((respJSON) => {
-				// Look for 401s
-				if (response.status == 401) {
-					clearAuthToken()
-				}
-				return Promise.reject(respJSON)
-			})
-		}
-	}, (error) => {
-		return Promise.reject(error)
-	})
-}
-
 /**
  * Creates the base request object for the operation
  * @param  {String} method HTTP Method
  * @param  {String} URL    URL For Req
+ * @param  {Object} Body   Body for the request
  * @return {Request}       Formatted Request
  */
-function baseRequest(method, url) {
+function baseRequest(method, url, body) {
 	const headersForRequest = defaultHeaders()
 	const init = {
 		method: method,
 		headers: headersForRequest,
 		mode: 'cors',
-		cache: 'default'
+		cache: 'default',
+		body: JSON.stringify(body)
 	}
 	let req = new Request(url, init)
 	return req
@@ -139,24 +118,9 @@ function defaultHeaders() {
  * @param  {Headers} headers
  */
 function appendAuthentication(headers) {
-	const authHeader = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
+	const authHeader = getAuthToken()
 	if (authHeader) {
-		const bearerHeader = 'Bearer ' + authHeader
+		const bearerHeader = 'bearer ' + authHeader
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
-}
-
-/**
- * Sets the Auth token for the app
- * @param {String} token
- */
-export function setAuthToken(token) {
-	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, token)
-}
-
-/**
- * Clears the auth token
- */
- export function clearAuthToken() {
-	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, null)
 }

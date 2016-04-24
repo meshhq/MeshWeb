@@ -27,12 +27,30 @@ $MeshBlue: #65A8EC;
 // Dimensions
 $NavPaneWidth: 220px;
 
-// Fonts
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  src: url('https://fonts.googleapis.com/css?family=Lato:400,700,300,100,900');
+/**
+ * Helpers
+ */
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
+
+/**
+* Bootstrap Overrides
+*/
+
+.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: $MeshGrey;
+}
+
+/**
+* Base
+*/
 
 // Fonts
 @font-face {
@@ -118,6 +136,11 @@ $NavPaneWidth: 220px;
        url('/assets/fonts/Work-Sans-600/Work-Sans-600.ttf') format('truetype'),
        url('/assets/fonts/Work-Sans-600/Work-Sans-600.svg#WorkSans') format('svg');
 }
+
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,100,700,900);
+
+// Standard CSS Defaults
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $WorkSansFont;
 }

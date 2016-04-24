@@ -38,8 +38,8 @@ class App extends Component {
     };
 
     // Binding these to the current class
-    this.handleNavBarClick = this._handleNavBarClick.bind(this)
-    this.handleNavPaneClick = this._handleNavPaneClick.bind(this)
+    this.handleNavBarClick = this.handleNavBarClick.bind(this)
+    this.handleNavPaneClick = this.handleNavPaneClick.bind(this)
   }
 
   componentDidMount() {
@@ -77,7 +77,7 @@ class App extends Component {
    * Handling a nav bar click
    * @param  {Integer} navIdx
    */
-  _handleNavBarClick(navIdx) {
+  handleNavBarClick(navIdx) {
     if (navIdx != this.props.activeNavIdx) {
       this.props.navActions.setNavSelection(navIdx)
     }
@@ -87,7 +87,7 @@ class App extends Component {
    * Handling a nav pane click
    * @param  {Integer} navIdx
    */
-  _handleNavPaneClick(navIdx) {
+  handleNavPaneClick(navIdx) {
     if (navIdx != this.props.activeNavIdx) {
       this.props.navActions.setNavSelection(navIdx)
     }
@@ -178,7 +178,7 @@ class App extends Component {
           accountName="KEVIN COLEMAN"
           activeNavIdx={activeNavIdx}
           navTitles={navTitles}
-          onNavChange={this._handleNavBarClick}
+          onNavChange={this.handleNavBarClick}
         />
         <NavPane
           activeNavIdx={activeNavIdx}

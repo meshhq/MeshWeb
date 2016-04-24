@@ -42,7 +42,6 @@
     "react/jsx-closing-bracket-location": 1,
     "react/jsx-curly-spacing": 1,
     "react/jsx-equals-spacing": 1,
-    "react/jsx-handler-names": 2,
     "react/jsx-indent-props": [2, 2],
     "react/jsx-indent": [2, 2],
     "react/jsx-key": 1,
@@ -70,8 +69,13 @@
     "react/react-in-jsx-scope": 1,
     "react/require-extension": 1,
     "react/self-closing-comp": 1,
-    "react/jsx-sort-prop-types": 1,
+    "react/sort-prop-types": 1,
     "react/sort-comp": 1,
-    "react/wrap-multilines": 1
+    "react/wrap-multilines": 1,
+
+    "react/jsx-handler-names": [2, {
+      "eventHandlerPrefix": "_handle",
+      "eventHandlerPropPrefix": "_handle"
+    }]
   }
 }
