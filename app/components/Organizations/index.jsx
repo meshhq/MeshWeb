@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import DataListWrapper from '../Shared/DataListWrapper'
+import ActionBar from '../ActionBar'
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -46,11 +47,18 @@ class Organizations extends Component {
   }
 
   render() {
+    // Setting up our action bar.
+    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
+    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
+    let actions = [newAction, publishAction, deleteAction];
+
     const { filteredDataList } = this.state
     return (
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ActionBar actions={actions} onActionClick={this.handleActionClick}/>
             <Table
               headerHeight={50}
               height={1000}

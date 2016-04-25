@@ -8,6 +8,8 @@ import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
+import ActionBar from '../ActionBar'
+
 
 // Actions
 import * as UserActions from '../../actions/users'
@@ -107,15 +109,26 @@ class UsersTable extends React.Component {
   }
 
   render() {
+    // Setting up our action bar.
+    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
+    let addAction = { handler: this.handleActionClick, title: 'Add To', type: 0 };
+    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
+    let actions = [newAction, publishAction, addAction, deleteAction];
+
     const { filteredDataList, selectedList  } = this.state
     return (
 
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ActionBar
+              actions={actions}
+              onSearchInput={this.handleOnFilterChange}
+            />
             <Table
-              headerHeight={50}
-              height={1000}
+              headerHeight={40}
+              height={800}
               rowHeight={35}
               rowsCount={filteredDataList.getSize()}
               width={this.props.width}
