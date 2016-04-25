@@ -8,6 +8,7 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
+import ActionBar from '../ActionBar'
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -17,6 +18,14 @@ const { Table, Column, Cell } = FixedDataTable;
 class Lists extends Component {
   constructor(props, context) {
     super(props, context)
+
+    // Bind Action Handlers
+
+    this.handleNewListClick = this._handleNewList.bind(this)
+    this.handlePublishListClick = this._handlePublishList.bind(this)
+    this.handleDeleteListClick = this._handleDeleteList.bind(this)
+    this.handleFilterListClick = this._handleFilterList.bind(this)
+    this.handleSearchListClick = this._handleSearchList.bind(this)
 
     /**
      * Generates the list of providers to show in the dropdown.
@@ -44,30 +53,11 @@ class Lists extends Component {
   // Action Bar Handlers
   //****************************************************************************
 
-  _handleActionClick(idx) {
-    switch(idx) {
-    case 0:
-        // Select All
-        break;
-    case 1:
-        // Show form
-        break;
-    case 2:
-
-        break;
-    case 3:
-        // Merge
-        break;
-    case 4:
-        // More
-        break;
-      }
-  }
-
   /**
    * _handleNewList handles a click to the `New` action bar button.
    */
   _handleNewList() {
+
     /*
       1. Present form for List data entry.
       2. Optimistically add list model to data source.
@@ -78,7 +68,7 @@ class Lists extends Component {
   /**
    * _handlePublishList handles a click to the `Publish` action bar button.
    */
-  _handlePublishlist() {
+  _handlePublishList() {
     /*
       1. Present integration view with options to select one or multiple integtrations.
       2. Publish the list to the selected integrations.
@@ -94,6 +84,13 @@ class Lists extends Component {
       2. Optimistically delete list from data source.
       2. Delete the list via Mesh API.
      */
+  }
+
+  /**
+   * _handleFilterList handles a click to the `Provider` action bar button.
+   */
+  _handleFilterList() {
+
   }
 
   //****************************************************************************
@@ -112,6 +109,10 @@ class Lists extends Component {
   //****************************************************************************
   // List Filtering
   //****************************************************************************
+
+  _handleSearchList() {
+
+  }
 
   _listsFilteredByCurrentIntegration() {
     const lists = this.props.lists;
@@ -133,6 +134,13 @@ class Lists extends Component {
   }
 
   render() {
+    // Setting up our action bar.
+    let newAction = { handler: this.handleNewListClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
+    let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0 };
+    let filterAction = { handler: this.handleFilterListClick, title: 'Select Provider', type: 1 };
+    let actions = [newAction, publishAction, deleteAction, filterAction];
+
     // MAKE PANELS
     const { selectedLists, filteredDataList } = this.state
     const providersForDropdown = _.filter(this.state.filteredProviders, (provider) => {
@@ -169,6 +177,10 @@ class Lists extends Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ActionBar
+              actions={actions}
+              onSearchInput={this.handleSearchListClick}
+            />
             <Table
               headerHeight={42}
               height={1000}
@@ -215,7 +227,7 @@ class Lists extends Component {
                   data={filteredDataList}
                       />}
                 header={<Cell>{'Provider'}</Cell>}
-                width={200}
+                width={100}
               />
               <Column
                 cell={<TextCell

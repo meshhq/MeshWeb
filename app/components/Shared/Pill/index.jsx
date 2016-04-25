@@ -6,8 +6,9 @@ class Pill extends Component {
   }
 
   render() {
-    let divStyle = { 'backgroundColor': this.props.color, 'border-radius': 4 }
-    let pStyle = { 'font-weight': 'bold', 'color': 'white' }
+    let divStyle = { 'backgroundColor': this.props.color }
+    let pStyle = { 'fontWeight': 'bold', 'color': 'white' }
+
     return (
       <div className="pill-container"
         style={divStyle}
