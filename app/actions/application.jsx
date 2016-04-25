@@ -1,5 +1,5 @@
 
-import { GET, setAuthToken } from '../helpers/api'
+import { GET } from '../helpers/api'
 import { refreshUsers } from './users'
 import { refreshProviders } from './providers'
 import { refreshLists } from './lists'
@@ -25,9 +25,7 @@ function shouldFetchAppId(state) {
 function fetchFirstAppId(dispatch) {
 	return GET('applications').then(function(json) {
 			let appInfo = json[0]
-			let appId = appInfo['application_id']
-			let auth_token = appInfo['application_secret']
-			setAuthToken(auth_token)
+			let appId = appInfo['id']
 			dispatch(resolvedAppId(appId))
 			
 			// After a app id is resolved, dispatch refreshes of all

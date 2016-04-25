@@ -43,6 +43,7 @@
     "async": "^1.5.2",
     "babel-runtime": "^6.3.19",
     "classnames": "^2.1.2",
+    "fbemitter": "^2.0.2",
     "fixed-data-table": "^0.6.0",
     "history": "^1.17.0",
     "immutable": "^3.7.6",
