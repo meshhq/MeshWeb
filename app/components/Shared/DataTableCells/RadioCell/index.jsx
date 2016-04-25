@@ -37,6 +37,7 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
 
 TextCell.propTypes = {
 	col: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
 	props: PropTypes.array.isRequired,
   rowIndex: PropTypes.number.isRequired,
   selectedList: PropTypes.array.isRequired

@@ -16,8 +16,8 @@ class UsersTable extends React.Component {
       filteredDataList: this._dataList,
       selectedList: {}
     };
-    this._handleOnFilterChange = this._handleOnFilterChange.bind(this);
-    this._handleToggleAll = this._handleToggleAll.bind(this);
+    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
+    this.handleToggleAll = this.handleToggleAll.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,10 +28,10 @@ class UsersTable extends React.Component {
   }
 
   /**
-   * _handleOnFilterChange is the callback for all changes to the text filter
+   * handleOnFilterChange is the callback for all changes to the text filter
    * @param  {[type]} e The Event
    */
-  _handleOnFilterChange(e) {
+  handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({
         filteredDataList: this._dataList
@@ -54,10 +54,10 @@ class UsersTable extends React.Component {
   }
 
   /**
-   * _handleToggleAll takes care of handling the event where all users are toggles
+   * handleToggleAll takes care of handling the event where all users are toggles
    * @param  {[type]} e The event
    */
-  _handleToggleAll(e) {
+  handleToggleAll(e) {
     // If the input is toggled off, then wipe the selected list
     if (!e.target.checked) {
       this.setState({
@@ -93,7 +93,7 @@ class UsersTable extends React.Component {
             <div className="col-md-6 col-xs-12 dataTableWrapper">
               <input
                 className="inputFilter"
-                onChange={this._handleOnFilterChange}
+                onChange={this.handleOnFilterChange}
                 placeholder="Filter by First Name"
               />
               <br />
@@ -120,7 +120,7 @@ class UsersTable extends React.Component {
                       <span className="input-group-addon">
                         <input
                           aria-label="..."
-                          onChange={this._handleToggleAll}
+                          onChange={this.handleToggleAll}
                           type="checkbox"
                         />
                       </span>
