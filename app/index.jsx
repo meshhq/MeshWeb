@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 
 import App from './containers/App'
+import Login from './containers/Login'
+import { requireAuth } from './helpers/session'
 import configureStore from './store'
 
 const store = configureStore()
@@ -13,11 +15,17 @@ const store = configureStore()
 import './assets/base_assets.scss'
 import './assets/base_scripts'
 
+// Render the component
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route component={App}
+        onEnter={requireAuth}
         path="/"
+      />
+      <Route 
+        component={Login}
+        path="/login"
       />
     </Router>
   </Provider>,

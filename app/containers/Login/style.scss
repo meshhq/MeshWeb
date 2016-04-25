@@ -1,0 +1,48 @@
+
+#root, html, body, .login-container {
+    height: 100%;
+}
+
+.react-root {
+	background: $MeshWhite
+}
+
+.brand {
+	font-size: 1.5em;
+	padding-bottom: 25px;
+}
+
+.login-container {
+	display: table;
+	.vertical-center-row {
+	  display: table-cell;
+	  vertical-align: middle;
+	}
+
+	.form-group {
+		margin: 0px;
+
+		input {
+			border-radius: 0px;
+		}
+		
+		.email-form {
+			margin-bottom: 5px;
+		}
+
+		.pass-form {
+			margin-bottom: 10px;
+		}
+	}
+
+	.sign-in {
+		color: $MeshBlack;
+		font-size: 1em;
+	}
+
+	button {
+		font-family: $WorkSansFont;
+		border-radius: 0px;
+
+	}
+}
