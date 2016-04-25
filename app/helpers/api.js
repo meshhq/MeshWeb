@@ -2,9 +2,14 @@
 import { BASE_URL } from '../constants/api'
 import { Fetch, Headers, Request } from 'isomorphic-fetch'
 import { getAuthToken, clearAuthToken } from './session'
+import { EventEmitter } from 'fbemitter'
 import URI from 'urijs'
+const emitter = new EventEmitter()
 
 const AUTHORIZATION_HEADER_KEY = 'Authorization'
+
+// Notification name for a 401
+export const UNAUTHORIZED_ACCESS_NOTIFICATION = 'UNAUTHORIZED_ACCESS_NOTIFICATION'
 
 /**
  * INTERFACE METHODS
@@ -49,6 +54,7 @@ function performFetch(request) {
 				// Look for 401s
 				if (response.status == 401) {
 					clearAuthToken()
+					emitter.emit(AUTHORIZATION_HEADER_KEY, true)
 				}
 				return Promise.reject(respJSON)
 			})
