@@ -166,11 +166,11 @@ class Lists extends Component {
     }
 
     // Building the drop down top left sort
-    const filteredLists = _.filter(this.props.lists, (list) => {
-      const hasName = list.hasOwnProperty('name')
-      const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
-      return hasName && isCurrentProvider
-    })
+    // const filteredLists = _.filter(this.props.lists, (list) => {
+    //   const hasName = list.hasOwnProperty('name')
+    //   const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
+    //   return hasName && isCurrentProvider
+    // })
 
     // Layout the providers in a row
     return (
