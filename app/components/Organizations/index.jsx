@@ -24,6 +24,79 @@ class Organizations extends Component {
     });
   }
 
+  //****************************************************************************
+  // Action Bar Handlers
+  //****************************************************************************
+
+  _handleActionClick(idx) {
+    switch(idx) {
+    case 0:
+        // Select All
+        break;
+    case 1:
+        // Show form
+        break;
+    case 2:
+
+        break;
+    case 3:
+        // Merge
+        break;
+    case 4:
+        // More
+        break;
+      }
+  }
+
+  /**
+   * _handleNewOrganization handles a click to the `New` action bar button.
+   */
+  _handleNewOrganization() {
+    /*
+      1. Present for organization data entry.
+      2. Optimistically add organization model to data source.
+      2. Add the orgainzation via API.
+     */
+  }
+
+  /**
+   * _handlePublishOrganization handles a click to the `Publish` action bar button.
+   */
+  _handlePublishOrganization() {
+    /*
+      1. Present integration view with options to select one or multiple integtrations.
+      2. Publish the orgainzation to the selected integrations.
+     */
+  }
+
+  /**
+   * _handleDeleteOrganization handles a click to the `Delete` action bar button.
+   */
+  _handleDeleteOrganization() {
+    /*
+      1. Present deletion confirmation box.
+      2. Optimistically delete organization from data source.
+      2. Delete the organization via Mesh API.
+     */
+  }
+
+  //****************************************************************************
+  // User Detail
+  //****************************************************************************
+
+  /**
+   * _handleShowOrganizationDetail handles a click on the actual list in the table.
+   */
+  _handleShowOrganizationDetail() {
+    /*
+      1. Present the organization detail view.
+     */
+  }
+
+  //****************************************************************************
+  // Organization Filtering
+  //****************************************************************************
+
   handleOnFilterChange(e) {
     if (!e.target.value) {
       this.setState({

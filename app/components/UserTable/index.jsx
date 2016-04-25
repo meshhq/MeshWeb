@@ -19,23 +19,33 @@ const { Table, Column, Cell } = FixedDataTable;
 class UsersTable extends React.Component {
   constructor(props) {
     super(props);
+
+    // Method binding boiler plate.
+    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
+    this.handleActionClick = this._handleActionClick.bind(this)
+    this.handleToggleAll = this._handleToggleAll.bind(this);
+
+    // Setup our data model.
     this.dataList = new DataListWrapper(this.props.users.users)
+
+    // Setup our state.
     this.state = {
       filteredDataList: this.dataList,
       selectedList: {}
     };
-
-    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
-    this.handleActionClick = this._handleActionClick.bind(this)
-    this.handleToggleAll = this._handleToggleAll.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+    // KC Note. Why set out state again here?
     this.dataList = new DataListWrapper(nextProps.users.users)
     this.setState({
       filteredDataList: this.dataList
     });
   }
+
+  //****************************************************************************
+  // Action Bar Handlers
+  //****************************************************************************
 
   _handleActionClick(idx) {
     switch(idx) {
@@ -58,6 +68,75 @@ class UsersTable extends React.Component {
   }
 
   /**
+   * _handleNewUser handles a click to the `New` action bar button.
+   */
+  _handleNewUser() {
+    /*
+      1. Present for user data entry.
+      2. Optimistically add user model to data source.
+      2. Add the user via API.
+     */
+  }
+
+  /**
+   * _handleMergeUsers handles a click to the `Merge` action bar button.
+   */
+  _handleMergeUsers() {
+    /*
+      1. Present for user data merge. Show side by side user values.
+     */
+  }
+
+  /**
+   * _handlePublishUser handles a click to the `Publish` action bar button.
+   */
+  _handlePublishUser() {
+    /*
+      1. Present integration view with options to select one or multiple integtrations.
+      2. Publish the user to the selected integrations.
+     */
+  }
+
+  /**
+   * _handleAddUser handles a click to the `Add` action bar button.
+   */
+  _handleAddUser() {
+    /*
+      1. Present view to select type of either list or company.
+      2. Present view to select from companies or lists.
+      3. Add the user to the company or list.
+     */
+  }
+
+  /**
+   * _handleDeleteUser handles a click to the `Delete` action bar button.
+   */
+  _handleDeleteUser() {
+    /*
+      1. Present deletion confirmation box.
+      2. Optimistically delete user from data source.
+      2. Delete the user via Mesh API.
+     */
+  }
+
+  //****************************************************************************
+  // User Detail
+  //****************************************************************************
+
+  /**
+   * _handleShowUserDetail handles a click on the actual list in the table.
+   */
+  _handleShowUserDetail() {
+    /*
+      1. Present the user detail view.
+     */
+  }
+
+  //****************************************************************************
+  // User Filtering
+  //****************************************************************************
+
+  /**
    * _handleOnFilterChange is the callback for all changes to the text filter
    * @param  {[type]} e The Event
    */
@@ -68,6 +147,8 @@ class UsersTable extends React.Component {
       });
     }
 
+    // KC Note: I think we are going to want to query the server as opposed to
+    //  an in memory sort.
     let filterBy = e.target.value.toLowerCase();
     let size = this.dataList.getSize();
     let filteredIndexes = [];
@@ -82,6 +163,10 @@ class UsersTable extends React.Component {
       filteredDataList: new DataListWrapper(this.props.users.users, filteredIndexes)
     });
   }
+
+  //****************************************************************************
+  // Toggle All Handler
+  //****************************************************************************
 
   /**
    * _handleToggleAll takes care of handling the event where all users are toggles
