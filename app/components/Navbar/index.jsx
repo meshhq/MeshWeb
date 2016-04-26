@@ -21,9 +21,10 @@ class NavBar extends Component {
       // let glyph = glyphs[count]
       let onClick = this._handleNavItemWasClicked.bind(this, count)
       let item = (
-        <li>
+        <li key={title}>
           <a className="light"
             href="#"
+
             onClick={onClick}
           >
           {title}

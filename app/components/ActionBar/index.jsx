@@ -28,8 +28,7 @@ class ActionBar extends Component {
 ActionBar.displayName = 'Action Bar';
 
 ActionBar.propTypes = {
-  actions: PropTypes.array.isRequired,
-  onSearchInput: PropTypes.func.isRequired
+  actions: PropTypes.array.isRequired
 }
 
 export default ActionBar

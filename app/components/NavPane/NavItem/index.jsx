@@ -2,11 +2,14 @@
 import React, { Component, PropTypes } from 'react'
 
 class NavItem extends Component {
+
   render() {
+    const klassName = this.props.active ? 'nav-item active' : 'nav-item'
     return (
-      <div className="nav-item">
+      <div className={klassName}>
         <div className="nav-item-container">
-          <span aria-hidden="true"
+          <span 
+            aria-hidden="true"
             className={this.props.glyph}
           />
           <a href="" 
@@ -23,6 +26,7 @@ class NavItem extends Component {
 NavItem.displayName = 'Navigation Item';
 
 NavItem.propTypes = {
+  active: PropTypes.bool.isRequired,
   glyph: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired

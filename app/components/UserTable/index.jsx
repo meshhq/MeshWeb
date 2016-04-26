@@ -251,7 +251,7 @@ class UsersTable extends React.Component {
               actions={actions}
               onSearchInput={this.handleOnFilterChange}
             />
-            <UserForm displayed={this.state.userFormDisplayed} />
+            <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
             <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
             <Table
               headerHeight={40}
@@ -279,41 +279,53 @@ class UsersTable extends React.Component {
                 width={32}
               />
               <Column
-                cell={<TextCell col="first_name"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props} 
+                    col="first_name"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'First Name'}</Cell>}
                 width={150}
               />
               <Column
-                cell={<TextCell
-                  col="last_name"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="last_name"
+                    data={filteredDataList}
+
+                  />}
                 header={<Cell>{'Last Name'}</Cell>}
                 width={150}
               />
               <Column
-                cell={<TextCell
-                  col="email"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="email"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Email'}</Cell>}
                 width={300}
               />
               <Column
-                cell={<TextCell
-                  col="phone"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="phone"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Phone'}</Cell>}
                 width={200}
               />
               <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="id"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'ID'}</Cell>}
                 width={200}
               />

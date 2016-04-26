@@ -30,12 +30,17 @@ $NavBarHeight: 60px;
 	a {
 		color: white;
 	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
 	a.bold {
 		font-weight: 700;
 	}
 
 	a.light {
-		font-weight: 500;
+		font-weight: 600;
 	}
 
 	a.navbar-header-brand {
@@ -55,19 +60,13 @@ $NavBarHeight: 60px;
 
 	// Nav Items
 	li {
-		padding: 0px 5px;
+		padding: 10px 5px;
 
 		a {
 			font-weight: 700;
-			padding: 0px 10px;
+			padding: 10px 10px;
 			height: 100%;
 			font-size: 14px;
-		}
-
-
-		a:hover {
-			border-bottom: 2px solid white;
-			background-color: #3399ff;
 		}
 
 		a:active {
@@ -86,4 +85,15 @@ $NavBarHeight: 60px;
 			font-weight: 400;
 		}
 	}
+}
+
+
+.nav {
+	li {
+		a:hover {
+			text-decoration: none;
+			background: none;
+		}
+	}
+
 }

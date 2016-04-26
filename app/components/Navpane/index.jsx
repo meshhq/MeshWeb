@@ -27,14 +27,20 @@ class NavPane extends Component {
       let item
       if (count == this.props.activeNavIdx) {
         item = (
-          <NavItem glyph={glyph}
+          <NavItem 
+            active
+            glyph={glyph}
+            key={title}
             onClick={onClick}
             title={title}
           />
         )
       } else {
         item = (
-          <NavItem glyph={glyph}
+          <NavItem 
+            active={false}
+            glyph={glyph}
+            key={title}
             onClick={onClick}
             title={title}
           />

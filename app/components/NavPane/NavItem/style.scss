@@ -1,5 +1,5 @@
 
-$NavItemHeight: 72px;
+$NavItemHeight: 60px;
 $NavItemContainerTopPadding: 28px;
 $NavItemContainerLeftMargin: 24px;
 
@@ -8,15 +8,24 @@ $NavItemContainerLeftMargin: 24px;
 	width: 100%;
 	margin-bottom: 1px;
 	height: $NavItemHeight;
+	font-size: 1.5em;
+	
+	a {
+		color: $MeshBlack;	
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
 }
 
 .nav-item:hover {
 	border-left: 3px solid #cc7a6f;
 	padding-left: -3px;
-
-	h4 {
-		// border-bottom: 2px solid white;
-	}
+	color: #FFFFFF;
+	text-decoration: none;
+	
 }
 
 .nav-item-container {
@@ -33,11 +42,15 @@ $NavItemContainerLeftMargin: 24px;
 
 	a {
 		float: left;
-		color: black;
+		color: $MeshBlack;
 		font-size: 18px;
 		font-weight: 700px;
 		margin-top: 0px;
 		margin-bottom: 0px;
 		margin-left: 14px;
+	}
+
+	span {
+		color: $MeshBlack;
 	}
 }
