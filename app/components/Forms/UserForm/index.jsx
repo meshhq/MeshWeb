@@ -29,12 +29,12 @@ class UserForm extends Component {
 
 
           <Modal.Body>
-            <Input placeholder="First Name" type="text" onChange={this._handleChange.bind(this, 'firstName')}/>
-            <Input placeholder="Last Name"type="text" onChange={this._handleChange.bind(this, 'lastName')}/>
-            <Input placeholder="Email Address" type="text" onChange={this._handleChange.bind(this, 'email')}/>
-            <Input placeholder="Phone Number" type="text" onChange={this._handleChange.bind(this, 'phone')}/>
-            <Input placeholder="Company Name" type="text" onChange={this._handleChange.bind(this, 'company')}/>
-            <Input placeholder="Website" type="text" onChange={this._handleChange.bind(this, 'website')}/>
+            <Input onChange={this._handleChange.bind(this, 'firstName')} placeholder="First Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'lastName')} placeholder="Last Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'email')} placeholder="Email Address" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'phone')} placeholder="Phone Number" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'company')} placeholder="Company Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'website')} placeholder="Website" type="text" />
           </Modal.Body>
 
           <Modal.Footer>
