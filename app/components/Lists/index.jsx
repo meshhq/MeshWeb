@@ -1,5 +1,7 @@
 
 import React, { PropTypes, Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import _ from 'underscore'
 
 // Components
@@ -9,6 +11,10 @@ import RadioCell from '../Shared/DataTableCells/RadioCell'
 import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import ListForm from '../Forms/ListForm'
+
+// Actions
+import * as ListActions from '../../actions/lists'
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -20,12 +26,14 @@ class Lists extends Component {
     super(props, context)
 
     // Bind Action Handlers
-
     this.handleNewListClick = this._handleNewList.bind(this)
     this.handlePublishListClick = this._handlePublishList.bind(this)
     this.handleDeleteListClick = this._handleDeleteList.bind(this)
     this.handleFilterListClick = this._handleFilterList.bind(this)
     this.handleSearchListClick = this._handleSearchList.bind(this)
+
+    this.handleSaveList = this._handleSaveList.bind(this)
+    this.handleCloseForm = this._handleCloseForm.bind(this)
 
     /**
      * Generates the list of providers to show in the dropdown.
@@ -45,7 +53,8 @@ class Lists extends Component {
       filteredDataList: this.dataList,
       selectedLists: {},
       filteredProviders: filteredProviders,
-      selectedProvider: _.last(filteredProviders)
+      selectedProvider: _.last(filteredProviders),
+      listFormDisplayed: false
     }
   }
 
@@ -57,7 +66,9 @@ class Lists extends Component {
    * _handleNewList handles a click to the `New` action bar button.
    */
   _handleNewList() {
-
+    this.setState({
+      listFormDisplayed: true
+    });
     /*
       1. Present form for List data entry.
       2. Optimistically add list model to data source.
@@ -91,6 +102,26 @@ class Lists extends Component {
    */
   _handleFilterList() {
 
+  }
+
+  //****************************************************************************
+  // List Form
+  //****************************************************************************
+
+  _handleSaveList(element, textBox) {
+    console.log(element)
+    console.log(textBox)
+    console.log(this.props)
+    this.props.listActions.createList(textBox)
+    this.setState({
+      listFormDisplayed: false
+    });
+  }
+
+  _handleCloseForm() {
+    this.setState({
+      listFormDisplayed: false
+    });
   }
 
   //****************************************************************************
@@ -181,6 +212,7 @@ class Lists extends Component {
               actions={actions}
               onSearchInput={this.handleSearchListClick}
             />
+            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseForm} onSave={this.handleSaveList} />
             <Table
               headerHeight={42}
               height={1000}
@@ -251,9 +283,27 @@ Lists.defaultProps = {
 }
 
 Lists.propTypes = {
+  listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired
 }
+
+function mapStateToProps(state) {
+  return {
+    listState: state.lists
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    listActions: bindActionCreators(ListActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Lists)
 
 // Display Name
 Lists.displayName = 'Lists'

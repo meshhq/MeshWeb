@@ -225,6 +225,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+  console.log('Love It')
   return {
     appActions: bindActionCreators(AppActions, dispatch),
     listActions: bindActionCreators(ListActions, dispatch),
