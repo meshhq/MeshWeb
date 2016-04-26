@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import NavItem from './NavItem'
 
 // Nav Item Titles
-const titles = ['USERS', 'ORGANIZATIONS', 'LISTS', 'INTEGRATIONS']
+const titles = ['Users', 'Organizations', 'Lists', 'Integrations']
 
 // Nav Item Glyphs
 const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large', 'glyphicon glyphicon-th-list', 'glyphicon glyphicon-ok']

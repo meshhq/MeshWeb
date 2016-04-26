@@ -37,6 +37,9 @@
 	// Todo, change to $NavBarHeight;
 	height: calc(100% - 60px);
 	padding:1em;
+
+	border-radius: 5px;
+	box-shadow: inset 0px 0px 1px rgba(0,0,0,0.9);
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

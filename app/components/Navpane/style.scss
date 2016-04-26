@@ -8,4 +8,8 @@ $NavPaneHeight: 1000px;
 	float: left;
 	width: $NavPaneWidth;
 	height:$NavPaneHeight;
+
+	:hover {
+		background-color: $MeshWhite;
+	}
 }

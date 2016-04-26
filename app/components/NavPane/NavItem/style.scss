@@ -10,11 +10,12 @@ $NavItemContainerLeftMargin: 24px;
 	height: $NavItemHeight;
 }
 
-.nav-item:hover{
-	background-color: $MeshNavMediumBlue;
+.nav-item:hover {
+	border-left: 3px solid #cc7a6f;
+	padding-left: -3px;
 
 	h4 {
-		border-bottom: 2px solid white;
+		// border-bottom: 2px solid white;
 	}
 }
 
