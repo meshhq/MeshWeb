@@ -17,8 +17,6 @@ class UserForm extends Component {
     this.setState({
       stateKey: value
     });
-    console.log(stateKey)
-    console.log(this.state)
   }
 
   render() {
@@ -31,12 +29,12 @@ class UserForm extends Component {
 
 
           <Modal.Body>
-            <Input placeholder="First Name" type="text" onChange={this._handleChange.bind(this, "firstName")}/>
-            <Input placeholder="Last Name"type="text" onChange={this._handleChange.bind(this, "lastName")}/>
-            <Input placeholder="Email Address" type="text" onChange={this._handleChange.bind(this, "email")}/>
-            <Input placeholder="Phone Number" type="text" onChange={this._handleChange.bind(this, "phone")}/>
-            <Input placeholder="Company Name" type="text" onChange={this._handleChange.bind(this, "company")}/>
-            <Input placeholder="Website" type="text" onChange={this._handleChange.bind(this, "website")}/>
+            <Input placeholder="First Name" type="text" onChange={this._handleChange.bind(this, 'firstName')}/>
+            <Input placeholder="Last Name"type="text" onChange={this._handleChange.bind(this, 'lastName')}/>
+            <Input placeholder="Email Address" type="text" onChange={this._handleChange.bind(this, 'email')}/>
+            <Input placeholder="Phone Number" type="text" onChange={this._handleChange.bind(this, 'phone')}/>
+            <Input placeholder="Company Name" type="text" onChange={this._handleChange.bind(this, 'company')}/>
+            <Input placeholder="Website" type="text" onChange={this._handleChange.bind(this, 'website')}/>
           </Modal.Body>
 
           <Modal.Footer>
