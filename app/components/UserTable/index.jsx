@@ -221,15 +221,13 @@ class UsersTable extends React.Component {
     }
   }
 
-  _onCancel(e, test) {
-    console.log(test)
+  _onCancel() {
     this.setState({
       userFormDisplayed: false
     });
   }
 
-  _onSave(e, test) {
-    console.log(test)
+  _onSave() {
     this.setState({
       userFormDisplayed: false
     });
