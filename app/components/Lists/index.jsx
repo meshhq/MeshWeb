@@ -108,11 +108,8 @@ class Lists extends Component {
   // List Form
   //****************************************************************************
 
-  _handleSaveList(element, textBox) {
-    console.log(element)
-    console.log(textBox)
-    console.log(this.props)
-    this.props.listActions.createList(textBox)
+  _handleSaveList(element, params) {
+    this.props.listActions.createList(params)
     this.setState({
       listFormDisplayed: false
     });
@@ -307,5 +304,3 @@ export default connect(
 
 // Display Name
 Lists.displayName = 'Lists'
-
-export default Lists
