@@ -104,6 +104,39 @@ export function deleteList(listID) {
 	}
 }
 
+//------------------------------------------------------------------------------
+// Publish List
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to publish a list has begun.
+export const PUBLISHING_LIST = 'PUBLISHING_LIST'
+export function publishingList() {
+	return {
+		type: PUBLISHING_LIST
+	}
+}
+
+// The action to indicate a list has been created.
+export const PUBLISHED_LIST = 'PUBLISHED_LIST'
+export function publishedList() {
+	return {
+		type: PUBLISHED_LIST
+	}
+}
+
+export function publishList(listID, providers) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(creatingList())
+			const appID = getState().app.id
+			return POST(`apps/${appID}/lists/${listID}/publish`, providers)
+			.then(function(json){
+					dispatch(createdList(json))
+				}
+			)
+		}
+	}
+}
 
 //------------------------------------------------------------------------------
 // Refresh Lists

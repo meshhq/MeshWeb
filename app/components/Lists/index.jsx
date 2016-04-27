@@ -11,7 +11,11 @@ import RadioCell from '../Shared/DataTableCells/RadioCell'
 import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+
+// Forms
 import ListForm from '../Forms/ListForm'
+import DeleteForm from '../Forms/DeleteForm'
+import ProviderForm from '../Forms/ProviderForm'
 
 // Actions
 import * as ListActions from '../../actions/lists'
@@ -24,17 +28,6 @@ const { Table, Column, Cell } = FixedDataTable;
 class Lists extends Component {
   constructor(props, context) {
     super(props, context)
-
-    // Bind Action Handlers
-    this.handleNewListClick = this._handleNewList.bind(this)
-    this.handlePublishListClick = this._handlePublishList.bind(this)
-    this.handleDeleteListClick = this._handleDeleteList.bind(this)
-    this.handleFilterListClick = this._handleFilterList.bind(this)
-    this.handleSearchListClick = this._handleSearchList.bind(this)
-
-    this.handleSaveList = this._handleSaveList.bind(this)
-    this.handleCloseForm = this._handleCloseForm.bind(this)
-
     /**
      * Generates the list of providers to show in the dropdown.
      */
@@ -47,6 +40,25 @@ class Lists extends Component {
     })
     filteredProviders.push(this._meshProvider())
 
+    // New List Handlers
+    this.handleNewListClick = this._handleNewList.bind(this)
+    this.handleSaveList = this._handleSaveList.bind(this)
+    this.handleCloseListForm = this._handleCloseListForm.bind(this)
+
+    // Deletion List Handlers
+    this.handleDeleteListClick = this._handleDeleteListClick.bind(this)
+    this.handleDeleteList = this._handleDeleteList.bind(this)
+    this.handleCloseDeleteForm = this._handleCloseDeleteForm.bind(this)
+
+    // Publish List Handlers
+    this.handlePublishListClick = this._handlePublishListClick.bind(this)
+    this.handlePublishList = this._handlePublishList.bind(this)
+    this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
+
+    this.handleFilterListClick = this._handleFilterList.bind(this)
+    this.handleSearchListClick = this._handleSearchList.bind(this)
+
+
     // Generate the Dta wrapper for the lists.
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
@@ -54,13 +66,15 @@ class Lists extends Component {
       selectedLists: {},
       filteredProviders: filteredProviders,
       selectedProvider: _.last(filteredProviders),
-      listFormDisplayed: false
+      listFormDisplayed: false,
+      providerFormDisplayed: false,
+      deleteFormDisplayed: false
     }
   }
 
-  //****************************************************************************
-  // Action Bar Handlers
-  //****************************************************************************
+  //----------------------------------------------------------------------------
+  // New Actiion
+  //----------------------------------------------------------------------------
 
   /**
    * _handleNewList handles a click to the `New` action bar button.
@@ -69,44 +83,7 @@ class Lists extends Component {
     this.setState({
       listFormDisplayed: true
     });
-    /*
-      1. Present form for List data entry.
-      2. Optimistically add list model to data source.
-      2. Add the list via API.
-     */
   }
-
-  /**
-   * _handlePublishList handles a click to the `Publish` action bar button.
-   */
-  _handlePublishList() {
-    /*
-      1. Present integration view with options to select one or multiple integtrations.
-      2. Publish the list to the selected integrations.
-     */
-  }
-
-  /**
-   * _handleDeleteList handles a click to the `Delete` action bar button.
-   */
-  _handleDeleteList() {
-    /*
-      1. Present deletion confirmation box.
-      2. Optimistically delete list from data source.
-      2. Delete the list via Mesh API.
-     */
-  }
-
-  /**
-   * _handleFilterList handles a click to the `Provider` action bar button.
-   */
-  _handleFilterList() {
-
-  }
-
-  //****************************************************************************
-  // List Form
-  //****************************************************************************
 
   _handleSaveList(element, params) {
     this.props.listActions.createList(params)
@@ -115,15 +92,78 @@ class Lists extends Component {
     });
   }
 
-  _handleCloseForm() {
+  _handleCloseListForm() {
     this.setState({
       listFormDisplayed: false
     });
   }
 
-  //****************************************************************************
+  //----------------------------------------------------------------------------
+  // Publish Action
+  //----------------------------------------------------------------------------
+
+  /**
+   * _handlePublishList handles a click to the `Publish` action bar button.
+   */
+  _handlePublishListClick() {
+    this.setState({
+      providerFormDisplayed: true
+    });
+  }
+
+  _handlePublishList(element, params) {
+    this.props.listActions.publishList(params)
+    this.setState({
+      providerFormDisplayed: false
+    });
+  }
+
+  _handleCloseProviderForm() {
+    this.setState({
+      providerFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Delete Action
+  //----------------------------------------------------------------------------
+
+  /**
+   * _handleDeleteList handles a click to the `Delete` action bar button.
+   */
+  _handleDeleteListClick() {
+    this.setState({
+      deleteFormDisplayed: true
+    });
+  }
+
+  _handleDeleteList(element, listID) {
+    this.props.listActions.deleteList(listID)
+    this.setState({
+      deleteFormDisplayed: false
+    });
+  }
+
+  _handleCloseDeleteForm() {
+    this.setState({
+      deleteFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Filter Action
+  //----------------------------------------------------------------------------
+
+  /**
+   * _handleFilterList handles a click to the `Provider` action bar button.
+   */
+  _handleFilterList() {
+
+  }
+
+  //----------------------------------------------------------------------------
   // List Detail
-  //****************************************************************************
+  //----------------------------------------------------------------------------
 
   /**
    * _handleShowListDetail handles a click on the actual list in the table.
@@ -134,9 +174,9 @@ class Lists extends Component {
      */
   }
 
-  //****************************************************************************
+  //----------------------------------------------------------------------------
   // List Filtering
-  //****************************************************************************
+  //----------------------------------------------------------------------------
 
   _handleSearchList() {
 
@@ -209,7 +249,13 @@ class Lists extends Component {
               actions={actions}
               onSearchInput={this.handleSearchListClick}
             />
-            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseForm} onSave={this.handleSaveList} />
+            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} />
+            <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList} />
+            <ProviderForm
+              logoSrc={'//logo.clearbit.com/spotify.com'}
+              displayed={this.state.providerFormDisplayed}
+              onCancel={this.handleCloseProviderForm}
+              onPublish={this.handlePublishList} />
             <Table
               headerHeight={42}
               height={1000}
@@ -251,10 +297,12 @@ class Lists extends Component {
                 width={210}
               />
               <Column
-                cell={<PillCell
-                  col="origin_provider"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <PillCell
+                    {...this.props}
+                    col="origin_provider"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Provider'}</Cell>}
                 width={100}
               />

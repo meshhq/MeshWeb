@@ -8,13 +8,11 @@ class NavItem extends Component {
     return (
       <div className={klassName}>
         <div className="nav-item-container">
-          <span 
+          <span
             aria-hidden="true"
             className={this.props.glyph}
           />
-          <a href="" 
-            onClick={this.props.onClick}
-          >
+          <a onClick={this.props.onClick}>
             {this.props.title}
           </a>
         </div>
