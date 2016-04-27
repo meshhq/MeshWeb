@@ -246,90 +246,101 @@ class UsersTable extends React.Component {
 
       <div className="data-table">
         <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
-            <ActionBar
-              actions={actions}
-              onSearchInput={this.handleOnFilterChange}
-            />
-            <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
-            <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
-            <Table
-              headerHeight={40}
-              height={800}
-              rowHeight={35}
-              rowsCount={filteredDataList.getSize()}
-              width={this.props.width}
-              {...this.props}
-            >
-              <TextColumn data={filteredDataList}/>
-              <Column
-                cell={<RadioCell
-                  col="radio"
-                  data={filteredDataList}
-                  selectedList={selectedList}
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-12">
+                <ActionBar
+                  actions={actions}
+                  onSearchInput={this.handleOnFilterChange}
+                />              
+              </div>
+              <div className="col-md-12">
+                <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
+                <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12 dataTableWrapper">
+                <Table
+                  headerHeight={40}
+                  height={800}
+                  rowHeight={35}
+                  rowsCount={filteredDataList.getSize()}
+                  width={this.props.width}
+                  {...this.props}
+                >
+                  <TextColumn data={filteredDataList}/>
+                  <Column
+                    cell={<RadioCell
+                      col="radio"
+                      data={filteredDataList}
+                      selectedList={selectedList}
+                          />}
+                    header={<Cell>
+                      <div className="input-group">
+                        <input
+                          aria-label="..."
+                          onChange={this.handleToggleAll}
+                          type="checkbox"
+                        />
+                      </div></Cell>}
+                    width={32}
+                  />
+                  <Column
+                    cell={
+                      <TextCell
+                        {...this.props} 
+                        col="first_name"
+                        data={filteredDataList}
                       />}
-                header={<Cell>
-                  <div className="input-group">
-                    <input
-                      aria-label="..."
-                      onChange={this.handleToggleAll}
-                      type="checkbox"
-                    />
-                  </div></Cell>}
-                width={32}
-              />
-              <Column
-                cell={
-                  <TextCell
-                    {...this.props} 
-                    col="first_name"
-                    data={filteredDataList}
-                  />}
-                header={<Cell>{'First Name'}</Cell>}
-                width={150}
-              />
-              <Column
-                cell={
-                  <TextCell
-                    {...this.props}
-                    col="last_name"
-                    data={filteredDataList}
+                    header={<Cell>{'First Name'}</Cell>}
+                    width={150}
+                  />
+                  <Column
+                    cell={
+                      <TextCell
+                        {...this.props}
+                        col="last_name"
+                        data={filteredDataList}
 
-                  />}
-                header={<Cell>{'Last Name'}</Cell>}
-                width={150}
-              />
-              <Column
-                cell={
-                  <TextCell
-                    {...this.props}
-                    col="email"
-                    data={filteredDataList}
-                  />}
-                header={<Cell>{'Email'}</Cell>}
-                width={300}
-              />
-              <Column
-                cell={
-                  <TextCell
-                    {...this.props}
-                    col="phone"
-                    data={filteredDataList}
-                  />}
-                header={<Cell>{'Phone'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={
-                  <TextCell
-                    {...this.props}
-                    col="id"
-                    data={filteredDataList}
-                  />}
-                header={<Cell>{'ID'}</Cell>}
-                width={200}
-              />
-            </Table>
+                      />}
+                    header={<Cell>{'Last Name'}</Cell>}
+                    width={150}
+                  />
+                  <Column
+                    cell={
+                      <TextCell
+                        {...this.props}
+                        col="email"
+                        data={filteredDataList}
+                      />}
+                    header={<Cell>{'Email'}</Cell>}
+                    width={300}
+                  />
+                  <Column
+                    cell={
+                      <TextCell
+                        {...this.props}
+                        col="phone"
+                        data={filteredDataList}
+                      />}
+                    header={<Cell>{'Phone'}</Cell>}
+                    width={200}
+                  />
+                  <Column
+                    cell={
+                      <TextCell
+                        {...this.props}
+                        col="id"
+                        data={filteredDataList}
+                      />}
+                    header={<Cell>{'ID'}</Cell>}
+                    width={200}
+                  />
+                </Table>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>

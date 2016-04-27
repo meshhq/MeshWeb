@@ -28,6 +28,14 @@ $MeshBlue: #65A8EC;
 $NavPaneWidth: 220px;
 
 /**
+ * Media Query Constants
+ */
+$screen-xs: 480px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1200px;
+
+/**
  * Helpers
  */
 .vcenter {

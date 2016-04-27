@@ -2,9 +2,8 @@
 import { BASE_URL } from '../constants/api'
 import { Fetch, Headers, Request } from 'isomorphic-fetch'
 import { getAuthToken, clearAuthToken } from './session'
-import { EventEmitter } from 'fbemitter'
+import EventEmitter from './eventEmitter'
 import URI from 'urijs'
-const emitter = new EventEmitter()
 
 const AUTHORIZATION_HEADER_KEY = 'Authorization'
 
@@ -54,7 +53,7 @@ function performFetch(request) {
 				// Look for 401s
 				if (response.status == 401) {
 					clearAuthToken()
-					emitter.emit(AUTHORIZATION_HEADER_KEY, true)
+					EventEmitter.sharedEmitter().emit(UNAUTHORIZED_ACCESS_NOTIFICATION, true)
 				}
 				return Promise.reject(respJSON)
 			})
@@ -130,3 +129,4 @@ function appendAuthentication(headers) {
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
 }
+

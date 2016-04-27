@@ -1,4 +1,7 @@
 .action-group {
-	float: right;
+	@media (min-width: $screen-sm) { 
+		float: right;	
+	}
+	
 	padding: 2px;
 }
