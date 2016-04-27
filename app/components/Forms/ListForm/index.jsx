@@ -23,6 +23,9 @@ class ListForm extends Component {
   }
 
   render() {
+    const providersForDropdown = _.map(this.props.providers, (provider) => {
+      return provider.type != this.state.selectedProvider.type
+    })
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>

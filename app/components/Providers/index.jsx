@@ -41,7 +41,6 @@ class Providers extends Component {
           rowContainer.push(providersSections[providerIdx])
         }
       }
-
       providerRows.push(rowContainer)
     }
 

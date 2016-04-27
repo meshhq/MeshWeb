@@ -45,7 +45,7 @@ class UsersTable extends React.Component {
     // Setup our state.
     this.state = {
       filteredDataList: this.dataList,
-      selectedList: {},
+      selectedList: [],
       userFormDisplayed: false
     };
   }
@@ -182,37 +182,43 @@ class UsersTable extends React.Component {
     });
   }
 
-  //****************************************************************************
-  // Toggle All Handler
-  //****************************************************************************
+  //----------------------------------------------------------------------------
+  // User Selection
+  //----------------------------------------------------------------------------
+
+  /**
+   * handleSelectOne takes care of handling the event where one list is selected.
+   * @param  {[type]} e The event
+   * @param  {[type]} idx The index for the list.
+   */
+  _handleSelectOne(e, idx) {
+    let selectedList = this.state.selectedList
+    const id = this.props.users.users[idx].id
+    if (e.target.checked) {
+      selectedList.push(id)
+    } else {
+      selectedList.pop(id)
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
 
   /**
    * _handleToggleAll takes care of handling the event where all users are toggles
    * @param  {[type]} e The event
    */
   _handleToggleAll(e) {
-    this.setState({
-      userFormDisplayed: !this.state.userFormDisplayed
-    });
-
-    // If the input is toggled off, then wipe the selected list
-    if (!e.target.checked) {
-      this.setState({
-        selectedList: {}
-      });
-    } else {
-      // Copy over all IDs
-      let selectedList = {}
+    let selectedList = {}
+    if (e.target.checked) {
       for (let idx in this.props.users.users) {
         const id = this.props.users.users[idx].id
-        selectedList[id] = true
+        selectedList.push(id)
       }
-
-      // Set new State
-      this.setState({
-        selectedList: selectedList
-      });
     }
+    this.setState({
+      selectedList: selectedList
+    });
   }
 
   _onCancel() {
@@ -260,6 +266,7 @@ class UsersTable extends React.Component {
                   col="radio"
                   data={filteredDataList}
                   selectedList={selectedList}
+                  {...this.props}
                       />}
                 header={<Cell>
                   <div className="input-group">
@@ -272,41 +279,52 @@ class UsersTable extends React.Component {
                 width={32}
               />
               <Column
-                cell={<TextCell col="first_name"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="first_name"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'First Name'}</Cell>}
                 width={150}
               />
               <Column
-                cell={<TextCell
-                  col="last_name"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="last_name"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Last Name'}</Cell>}
                 width={150}
               />
               <Column
-                cell={<TextCell
-                  col="email"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="email"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Email'}</Cell>}
                 width={300}
               />
               <Column
-                cell={<TextCell
-                  col="phone"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="phone"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'Phone'}</Cell>}
                 width={200}
               />
               <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
+                cell={
+                  <TextCell
+                    {...this.props}
+                    col="id"
+                    data={filteredDataList}
+                  />}
                 header={<Cell>{'ID'}</Cell>}
                 width={200}
               />

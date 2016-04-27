@@ -55,15 +55,18 @@ class Lists extends Component {
     this.handlePublishList = this._handlePublishList.bind(this)
     this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
 
-    this.handleFilterListClick = this._handleFilterList.bind(this)
-    this.handleSearchListClick = this._handleSearchList.bind(this)
+    // Filtering
+    this.handleSearchLists = this._handleSearchLists.bind(this)
 
+    // List Selection
+    this.handleSelectOne = this._handleSelectOne.bind(this)
+    this.handleSelectAll = this._handleSelectAll.bind(this)
 
     // Generate the Dta wrapper for the lists.
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
+      selectedList: [],
       filteredDataList: this.dataList,
-      selectedLists: {},
       filteredProviders: filteredProviders,
       selectedProvider: _.last(filteredProviders),
       listFormDisplayed: false,
@@ -111,8 +114,21 @@ class Lists extends Component {
     });
   }
 
-  _handlePublishList(element, params) {
-    this.props.listActions.publishList(params)
+  _handlePublishList(params) {
+    let providers = [];
+    this.props.providers.map(function(provider) {
+      let type = provider['type']
+      let shouldPublish = params[type]
+      if (shouldPublish === true) {
+        providers.push(provider.name)
+      }
+    });
+
+    for (let idx in this.state.selectedList) {
+      let listID = this.state.selectedList[idx]
+      this.props.listActions.publishList(listID, providers)
+    }
+
     this.setState({
       providerFormDisplayed: false
     });
@@ -137,8 +153,12 @@ class Lists extends Component {
     });
   }
 
-  _handleDeleteList(element, listID) {
-    this.props.listActions.deleteList(listID)
+  _handleDeleteList() {
+    for (let idx in this.state.selectedList) {
+      let listID = this.state.selectedList[idx]
+      this.props.listActions.deleteList(listID)
+    }
+
     this.setState({
       deleteFormDisplayed: false
     });
@@ -161,27 +181,6 @@ class Lists extends Component {
 
   }
 
-  //----------------------------------------------------------------------------
-  // List Detail
-  //----------------------------------------------------------------------------
-
-  /**
-   * _handleShowListDetail handles a click on the actual list in the table.
-   */
-  _handleShowListDetail() {
-    /*
-      1. Present the list detail view.
-     */
-  }
-
-  //----------------------------------------------------------------------------
-  // List Filtering
-  //----------------------------------------------------------------------------
-
-  _handleSearchList() {
-
-  }
-
   _listsFilteredByCurrentIntegration() {
     const lists = this.props.lists;
     return _.filter(lists, (list) => { list.integraitonId === this.state.selectedIntegration.id })
@@ -201,6 +200,114 @@ class Lists extends Component {
     }
   }
 
+  //----------------------------------------------------------------------------
+  // List Detail
+  //----------------------------------------------------------------------------
+
+  /**
+   * _handleShowListDetail handles a click on the actual list in the table.
+   */
+  _handleShowListDetail() {
+    /*
+      1. Present the list detail view.
+     */
+  }
+
+  //----------------------------------------------------------------------------
+  // List Searching
+  //----------------------------------------------------------------------------
+
+  _handleSearchLists(e) {
+    let dataList;
+    if (e.target.value) {
+      let filterBy = e.target.value.toLowerCase();
+      let size = this.dataList.getSize();
+      let filteredIndexes = [];
+      for (let index = 0; index < size; index++) {
+        let { name } = this.dataList.getObjectAt(index);
+        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+          filteredIndexes.push(index);
+        }
+      }
+      dataList = new DataListWrapper(this.props.lists, filteredIndexes)
+    } else {
+      dataList = this.dataList
+    }
+    this.setState({
+      filteredDataList: dataList
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // List Selection
+  //----------------------------------------------------------------------------
+
+  /**
+   * handleSelectOne takes care of handling the event where one list is selected.
+   * @param  {[type]} e The event
+   * @param  {[type]} idx The index for the list.
+   */
+  _handleSelectOne(e, idx) {
+    let selectedList = this.state.selectedList
+    const id = this.props.lists[idx].id
+    if (e.target.checked) {
+      selectedList.push(id)
+    } else {
+      selectedList.pop(id)
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+  /**
+   * handleSelectAll takes care of handling the event where all users are toggles
+   * @param  {[type]} e The event
+   */
+  _handleSelectAll(e) {
+    let selectedList = []
+    if (e.target.checked) {
+      for (let idx in this.props.filteredDataList) {
+        const id = this.props.filteredDataList[idx].id
+        selectedList.push(id)
+      }
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+  /*
+  const providersForDropdown = _.filter(this.state.filteredProviders, (provider) => {
+    return provider.type != this.state.selectedProvider.type
+  })
+
+  // Building the drop down top left sort
+  let providerSortList = []
+  for (let i = 0; i < providersForDropdown.length; i++) {
+
+    const provider = providersForDropdown[i]
+    const providerClicked = this._providerSelected.bind(this, provider)
+    providerSortList.push(
+      <li>
+        <a href="#"
+          key={provider.name}
+          onClick={providerClicked}
+        >
+        {provider.name}
+        </a>
+      </li>
+    )
+  }
+
+  Building the drop down top left sort
+  const filteredLists = _.filter(this.props.lists, (list) => {
+    const hasName = list.hasOwnProperty('name')
+    const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
+    return hasName && isCurrentProvider
+  })
+  */
+
   render() {
     // Setting up our action bar.
     let newAction = { handler: this.handleNewListClick, title: 'New', type: 0 };
@@ -209,53 +316,25 @@ class Lists extends Component {
     let filterAction = { handler: this.handleFilterListClick, title: 'Select Provider', type: 1 };
     let actions = [newAction, publishAction, deleteAction, filterAction];
 
-    // MAKE PANELS
-    const { selectedLists, filteredDataList } = this.state
-    const providersForDropdown = _.filter(this.state.filteredProviders, (provider) => {
-      return provider.type != this.state.selectedProvider.type
-    })
+    // Data sources.
+    const { selectedList, filteredDataList } = this.state
 
-    // Building the drop down top left sort
-    let providerSortList = []
-    for (let i = 0; i < providersForDropdown.length; i++) {
-
-      const provider = providersForDropdown[i]
-      const providerClicked = this._providerSelected.bind(this, provider)
-      providerSortList.push(
-        <li>
-          <a href="#"
-            key={provider.name}
-            onClick={providerClicked}
-          >
-          {provider.name}
-          </a>
-        </li>
-      )
-    }
-
-    // Building the drop down top left sort
-    // const filteredLists = _.filter(this.props.lists, (list) => {
-    //   const hasName = list.hasOwnProperty('name')
-    //   const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
-    //   return hasName && isCurrentProvider
-    // })
-
-    // Layout the providers in a row
+    // Setup Out Cells
+    let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    let nameCell = (<TextCell col="name" data={filteredDataList} />)
+    let idCell = (<TextCell col="id" data={filteredDataList} />)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
+    let descriptionCell = (<TextCell col="description" data={filteredDataList}/>)
+    
+    // Layout the providers table.
     return (
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ActionBar
-              actions={actions}
-              onSearchInput={this.handleSearchListClick}
-            />
-            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} />
-            <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList} />
-            <ProviderForm
-              logoSrc={'//logo.clearbit.com/spotify.com'}
-              displayed={this.state.providerFormDisplayed}
-              onCancel={this.handleCloseProviderForm}
-              onPublish={this.handlePublishList} />
+            <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
+            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
+            <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
+            <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
             <Table
               headerHeight={42}
               height={1000}
@@ -265,55 +344,19 @@ class Lists extends Component {
               {...this.props}
             >
               <Column
-                cell={<RadioCell
-                  col="radio"
-                  data={filteredDataList}
-                  selectedList={selectedLists}
-                      />}
-                header={<Cell>
-                  <div className="input-group">
-                    <input
-                      aria-label="..."
-                      onChange={this.handleToggleAll}
-                      type="checkbox"
-                    />
-                  </div></Cell>}
+                cell={radioCell}
+                header={
+                  <Cell>
+                    <div className="input-group">
+                      <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
+                    </div>
+                  </Cell>}
                 width={32}
               />
-              <Column
-                cell={<TextCell
-                  col="name"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Name'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="id"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'ID'}</Cell>}
-                width={210}
-              />
-              <Column
-                cell={
-                  <PillCell
-                    {...this.props}
-                    col="origin_provider"
-                    data={filteredDataList}
-                  />}
-                header={<Cell>{'Provider'}</Cell>}
-                width={100}
-              />
-              <Column
-                cell={<TextCell
-                  col="description"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Description'}</Cell>}
-                width={600}
-              />
+              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
+              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
+              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
+              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
             </Table>
           </div>
         </div>
@@ -328,6 +371,7 @@ Lists.defaultProps = {
 }
 
 Lists.propTypes = {
+  filteredDataList: PropTypes.object.isRequired,
   listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired

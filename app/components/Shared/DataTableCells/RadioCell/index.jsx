@@ -4,14 +4,21 @@ import FixedDataTable from 'fixed-data-table'
 
 const { Cell } = FixedDataTable;
 
-const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
-  const user = data.getObjectAt(rowIndex)
+const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) => {
+  let handleChange = function(e) {
+    onChange(e, rowIndex)
+  }
+
+  const object = data.getObjectAt(rowIndex)
   let inputUI
-  if (selectedList[user.id] == true) {
+  // TODO: Add logic to check if array contains
+  // selectedList.contains(object.id)
+  if (false) {
     inputUI = (
       <input
         aria-label="..."
         checked
+        onChange={handleChange}
         type="checkbox"
       />
     )
@@ -19,11 +26,11 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
     inputUI = (
       <input
         aria-label="..."
+        onChange={handleChange}
         type="checkbox"
       />
     )
   }
-
   return (
     <div className={'radio-cell ' + rowIndex + '_' + col}>
       <Cell {...props}>
@@ -35,14 +42,14 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
     )
 }
 
-TextCell.propTypes = {
+RadioCell.propTypes = {
 	col: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-	props: PropTypes.array.isRequired,
+	props: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired,
   selectedList: PropTypes.array.isRequired
 }
 
-TextCell.displayName = 'Text Cell'
+RadioCell.displayName = 'Radio Cell'
 
-export default TextCell
+export default RadioCell

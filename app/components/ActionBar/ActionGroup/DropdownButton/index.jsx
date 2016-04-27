@@ -3,6 +3,12 @@ import React, { Component, PropTypes } from 'react'
 
 class DropdownButton extends Component {
   render() {
+    let providers = this.props.providers.map(function(provider) {
+      return (<li><a href="#">{provider.name}</a></li>)
+    });
+
+    // TODO; Add action handler.
+    let dropdown = (<ul className="dropdown-menu">{providers}</ul>)
     return (
       <div className="btn-group">
         <button
@@ -16,16 +22,7 @@ class DropdownButton extends Component {
           <span className="caret"></span>
           <span className="sr-only">{"Toggle Dropdown"}</span>
         </button>
-        <ul className="dropdown-menu">
-          <li><a href="#">{this.props.title}</a></li>
-          <li><a href="#">{"Another action"}</a></li>
-          <li><a href="#">{"Something else here"}</a></li>
-          <li
-            className="divider"
-            role="separator"
-          />
-          <li><a href="#">{"Separated link"}</a></li>
-        </ul>
+        {dropdown}
       </div>
     )
   }
@@ -35,6 +32,7 @@ DropdownButton.displayName = 'Dropdown Button';
 
 DropdownButton.propTypes = {
   onClick: PropTypes.func.isRequired,
+  providers: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired
 }
 

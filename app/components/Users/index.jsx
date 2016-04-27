@@ -10,14 +10,16 @@ const { Table, Column, Cell } = FixedDataTable;
 class UsersTable extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
+    this.handleToggleAll = this._handleToggleAll.bind(this);
+
     this._dataList = new DataListWrapper(this.props.users.users)
-    this._selectedList = {}
     this.state = {
       filteredDataList: this._dataList,
       selectedList: {}
     };
-    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
-    this.handleToggleAll = this.handleToggleAll.bind(this);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,6 +34,7 @@ class UsersTable extends React.Component {
    * @param  {[type]} e The Event
    */
   handleOnFilterChange(e) {
+    // Not text in search bar.
     if (!e.target.value) {
       this.setState({
         filteredDataList: this._dataList
@@ -57,7 +60,7 @@ class UsersTable extends React.Component {
    * handleToggleAll takes care of handling the event where all users are toggles
    * @param  {[type]} e The event
    */
-  handleToggleAll(e) {
+  _handleToggleAll(e) {
     // If the input is toggled off, then wipe the selected list
     if (!e.target.checked) {
       this.setState({
