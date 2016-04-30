@@ -67,7 +67,7 @@ class Login extends Component {
             aria-hidden="true" 
             className="glyphicon glyphicon-exclamation-sign"
           />
-          <span className="sr-only">{'Error:'}</span>{' Credentials Invalid'}
+          <span className="sr-only">{'Error:'}</span>{' There was an issue logging you in'}
         </div>
       )
     }

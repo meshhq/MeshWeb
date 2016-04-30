@@ -28,14 +28,9 @@ EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unau
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route component={App}
-        onEnter={requireAuth}
-        path="/"
-      />
-      <Route 
-        component={Login}
-        path="/login"
-      />
+      <Route component={App} onEnter={requireAuth} path="/" />
+      <Route component={Login} path="/login" />
+      <Route component={App} path="*" />
     </Router>
   </Provider>,
   document.getElementById('root')

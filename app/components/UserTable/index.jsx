@@ -254,6 +254,8 @@ class UsersTable extends React.Component {
                   onSearchInput={this.handleOnFilterChange}
                 />              
               </div>
+            </div>
+            <div className="row">
               <div className="col-md-12">
                 <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
                 <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
