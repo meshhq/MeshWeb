@@ -4,7 +4,7 @@ import FixedDataTable from 'fixed-data-table'
 
 const { Cell } = FixedDataTable;
 
-const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
+const TextCell = ({ data, selectedList, col, ...props }) => {
   const user = data.getObjectAt(rowIndex)
   let inputUI
   if (selectedList[user.id] == true) {
@@ -22,8 +22,10 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
         type="checkbox"
       />
     )
-  }
+  } 
 
+  const { rowIndex } = this.props
+  console.log(this.props)
   return (
     <div className={'radio-cell ' + rowIndex + '_' + col}>
       <Cell {...props}>
@@ -38,11 +40,9 @@ const TextCell = ({ data, rowIndex, selectedList, col, ...props }) => {
 TextCell.propTypes = {
 	col: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-	props: PropTypes.array.isRequired,
-  rowIndex: PropTypes.number.isRequired,
-  selectedList: PropTypes.array.isRequired
+  selectedList: PropTypes.object.isRequired
 }
 
-TextCell.displayName = 'Text Cell'
+TextCell.displayName = 'Radio Cell'
 
 export default TextCell

@@ -5,11 +5,12 @@ import FixedDataTable from 'fixed-data-table'
 const { Cell } = FixedDataTable;
 
 const TextCell = ({ rowIndex, data, col, ...props }) => {
+  const { rowIdx } = this.props.rowIndex
   return (
     <div className="text-cell">
       <Cell {...props}>
         <p>
-          {data.getObjectAt(rowIndex)[col]}
+          {data.getObjectAt(rowIdx)[col]}
         </p>
       </Cell>
     </div>
@@ -18,9 +19,7 @@ const TextCell = ({ rowIndex, data, col, ...props }) => {
 
 TextCell.propTypes = {
 	col: PropTypes.string.isRequired,
-	data: PropTypes.object.isRequired,
-	props: PropTypes.array.isRequired,
-  rowIndex: PropTypes.number.isRequired
+	data: PropTypes.object.isRequired
 }
 
 TextCell.displayName = 'Text Cell'
