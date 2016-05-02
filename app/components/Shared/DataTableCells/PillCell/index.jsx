@@ -24,7 +24,7 @@ const PROVIDER_COLORS = {
   4: '#579FE4',
   5: '#D7684F',
   6: '#3993EA',
-  7: '#SHOPIFY'
+  7: '#3993EA'
 }
 
 const PillCell = ({ rowIndex, data, col, ...props }) => {

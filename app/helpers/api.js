@@ -47,7 +47,11 @@ export function DELETE(path, params) {
 function performFetch(request) {
 	return Fetch(request).then((response) => {
 		if (response.ok) {
-			return response.json()
+			if (response.status === 204) {
+				return null
+			} else {
+				return response.json()
+			}
 		} else {
 			return response.json().then((respJSON) => {
 				// Look for 401s

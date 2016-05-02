@@ -9,11 +9,10 @@ const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) =>
     onChange(e, rowIndex)
   }
 
-  const object = data.getObjectAt(rowIndex)
+  let object = data.getObjectAt(rowIndex)
   let inputUI
-  // TODO: Add logic to check if array contains
-  // selectedList.contains(object.id)
-  if (false) {
+  let idx = selectedList.indexOf(object)
+  if (!idx) {
     inputUI = (
       <input
         aria-label="..."
@@ -45,8 +44,6 @@ const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) =>
 RadioCell.propTypes = {
 	col: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-	props: PropTypes.object.isRequired,
-  rowIndex: PropTypes.number.isRequired,
   selectedList: PropTypes.array.isRequired
 }
 

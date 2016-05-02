@@ -122,12 +122,7 @@ class App extends Component {
     const { userState, providerState, activeNavIdx, listState, organizationState } = this.props
     switch(activeNavIdx) {
       case 0:
-        return (
-          <UserTable
-            users={userState}
-            width={this.state.width}
-          />
-          )
+        return (<UserTable providers={providerState.providers} users={userState} width={this.state.width}/>)
       case 1:
         return (
           <Organizations
@@ -225,7 +220,6 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log('Love It')
   return {
     appActions: bindActionCreators(AppActions, dispatch),
     listActions: bindActionCreators(ListActions, dispatch),

@@ -1,7 +1,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import ActionButton from './ActionButton'
-import DropdownButton from './DropdownButton'
+import Dropdown from './DropdownButton'
 
 // Button type enum.
 let buttonType = {
@@ -12,7 +12,6 @@ let buttonType = {
 
 class ActionGroup extends Component {
   render() {
-
     // Itterate over all button supplied to the class to build the action group.
     let providers = this.props.providers
     let actionButtons = this.props.actions.map(function(action) {
@@ -22,7 +21,7 @@ class ActionGroup extends Component {
           return (<ActionButton key={action.title} onButtonClick={action.handler} title={action.title}/>)
 
         case buttonType.DROPDOWN:
-          return (<DropdownButton key={action.title} onClick={action.handler} providers={providers} title={action.title}/>)
+          return (<Dropdown key={action.title} onClick={action.handler} providers={providers} title={action.title}/>)
 
         case buttonType.RADIO:
             break;

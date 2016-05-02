@@ -45,10 +45,10 @@ class ProviderForm extends Component {
     let providerColumns = this.props.providers.map(function(provider) {
       let type = provider['type']
       return (
-        <Row>
-          <Col className='provider-column' ref={provider['id']} md={6}>
+        <Row key={provider.name}>
+          <Col className='provider-column' md={6} ref={provider['id']}>
             <div className='provider-container'>
-              <input id={type} ref={'test'} type="radio" aria-label="..." onChange={test}/>
+              <input aria-label="..." id={type} onChange={test} type={'radio'} />
               <img className="logo-img" src={provider['logo_url']} />
               <p>{provider['name']}</p>
             </div>

@@ -10,12 +10,10 @@ class ListForm extends Component {
     this.handleSave = this._handleSave.bind(this)
   }
 
-
   _handleChange(stateKey, e) {
-    let value = e.target.value
-    this.setState({
-      stateKey: value
-    });
+    let state = this.state
+    state[stateKey] = e.target.value;
+    this.setState( state )
   }
 
   _handleSave() {
@@ -23,9 +21,6 @@ class ListForm extends Component {
   }
 
   render() {
-    const providersForDropdown = _.map(this.props.providers, (provider) => {
-      return provider.type != this.state.selectedProvider.type
-    })
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
@@ -35,7 +30,7 @@ class ListForm extends Component {
 
 
           <Modal.Body>
-            <Input placeholder="List Name" type="text" onChange={this._handleChange.bind(this, 'listName')}/>
+            <Input placeholder="List Name" type="text" onChange={this._handleChange.bind(this, 'name')}/>
             <Input placeholder="Description"type="text" onChange={this._handleChange.bind(this, 'description')}/>
           </Modal.Body>
 

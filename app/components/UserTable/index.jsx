@@ -247,10 +247,7 @@ class UsersTable extends React.Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ActionBar
-              actions={actions}
-              onSearchInput={this.handleOnFilterChange}
-            />
+            <ActionBar actions={actions} onSearchInput={this.handleOnFilterChange} providers={this.props.providers} />
             <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
             <Table
               headerHeight={40}
@@ -339,6 +336,7 @@ class UsersTable extends React.Component {
 UsersTable.displayName = 'Users Table';
 
 UsersTable.propTypes = {
+  providers: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }

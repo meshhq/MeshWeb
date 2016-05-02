@@ -96,8 +96,8 @@ export function deleteList(listID) {
 			dispatch(deletingList())
 			const appID = getState().app.id
 			return DELETE(`apps/${appID}/lists/${listID}`)
-			.then(function(json){
-					dispatch(deletedList(json))
+			.then(function(){
+					dispatch(deletedList())
 				}
 			)
 		}

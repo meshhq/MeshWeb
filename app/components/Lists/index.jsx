@@ -28,17 +28,6 @@ const { Table, Column, Cell } = FixedDataTable;
 class Lists extends Component {
   constructor(props, context) {
     super(props, context)
-    /**
-     * Generates the list of providers to show in the dropdown.
-     */
-     // KC Note: I think we should actually ask the server for the customers activated integrations here.
-     // Gets rid of all the logic below.
-    const providerTypesPresentInLists = _.pluck(this.props.lists, 'origin_provider')
-    const uniqProviderTypesPresentInLists = _.uniq(providerTypesPresentInLists)
-    const filteredProviders = _.filter(this.props.providers, (provider) => {
-      return _.indexOf(uniqProviderTypesPresentInLists, provider.type) != -1
-    })
-    filteredProviders.push(this._meshProvider())
 
     // New List Handlers
     this.handleNewListClick = this._handleNewList.bind(this)
@@ -55,7 +44,10 @@ class Lists extends Component {
     this.handlePublishList = this._handlePublishList.bind(this)
     this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
 
-    // Filtering
+    // Filter List Handlers
+    this.handleFilterListClick = this._handleFilterListClick.bind(this)
+
+    // Searching
     this.handleSearchLists = this._handleSearchLists.bind(this)
 
     // List Selection
@@ -66,9 +58,8 @@ class Lists extends Component {
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
       selectedList: [],
+      selectedProvider: null,
       filteredDataList: this.dataList,
-      filteredProviders: filteredProviders,
-      selectedProvider: _.last(filteredProviders),
       listFormDisplayed: false,
       providerFormDisplayed: false,
       deleteFormDisplayed: false
@@ -88,9 +79,16 @@ class Lists extends Component {
     });
   }
 
-  _handleSaveList(element, params) {
-    this.props.listActions.createList(params)
+  _handleSaveList(params) {
+    // Optimistically add the list to the model.
+    let list = { 'name': params.name, 'description': params.description }
+    this.props.lists.push(list)
+    this.dataList = new DataListWrapper(this.props.lists)
+
+    // Create list via Mesh API.
+    this.props.listActions.createList(list)
     this.setState({
+      filteredDataList: this.dataList,
       listFormDisplayed: false
     });
   }
@@ -156,10 +154,14 @@ class Lists extends Component {
   _handleDeleteList() {
     for (let idx in this.state.selectedList) {
       let listID = this.state.selectedList[idx]
+      this.props.lists.splice(idx, 1);
       this.props.listActions.deleteList(listID)
     }
 
+    this.dataList = new DataListWrapper(this.props.lists)
     this.setState({
+      selectedList: [],
+      dataList: this.dataList,
       deleteFormDisplayed: false
     });
   }
@@ -177,18 +179,47 @@ class Lists extends Component {
   /**
    * _handleFilterList handles a click to the `Provider` action bar button.
    */
-  _handleFilterList() {
+  _handleFilterListClick(idx) {
+    // Update provider state.
+    let provider
+    let providerType
+    if (idx) {
+      provider = this.props.providers.find(function(provider){
+        return provider.type === idx
+      });
+      providerType = provider.type
+    }
+
+    this.setState(
+      { selectedProvider: providerType },
+      function () {
+        if (this.state.selectedProvider) {
+          let filteredLists = this._filteredLists()
+          this.dataList = new DataListWrapper(filteredLists)
+        } else {
+          this.dataList = new DataListWrapper(this.props.lists)
+        }
+        this.setState({ filteredDataList: this.dataList })
+    });
 
   }
 
-  _listsFilteredByCurrentIntegration() {
-    const lists = this.props.lists;
-    return _.filter(lists, (list) => { list.integraitonId === this.state.selectedIntegration.id })
+  _filteredLists() {
+     let lists = _.filter(this.props.lists, (list) => {
+      const hasName = list.hasOwnProperty('name')
+      const isCurrentProvider = list.origin_provider == this.state.selectedProvider
+      return hasName && isCurrentProvider
+    })
+    return lists
   }
 
-  _providerSelected(provider) {
-    this.setState({ selectedProvider: provider })
+  _filteredProviders() {
+    return _.filter(this.props.providers, (provider) => {
+      return provider.type == this.state.selectedProvider.type
+    })
   }
+
+
 
   /**
    * Synthetic provider injected into the provider selection list
@@ -277,38 +308,8 @@ class Lists extends Component {
     });
   }
 
-  /*
-  const providersForDropdown = _.filter(this.state.filteredProviders, (provider) => {
-    return provider.type != this.state.selectedProvider.type
-  })
-
-  // Building the drop down top left sort
-  let providerSortList = []
-  for (let i = 0; i < providersForDropdown.length; i++) {
-
-    const provider = providersForDropdown[i]
-    const providerClicked = this._providerSelected.bind(this, provider)
-    providerSortList.push(
-      <li>
-        <a href="#"
-          key={provider.name}
-          onClick={providerClicked}
-        >
-        {provider.name}
-        </a>
-      </li>
-    )
-  }
-
-  Building the drop down top left sort
-  const filteredLists = _.filter(this.props.lists, (list) => {
-    const hasName = list.hasOwnProperty('name')
-    const isCurrentProvider = list.origin_provider == this.state.selectedProvider.type
-    return hasName && isCurrentProvider
-  })
-  */
-
   render() {
+
     // Setting up our action bar.
     let newAction = { handler: this.handleNewListClick, title: 'New', type: 0 };
     let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
@@ -320,12 +321,17 @@ class Lists extends Component {
     const { selectedList, filteredDataList } = this.state
 
     // Setup Out Cells
+    let selectAllHeader = (<Cell>
+      <div className="input-group">
+        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
+      </div>
+    </Cell>)
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
     let nameCell = (<TextCell col="name" data={filteredDataList} />)
     let idCell = (<TextCell col="id" data={filteredDataList} />)
     let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
     let descriptionCell = (<TextCell col="description" data={filteredDataList}/>)
-    
+
     // Layout the providers table.
     return (
       <div className="data-table">
@@ -343,16 +349,7 @@ class Lists extends Component {
               width={1200}
               {...this.props}
             >
-              <Column
-                cell={radioCell}
-                header={
-                  <Cell>
-                    <div className="input-group">
-                      <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
-                    </div>
-                  </Cell>}
-                width={32}
-              />
+              <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
@@ -371,7 +368,6 @@ Lists.defaultProps = {
 }
 
 Lists.propTypes = {
-  filteredDataList: PropTypes.object.isRequired,
   listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired
