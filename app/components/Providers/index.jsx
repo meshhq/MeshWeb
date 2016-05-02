@@ -13,7 +13,7 @@ class Providers extends Component {
   }
 
   _providerWasToggled(providerId, on) {
-    // Nada for now
+    return on
   }
 
   render() {
