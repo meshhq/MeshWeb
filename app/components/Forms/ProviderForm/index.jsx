@@ -8,16 +8,20 @@ class ProviderForm extends Component {
     this.resetState = this._resetState.bind(this)
     this.handleChange = this._handleChange.bind(this)
     this.handlePublish = this._handlePublish.bind(this)
-    this.resetState()
+    this.state = this._initialState()
   }
 
   _resetState() {
+      this.state = this._initialState()
+  }
+
+  _initialState() {
     let state = {};
     this.props.providers.map(function(provider) {
-      let type = provider['type']
+      let type = provider['name']
       state[type] = false;
     });
-    this.state = state
+    return state
   }
 
   _handlePublish() {
@@ -38,30 +42,65 @@ class ProviderForm extends Component {
     }
   }
 
-  render() {
+  _splitProviders() {
+    let providerPairs = [];
+    for (let i = 0; i < this.props.providers.length; i++) {
+      if (i % 2 == 0) {
+        providerPairs.push([])
+      }
+
+      const currentPairGroup = providerPairs[Math.floor(i / 2)]
+      currentPairGroup.push(this.props.providers[i])
+    }
+
+    return providerPairs
+  }
+
+  _generateColumns() {
     let test = this.handleChange
 
     // Itterate over all button supplied to the class to build the action group.
-    let providerColumns = this.props.providers.map(function(provider) {
-      let type = provider['type']
-      return (
-        <Row key={provider.name}>
-          <Col className='provider-column' md={6} ref={provider['id']}>
-            <div className='provider-container'>
-              <input aria-label="..." id={type} onChange={test} type={'radio'} />
-              <img className="logo-img" src={provider['logo_url']} />
-              <p>{provider['name']}</p>
-            </div>
+    let columnCount = 0;
+    let splitProviders = this._splitProviders()
+    let providerColumns = splitProviders.map(function(providers) {
+      let colums = [];
+      if (providers.length > 0) {
+        let provider = providers[0]
+        colums.push(
+          <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
+            <input className='provider-radio' aria-label="..." id={provider['name']} onChange={test} type={'radio'} />
+            <img className="logo-img" src={provider['logo_url']} />
+            <p className='provider-name'>{provider['name']}</p>
           </Col>
+        )
+      }
+      if (providers.length > 1) {
+        let provider = providers[1]
+        colums.push(
+          <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
+            <input className='provider-radio' aria-label="..." id={provider['name']} onChange={test} type={'radio'} />
+            <img className="logo-img" src={provider['logo_url']} />
+            <p className='provider-name'>{provider['name']}</p>
+          </Col>
+        )
+      }
+      columnCount++
+      return (
+        <Row className='provider-row' key={columnCount}>
+          {colums}
         </Row>
       )
     });
+    return providerColumns
+  }
 
+  render() {
+    let providerColumns = this._generateColumns()
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
           <Modal.Header closeButton>
-            <Modal.Title>{"Publis List"}</Modal.Title>
+            <Modal.Title>{"Publish List"}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

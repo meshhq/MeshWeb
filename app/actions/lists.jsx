@@ -129,7 +129,8 @@ export function publishList(listID, providers) {
 		if (getState().app.id) {
 			dispatch(publishingList())
 			const appID = getState().app.id
-			return POST(`apps/${appID}/lists/${listID}/publish`, providers)
+			let body = { 'destination_providers' : providers }
+			return POST(`apps/${appID}/lists/${listID}/publish`, body)
 			.then(function(json){
 					dispatch(createdList(json))
 				}
