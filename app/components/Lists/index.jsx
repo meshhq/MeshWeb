@@ -3,6 +3,7 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'underscore'
+import { ToastContainer, ToastMessage } from 'react-toastr'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -16,12 +17,13 @@ import ActionBar from '../ActionBar'
 import ListForm from '../Forms/ListForm'
 import DeleteForm from '../Forms/DeleteForm'
 import ProviderForm from '../Forms/ProviderForm'
+import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
 import * as ListActions from '../../actions/lists'
 
 const { Table, Column, Cell } = FixedDataTable;
-
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 /**
  * Lists represent the user lists for a application
  */
@@ -54,6 +56,9 @@ class Lists extends Component {
     this.handleSelectOne = this._handleSelectOne.bind(this)
     this.handleSelectAll = this._handleSelectAll.bind(this)
 
+    // Errors
+    this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
+
     // Generate the Dta wrapper for the lists.
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
@@ -62,8 +67,15 @@ class Lists extends Component {
       filteredDataList: this.dataList,
       listFormDisplayed: false,
       providerFormDisplayed: false,
-      deleteFormDisplayed: false
+      deleteFormDisplayed: false,
+      errorFormDisplayed: false
     }
+  }
+
+  _handleCloseErrorForm() {
+    this.setState({
+      errorFormDisplayed: false
+    });
   }
 
   //----------------------------------------------------------------------------
@@ -107,16 +119,22 @@ class Lists extends Component {
    * _handlePublishList handles a click to the `Publish` action bar button.
    */
   _handlePublishListClick() {
-    this.setState({
-      providerFormDisplayed: true
-    });
+    if (this.state.selectedList.length == 0) {
+      this.setState({
+        errorFormDisplayed: true
+      });
+    } else {
+      this.setState({
+        providerFormDisplayed: true
+      });
+    }
   }
 
   _handlePublishList(params) {
     let providers = [];
     this.props.providers.map(function(provider) {
-      let type = provider['type']
-      let shouldPublish = params[type]
+      let name = provider['name']
+      let shouldPublish = params[name]
       if (shouldPublish === true) {
         providers.push(provider.name)
       }
@@ -128,6 +146,7 @@ class Lists extends Component {
     }
 
     this.setState({
+      selectedList: [],
       providerFormDisplayed: false
     });
   }
@@ -146,9 +165,15 @@ class Lists extends Component {
    * _handleDeleteList handles a click to the `Delete` action bar button.
    */
   _handleDeleteListClick() {
-    this.setState({
-      deleteFormDisplayed: true
-    });
+    if (this.state.selectedList.length == 0) {
+      this.setState({
+        errorFormDisplayed: true
+      });
+    } else {
+      this.setState({
+        deleteFormDisplayed: true
+      });
+    }
   }
 
   _handleDeleteList() {
@@ -280,7 +305,7 @@ class Lists extends Component {
    */
   _handleSelectOne(e, idx) {
     let selectedList = this.state.selectedList
-    const id = this.props.lists[idx].id
+    const id = this.state.filteredDataList.getObjectAt(idx).id
     if (e.target.checked) {
       selectedList.push(id)
     } else {
@@ -298,8 +323,8 @@ class Lists extends Component {
   _handleSelectAll(e) {
     let selectedList = []
     if (e.target.checked) {
-      for (let idx in this.props.filteredDataList) {
-        const id = this.props.filteredDataList[idx].id
+      for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
+        const id = this.state.filteredDataList.getObjectAt(idx).id
         selectedList.push(id)
       }
     }
@@ -337,10 +362,12 @@ class Lists extends Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
+            <ToastContainer ref="container" toastMessageFactory={ToastMessageFactory} className="toast-top-full-width" />
             <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
             <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
             <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
             <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
+            <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
             <Table
               headerHeight={42}
               height={1000}

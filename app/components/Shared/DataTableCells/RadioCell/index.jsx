@@ -5,30 +5,17 @@ import FixedDataTable from 'fixed-data-table'
 const { Cell } = FixedDataTable;
 
 const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) => {
+
   let handleChange = function(e) {
     onChange(e, rowIndex)
   }
-
-  let object = data.getObjectAt(rowIndex)
   let inputUI
-  let idx = selectedList.indexOf(object)
-  if (!idx) {
-    inputUI = (
-      <input
-        aria-label="..."
-        checked
-        onChange={handleChange}
-        type="checkbox"
-      />
-    )
+  let object = data.getObjectAt(rowIndex)
+  let idx = selectedList.indexOf(object.id)
+  if (idx != -1) {
+    inputUI = (<input aria-label="..." checked onChange={handleChange} type="checkbox" />)
   } else {
-    inputUI = (
-      <input
-        aria-label="..."
-        onChange={handleChange}
-        type="checkbox"
-      />
-    )
+    inputUI = (<input aria-label="..." onChange={handleChange} type="checkbox" />)
   }
   return (
     <div className={'radio-cell ' + rowIndex + '_' + col}>
