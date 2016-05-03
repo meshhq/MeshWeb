@@ -335,15 +335,25 @@ class Lists extends Component {
 
   render() {
 
-    // Setting up our action bar.
+    // Data sources.
+    const { selectedList, filteredDataList } = this.state
+
+    // Building The List Actions
     let newAction = { handler: this.handleNewListClick, title: 'New', type: 0 };
     let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
     let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0 };
     let filterAction = { handler: this.handleFilterListClick, title: 'Select Provider', type: 1 };
     let actions = [newAction, publishAction, deleteAction, filterAction];
-
-    // Data sources.
-    const { selectedList, filteredDataList } = this.state
+    let actionDivs = (
+      <div className={'actions'}>
+        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
+        <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
+        <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
+        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
+        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
+        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
+      </div>
+    )
 
     // Setup Out Cells
     let selectAllHeader = (<Cell>
@@ -362,20 +372,8 @@ class Lists extends Component {
       <div className="data-table">
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ToastContainer ref="container" toastMessageFactory={ToastMessageFactory} className="toast-top-full-width" />
-            <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
-            <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
-            <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
-            <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
-            <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
-            <Table
-              headerHeight={42}
-              height={1000}
-              rowHeight={42}
-              rowsCount={filteredDataList.getSize()}
-              width={1200}
-              {...this.props}
-            >
+            {actionDivs}
+            <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
