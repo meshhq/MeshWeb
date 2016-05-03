@@ -335,12 +335,16 @@ class Lists extends Component {
     // Layout the providers table.
     return (
       <div className="data-table">
-        <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
+        <div className="row">
+          <div className="col-md-12">
             <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
             <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
             <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
             <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
+          </div>
+        </div>
+        <div className="row table-wrapper">
+          <div className="col-md-12 dataTableWrapper">
             <Table
               headerHeight={42}
               height={1000}
