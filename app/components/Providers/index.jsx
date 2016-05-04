@@ -12,9 +12,9 @@ class Providers extends Component {
     return 'Chillwave vice sriracha hella cliche forage. Thundercats artisan iphone, butcher +1 next level keffiyeh fixie narwhal.'
   }
 
-  // _providerWasToggled(providerId, on) {
-  //   // Nada for now
-  // }
+  _providerWasToggled(providerId, on) {
+    return on
+  }
 
   render() {
     const providersSections = _.map(this.props.providerState.providers, (provider) => {
@@ -41,7 +41,6 @@ class Providers extends Component {
           rowContainer.push(providersSections[providerIdx])
         }
       }
-
       providerRows.push(rowContainer)
     }
 

@@ -1,41 +1,42 @@
 
 import React, { Component, PropTypes } from 'react'
+import { DropdownButton, MenuItem } from 'react-bootstrap'
 
-class DropdownButton extends Component {
+class Dropdown extends Component {
+
+  _onSelection(event, eventKey) {
+    if (eventKey == 'All') {
+      this.props.onClick(null)
+    } else {
+      this.props.onClick(eventKey)
+    }
+  }
+
   render() {
+    let providers = [];
+    for (let idx = 0; idx < this.props.providers.length; idx++) {
+      let provider = this.props.providers[idx]
+      let item = (<MenuItem eventKey={provider.type} key={provider.name} >{provider.name} </MenuItem>)
+      providers.push(item)
+    }
+
+    let onSelection = this._onSelection.bind(this)
     return (
-      <div className="btn-group">
-        <button
-          aria-expanded="false"
-          aria-haspopup="true"
-          className="btn btn-default dropdown-toggle"
-          data-toggle="dropdown"
-          type="button"
-        >
-          {this.props.title}
-          <span className="caret"></span>
-          <span className="sr-only">{"Toggle Dropdown"}</span>
-        </button>
-        <ul className="dropdown-menu">
-          <li><a href="#">{this.props.title}</a></li>
-          <li><a href="#">{"Another action"}</a></li>
-          <li><a href="#">{"Something else here"}</a></li>
-          <li
-            className="divider"
-            role="separator"
-          />
-          <li><a href="#">{"Separated link"}</a></li>
-        </ul>
-      </div>
+      <DropdownButton bsStyle={'default'} id={'dropdown-size-medium'} onSelect={onSelection} pullRight title={this.props.title} >
+        {providers}
+        <MenuItem divider />
+        <MenuItem eventKey={'All'}>{'All'}</MenuItem>
+      </DropdownButton>
     )
   }
 }
 
-DropdownButton.displayName = 'Dropdown Button';
+Dropdown.displayName = 'Dropdown';
 
-DropdownButton.propTypes = {
+Dropdown.propTypes = {
   onClick: PropTypes.func.isRequired,
+  providers: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired
 }
 
-export default DropdownButton
+export default Dropdown

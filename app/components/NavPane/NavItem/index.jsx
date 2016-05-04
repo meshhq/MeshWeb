@@ -3,18 +3,26 @@ import React, { Component, PropTypes } from 'react'
 
 class NavItem extends Component {
 
+  constructor(props, context) {
+    super(props, context)
+    this.handleOnClick = this._handleOnClick.bind(this)
+  }
+
+  _handleOnClick(e) {
+    e.preventDefault()
+    this.props.onClick()
+  }
+
   render() {
     const klassName = this.props.active ? 'nav-item active' : 'nav-item'
     return (
       <div className={klassName}>
         <div className="nav-item-container">
-          <span 
+          <span
             aria-hidden="true"
             className={this.props.glyph}
           />
-          <a href="" 
-            onClick={this.props.onClick}
-          >
+          <a href="" onClick={this.handleOnClick} >
             {this.props.title}
           </a>
         </div>
