@@ -1,4 +1,4 @@
-echo -e "\n 🌎  \033[0;32mDeploying updates to AWS PRODUCTION...\033[0m"
+echo -e "\n \033[0;32mDeploying updates to AWS PRODUCTION...\033[0m 🌎"
 
 # Add changes to git.
 git add -A
