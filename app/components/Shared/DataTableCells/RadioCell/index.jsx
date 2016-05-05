@@ -4,28 +4,19 @@ import FixedDataTable from 'fixed-data-table'
 
 const { Cell } = FixedDataTable;
 
-const TextCell = ({ data, selectedList, col, ...props }) => {
-  const user = data.getObjectAt(rowIndex)
-  let inputUI
-  if (selectedList[user.id] == true) {
-    inputUI = (
-      <input
-        aria-label="..."
-        checked
-        type="checkbox"
-      />
-    )
-  } else {
-    inputUI = (
-      <input
-        aria-label="..."
-        type="checkbox"
-      />
-    )
-  } 
+const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) => {
 
-  const { rowIndex } = this.props
-  console.log(this.props)
+  let handleChange = function(e) {
+    onChange(e, rowIndex)
+  }
+  let inputUI
+  let object = data.getObjectAt(rowIndex)
+  let idx = selectedList.indexOf(object.id)
+  if (idx != -1) {
+    inputUI = (<input aria-label="..." checked onChange={handleChange} type="checkbox" />)
+  } else {
+    inputUI = (<input aria-label="..." onChange={handleChange} type="checkbox" />)
+  }
   return (
     <div className={'radio-cell ' + rowIndex + '_' + col}>
       <Cell {...props}>
@@ -37,12 +28,12 @@ const TextCell = ({ data, selectedList, col, ...props }) => {
     )
 }
 
-TextCell.propTypes = {
-	col: PropTypes.string.isRequired,
+RadioCell.propTypes = {
+  col: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-  selectedList: PropTypes.object.isRequired
+  selectedList: PropTypes.array.isRequired
 }
 
-TextCell.displayName = 'Radio Cell'
+RadioCell.displayName = 'Radio Cell'
 
-export default TextCell
+export default RadioCell

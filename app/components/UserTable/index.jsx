@@ -36,23 +36,18 @@ class UsersTable extends React.Component {
     this.handleActionClick = this._handleActionClick.bind(this)
     this.handleToggleAll = this._handleToggleAll.bind(this);
 
+    this.onCancel = this._onCancel.bind(this)
+    this.onSave = this._onSave.bind(this)
+
     // Setup our data model.
     this.dataList = new DataListWrapper(this.props.users.users)
 
     // Setup our state.
     this.state = {
       filteredDataList: this.dataList,
-      selectedList: {},
+      selectedList: [],
       userFormDisplayed: false
-
     };
-
-    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
-    this.handleActionClick = this._handleActionClick.bind(this)
-    this.handleToggleAll = this._handleToggleAll.bind(this);
-
-    this.onCancel = this._onCancel.bind(this)
-    this.onSave = this._onSave.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,11 +68,7 @@ class UsersTable extends React.Component {
         // Select All
         break;
     case 1:
-        this.setState({
-          userFormDisplayed: true
-        });
         // New User
-
         break;
     case 2:
 
@@ -95,8 +86,11 @@ class UsersTable extends React.Component {
    * _handleNewUser handles a click to the `New` action bar button.
    */
   _handleNewUser() {
+    // 1. Present for user data entry.
+    this.setState({
+      userFormDisplayed: true
+    });
     /*
-      1. Present for user data entry.
       2. Optimistically add user model to data source.
       2. Add the user via API.
      */
@@ -188,37 +182,43 @@ class UsersTable extends React.Component {
     });
   }
 
-  //****************************************************************************
-  // Toggle All Handler
-  //****************************************************************************
+  //----------------------------------------------------------------------------
+  // User Selection
+  //----------------------------------------------------------------------------
+
+  /**
+   * handleSelectOne takes care of handling the event where one list is selected.
+   * @param  {[type]} e The event
+   * @param  {[type]} idx The index for the list.
+   */
+  _handleSelectOne(e, idx) {
+    let selectedList = this.state.selectedList
+    const id = this.props.users.users[idx].id
+    if (e.target.checked) {
+      selectedList.push(id)
+    } else {
+      selectedList.pop(id)
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
 
   /**
    * _handleToggleAll takes care of handling the event where all users are toggles
    * @param  {[type]} e The event
    */
   _handleToggleAll(e) {
-    this.setState({
-      userFormDisplayed: !this.state.userFormDisplayed
-    });
-
-    // If the input is toggled off, then wipe the selected list
-    if (!e.target.checked) {
-      this.setState({
-        selectedList: {}
-      });
-    } else {
-      // Copy over all IDs
-      let selectedList = {}
+    let selectedList = {}
+    if (e.target.checked) {
       for (let idx in this.props.users.users) {
         const id = this.props.users.users[idx].id
-        selectedList[id] = true
+        selectedList.push(id)
       }
-
-      // Set new State
-      this.setState({
-        selectedList: selectedList
-      });
     }
+    this.setState({
+      selectedList: selectedList
+    });
   }
 
   _onCancel() {
@@ -249,15 +249,7 @@ class UsersTable extends React.Component {
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-12">
-                <ActionBar
-                  actions={actions}
-                  onSearchInput={this.handleOnFilterChange}
-                />              
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
+                <ActionBar actions={actions} onSearchInput={this.handleOnFilterChange} providers={this.props.providers} />
                 <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
               </div>
             </div>
@@ -277,6 +269,7 @@ class UsersTable extends React.Component {
                       col="radio"
                       data={filteredDataList}
                       selectedList={selectedList}
+                      {...this.props}
                           />}
                     header={<Cell>
                       <div className="input-group">
@@ -291,7 +284,7 @@ class UsersTable extends React.Component {
                   <Column
                     cell={
                       <TextCell
-                        {...this.props} 
+                        {...this.props}
                         col="first_name"
                         data={filteredDataList}
                       />}
@@ -304,7 +297,6 @@ class UsersTable extends React.Component {
                         {...this.props}
                         col="last_name"
                         data={filteredDataList}
-
                       />}
                     header={<Cell>{'Last Name'}</Cell>}
                     width={150}
@@ -341,7 +333,6 @@ class UsersTable extends React.Component {
                   />
                 </Table>
               </div>
-
             </div>
           </div>
         </div>
@@ -353,6 +344,7 @@ class UsersTable extends React.Component {
 UsersTable.displayName = 'Users Table';
 
 UsersTable.propTypes = {
+  providers: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }

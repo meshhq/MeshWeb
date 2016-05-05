@@ -22,7 +22,7 @@ class ActionBar extends Component {
           <SearchBar onSearchInput={this.handleSearchInput}/>
         </div>
         <div className="col-md-6 col-sm-12">
-          <ActionGroup actions={this.props.actions} />
+          <ActionGroup actions={this.props.actions} providers={this.props.providers} />
         </div>
       </div>
     )
@@ -33,7 +33,8 @@ ActionBar.displayName = 'Action Bar';
 
 ActionBar.propTypes = {
   actions: PropTypes.array.isRequired,
-  onSearchInput: PropTypes.func.isRequired
+  onSearchInput: PropTypes.func.isRequired,
+  providers: PropTypes.array.isRequired
 }
 
 export default ActionBar
