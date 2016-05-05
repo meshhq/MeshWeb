@@ -11,7 +11,9 @@
     "lint": "eslint . --ext=jsx --ext=js",
     "build": "NODE_ENV=production webpack --progress --colors",
     "_deploy": "./lib/deploy.sh",
-    "deploy": "npm run build && npm run _deploy"
+    "_deploy_aws": "./lib/deploy_aws_production.sh",
+    "deploy": "npm run build && npm run _deploy",
+    "deploy aws": "npm run build && npm run _deploy_aws"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
