@@ -11,7 +11,6 @@ import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import UserForm from '../Forms/UserForm'
 
-
 // Actions
 import * as UserActions from '../../actions/users'
 
@@ -343,15 +342,15 @@ class UsersTable extends React.Component {
 
 UsersTable.displayName = 'Users Table';
 
+UsersTable.defaultProps = {
+  users: [],
+  width: 0
+}
+
 UsersTable.propTypes = {
   providers: PropTypes.array.isRequired,
   users: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
-}
-
-UsersTable.defaultProps = {
-  users: [],
-  width: 0
 }
 
 function mapDispatchToProps(dispatch) {
