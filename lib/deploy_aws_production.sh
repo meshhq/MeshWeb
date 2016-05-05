@@ -18,7 +18,7 @@ timestamp() {
 }
 
 # Clear the bucket
-aws s3 rm s3://bucket-name --recursive
+aws s3 rm s3://meshweb --recursive
 
 # Upload new site
 aws s3 sync ./public/ s3://meshweb
