@@ -17,6 +17,7 @@ const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) =>
   } else {
     inputUI = (<input aria-label="..." onChange={handleChange} type="checkbox" />)
   }
+
   return (
     <div className={'radio-cell ' + rowIndex + '_' + col}>
       <Cell {...props}>

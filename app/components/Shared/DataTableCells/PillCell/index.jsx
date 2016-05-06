@@ -28,8 +28,12 @@ const PROVIDER_COLORS = {
 }
 
 const PillCell = ({ rowIndex, data, col, ...props }) => {
-  let color = PROVIDER_COLORS[data.getObjectAt(rowIndex)[col]]
-  let title = PROVIDERS[data.getObjectAt(rowIndex)[col]]
+  let provider = data.getObjectAt(rowIndex)[col]
+  if (provider == undefined) {
+    provider = 0;
+  }
+  let color = PROVIDER_COLORS[provider]
+  let title = PROVIDERS[provider]
   return (
     <div className="pill-cell">
       <Cell {...props}>

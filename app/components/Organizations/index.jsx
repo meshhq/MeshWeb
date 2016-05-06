@@ -1,20 +1,69 @@
 
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { ToastContainer, ToastMessage } from 'react-toastr'
+
+// Components
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
+import RadioCell from '../Shared/DataTableCells/RadioCell'
+import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 
-const { Table, Column, Cell } = FixedDataTable;
+// Forms
+import OrganizationForm from '../Forms/OrganizationForm'
+import DeleteForm from '../Forms/DeleteForm'
+import ProviderForm from '../Forms/ProviderForm'
+import ErrorForm from '../Forms/ErrorForm'
 
-class Organizations extends Component {
+// Actions
+import * as OrganizationActions from '../../actions/organizations'
+
+const { Table, Column, Cell } = FixedDataTable;
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+
+class OrganizationTable extends Component {
   constructor(props) {
     super(props);
-    this._dataList = new DataListWrapper(this.props.organizations)
+
+    // Organization Selection
+    this.handleSelectOne = this._handleSelectOne.bind(this)
+    this.handleSelectAll = this._handleSelectAll.bind(this)
+
+    // New Organization Handlers
+    this.handleNewClick = this._handleNewClick.bind(this)
+    this.handleSaveOrganization = this._handleSaveOrganization.bind(this)
+    this.handleCloseOrganizationForm = this._handleCloseOrganizationForm.bind(this)
+
+    // Delete Organization Handlers
+    this.handleDeleteClick = this._handleDeleteClick.bind(this)
+    this.handleDeleteOrganization = this._handleDeleteOrganization.bind(this)
+    this.handleCloseDeleteForm = this._handleCloseDeleteForm.bind(this)
+
+    // Publish Organization Handlers
+    this.handlePublishClick = this._handlePublishClick.bind(this)
+    this.handlePublishOrganization = this._handlePublishOrganization.bind(this)
+    this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
+
+    // Searching
+    this.handleSearch = this._handleSearch.bind(this)
+
+    // Errors
+    this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
+
+    // Setup our data source
+    this.dataList = new DataListWrapper(this.props.organizations)
     this.state = {
-      filteredDataList: this._dataList
+      selectedList: [],
+      selectedProvider: null,
+      filteredDataList: this.dataList,
+      newFormDisplayed: false,
+      providerFormDisplayed: false,
+      deleteFormDisplayed: false,
+      errorFormDisplayed: false
     };
-    this.handleOnFilterChange = this.handleOnFilterChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,65 +73,212 @@ class Organizations extends Component {
     });
   }
 
-  //****************************************************************************
-  // Action Bar Handlers
-  //****************************************************************************
-
-  _handleActionClick(idx) {
-    switch(idx) {
-    case 0:
-        // Select All
-        break;
-    case 1:
-        // Show form
-        break;
-    case 2:
-
-        break;
-    case 3:
-        // Merge
-        break;
-    case 4:
-        // More
-        break;
-      }
+  /**
+   * Synthetic provider injected into the provider selection list
+   */
+  _meshProvider() {
+    return {
+      name: 'Mesh',
+      type: 0
+    }
   }
+
+  //----------------------------------------------------------------------------
+  // Error Handling
+  //----------------------------------------------------------------------------
+
+  _handleCloseErrorForm() {
+    this.setState({
+      errorFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // List Searching
+  //----------------------------------------------------------------------------
+
+  _handleSearch(e) {
+    let dataList;
+    if (e.target.value) {
+      let filterBy = e.target.value.toLowerCase();
+      let size = this.dataList.getSize();
+      let filteredIndexes = [];
+      for (let index = 0; index < size; index++) {
+        let { name } = this.dataList.getObjectAt(index);
+        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+          filteredIndexes.push(index);
+        }
+      }
+      dataList = new DataListWrapper(this.props.organizations, filteredIndexes)
+    } else {
+      dataList = this.dataList
+    }
+    this.setState({
+      filteredDataList: dataList
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Organization Selection
+  //----------------------------------------------------------------------------
+
+  /**
+   * handleSelectOne takes care of handling the event where one list is selected.
+   * @param  {[type]} e The event
+   * @param  {[type]} idx The index for the list.
+   */
+  _handleSelectOne(e, idx) {
+    let selectedList = this.state.selectedList
+    const id = this.state.filteredDataList.getObjectAt(idx).id
+    if (e.target.checked) {
+      selectedList.push(id)
+    } else {
+      selectedList.pop(id)
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+  /**
+   * handleSelectAll takes care of handling the event where all users are toggles
+   * @param  {[type]} e The event
+   */
+  _handleSelectAll(e) {
+    let selectedList = []
+    if (e.target.checked) {
+      for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
+        const id = this.state.filteredDataList.getObjectAt(idx).id
+        selectedList.push(id)
+      }
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // New Action
+  //----------------------------------------------------------------------------
 
   /**
    * _handleNewOrganization handles a click to the `New` action bar button.
    */
-  _handleNewOrganization() {
-    /*
-      1. Present for organization data entry.
-      2. Optimistically add organization model to data source.
-      2. Add the orgainzation via API.
-     */
+  _handleNewClick() {
+    this.setState({
+      newFormDisplayed: true
+    });
   }
 
-  /**
-   * _handlePublishOrganization handles a click to the `Publish` action bar button.
-   */
-  _handlePublishOrganization() {
-    /*
-      1. Present integration view with options to select one or multiple integtrations.
-      2. Publish the orgainzation to the selected integrations.
-     */
+  _handleSaveOrganization(params) {
+    // Optimistically add the list to the model.
+    let organization = { 'name': params.name, 'description': params.description }
+    this.props.organizations.push(organization)
+    this.dataList = new DataListWrapper(this.props.organizations)
+
+    // Create list via Mesh API.
+    this.props.organizationActions.createOrganization(organization)
+    this.setState({
+      filteredDataList: this.dataList,
+      newFormDisplayed: false
+    });
   }
 
+  _handleCloseOrganizationForm() {
+    this.setState({
+      newFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Publish Action
+  //----------------------------------------------------------------------------
+
   /**
-   * _handleDeleteOrganization handles a click to the `Delete` action bar button.
+   * _handlePublishList handles a click to the `Publish` action bar button.
    */
+  _handlePublishClick() {
+    if (this.state.selectedList.length == 0) {
+      this.setState({
+        errorFormDisplayed: true
+      });
+    } else {
+      this.setState({
+        providerFormDisplayed: true
+      });
+    }
+  }
+
+  _handlePublishOrganization(params) {
+    let providers = [];
+    this.props.providers.map(function(provider) {
+      let name = provider['name']
+      let shouldPublish = params[name]
+      if (shouldPublish === true) {
+        providers.push(provider.name)
+      }
+    });
+
+    for (let idx in this.state.selectedList) {
+      let organizationID = this.state.selectedList[idx]
+      this.props.organizationActions.publishOrganization(organizationID, providers)
+    }
+
+    this.setState({
+      selectedList: [],
+      providerFormDisplayed: false
+    });
+  }
+
+  _handleCloseProviderForm() {
+    this.setState({
+      providerFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Delete Action
+  //----------------------------------------------------------------------------
+
+  /**
+   * _handleDeleteList handles a click to the `Delete` action bar button.
+   */
+  _handleDeleteClick() {
+    if (this.state.selectedList.length == 0) {
+      this.setState({
+        errorFormDisplayed: true
+      });
+    } else {
+      this.setState({
+        deleteFormDisplayed: true
+      });
+    }
+  }
+
   _handleDeleteOrganization() {
-    /*
-      1. Present deletion confirmation box.
-      2. Optimistically delete organization from data source.
-      2. Delete the organization via Mesh API.
-     */
+    for (let idx in this.state.selectedList) {
+      let organizationID = this.state.selectedList[idx]
+      this.props.organizations.splice(idx, 1);
+      this.props.organizationActions.deleteOrganization(organizationID)
+    }
+
+    this.dataList = new DataListWrapper(this.props.organizations)
+    this.setState({
+      selectedList: [],
+      filteredDataList: this.dataList,
+      deleteFormDisplayed: false
+    });
   }
 
-  //****************************************************************************
-  // User Detail
-  //****************************************************************************
+  _handleCloseDeleteForm() {
+    this.setState({
+      deleteFormDisplayed: false
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // Show Action
+  //----------------------------------------------------------------------------
 
   /**
    * _handleShowOrganizationDetail handles a click on the actual list in the table.
@@ -93,9 +289,9 @@ class Organizations extends Component {
      */
   }
 
-  //****************************************************************************
-  // Organization Filtering
-  //****************************************************************************
+  //----------------------------------------------------------------------------
+  // Filtering Action
+  //----------------------------------------------------------------------------
 
   handleOnFilterChange(e) {
     if (!e.target.value) {
@@ -120,66 +316,58 @@ class Organizations extends Component {
   }
 
   render() {
-    // Setting up our action bar.
-    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
-    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
-    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
-    let actions = [newAction, publishAction, deleteAction];
+    // Data sources.
+    const { selectedList, filteredDataList } = this.state
 
-    const { filteredDataList } = this.state
+    // Building Organization Actions
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0 };
+    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0 };
+    let actions = [newAction, publishAction, deleteAction];
+    let actionDivs = (
+      <div className={'actions'}>
+        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
+        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
+        <OrganizationForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization}/>
+        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteOrganization}/>
+        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization} providers={this.props.providers} />
+        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select an Organization"} onOK={this.handleCloseErrorForm}/>
+      </div>
+    )
+
+    // Setup Cells
+    let selectAllHeader = (<Cell>
+      <div className="input-group">
+        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
+      </div>
+    </Cell>)
+    let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    let nameCell = (<TextCell col="name" data={filteredDataList} />)
+    let idCell = (<TextCell col="id" data={filteredDataList} />)
+    let descriptionCell = (<TextCell col="description" data={filteredDataList} />)
+    let sizeCell = (<TextCell col="size" data={filteredDataList} />)
+    let industryCell = (<TextCell col="industry" data={filteredDataList} />)
+    let websiteCell = (<TextCell col="website" data={filteredDataList} />)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
+
     return (
       <div className="data-table">
+        <div className="row">
+          <div className="col-md-12">
+            {actionDivs}
+          </div>
+        </div>
         <div className="row table-wrapper">
           <div className="col-md-12 dataTableWrapper">
-            <ActionBar actions={actions} onSearchInput={this.handleOnFilterChange} providers={this.props.providers} />
-            <Table
-              headerHeight={50}
-              height={1000}
-              rowHeight={35}
-              rowsCount={filteredDataList.getSize()}
-              width={this.props.width}
-              {...this.props}
-            >
-              <Column
-                cell={<TextCell
-                  col="name"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Name'}</Cell>}
-                width={150}
-              />
-              <Column
-                cell={<TextCell
-                  col="description"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Description'}</Cell>}
-                width={400}
-              />
-              <Column
-                cell={<TextCell
-                  col="size"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Size'}</Cell>}
-                width={50}
-              />
-              <Column
-                cell={<TextCell
-                  col="industry"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Industry'}</Cell>}
-                width={200}
-              />
-              <Column
-                cell={<TextCell
-                  col="website"
-                  data={filteredDataList}
-                      />}
-                header={<Cell>{'Website'}</Cell>}
-                width={200}
-              />
+            <Table headerHeight={50} height={1000} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
+              <Column cell={radioCell} header={selectAllHeader} width={32}/>
+              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
+              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
+              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
+              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
+              <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={50} />
+              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
+              <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={200} />
             </Table>
           </div>
         </div>
@@ -188,17 +376,34 @@ class Organizations extends Component {
   }
 }
 
-Organizations.defaultProps = {
+// Display Name
+OrganizationTable.displayName = 'Organization Table'
+
+OrganizationTable.defaultProps = {
   organizations: [],
   width: 0
 }
 
-Organizations.propTypes = {
+OrganizationTable.propTypes = {
+  organizationActions: PropTypes.object.isRequired,
   organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  providers: PropTypes.array.isRequired,
   width: PropTypes.number.isRequired
 }
 
-// Display Name
-Organizations.displayName = 'Organizations'
+function mapStateToProps(state) {
+  return {
+    organizationState: state.organizations
+  }
+}
 
-export default Organizations
+function mapDispatchToProps(dispatch) {
+  return {
+    organizationActions: bindActionCreators(OrganizationActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OrganizationTable)

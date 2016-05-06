@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 import React from 'react'
 
 // Components
-import Lists from '../../components/Lists'
+import ListTable from '../../components/Lists'
 import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
-import Organizations from '../../components/Organizations'
+import OrganizationTable from '../../components/Organizations'
 import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
 import UserTable from '../../components/UserTable'
@@ -19,7 +19,7 @@ import * as AppActions from '../../actions/application'
 import * as ListActions from '../../actions/lists'
 import * as NavActions from '../../actions/nav'
 import * as NavPaneActions from '../../actions/NavPane'
-import * as OrgActions from '../../actions/organizations'
+import * as OrganizationActions from '../../actions/organizations'
 import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
 
@@ -122,26 +122,13 @@ class App extends Component {
     const { userState, providerState, activeNavIdx, listState, organizationState } = this.props
     switch(activeNavIdx) {
       case 0:
-        return (<UserTable providers={providerState.providers} users={userState} width={this.state.width}/>)
+        return (<UserTable providers={providerState.providers} users={userState.users} width={this.state.width}/>)
       case 1:
-        return (
-          <Organizations
-            organizations={organizationState.organizations}
-            providers={providerState.providers}
-            width={this.state.width}
-          />
-          )
+        return (<OrganizationTable organizations={organizationState.organizations} providers={providerState.providers} width={this.state.width}/> )
       case 2:
-        return (
-          <Lists lists={listState.lists}
-            providers={providerState.providers}
-          />
-          )
+        return (<ListTable lists={listState.lists} providers={providerState.providers}/>)
       case 3:
-        return (
-          <Providers providerState={providerState}/>
-          )
-
+        return (<Providers providerState={providerState}/>)
     }
   }
 
@@ -169,16 +156,8 @@ class App extends Component {
     const appContent = this._contentForApp()
     return (
       <div className="react-root">
-        <NavBar
-          accountName="KEVIN COLEMAN"
-          activeNavIdx={activeNavIdx}
-          navTitles={navTitles}
-          onNavChange={this.handleNavBarClick}
-        />
-        <NavPane
-          activeNavIdx={activeNavIdx}
-          onNavChange={this.handleNavPaneClick}
-        />
+        <NavBar accountName="KEVIN COLEMAN" activeNavIdx={activeNavIdx} navTitles={navTitles} onNavChange={this.handleNavBarClick} />
+        <NavPane activeNavIdx={activeNavIdx} onNavChange={this.handleNavPaneClick}/>
         <div className="container-wrapper">
           {appContent}
         </div>
@@ -225,7 +204,7 @@ function mapDispatchToProps(dispatch) {
     listActions: bindActionCreators(ListActions, dispatch),
     navActions: bindActionCreators(NavActions, dispatch),
     navPaneActions: bindActionCreators(NavPaneActions, dispatch),
-    organizationActions: bindActionCreators(OrgActions, dispatch),
+    organizationActions: bindActionCreators(OrganizationActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
   }

@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { ToastContainer, ToastMessage } from 'react-toastr'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -9,13 +10,18 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
-import UserForm from '../Forms/UserForm'
 
+// Forms
+import UserForm from '../Forms/UserForm'
+import DeleteForm from '../Forms/DeleteForm'
+import ProviderForm from '../Forms/ProviderForm'
+import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
 import * as UserActions from '../../actions/users'
 
 const { Table, Column, Cell } = FixedDataTable;
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
 const TextColumn = ({ data, ...props }) => {
   this.displayName = 'TextColumn'
@@ -27,313 +33,388 @@ const TextColumn = ({ data, ...props }) => {
   )
 }
 
-class UsersTable extends React.Component {
+class UserTable extends React.Component {
   constructor(props) {
     super(props);
 
-    // Method binding boiler plate.
-    this.handleOnFilterChange = this._handleOnFilterChange.bind(this);
-    this.handleActionClick = this._handleActionClick.bind(this)
-    this.handleToggleAll = this._handleToggleAll.bind(this);
+      // User Selection
+      this.handleSelectOne = this._handleSelectOne.bind(this)
+      this.handleSelectAll = this._handleSelectAll.bind(this)
 
-    this.onCancel = this._onCancel.bind(this)
-    this.onSave = this._onSave.bind(this)
+      // New User Handlers
+      this.handleNewClick = this._handleNewClick.bind(this)
+      this.handleSaveUser = this._handleSaveUser.bind(this)
+      this.handleCloseUserForm = this._handleCloseUserForm.bind(this)
 
-    // Setup our data model.
-    this.dataList = new DataListWrapper(this.props.users.users)
+      // Delete User Handlers
+      this.handleDeleteClick = this._handleDeleteClick.bind(this)
+      this.handleDeleteUser = this._handleDeleteUser.bind(this)
+      this.handleCloseDeleteForm = this._handleCloseDeleteForm.bind(this)
 
-    // Setup our state.
-    this.state = {
-      filteredDataList: this.dataList,
-      selectedList: [],
-      userFormDisplayed: false
-    };
-  }
+      // Publish User Handlers
+      this.handlePublishClick = this._handlePublishClick.bind(this)
+      this.handlePublishUser = this._handlePublishUser.bind(this)
+      this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
 
-  componentWillReceiveProps(nextProps) {
-    // KC Note. Why set out state again here?
-    this.dataList = new DataListWrapper(nextProps.users.users)
-    this.setState({
-      filteredDataList: this.dataList
-    });
-  }
+      // Add User To Handlers
+      this.handleAddToClick = this._handleAddToClick.bind(this)
+      this.handleAddUserTo = this._handleAddUserTo.bind(this)
+      this.handleCloseAddToFrom = this._handleCloseAddToForm.bind(this)
 
-  //****************************************************************************
-  // Action Bar Handlers
-  //****************************************************************************
+      // Searching
+      this.handleSearch = this._handleSearch.bind(this)
 
-  _handleActionClick(idx) {
-    switch(idx) {
-    case 0:
-        // Select All
-        break;
-    case 1:
-        // New User
-        break;
-    case 2:
+      // Errors
+      this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
-        break;
-    case 3:
-        // Merge
-        break;
-    case 4:
-        // More
-        break;
-      }
-  }
+      // Setup our data source
+      this.dataList = new DataListWrapper(this.props.users)
+      this.state = {
+        selectedList: [],
+        selectedProvider: null,
+        filteredDataList: this.dataList,
+        newFormDisplayed: false,
+        providerFormDisplayed: false,
+        deleteFormDisplayed: false,
+        addToFormDisplayed: false,
+        errorFormDisplayed: false
+      };
+    }
 
-  /**
-   * _handleNewUser handles a click to the `New` action bar button.
-   */
-  _handleNewUser() {
-    // 1. Present for user data entry.
-    this.setState({
-      userFormDisplayed: true
-    });
-    /*
-      2. Optimistically add user model to data source.
-      2. Add the user via API.
-     */
-  }
-
-  /**
-   * _handleMergeUsers handles a click to the `Merge` action bar button.
-   */
-  _handleMergeUsers() {
-    /*
-      1. Present for user data merge. Show side by side user values.
-     */
-  }
-
-  /**
-   * _handlePublishUser handles a click to the `Publish` action bar button.
-   */
-  _handlePublishUser() {
-    /*
-      1. Present integration view with options to select one or multiple integtrations.
-      2. Publish the user to the selected integrations.
-     */
-  }
-
-  /**
-   * _handleAddUser handles a click to the `Add` action bar button.
-   */
-  _handleAddUser() {
-    /*
-      1. Present view to select type of either list or company.
-      2. Present view to select from companies or lists.
-      3. Add the user to the company or list.
-     */
-  }
-
-  /**
-   * _handleDeleteUser handles a click to the `Delete` action bar button.
-   */
-  _handleDeleteUser() {
-    /*
-      1. Present deletion confirmation box.
-      2. Optimistically delete user from data source.
-      2. Delete the user via Mesh API.
-     */
-  }
-
-  //****************************************************************************
-  // User Detail
-  //****************************************************************************
-
-  /**
-   * _handleShowUserDetail handles a click on the actual list in the table.
-   */
-  _handleShowUserDetail() {
-    /*
-      1. Present the user detail view.
-     */
-  }
-
-  //****************************************************************************
-  // User Filtering
-  //****************************************************************************
-
-  /**
-   * _handleOnFilterChange is the callback for all changes to the text filter
-   * @param  {[type]} e The Event
-   */
-  _handleOnFilterChange(e) {
-    if (!e.target.value) {
+    componentWillReceiveProps(nextProps) {
+      this._dataList = new DataListWrapper(nextProps.users)
       this.setState({
         filteredDataList: this.dataList
       });
     }
 
-    // KC Note: I think we are going to want to query the server as opposed to
-    //  an in memory sort.
-    let filterBy = e.target.value.toLowerCase();
-    let size = this.dataList.getSize();
-    let filteredIndexes = [];
-    for (let index = 0; index < size; index++) {
-      let { first_name } = this.dataList.getObjectAt(index);
-      if (first_name.toLowerCase().indexOf(filterBy) !== -1) {
-        filteredIndexes.push(index);
+    /**
+     * Synthetic provider injected into the provider selection list
+     */
+    _meshProvider() {
+      return {
+        name: 'Mesh',
+        type: 0
       }
     }
 
-    this.setState({
-      filteredDataList: new DataListWrapper(this.props.users.users, filteredIndexes)
-    });
-  }
+    //----------------------------------------------------------------------------
+    // Error Handling
+    //----------------------------------------------------------------------------
 
-  //----------------------------------------------------------------------------
-  // User Selection
-  //----------------------------------------------------------------------------
-
-  /**
-   * handleSelectOne takes care of handling the event where one list is selected.
-   * @param  {[type]} e The event
-   * @param  {[type]} idx The index for the list.
-   */
-  _handleSelectOne(e, idx) {
-    let selectedList = this.state.selectedList
-    const id = this.props.users.users[idx].id
-    if (e.target.checked) {
-      selectedList.push(id)
-    } else {
-      selectedList.pop(id)
+    _handleCloseErrorForm() {
+      this.setState({
+        errorFormDisplayed: false
+      });
     }
-    this.setState({
-      selectedList: selectedList
-    });
-  }
 
-  /**
-   * _handleToggleAll takes care of handling the event where all users are toggles
-   * @param  {[type]} e The event
-   */
-  _handleToggleAll(e) {
-    let selectedList = {}
-    if (e.target.checked) {
-      for (let idx in this.props.users.users) {
-        const id = this.props.users.users[idx].id
+    //----------------------------------------------------------------------------
+    // List Searching
+    //----------------------------------------------------------------------------
+
+    _handleSearch(e) {
+      let dataList;
+      if (e.target.value) {
+        let filterBy = e.target.value.toLowerCase();
+        let size = this.dataList.getSize();
+        let filteredIndexes = [];
+        for (let index = 0; index < size; index++) {
+          let { first_name } = this.dataList.getObjectAt(index);
+          if (first_name.toLowerCase().indexOf(filterBy) !== -1) {
+            filteredIndexes.push(index);
+          }
+        }
+        dataList = new DataListWrapper(this.props.users, filteredIndexes)
+      } else {
+        dataList = this.dataList
+      }
+      this.setState({
+        filteredDataList: dataList
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // User Selection
+    //----------------------------------------------------------------------------
+
+    /**
+     * handleSelectOne takes care of handling the event where one list is selected.
+     * @param  {[type]} e The event
+     * @param  {[type]} idx The index for the list.
+     */
+    _handleSelectOne(e, idx) {
+      let selectedList = this.state.selectedList
+      const id = this.state.filteredDataList.getObjectAt(idx).id
+      if (e.target.checked) {
         selectedList.push(id)
+      } else {
+        selectedList.pop(id)
+      }
+      this.setState({
+        selectedList: selectedList
+      });
+    }
+
+    /**
+     * handleSelectAll takes care of handling the event where all users are toggles
+     * @param  {[type]} e The event
+     */
+    _handleSelectAll(e) {
+      let selectedList = []
+      if (e.target.checked) {
+        for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
+          const id = this.state.filteredDataList.getObjectAt(idx).id
+          selectedList.push(id)
+        }
+      }
+      this.setState({
+        selectedList: selectedList
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // New Action
+    //----------------------------------------------------------------------------
+
+    /**
+     * _handleNewUser handles a click to the `New` action bar button.
+     */
+    _handleNewClick() {
+      this.setState({
+        newFormDisplayed: true
+      });
+    }
+
+    _handleSaveUser(params) {
+      // Optimistically add the list to the model.
+      let user = { 'name': params.name, 'description': params.description }
+      this.props.users.push(user)
+      this.dataList = new DataListWrapper(this.props.users)
+
+      // Create list via Mesh API.
+      this.props.userActions.createUser(user)
+      this.setState({
+        filteredDataList: this.dataList,
+        newFormDisplayed: false
+      });
+    }
+
+    _handleCloseUserForm() {
+      this.setState({
+        newFormDisplayed: false
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // Publish Action
+    //----------------------------------------------------------------------------
+
+    /**
+     * _handlePublishClick handles a click to the `Publish` action bar button.
+     */
+    _handlePublishClick() {
+      if (this.state.selectedList.length == 0) {
+        this.setState({
+          errorFormDisplayed: true
+        });
+      } else {
+        this.setState({
+          providerFormDisplayed: true
+        });
       }
     }
-    this.setState({
-      selectedList: selectedList
-    });
-  }
 
-  _onCancel() {
-    this.setState({
-      userFormDisplayed: false
-    });
-  }
+    _handlePublishUser(params) {
+      let providers = [];
+      this.props.providers.map(function(provider) {
+        let name = provider['name']
+        let shouldPublish = params[name]
+        if (shouldPublish === true) {
+          providers.push(provider.name)
+        }
+      });
 
-  _onSave() {
-    this.setState({
-      userFormDisplayed: false
-    });
-  }
+      for (let idx in this.state.selectedList) {
+        let userID = this.state.selectedList[idx]
+        this.props.userActions.publishUser(userID, providers)
+      }
+
+      this.setState({
+        selectedList: [],
+        providerFormDisplayed: false
+      });
+    }
+
+    _handleCloseProviderForm() {
+      this.setState({
+        providerFormDisplayed: false
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // Delete Action
+    //----------------------------------------------------------------------------
+
+    /**
+     * _handleDeleteClick handles a click to the `Delete` action bar button.
+     */
+    _handleDeleteClick() {
+      if (this.state.selectedList.length == 0) {
+        this.setState({
+          errorFormDisplayed: true
+        });
+      } else {
+        this.setState({
+          deleteFormDisplayed: true
+        });
+      }
+    }
+
+    _handleDeleteUser() {
+      for (let idx in this.state.selectedList) {
+        let userID = this.state.selectedList[idx]
+        this.props.users.splice(idx, 1);
+        this.props.userActions.deleteUser(userID)
+      }
+
+      this.dataList = new DataListWrapper(this.props.users)
+      this.setState({
+        selectedList: [],
+        filteredDataList: this.dataList,
+        deleteFormDisplayed: false
+      });
+    }
+
+    _handleCloseDeleteForm() {
+      this.setState({
+        deleteFormDisplayed: false
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // New Action
+    //----------------------------------------------------------------------------
+
+    /**
+     * _handleNewUser handles a click to the `New` action bar button.
+     */
+    _handleAddToClick() {
+      this.setState({
+        addToFormDisplayed: true
+      });
+    }
+
+    _handleAddUserTo(params) {
+      // Optimistically add the list to the model.
+      let user = { 'name': params.name, 'description': params.description }
+      this.props.users.push(user)
+      this.dataList = new DataListWrapper(this.props.users)
+
+      // Create list via Mesh API.
+    //  this.props.userActions.createUser(user)
+      this.setState({
+        filteredDataList: this.dataList,
+        addToFormDisplayed: false
+      });
+    }
+
+    _handleCloseAddToForm() {
+      this.setState({
+        addToFormDisplayed: false
+      });
+    }
+
+    //----------------------------------------------------------------------------
+    // Show Action
+    //----------------------------------------------------------------------------
+
+    /**
+     * _handleShowUserDetail handles a click on the actual list in the table.
+     */
+    _handleShowUserDetail() {
+      /*
+        1. Present the user detail view.
+       */
+    }
+
+    //----------------------------------------------------------------------------
+    // Filtering Action
+    //----------------------------------------------------------------------------
+
+    handleOnFilterChange(e) {
+      if (!e.target.value) {
+        this.setState({
+          filteredDataList: this.dataList
+        });
+      }
+
+      let filterBy = e.target.value.toLowerCase();
+      let size = this._dataList.getSize();
+      let filteredIndexes = [];
+      for (let index = 0; index < size; index++) {
+        let { name } = this._dataList.getObjectAt(index);
+        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+          filteredIndexes.push(index);
+        }
+      }
+
+      this.setState({
+        filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
+      });
+    }
 
   render() {
-    // Setting up our action bar.
-    let newAction = { handler: this.handleActionClick, title: 'New', type: 0 };
-    let publishAction = { handler: this.handleActionClick, title: 'Publish', type: 0 };
-    let addAction = { handler: this.handleActionClick, title: 'Add To', type: 0 };
-    let deleteAction = { handler: this.handleActionClick, title: 'Delete', type: 0 };
-    let actions = [newAction, publishAction, addAction, deleteAction];
-
     const { filteredDataList, selectedList  } = this.state
-    return (
 
+    // Setting up our action bar.
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
+    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0 };
+    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0 };
+    let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0 };
+    let actions = [newAction, publishAction, deleteAction, addToAction];
+
+    let actionDivs = (
+      <div className={'actions'}>
+        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
+        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
+        <UserForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser}/>
+        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
+        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishUser} providers={this.props.providers} />
+        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select a User"} onOK={this.handleCloseErrorForm}/>
+      </div>
+    )
+
+    // Setup Cells
+    let selectAllHeader = (<Cell>
+      <div className="input-group">
+        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
+      </div>
+    </Cell>)
+    let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    let idCell = (<TextCell col="id" data={filteredDataList} />)
+    let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
+    let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
+    let emailCell = (<TextCell col="email" data={filteredDataList} />)
+    let phoneCell = (<TextCell col="phone" data={filteredDataList} />)
+
+    return (
       <div className="data-table">
-        <div className="row table-wrapper">
+        <div className="row">
           <div className="col-md-12">
-            <div className="row">
-              <div className="col-md-12">
-                <ActionBar actions={actions} onSearchInput={this.handleOnFilterChange} providers={this.props.providers} />
-                <UserForm displayed={this.state.userFormDisplayed} onCancel={this.onCancel} onSave={this.onSave} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12 dataTableWrapper">
-                <Table
-                  headerHeight={40}
-                  height={800}
-                  rowHeight={35}
-                  rowsCount={filteredDataList.getSize()}
-                  width={this.props.width}
-                  {...this.props}
-                >
-                  <TextColumn data={filteredDataList}/>
-                  <Column
-                    cell={<RadioCell
-                      col="radio"
-                      data={filteredDataList}
-                      selectedList={selectedList}
-                      {...this.props}
-                          />}
-                    header={<Cell>
-                      <div className="input-group">
-                        <input
-                          aria-label="..."
-                          onChange={this.handleToggleAll}
-                          type="checkbox"
-                        />
-                      </div></Cell>}
-                    width={32}
-                  />
-                  <Column
-                    cell={
-                      <TextCell
-                        {...this.props}
-                        col="first_name"
-                        data={filteredDataList}
-                      />}
-                    header={<Cell>{'First Name'}</Cell>}
-                    width={150}
-                  />
-                  <Column
-                    cell={
-                      <TextCell
-                        {...this.props}
-                        col="last_name"
-                        data={filteredDataList}
-                      />}
-                    header={<Cell>{'Last Name'}</Cell>}
-                    width={150}
-                  />
-                  <Column
-                    cell={
-                      <TextCell
-                        {...this.props}
-                        col="email"
-                        data={filteredDataList}
-                      />}
-                    header={<Cell>{'Email'}</Cell>}
-                    width={300}
-                  />
-                  <Column
-                    cell={
-                      <TextCell
-                        {...this.props}
-                        col="phone"
-                        data={filteredDataList}
-                      />}
-                    header={<Cell>{'Phone'}</Cell>}
-                    width={200}
-                  />
-                  <Column
-                    cell={
-                      <TextCell
-                        {...this.props}
-                        col="id"
-                        data={filteredDataList}
-                      />}
-                    header={<Cell>{'ID'}</Cell>}
-                    width={200}
-                  />
-                </Table>
-              </div>
-            </div>
+            {actionDivs}
+          </div>
+        </div>
+        <div className="row table-wrapper">
+          <div className="col-md-12 dataTableWrapper">
+            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
+              <TextColumn data={filteredDataList}/>
+              <Column cell={radioCell} header={selectAllHeader} width={32}/>
+              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={200}/>
+              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={150}/>
+              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={150}/>
+              <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={300}/>
+              <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
+            </Table>
           </div>
         </div>
       </div>
@@ -341,17 +422,24 @@ class UsersTable extends React.Component {
   }
 }
 
-UsersTable.displayName = 'Users Table';
+UserTable.displayName = 'User Table';
 
-UsersTable.propTypes = {
-  providers: PropTypes.array.isRequired,
-  users: PropTypes.object.isRequired,
+UserTable.defaultProps = {
+  users: [],
+  width: 0
+}
+
+UserTable.propTypes = {
+  providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  userActions: PropTypes.object.isRequired,
+  users: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   width: PropTypes.number.isRequired
 }
 
-UsersTable.defaultProps = {
-  users: [],
-  width: 0
+function mapStateToProps(state) {
+  return {
+    userState: state.users
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -361,7 +449,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
+  mapStateToProps,
   mapDispatchToProps
-)(UsersTable)
-
-export default UsersTable
+)(UserTable)

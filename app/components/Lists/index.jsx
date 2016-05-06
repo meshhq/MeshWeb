@@ -24,15 +24,20 @@ import * as ListActions from '../../actions/lists'
 
 const { Table, Column, Cell } = FixedDataTable;
 const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+
 /**
  * Lists represent the user lists for a application
  */
-class Lists extends Component {
+class ListTable extends Component {
   constructor(props, context) {
     super(props, context)
 
+    // List Selection
+    this.handleSelectOne = this._handleSelectOne.bind(this)
+    this.handleSelectAll = this._handleSelectAll.bind(this)
+
     // New List Handlers
-    this.handleNewListClick = this._handleNewList.bind(this)
+    this.handleNewClick = this._handleNewClick.bind(this)
     this.handleSaveList = this._handleSaveList.bind(this)
     this.handleCloseListForm = this._handleCloseListForm.bind(this)
 
@@ -52,10 +57,6 @@ class Lists extends Component {
     // Searching
     this.handleSearchLists = this._handleSearchLists.bind(this)
 
-    // List Selection
-    this.handleSelectOne = this._handleSelectOne.bind(this)
-    this.handleSelectAll = this._handleSelectAll.bind(this)
-
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
@@ -72,6 +73,10 @@ class Lists extends Component {
     }
   }
 
+  //----------------------------------------------------------------------------
+  // Error Handling
+  //----------------------------------------------------------------------------
+
   _handleCloseErrorForm() {
     this.setState({
       errorFormDisplayed: false
@@ -83,9 +88,9 @@ class Lists extends Component {
   //----------------------------------------------------------------------------
 
   /**
-   * _handleNewList handles a click to the `New` action bar button.
+   * _handleNewClick handles a click to the `New` action bar button.
    */
-  _handleNewList() {
+  _handleNewClick() {
     this.setState({
       listFormDisplayed: true
     });
@@ -244,8 +249,6 @@ class Lists extends Component {
     })
   }
 
-
-
   /**
    * Synthetic provider injected into the provider selection list
    */
@@ -339,7 +342,7 @@ class Lists extends Component {
     const { selectedList, filteredDataList } = this.state
 
     // Building The List Actions
-    let newAction = { handler: this.handleNewListClick, title: 'New', type: 0 };
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
     let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
     let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0 };
     let filterAction = { handler: this.handleFilterListClick, title: 'Select Provider', type: 1 };
@@ -391,12 +394,15 @@ class Lists extends Component {
   }
 }
 
-Lists.defaultProps = {
+// Display Name
+ListTable.displayName = 'Lists'
+
+ListTable.defaultProps = {
   currentCompany: '',
   lists: []
 }
 
-Lists.propTypes = {
+ListTable.propTypes = {
   listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired
@@ -417,7 +423,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Lists)
-
-// Display Name
-Lists.displayName = 'Lists'
+)(ListTable)
