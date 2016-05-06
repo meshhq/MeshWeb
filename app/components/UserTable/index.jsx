@@ -391,14 +391,13 @@ class UserTable extends React.Component {
       </div>
     </Cell>)
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    let idCell = (<TextCell col="id" data={filteredDataList} />)
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
     let emailCell = (<TextCell col="email" data={filteredDataList} />)
     let phoneCell = (<TextCell col="phone" data={filteredDataList} />)
-    let idCell = (<TextCell col="id" data={filteredDataList} />)
 
     return (
-
       <div className="data-table">
         <div className="row">
           <div className="col-md-12">
