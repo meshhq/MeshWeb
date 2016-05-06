@@ -17,34 +17,17 @@ class NavPane extends Component {
   }
 
   render() {
-
     const navItems = []
-    for(let count = 0; count < 4; count++) {
-      let title = titles[count]
-      let glyph = glyphs[count]
-      let onClick = this._handleNavItemWasClicked.bind(this, count)
+    for(let idx = 0; idx < 4; idx++) {
+      let title = titles[idx]
+      let glyph = glyphs[idx]
+      let onClick = this._handleNavItemWasClicked.bind(this, idx)
 
       let item
-      if (count == this.props.activeNavIdx) {
-        item = (
-          <NavItem 
-            active
-            glyph={glyph}
-            key={title}
-            onClick={onClick}
-            title={title}
-          />
-        )
+      if (idx == this.props.activeNavIdx) {
+        item = ( <NavItem active glyph={glyph} key={title} onClick={onClick} title={title} /> )
       } else {
-        item = (
-          <NavItem 
-            active={false}
-            glyph={glyph}
-            key={title}
-            onClick={onClick}
-            title={title}
-          />
-        )
+        item = ( <NavItem active={false} glyph={glyph} key={title} onClick={onClick} title={title} /> )
       }
       navItems.push(item)
     }
