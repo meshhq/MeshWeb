@@ -122,7 +122,7 @@ class App extends Component {
     const { userState, providerState, activeNavIdx, listState, organizationState } = this.props
     switch(activeNavIdx) {
       case 0:
-        return (<UserTable providers={providerState.providers} users={userState} width={this.state.width}/>)
+        return (<UserTable providers={providerState.providers} users={userState.users} width={this.state.width}/>)
       case 1:
         return (<OrganizationTable organizations={organizationState.organizations} providers={providerState.providers} width={this.state.width}/> )
       case 2:

@@ -265,7 +265,7 @@ class OrganizationTable extends Component {
     this.dataList = new DataListWrapper(this.props.organizations)
     this.setState({
       selectedList: [],
-      dataList: this.dataList,
+      filteredDataList: this.dataList,
       deleteFormDisplayed: false
     });
   }
@@ -335,7 +335,7 @@ class OrganizationTable extends Component {
       </div>
     )
 
-    // Setup Out Cells
+    // Setup Cells
     let selectAllHeader = (<Cell>
       <div className="input-group">
         <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
@@ -361,8 +361,8 @@ class OrganizationTable extends Component {
           <div className="col-md-12 dataTableWrapper">
             <Table headerHeight={50} height={1000} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
+              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
               <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={50} />

@@ -138,6 +138,10 @@ export function publishOrganization(organizationID, providers) {
 	}
 }
 
+//------------------------------------------------------------------------------
+// Refresh Organizations
+//------------------------------------------------------------------------------
+
 // This action is to indicate the desired
 // refresh of the user table
 export const REFRESH_ORGANIZATION_ORGANIZATION = 'REFRESH_ORGANIZATION_ORGANIZATION'
