@@ -11,7 +11,8 @@ fi
 git commit -m "$msg"
 
 # Push source and build repos.
-git push origin master
+branch_name=$(git name-rev --name-only HEAD)
+git push origin branch_name
 
 timestamp() {
   date +"%s"
