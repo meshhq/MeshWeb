@@ -65,7 +65,9 @@ class App extends Component {
    */
   _getWindowWidth() {
     let dom = ReactDOM.findDOMNode(this)
-    const width = dom.querySelectorAll('div.container')[0].clientWidth
+  
+    // TODO: Coleman - Change hardcoded width.
+    const width = dom.clientWidth - 230
     this.setState({ width: width })
   }
 

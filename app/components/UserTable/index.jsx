@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ToastContainer, ToastMessage } from 'react-toastr'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -383,7 +384,7 @@ class UserTable extends React.Component {
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select a User"} onOK={this.handleCloseErrorForm}/>
       </div>
     )
-
+    console.log(this.props.width)
     // Setup Cells
     let selectAllHeader = (<Cell>
       <div className="input-group">
@@ -394,30 +395,34 @@ class UserTable extends React.Component {
     let idCell = (<TextCell col="id" data={filteredDataList} />)
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
+    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} />)
+    let titleCell = (<TextCell col="title" data={filteredDataList} />)
     let emailCell = (<TextCell col="email" data={filteredDataList} />)
     let phoneCell = (<TextCell col="phone" data={filteredDataList} />)
+    let mobileCell = (<TextCell col="mobile" data={filteredDataList} />)
+    let priorityCell = (<TextCell col="priority" data={filteredDataList} />)
 
     return (
-      <div className="data-table">
-        <div className="row">
-          <div className="col-md-12">
-            {actionDivs}
-          </div>
-        </div>
-        <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
-            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
+      <Grid fluid>
+        {actionDivs}
+        <Row className="data-table-row">
+          <Col className="data-table-column" md={12}>
+            <Table width={this.props.width} height={800} headerHeight={40} rowHeight={35} rowsCount={filteredDataList.getSize()} {...this.props}>
               <TextColumn data={filteredDataList}/>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={200}/>
-              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={150}/>
-              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={150}/>
+              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>
+              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>
+              <Column cell={idCell} header={<Cell>{'Identifier'}</Cell>} width={200}/>
+              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
+              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={220}/>
+              <Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>
               <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={300}/>
               <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
+              <Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>
             </Table>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

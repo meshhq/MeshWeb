@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 import { ToastContainer, ToastMessage } from 'react-toastr'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -372,14 +373,10 @@ class ListTable extends Component {
 
     // Layout the providers table.
     return (
-      <div className="data-table">
-        <div className="row">
-          <div className="col-md-12">
-            {actionDivs}
-          </div>
-        </div>
-        <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
+      <Grid fluid>
+        {actionDivs}
+        <Row className="data-table-row">
+          <Col className="data-table-column" md={12}>
             <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
@@ -387,9 +384,9 @@ class ListTable extends Component {
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
             </Table>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
