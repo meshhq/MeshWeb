@@ -18,11 +18,8 @@ timestamp() {
   date +"%s"
 }
 
-# Bucket Location
-bucket=$(s3://www.app.meshdata.io --region us-east-1)
-
 # Clear the bucket
-aws s3 rm bucket --recursive
+aws s3 rm s3://www.app.meshdata.io --region us-east-1 --recursive
 
 # Upload new site
-aws s3 sync ./public/ bucket
+aws s3 sync ./public/ s3://www.app.meshdata.io --region us-east-1
