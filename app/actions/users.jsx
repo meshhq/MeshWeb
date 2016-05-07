@@ -174,7 +174,7 @@ export function refreshUsers() {
 		if (getState().app.id) {
 			dispatch(requestedUsers())
 			const appId = getState().app.id
-			return GET(`apps/${appId}/users?limit=25`)
+			return GET(`apps/${appId}/users`, { limit: 35 })
 			.then(function(json){
 					dispatch(receivedUsers(json))
 				}
