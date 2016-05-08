@@ -12,7 +12,7 @@ git commit -m "$msg"
 
 # Push source and build repos.
 branch_name=$(git name-rev --name-only HEAD)
-git push origin branch_name
+git push origin HEAD
 
 timestamp() {
   date +"%s"
