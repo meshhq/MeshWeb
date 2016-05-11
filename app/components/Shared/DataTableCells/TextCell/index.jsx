@@ -5,7 +5,6 @@ import FixedDataTable from 'fixed-data-table'
 const { Cell } = FixedDataTable;
 
 const TextCell = ({ rowIndex, data, col, ...props }) => {
-  console.log(data.getObjectAt(rowIndex))
   return (
     <div className="text-cell">
       <Cell {...props}>

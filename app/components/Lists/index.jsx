@@ -17,7 +17,7 @@ import ActionBar from '../ActionBar'
 // Forms
 import ListForm from '../Forms/ListForm'
 import DeleteForm from '../Forms/DeleteForm'
-import ProviderForm from '../Forms/ProviderForm'
+import IntegrationForm from '../Forms/IntegrationForm'
 import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
@@ -50,7 +50,7 @@ class ListTable extends Component {
     // Publish List Handlers
     this.handlePublishListClick = this._handlePublishListClick.bind(this)
     this.handlePublishList = this._handlePublishList.bind(this)
-    this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
+    this.handleCloseIntegrationForm = this._handleCloseIntegrationForm.bind(this)
 
     // Filter List Handlers
     this.handleFilterListClick = this._handleFilterListClick.bind(this)
@@ -65,10 +65,10 @@ class ListTable extends Component {
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
       selectedList: [],
-      selectedProvider: null,
+      selectedIntegration: null,
       filteredDataList: this.dataList,
       listFormDisplayed: false,
-      providerFormDisplayed: false,
+      integrationFormDisplayed: false,
       deleteFormDisplayed: false,
       errorFormDisplayed: false
     }
@@ -131,35 +131,35 @@ class ListTable extends Component {
       });
     } else {
       this.setState({
-        providerFormDisplayed: true
+        integrationFormDisplayed: true
       });
     }
   }
 
   _handlePublishList(params) {
-    let providers = [];
-    this.props.providers.map(function(provider) {
-      let name = provider['name']
+    let integrations = [];
+    this.props.integrations.map(function(integration) {
+      let name = integration['name']
       let shouldPublish = params[name]
       if (shouldPublish === true) {
-        providers.push(provider.name)
+        integrations.push(integration.name)
       }
     });
 
     for (let idx in this.state.selectedList) {
       let listID = this.state.selectedList[idx]
-      this.props.listActions.publishList(listID, providers)
+      this.props.listActions.publishList(listID, integrations)
     }
 
     this.setState({
       selectedList: [],
-      providerFormDisplayed: false
+      integrationFormDisplayed: false
     });
   }
 
-  _handleCloseProviderForm() {
+  _handleCloseIntegrationForm() {
     this.setState({
-      providerFormDisplayed: false
+      integrationFormDisplayed: false
     });
   }
 
@@ -208,23 +208,23 @@ class ListTable extends Component {
   //----------------------------------------------------------------------------
 
   /**
-   * _handleFilterList handles a click to the `Provider` action bar button.
+   * _handleFilterList handles a click to the `Integration` action bar button.
    */
   _handleFilterListClick(idx) {
-    // Update provider state.
-    let provider
-    let providerType
+    // Update integration state.
+    let integration
+    let integrationType
     if (idx) {
-      provider = this.props.providers.find(function(provider){
-        return provider.type === idx
+      integration = this.props.integrations.find(function(integration){
+        return integration.type === idx
       });
-      providerType = provider.type
+      integrationType = integration.type
     }
 
     this.setState(
-      { selectedProvider: providerType },
+      { selectedIntegration: integrationType },
       function () {
-        if (this.state.selectedProvider) {
+        if (this.state.selectedIntegration) {
           let filteredLists = this._filteredLists()
           this.dataList = new DataListWrapper(filteredLists)
         } else {
@@ -238,26 +238,16 @@ class ListTable extends Component {
   _filteredLists() {
      let lists = _.filter(this.props.lists, (list) => {
       const hasName = list.hasOwnProperty('name')
-      const isCurrentProvider = list.origin_provider == this.state.selectedProvider
-      return hasName && isCurrentProvider
+      const isCurrentIntegration = list.origin_provider == this.state.selectedIntegration
+      return hasName && isCurrentIntegration
     })
     return lists
   }
 
-  _filteredProviders() {
-    return _.filter(this.props.providers, (provider) => {
-      return provider.type == this.state.selectedProvider.type
+  _filteredIntegrations() {
+    return _.filter(this.props.integrations, (integration) => {
+      return integration.type == this.state.selectedIntegration.type
     })
-  }
-
-  /**
-   * Synthetic provider injected into the provider selection list
-   */
-  _meshProvider() {
-    return {
-      name: 'Mesh',
-      type: 0
-    }
   }
 
   //----------------------------------------------------------------------------
@@ -346,15 +336,15 @@ class ListTable extends Component {
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
     let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
     let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0 };
-    let filterAction = { handler: this.handleFilterListClick, title: 'Select Provider', type: 1 };
+    let filterAction = { handler: this.handleFilterListClick, title: 'Select Integration', type: 1 };
     let actions = [newAction, publishAction, deleteAction, filterAction];
     let actionDivs = (
       <div className={'actions'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
-        <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.providers}/>
+        <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.integrations}/>
         <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
-        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishList} providers={this.props.providers} />
+        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
       </div>
     )
@@ -379,9 +369,9 @@ class ListTable extends Component {
           <Col className="data-table-column" md={12}>
             <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
-              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
+              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
+              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={120}/>
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
             </Table>
           </Col>
@@ -400,6 +390,7 @@ ListTable.defaultProps = {
 }
 
 ListTable.propTypes = {
+  integrations: PropTypes.array.isRequired,
   listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired

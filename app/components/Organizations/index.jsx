@@ -16,7 +16,7 @@ import ActionBar from '../ActionBar'
 // Forms
 import OrganizationForm from '../Forms/OrganizationForm'
 import DeleteForm from '../Forms/DeleteForm'
-import ProviderForm from '../Forms/ProviderForm'
+import IntegrationForm from '../Forms/IntegrationForm'
 import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
@@ -331,7 +331,7 @@ class OrganizationTable extends Component {
         <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
         <OrganizationForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteOrganization}/>
-        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization} providers={this.props.providers} />
+        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select an Organization"} onOK={this.handleCloseErrorForm}/>
       </div>
     )
@@ -360,11 +360,11 @@ class OrganizationTable extends Component {
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
-              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/>
-              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
               <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={50} />
-              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
               <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={200} />
+              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/ >
+              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
+              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
             </Table>
           </Col>
         </Row>
@@ -382,6 +382,7 @@ OrganizationTable.defaultProps = {
 }
 
 OrganizationTable.propTypes = {
+  integrations: PropTypes.array.isRequired, 
   organizationActions: PropTypes.object.isRequired,
   organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   providers: PropTypes.array.isRequired,
