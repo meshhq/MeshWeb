@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ToastContainer, ToastMessage } from 'react-toastr'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -351,14 +352,10 @@ class OrganizationTable extends Component {
     let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
 
     return (
-      <div className="data-table">
-        <div className="row">
-          <div className="col-md-12">
-            {actionDivs}
-          </div>
-        </div>
-        <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
+      <Grid fluid>
+        {actionDivs}
+        <Row className="data-table-row">
+          <Col className="data-table-column" md={12}>
             <Table headerHeight={50} height={1000} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
@@ -369,9 +366,9 @@ class OrganizationTable extends Component {
               <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
               <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={200} />
             </Table>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }

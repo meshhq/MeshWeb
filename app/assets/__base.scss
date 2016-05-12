@@ -60,6 +60,19 @@ $screen-lg: 1200px;
 * Base
 */
 
+#root, html, body, .login-container {
+    height: 100%;
+}
+
+.react-root {
+  background-color: white;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
 // Fonts
 @font-face {
   font-family: 'Roboto';

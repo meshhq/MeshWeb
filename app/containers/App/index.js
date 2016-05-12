@@ -65,7 +65,9 @@ class App extends Component {
    */
   _getWindowWidth() {
     let dom = ReactDOM.findDOMNode(this)
-    const width = dom.querySelectorAll('div.container')[0].clientWidth
+  
+    // TODO: Coleman - Change hardcoded width.
+    const width = dom.clientWidth - 230
     this.setState({ width: width })
   }
 
@@ -156,10 +158,14 @@ class App extends Component {
     const appContent = this._contentForApp()
     return (
       <div className="react-root">
-        <NavBar accountName="KEVIN COLEMAN" activeNavIdx={activeNavIdx} navTitles={navTitles} onNavChange={this.handleNavBarClick} />
-        <NavPane activeNavIdx={activeNavIdx} onNavChange={this.handleNavPaneClick}/>
-        <div className="container-wrapper">
-          {appContent}
+        <div className="mesh-app">
+          <NavBar accountName="KEVIN COLEMAN" activeNavIdx={activeNavIdx} navTitles={navTitles} onNavChange={this.handleNavBarClick} />
+          <NavPane activeNavIdx={activeNavIdx} onNavChange={this.handleNavPaneClick}/>
+          <div className="outer-container">
+            <div className="container-wrapper">
+              {appContent}
+            </div>
+          </div>
         </div>
       </div>
     )
