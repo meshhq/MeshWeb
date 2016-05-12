@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import ActionGroup from './ActionGroup'
 import SearchBar from './SearchBar'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 class ActionBar extends Component {
   constructor(props) {
