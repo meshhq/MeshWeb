@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ToastContainer, ToastMessage } from 'react-toastr'
+import { Grid, Row, Col } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -14,7 +15,7 @@ import ActionBar from '../ActionBar'
 // Forms
 import UserForm from '../Forms/UserForm'
 import DeleteForm from '../Forms/DeleteForm'
-import ProviderForm from '../Forms/ProviderForm'
+import IntegrationForm from '../Forms/IntegrationForm'
 import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
@@ -54,7 +55,7 @@ class UserTable extends React.Component {
       // Publish User Handlers
       this.handlePublishClick = this._handlePublishClick.bind(this)
       this.handlePublishUser = this._handlePublishUser.bind(this)
-      this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
+      this.handleCloseIntegrationForm = this._handleCloseIntegrationForm.bind(this)
 
       // Add User To Handlers
       this.handleAddToClick = this._handleAddToClick.bind(this)
@@ -71,7 +72,7 @@ class UserTable extends React.Component {
       this.dataList = new DataListWrapper(this.props.users)
       this.state = {
         selectedList: [],
-        selectedProvider: null,
+        selectedIntegration: null,
         filteredDataList: this.dataList,
         newFormDisplayed: false,
         providerFormDisplayed: false,
@@ -86,16 +87,6 @@ class UserTable extends React.Component {
       this.setState({
         filteredDataList: this.dataList
       });
-    }
-
-    /**
-     * Synthetic provider injected into the provider selection list
-     */
-    _meshProvider() {
-      return {
-        name: 'Mesh',
-        type: 0
-      }
     }
 
     //----------------------------------------------------------------------------
@@ -245,7 +236,7 @@ class UserTable extends React.Component {
       });
     }
 
-    _handleCloseProviderForm() {
+    _handleCloseIntegrationForm() {
       this.setState({
         providerFormDisplayed: false
       });
@@ -379,7 +370,7 @@ class UserTable extends React.Component {
         <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
         <UserForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
-        <ProviderForm displayed={this.state.providerFormDisplayed} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishUser} providers={this.props.providers} />
+        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishUser}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select a User"} onOK={this.handleCloseErrorForm}/>
       </div>
     )
@@ -394,30 +385,34 @@ class UserTable extends React.Component {
     let idCell = (<TextCell col="id" data={filteredDataList} />)
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
+    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} />)
+    let titleCell = (<TextCell col="title" data={filteredDataList} />)
     let emailCell = (<TextCell col="email" data={filteredDataList} />)
     let phoneCell = (<TextCell col="phone" data={filteredDataList} />)
+    let mobileCell = (<TextCell col="mobile" data={filteredDataList} />)
+    let priorityCell = (<TextCell col="priority" data={filteredDataList} />)
 
     return (
-      <div className="data-table">
-        <div className="row">
-          <div className="col-md-12">
-            {actionDivs}
-          </div>
-        </div>
-        <div className="row table-wrapper">
-          <div className="col-md-12 dataTableWrapper">
-            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
+      <Grid fluid>
+        {actionDivs}
+        <Row className="data-table-row">
+          <Col className="data-table-column" md={12}>
+            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
               <TextColumn data={filteredDataList}/>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={200}/>
-              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={150}/>
-              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={150}/>
+              <Column cell={idCell} header={<Cell>{'Identifier'}</Cell>} width={200}/>
+              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>
+              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>
+              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
+              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>
               <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={300}/>
               <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
+              <Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>
+              <Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>
             </Table>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
@@ -430,6 +425,7 @@ UserTable.defaultProps = {
 }
 
 UserTable.propTypes = {
+  integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   userActions: PropTypes.object.isRequired,
   users: PropTypes.arrayOf(React.PropTypes.object).isRequired,

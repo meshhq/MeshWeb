@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Button, Modal, Grid, Row, Col } from 'react-bootstrap'
 
-class ProviderForm extends Component {
+class IntegrationForm extends Component {
   constructor(props) {
     super(props);
     this.resetState = this._resetState.bind(this)
@@ -17,7 +17,7 @@ class ProviderForm extends Component {
 
   _initialState() {
     let state = {};
-    this.props.providers.map(function(provider) {
+    this.props.integrations.map(function(provider) {
       let type = provider['name']
       state[type] = false;
     });
@@ -42,18 +42,18 @@ class ProviderForm extends Component {
     }
   }
 
-  _splitProviders() {
-    let providerPairs = [];
-    for (let i = 0; i < this.props.providers.length; i++) {
+  _splitIntegrations() {
+    let integrationPairs = [];
+    for (let i = 0; i < this.props.integrations.length; i++) {
       if (i % 2 == 0) {
-        providerPairs.push([])
+        integrationPairs.push([])
       }
 
-      const currentPairGroup = providerPairs[Math.floor(i / 2)]
-      currentPairGroup.push(this.props.providers[i])
+      const currentPairGroup = integrationPairs[Math.floor(i / 2)]
+      currentPairGroup.push(this.props.integrations[i])
     }
 
-    return providerPairs
+    return integrationPairs
   }
 
   _generateColumns() {
@@ -61,14 +61,14 @@ class ProviderForm extends Component {
 
     // Itterate over all button supplied to the class to build the action group.
     let columnCount = 0;
-    let splitProviders = this._splitProviders()
-    let providerColumns = splitProviders.map(function(providers) {
+    let splitIntegrations = this._splitIntegrations()
+    let providerColumns = splitIntegrations.map(function(providers) {
       let colums = [];
       if (providers.length > 0) {
         let provider = providers[0]
         colums.push(
           <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
-            <input className='provider-radio' aria-label="..." id={provider['name']} onChange={test} type={'radio'} />
+            <input aria-label="..." className='provider-radio'  id={provider['name']} onChange={test} type={'radio'} />
             <img className="logo-img" src={provider['logo_url']} />
             <p className='provider-name'>{provider['name']}</p>
           </Col>
@@ -78,7 +78,7 @@ class ProviderForm extends Component {
         let provider = providers[1]
         colums.push(
           <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
-            <input className='provider-radio' aria-label="..." id={provider['name']} onChange={test} type={'radio'} />
+            <input aria-label="..." className='provider-radio' id={provider['name']} onChange={test} type={'radio'} />
             <img className="logo-img" src={provider['logo_url']} />
             <p className='provider-name'>{provider['name']}</p>
           </Col>
@@ -95,7 +95,7 @@ class ProviderForm extends Component {
   }
 
   render() {
-    let providerColumns = this._generateColumns()
+    let integrationColumns = this._generateColumns()
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
@@ -105,7 +105,7 @@ class ProviderForm extends Component {
 
           <Modal.Body>
             <Grid fluid>
-              {providerColumns}
+              {integrationColumns}
             </Grid>
           </Modal.Body>
 
@@ -119,13 +119,13 @@ class ProviderForm extends Component {
   }
 }
 
-ProviderForm.propTypes = {
+IntegrationForm.propTypes = {
   displayed: PropTypes.bool.isRequired,
+  integrations: PropTypes.array.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onPublish: PropTypes.func.isRequired,
-  providers: PropTypes.array.isRequired
+  onPublish: PropTypes.func.isRequired
 }
 
-ProviderForm.displayName = 'Provider Form';
+IntegrationForm.displayName = 'Integration Form';
 
-export default ProviderForm
+export default IntegrationForm

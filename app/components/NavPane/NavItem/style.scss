@@ -4,54 +4,47 @@ $NavItemContainerTopPadding: 28px;
 $NavItemContainerLeftMargin: 24px;
 
 .nav-item {
+	display: flex;
+	align-items: center;
 	background-color: transparent;
 	width: 100%;
-	margin-bottom: 1px;
 	height: $NavItemHeight;
-	font-size: 1.5em;
-	
-	a {
-		color: $MeshBlack;	
-	}
-
-	a:hover {
-		text-decoration: none;
-	}
-
+	font-size: 1.2em;
 }
 
+.nav-item.active {
+	background-color: $MeshGreyUltraLight;
+	border-left: 4px solid gray;
+}
 .nav-item:hover {
-	border-left: 3px solid #cc7a6f;
+	border-left: 4px solid gray;
 	padding-left: -3px;
 	color: #FFFFFF;
 	text-decoration: none;
-	
 }
 
 .nav-item-container {
-	display: block;
-	padding-top: $NavItemContainerTopPadding;
+	display: table;
 	margin-left: $NavItemContainerLeftMargin;
 	background-color: transparent;
 
 	.glyphicon {
+		vertical-align: middle;
 		float: left;
-		margin-top: 1px;
 		color: black;
 	}
 
 	a {
+		vertical-align: middle;
 		float: left;
 		color: $MeshBlack;
 		font-size: 18px;
 		font-weight: 700px;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		margin-left: 14px;
+		margin-left: 12px;
 	}
 
-	span {
-		color: $MeshBlack;
+	a:hover {
+		text-decoration: none;
 	}
 }
 

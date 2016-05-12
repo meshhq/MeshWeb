@@ -2,7 +2,6 @@
 	background-color: white;
 	display: inline-block;
 	width: 100%;
-	height: 100%;
 	margin: 0px;
 	padding: 0px;
 }
@@ -24,7 +23,6 @@
 	display: inline-block;
 	background-color: blue;
 	width: 100%;
-	height: 1000px;
 }
 
 .container-wrapper {
@@ -32,13 +30,12 @@
 	float: left;
 
 	// Todo, change to $NavPaneWidth
-	width: calc(100% - 220px);
+	width: calc(100% - 200px);
 
 	// Todo, change to $NavBarHeight;
 	height: calc(100% - 60px);
-	padding:1em;
+	padding-top:1em;
 
-	border-radius: 5px;
 	box-shadow: inset 0px 0px 1px rgba(0,0,0,0.9);
 }
 

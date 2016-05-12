@@ -1,16 +1,6 @@
-.users-container {
+.data-table-row {
+	overflow: scroll;
 
-	// Top bar selector button
-	.input-group {
-		width: 100%;
-		input {
-			margin: 0;
-			position: absolute;
-		}
-	}
-}
-
-.data-table {
 	.header {
 		margin-bottom: 1.5em;
 
@@ -19,66 +9,43 @@
 			font-weight: 300;
 		}
 	}
+	.public_fixedDataTable_main {
+		margin-right: 0px;
+	}
+	.public_fixedDataTableCell_main {
+		background-image: none;
+	}
 
-	.dataTableWrapper {
-		overflow: scroll;
-
-		// Top Row Columns
-		.fixedDataTableLayout_main {
-			background-color: transparent;
-
-			.fixedDataTableLayout_rowsContainer {
-				background: transparent;
-			}
-
-			.public_fixedDataTableCell_cellContent {
-				color: $MeshBlack;
-
-			}
-			.public_fixedDataTableCell_main {
-				font: WorkSansFont;
-			}
+	.public_fixedDataTable_header {
+		background-image: linear-gradient(white, white);
+		.public_fixedDataTableCell_cellContent {
+			font-weight: bold;
+			color: $MeshBlackLight;
 		}
+	}
 
-		.fixedDataTableCellLayout_main {
-			background-color: transparent;
-		}
-
-		.public_fixedDataTableCell_main {
-			background-image: none;
-		}
-
-		.public_fixedDataTable_header {
-			background-image: linear-gradient(white, white);
-			.public_fixedDataTableCell_cellContent {
-				font-weight: bold;
-				color: $MeshBlackLight;
-			}
-		}
-
-		.public_fixedDataTableRow_highlighted {
-			background-color: transparent;
-		}
+	.public_fixedDataTableRow_highlighted {
+		background-color: transparent;
+	}
 
 
-		.public_fixedDataTableRow_highlighted {
-			background-color: transparent;
-		}
+	.public_fixedDataTableRow_highlighted {
+		background-color: transparent;
+	}
 
-		.public_fixedDataTableCell_main {
-			background-color: transparent;
-		}
+	.public_fixedDataTableCell_main {
+		background-color: transparent;
+	}
 
-		// Commenting out will give the rows an alternating color
-		.public_fixedDataTableRow_main {
-			background-color: transparent;
-		}
+	// Commenting out will give the rows an alternating color
+	.public_fixedDataTableRow_main {
+		background-color: transparent;
+	}
 
-		.fixedDataTableRowLayout_rowWrapper {
-			border: 1px solid #black;
-			border-bottom-style: solid;
-			border-bottom-color: $MeshGreyUltraLight;
-			border-bottom-width: 1px;
-		}
+	.fixedDataTableRowLayout_rowWrapper {
+		border: 1px solid #black;
+		border-bottom-style: solid;
+		border-bottom-color: $MeshGreyUltraLight;
+		border-bottom-width: 1px;
 	}
 }

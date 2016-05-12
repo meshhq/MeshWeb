@@ -1,9 +1,7 @@
 .action-group {
-	float: right;	
+	float: right;
 
-	@media (max-width: $screen-sm) { 
-		float: left;	
+	@media (max-width: $screen-sm) {
+		float: left;
 	}
-	
-	padding: 2px;
 }

@@ -13,8 +13,7 @@ export const UNAUTHORIZED_ACCESS_NOTIFICATION = 'UNAUTHORIZED_ACCESS_NOTIFICATIO
 /**
  * INTERFACE METHODS
  */
-
-export function GET(path, params) {
+export function Search(path, params) {
 	const url = URLWithPath(path, params)
 	const request = baseRequest('GET', url)
 	return performFetch(request)
@@ -133,4 +132,3 @@ function appendAuthentication(headers) {
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
 }
-

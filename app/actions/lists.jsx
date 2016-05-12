@@ -1,7 +1,6 @@
 
 import { GET, POST, PUT, DELETE } from '../helpers/api'
 
-
 //------------------------------------------------------------------------------
 // Create List
 //------------------------------------------------------------------------------
@@ -163,6 +162,9 @@ export function requestedLists() {
 
 export const RECEIVE_LISTS = 'RECEIVED_LISTS'
 export function receivedLists(json) {
+	if (!json) {
+		json = []
+	}
 	return {
 		type: RECEIVE_LISTS,
 		lists: json,

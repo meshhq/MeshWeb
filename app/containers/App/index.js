@@ -20,6 +20,7 @@ import * as ListActions from '../../actions/lists'
 import * as NavActions from '../../actions/nav'
 import * as NavPaneActions from '../../actions/NavPane'
 import * as OrganizationActions from '../../actions/organizations'
+import * as IntegrationActions from '../../actions/integrations'
 import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
 
@@ -65,7 +66,9 @@ class App extends Component {
    */
   _getWindowWidth() {
     let dom = ReactDOM.findDOMNode(this)
-    const width = dom.querySelectorAll('div.container')[0].clientWidth
+
+    // TODO: Coleman - Change hardcoded width.
+    const width = dom.clientWidth - 230
     this.setState({ width: width })
   }
 
@@ -119,14 +122,41 @@ class App extends Component {
    * @return {[JSX HTML]} HTML for container
    */
   _appComponentForCurrentNavIdx() {
-    const { userState, providerState, activeNavIdx, listState, organizationState } = this.props
+    const { userState, providerState, activeNavIdx, listState, organizationState, integrationState } = this.props
+
+    let integrations = []
+    for (let i = 0; i < integrationState.integrations.length; i++) {
+      let integration = integrationState.integrations[i]
+      if (integration.provider_type == undefined) {
+        integrations.push(providerState.providers[0])
+      } else {
+        let provider = providerState.providers[integration.provider_type]
+        integrations.push(provider)
+      }
+    }
+
     switch(activeNavIdx) {
       case 0:
-        return (<UserTable providers={providerState.providers} users={userState.users} width={this.state.width}/>)
+        return (<UserTable
+          integrations={integrations}
+          providers={providerState.providers}
+          users={userState.users}
+          width={this.state.width}
+                />)
       case 1:
-        return (<OrganizationTable organizations={organizationState.organizations} providers={providerState.providers} width={this.state.width}/> )
+        return (<OrganizationTable
+          integrations={integrations}
+          organizations={organizationState.organizations}
+          providers={providerState.providers}
+          width={this.state.width}
+                />)
       case 2:
-        return (<ListTable lists={listState.lists} providers={providerState.providers}/>)
+        return (<ListTable
+          integrations={integrations}
+          lists={listState.lists}
+          providers={providerState.providers}
+          width={this.state.width}
+                />)
       case 3:
         return (<Providers providerState={providerState}/>)
     }
@@ -169,6 +199,8 @@ class App extends Component {
 App.propTypes = {
   activeNavIdx: PropTypes.number.isRequired,
   appActions: PropTypes.object.isRequired,
+  integrationActions: PropTypes.object.isRequired,
+  integrationState: PropTypes.object.isRequired,
   listActions: PropTypes.object.isRequired,
   listState: PropTypes.object.isRequired,
   navActions: PropTypes.object.isRequired,
@@ -193,6 +225,7 @@ function mapStateToProps(state) {
     appState: state.app,
     listState: state.lists,
     organizationState: state.organizations,
+    integrationState: state.integrations,
     providerState: state.providers,
     userState: state.users
   }
@@ -205,6 +238,7 @@ function mapDispatchToProps(dispatch) {
     navActions: bindActionCreators(NavActions, dispatch),
     navPaneActions: bindActionCreators(NavPaneActions, dispatch),
     organizationActions: bindActionCreators(OrganizationActions, dispatch),
+    integrationActions: bindActionCreators(IntegrationActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
   }

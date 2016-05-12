@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import ActionGroup from './ActionGroup'
 import SearchBar from './SearchBar'
+import { Row, Col } from 'react-bootstrap'
 
 class ActionBar extends Component {
   constructor(props) {
@@ -17,14 +18,14 @@ class ActionBar extends Component {
 
   render() {
     return (
-      <div className="row action-bar">
-        <div className="col-md-6 col-sm-12">
+      <Row className='action-bar' key={'action'}>
+        <Col className='search-column' key={'search'} md={6} ref={'kev'}>
           <SearchBar onSearchInput={this.handleSearchInput}/>
-        </div>
-        <div className="col-md-6 col-sm-12">
+        </Col>
+        <Col className='action-column' key={'action'} md={6} ref={'test'}>
           <ActionGroup actions={this.props.actions} providers={this.props.providers} />
-        </div>
-      </div>
+        </Col>
+      </Row>
     )
   }
 }
