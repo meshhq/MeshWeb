@@ -11,14 +11,15 @@ fi
 git commit -m "$msg"
 
 # Push source and build repos.
-git push origin master
+branch_name=$(git name-rev --name-only HEAD)
+git push origin HEAD
 
 timestamp() {
   date +"%s"
 }
 
 # Clear the bucket
-aws s3 rm s3://app.meshdata.io --recursive
+aws s3 rm s3://app.meshdata.io --region us-east-1 --recursive
 
 # Upload new site
-aws s3 sync ./public/ s3://app.meshdata.io
+aws s3 sync ./public/ s3://app.meshdata.io --region us-east-1
