@@ -221,7 +221,7 @@ class UserTable extends React.Component {
         let name = provider['name']
         let shouldPublish = params[name]
         if (shouldPublish === true) {
-          providers.push(provider.name)
+          providers.push(provider.key)
         }
       });
 

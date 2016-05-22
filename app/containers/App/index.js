@@ -130,10 +130,14 @@ class App extends Component {
       if (integration.provider_type == undefined) {
         integrations.push(providerState.providers[0])
       } else {
-        let provider = providerState.providers[integration.provider_type]
+        let provider = providerState.providers.find(function(provider){
+          return provider.type == integration.provider_type
+        });
+        console.log(provider)
         integrations.push(provider)
       }
     }
+    console.log("Integrations", integrations)
 
     switch(activeNavIdx) {
       case 0:
