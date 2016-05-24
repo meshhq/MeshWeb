@@ -11,7 +11,7 @@ const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) =>
   }
   let inputUI
   let object = data.getObjectAt(rowIndex)
-  let idx = selectedList.indexOf(object.id)
+  let idx = selectedList.indexOf(object)
   if (idx != -1) {
     inputUI = (<input aria-label="..." checked onChange={handleChange} type="checkbox" />)
   } else {

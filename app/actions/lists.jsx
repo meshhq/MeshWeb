@@ -15,9 +15,11 @@ export function creatingList() {
 
 // The action to indicate a list has been created.
 export const CREATED_LIST = 'CREATED_LIST'
-export function createdList() {
+export function createdList(json) {
 	return {
-		type: CREATED_LIST
+		type: CREATED_LIST,
+		list: json,
+		createdAt: Date.now()
 	}
 }
 
@@ -49,20 +51,23 @@ export function updatingList() {
 
 // The action to indicate a list has been created.
 export const UPDATED_LIST = 'UPDATED_LIST'
-export function updatedList() {
+export function updatedList(list, json) {
 	return {
-		type: UPDATED_LIST
+		type: UPDATED_LIST,
+		previousList: list,
+		updatedList: json,
+		updatedAt: Date.now()
 	}
 }
 
-export function updateList(listID, params) {
+export function updateList(list, params) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(updatingList())
 			const appID = getState().app.id
-			return PUT(`apps/${appID}/lists/${listID}`, params)
+			return PUT(`apps/${appID}/lists/${list.id}`, params)
 			.then(function(json){
-					dispatch(updatedList(json))
+					dispatch(updatedList(list, json))
 				}
 			)
 		}
@@ -83,20 +88,22 @@ export function deletingList() {
 
 // The action to indicate a list has been created.
 export const DELETED_LIST = 'DELETED_LIST'
-export function deletedList() {
+export function deletedList(list) {
 	return {
-		type: DELETED_LIST
+		type: DELETED_LIST,
+		deletedList: list,
+		deletedAt: Date.now()
 	}
 }
 
-export function deleteList(listID) {
+export function deleteList(list) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(deletingList())
 			const appID = getState().app.id
-			return DELETE(`apps/${appID}/lists/${listID}`)
+			return DELETE(`apps/${appID}/lists/${list.id}`)
 			.then(function(){
-					dispatch(deletedList())
+					dispatch(deletedList(list))
 				}
 			)
 		}

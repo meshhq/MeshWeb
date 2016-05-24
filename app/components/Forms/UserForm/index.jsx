@@ -9,14 +9,19 @@ class UserForm extends Component {
       value: ''
     };
     this.handleChange = this._handleChange.bind(this)
+    this.handleSave = this._handleSave.bind(this)
   }
 
 
   _handleChange(stateKey, e) {
     let value = e.target.value
-    this.setState({
-      stateKey: value
-    });
+    let state = {};
+    state[stateKey] = value;
+    this.setState( state )
+  }
+
+  _handleSave() {
+    this.props.onSave(this.state)
   }
 
   render() {
@@ -29,17 +34,17 @@ class UserForm extends Component {
 
 
           <Modal.Body>
-            <Input onChange={this._handleChange.bind(this, 'firstName')} placeholder="First Name" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'lastName')} placeholder="Last Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'first_name')} placeholder="First Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'last_name')} placeholder="Last Name" type="text" />
             <Input onChange={this._handleChange.bind(this, 'email')} placeholder="Email Address" type="text" />
             <Input onChange={this._handleChange.bind(this, 'phone')} placeholder="Phone Number" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'company')} placeholder="Company Name" type="text" />
+            <Input onChange={this._handleChange.bind(this, 'organization_name')} placeholder="Organization Name" type="text" />
             <Input onChange={this._handleChange.bind(this, 'website')} placeholder="Website" type="text" />
           </Modal.Body>
 
           <Modal.Footer>
             <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
-            <Button bsStyle='success' onClick={this.props.onSave}>{"Save"}</Button>
+            <Button bsStyle='success' onClick={this.handleSave}>{"Save"}</Button>
           </Modal.Footer>
         </Modal>
       </div>

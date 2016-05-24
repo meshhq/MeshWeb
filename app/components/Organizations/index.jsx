@@ -130,7 +130,7 @@ class OrganizationTable extends Component {
    */
   _handleSelectOne(e, idx) {
     let selectedList = this.state.selectedList
-    const id = this.state.filteredDataList.getObjectAt(idx).id
+    const id = this.state.filteredDataList.getObjectAt(idx)
     if (e.target.checked) {
       selectedList.push(id)
     } else {
@@ -149,7 +149,7 @@ class OrganizationTable extends Component {
     let selectedList = []
     if (e.target.checked) {
       for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
-        const id = this.state.filteredDataList.getObjectAt(idx).id
+        const id = this.state.filteredDataList.getObjectAt(idx)
         selectedList.push(id)
       }
     }
@@ -171,16 +171,11 @@ class OrganizationTable extends Component {
     });
   }
 
+  // Create list via Mesh API.
   _handleSaveOrganization(params) {
-    // Optimistically add the list to the model.
     let organization = { 'name': params.name, 'description': params.description }
-    this.props.organizations.push(organization)
-    this.dataList = new DataListWrapper(this.props.organizations)
-
-    // Create list via Mesh API.
     this.props.organizationActions.createOrganization(organization)
     this.setState({
-      filteredDataList: this.dataList,
       newFormDisplayed: false
     });
   }
@@ -221,8 +216,8 @@ class OrganizationTable extends Component {
     });
 
     for (let idx in this.state.selectedList) {
-      let organizationID = this.state.selectedList[idx]
-      this.props.organizationActions.publishOrganization(organizationID, providers)
+      let organization = this.state.selectedList[idx]
+      this.props.organizationActions.publishOrganization(organization, providers)
     }
 
     this.setState({
@@ -258,15 +253,12 @@ class OrganizationTable extends Component {
 
   _handleDeleteOrganization() {
     for (let idx in this.state.selectedList) {
-      let organizationID = this.state.selectedList[idx]
-      this.props.organizations.splice(idx, 1);
-      this.props.organizationActions.deleteOrganization(organizationID)
+      let organization = this.state.selectedList[idx]
+      this.props.organizationActions.deleteOrganization(organization)
     }
 
-    this.dataList = new DataListWrapper(this.props.organizations)
     this.setState({
       selectedList: [],
-      filteredDataList: this.dataList,
       deleteFormDisplayed: false
     });
   }
@@ -362,7 +354,7 @@ class OrganizationTable extends Component {
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
               <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={50} />
               <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={200} />
-              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={100}/ >
+              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={140}/ >
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
               <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
             </Table>
@@ -382,7 +374,7 @@ OrganizationTable.defaultProps = {
 }
 
 OrganizationTable.propTypes = {
-  integrations: PropTypes.array.isRequired, 
+  integrations: PropTypes.array.isRequired,
   organizationActions: PropTypes.object.isRequired,
   organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   providers: PropTypes.array.isRequired,

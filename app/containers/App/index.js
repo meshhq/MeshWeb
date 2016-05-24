@@ -133,11 +133,9 @@ class App extends Component {
         let provider = providerState.providers.find(function(provider){
           return provider.type == integration.provider_type
         });
-        console.log(provider)
         integrations.push(provider)
       }
     }
-    console.log("Integrations", integrations)
 
     switch(activeNavIdx) {
       case 0:

@@ -83,7 +83,7 @@ class UserTable extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      this._dataList = new DataListWrapper(nextProps.users)
+      this.dataList = new DataListWrapper(nextProps.users)
       this.setState({
         filteredDataList: this.dataList
       });
@@ -135,11 +135,11 @@ class UserTable extends React.Component {
      */
     _handleSelectOne(e, idx) {
       let selectedList = this.state.selectedList
-      const id = this.state.filteredDataList.getObjectAt(idx).id
+      const user = this.state.filteredDataList.getObjectAt(idx)
       if (e.target.checked) {
-        selectedList.push(id)
+        selectedList.push(user)
       } else {
-        selectedList.pop(id)
+        selectedList.pop(user)
       }
       this.setState({
         selectedList: selectedList
@@ -154,8 +154,8 @@ class UserTable extends React.Component {
       let selectedList = []
       if (e.target.checked) {
         for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
-          const id = this.state.filteredDataList.getObjectAt(idx).id
-          selectedList.push(id)
+          const user = this.state.filteredDataList.getObjectAt(idx)
+          selectedList.push(user)
         }
       }
       this.setState({
@@ -178,14 +178,18 @@ class UserTable extends React.Component {
 
     _handleSaveUser(params) {
       // Optimistically add the list to the model.
-      let user = { 'name': params.name, 'description': params.description }
-      this.props.users.push(user)
-      this.dataList = new DataListWrapper(this.props.users)
+      let user = {
+        'first_name': params.first_name,
+        'last_name': params.last_name,
+        'email': params.email,
+        'phone': params.phone,
+        'organization': params.organization,
+        'website': params.website
+      }
 
       // Create list via Mesh API.
       this.props.userActions.createUser(user)
       this.setState({
-        filteredDataList: this.dataList,
         newFormDisplayed: false
       });
     }
@@ -263,15 +267,12 @@ class UserTable extends React.Component {
 
     _handleDeleteUser() {
       for (let idx in this.state.selectedList) {
-        let userID = this.state.selectedList[idx]
-        this.props.users.splice(idx, 1);
-        this.props.userActions.deleteUser(userID)
+        let user = this.state.selectedList[idx]
+        this.props.userActions.deleteUser(user)
       }
 
-      this.dataList = new DataListWrapper(this.props.users)
       this.setState({
         selectedList: [],
-        filteredDataList: this.dataList,
         deleteFormDisplayed: false
       });
     }
@@ -283,7 +284,7 @@ class UserTable extends React.Component {
     }
 
     //----------------------------------------------------------------------------
-    // New Action
+    // Add To Action
     //----------------------------------------------------------------------------
 
     /**
@@ -297,14 +298,18 @@ class UserTable extends React.Component {
 
     _handleAddUserTo(params) {
       // Optimistically add the list to the model.
-      let user = { 'name': params.name, 'description': params.description }
-      this.props.users.push(user)
-      this.dataList = new DataListWrapper(this.props.users)
+      // let user = {
+      //   'first_name': params.first_name,
+      //   'last_name': params.last_name,
+      //   'email': params.email,
+      //   'phone': params.phone,
+      //   'organization_name': params.organization,
+      //   'website': params.website
+      // }
 
-      // Create list via Mesh API.
-    //  this.props.userActions.createUser(user)
+    // Create list via Mesh API.
+    // this.props.userActions.createUser(user)
       this.setState({
-        filteredDataList: this.dataList,
         addToFormDisplayed: false
       });
     }
@@ -356,6 +361,7 @@ class UserTable extends React.Component {
 
   render() {
     const { filteredDataList, selectedList  } = this.state
+    console.log("Rows:", filteredDataList.getSize())
 
     // Setting up our action bar.
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
@@ -382,7 +388,6 @@ class UserTable extends React.Component {
       </div>
     </Cell>)
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    let idCell = (<TextCell col="id" data={filteredDataList} />)
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} />)
@@ -400,15 +405,14 @@ class UserTable extends React.Component {
             <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
               <TextColumn data={filteredDataList}/>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'Identifier'}</Cell>} width={200}/>
               <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>
               <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>
-              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
-              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>
-              <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={300}/>
+              <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={250}/>
               <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
               <Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>
+              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
               <Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>
+              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>
             </Table>
           </Col>
         </Row>

@@ -15,9 +15,11 @@ export function creatingOrganization() {
 
 // The action to indicate a list has been created.
 export const CREATED_ORGANIZATION = 'CREATED_ORGANIZATION'
-export function createdOrganization() {
+export function createdOrganization(json) {
 	return {
-		type: CREATED_ORGANIZATION
+		type: CREATED_ORGANIZATION,
+		organization: json,
+		createdAt: Date.now()
 	}
 }
 
@@ -49,20 +51,23 @@ export function updatingOrganization() {
 
 // The action to indicate a list has been created.
 export const UPDATED_ORGANIZATION = 'UPDATED_ORGANIZATION'
-export function updatedOrganization() {
+export function updatedOrganization(organization, json) {
 	return {
-		type: UPDATED_ORGANIZATION
+		type: UPDATED_ORGANIZATION,
+		previousOrganization: organization,
+		updatedOrganization: json,
+		updatedAt: Date.now()
 	}
 }
 
-export function updateOrganization(organizationID, params) {
+export function updateOrganization(organization, params) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(updatingOrganization())
 			const appID = getState().app.id
-			return PUT(`apps/${appID}/organizations/${organizationID}`, params)
+			return PUT(`apps/${appID}/organizations/${organization.id}`, params)
 			.then(function(json){
-					dispatch(updatedOrganization(json))
+					dispatch(updatedOrganization(organization, json))
 				}
 			)
 		}
@@ -83,20 +88,22 @@ export function deletingOrganization() {
 
 // The action to indicate a list has been created.
 export const DELETED_ORGANIZATION = 'DELETED_ORGANIZATION'
-export function deletedOrganization() {
+export function deletedOrganization(organization) {
 	return {
-		type: DELETED_ORGANIZATION
+		type: DELETED_ORGANIZATION,
+		deletedOrganization: organization,
+		deletedAt: Date.now()
 	}
 }
 
-export function deleteOrganization(organizationID) {
+export function deleteOrganization(organization) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(deletingOrganization())
 			const appID = getState().app.id
-			return DELETE(`apps/${appID}/organizations/${organizationID}`)
+			return DELETE(`apps/${appID}/organizations/${organization.id}`)
 			.then(function(){
-					dispatch(deletedOrganization())
+					dispatch(deletedOrganization(organization))
 				}
 			)
 		}

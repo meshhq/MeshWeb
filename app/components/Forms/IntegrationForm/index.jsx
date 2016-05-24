@@ -43,7 +43,6 @@ class IntegrationForm extends Component {
   }
 
   _splitIntegrations() {
-    console.log(this.props.integrations)
     let integrationPairs = [];
     for (let i = 0; i < this.props.integrations.length; i++) {
       if (i % 2 == 0) {
