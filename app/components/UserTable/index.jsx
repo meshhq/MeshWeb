@@ -297,18 +297,17 @@ class UserTable extends React.Component {
     }
 
     _handleAddUserTo(params) {
-      // Optimistically add the list to the model.
-      // let user = {
-      //   'first_name': params.first_name,
-      //   'last_name': params.last_name,
-      //   'email': params.email,
-      //   'phone': params.phone,
-      //   'organization_name': params.organization,
-      //   'website': params.website
-      // }
+      let user = {
+        'first_name': params.first_name,
+        'last_name': params.last_name,
+        'email': params.email,
+        'phone': params.phone,
+        'organization_name': params.organization,
+        'website': params.website
+      }
 
     // Create list via Mesh API.
-    // this.props.userActions.createUser(user)
+    this.props.userActions.createUser(user)
       this.setState({
         addToFormDisplayed: false
       });
@@ -361,7 +360,6 @@ class UserTable extends React.Component {
 
   render() {
     const { filteredDataList, selectedList  } = this.state
-    console.log("Rows:", filteredDataList.getSize())
 
     // Setting up our action bar.
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
