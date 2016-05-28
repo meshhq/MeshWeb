@@ -20,13 +20,8 @@ class Providers extends Component {
     const providersSections = _.map(this.props.providerState.providers, (provider) => {
       const providerToggled = this._providerWasToggled.bind(this, provider.id)
       return (
-        <ProviderCell key={provider.id}
-          logoSrc={provider.logo_url}
-          onToggle={providerToggled}
-          providerDescription={this._stubbedHipsterLorem()}
-          providerName={provider.name}
-        />
-        )
+        <ProviderCell key={provider.id} logoSrc={provider.logo_url} onToggle={providerToggled} providerDescription={this._stubbedHipsterLorem()} providerName={provider.name}/>
+      )
     })
 
     // Pack the providers into 3 per row

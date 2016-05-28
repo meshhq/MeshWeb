@@ -1,5 +1,5 @@
 
-import { ADD_USER, REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS } from '../actions/users'
+import { REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS, CREATED_USER, UPDATED_USER, DELETED_USER, PUBLISHED_USER } from '../actions/users'
 
 const defaultState = {
 	isFetching: false,
@@ -8,17 +8,33 @@ const defaultState = {
 }
 
 function users(state = defaultState, action) {
+	let updatedUsers = state.users
 	switch(action.type) {
-		case ADD_USER:
+		case CREATED_USER:
+			updatedUsers.splice(0, 0, action.user);
 			return Object.assign({}, state, {
-				users: [
-					...state,
-					{
-						firstName: action.firstName,
-						lastName: action.lastName
-					}
-				]
+				users: updatedUsers,
+				lastUpdated: action.createdAt
 			})
+		case UPDATED_USER:
+			let updatedIdx = updatedUsers.indexOf(action.previousUser);
+			for (let key in action.updatedUser) {
+				action.previousUser[key] = action.updatedUser[key]
+			}
+			updatedUsers[updatedIdx] = action.previousUser
+			return Object.assign({}, state, {
+				users: updatedUsers,
+				lastUpdated: action.UpdatedAt
+			})
+		case DELETED_USER:
+			let deletedIdx = updatedUsers.indexOf(action.deletedUser);
+			updatedUsers.splice(deletedIdx, 1)
+			return Object.assign({}, state, {
+				users: updatedUsers,
+				lastUpdated: action.DeletedAt
+			})
+		case PUBLISHED_USER:
+			return Object.assign({}, state, {})
 		case REFRESH_USER_LIST:
 			return Object.assign({}, state, {
 				didInvalidate: true
@@ -39,5 +55,6 @@ function users(state = defaultState, action) {
 			return state
 	}
 }
+
 
 export default users;

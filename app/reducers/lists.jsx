@@ -1,5 +1,5 @@
 
-import { REFRESH_LISTS, REQUEST_LISTS, RECEIVE_LISTS } from '../actions/lists'
+import { CREATED_LIST, UPDATED_LIST, REFRESH_LISTS, DELETED_LIST, PUBLISHED_LIST, REQUEST_LISTS, RECEIVE_LISTS } from '../actions/lists'
 
 const defaultState = {
 	isFetching: false,
@@ -8,7 +8,30 @@ const defaultState = {
 }
 
 function lists(state = defaultState, action) {
+	let updatedLists = state.lists
 	switch(action.type) {
+		case CREATED_LIST:
+			updatedLists.splice(0, 0, action.organization);
+			return Object.assign({}, state, {
+				lists: updatedLists,
+				lastUpdated: action.createdAt
+			})
+		case UPDATED_LIST:
+			let updatedIdx = updatedLists.indexOf(action.previousList);
+			updatedLists[updatedIdx] = action.updatedList
+			return Object.assign({}, state, {
+				lists: updatedLists,
+				lastUpdated: action.UpdatedAt
+			})
+		case DELETED_LIST:
+			let deletedIdx = updatedLists.indexOf(action.deletedList);
+			updatedLists.splice(deletedIdx, 1)
+			return Object.assign({}, state, {
+				lists: updatedLists,
+				lastUpdated: action.DeletedAt
+			})
+		case PUBLISHED_LIST:
+			return Object.assign({}, state, {})
 		case REFRESH_LISTS:
 			return Object.assign({}, state, {
 				didInvalidate: true

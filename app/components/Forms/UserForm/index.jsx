@@ -1,47 +1,59 @@
 
 import React, { Component, PropTypes } from 'react'
-import { Button, Modal, Input } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
+import UserDetailForm from './UserDetailForm'
+import NewUserForm from './NewUserForm'
 
 class UserForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: ''
-    };
+    this.state = {}
     this.handleChange = this._handleChange.bind(this)
+    this.handleSave = this._handleSave.bind(this)
+    this.handleUpdate = this._handleUpdate.bind(this)
   }
 
+  _handleChange(stateKey, event) {
+    let value = event.target.value
+    let state = {};
+    state[stateKey] = value;
+    this.setState( state )
+  }
 
-  _handleChange(stateKey, e) {
-    let value = e.target.value
-    this.setState({
-      stateKey: value
-    });
+  _handleSave() {
+    this.props.onSave(this.state)
+  }
+
+  _handleUpdate() {
+    this.props.onUpdate(this.state)
+  }
+
+  _newUserModal() {
+    return (
+      <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
+        <NewUserForm onCancel={this.props.onCancel} onChange={this.handleChange} onSave={this.handleSave}/>
+      </Modal>
+    );
+  }
+
+  _userDetailModal() {
+    return (
+      <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
+        <UserDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} user={this.props.user}/>
+      </Modal>
+    );
   }
 
   render() {
+    let modal;
+    if (this.props.user == null) {
+      modal = this._newUserModal()
+    } else {
+      modal = this._userDetailModal()
+    }
     return (
       <div>
-        <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-          <Modal.Header closeButton>
-            <Modal.Title>{"New User"}</Modal.Title>
-          </Modal.Header>
-
-
-          <Modal.Body>
-            <Input onChange={this._handleChange.bind(this, 'firstName')} placeholder="First Name" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'lastName')} placeholder="Last Name" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'email')} placeholder="Email Address" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'phone')} placeholder="Phone Number" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'company')} placeholder="Company Name" type="text" />
-            <Input onChange={this._handleChange.bind(this, 'website')} placeholder="Website" type="text" />
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
-            <Button bsStyle='success' onClick={this.props.onSave}>{"Save"}</Button>
-          </Modal.Footer>
-        </Modal>
+        {modal}
       </div>
     );
   }
@@ -49,8 +61,12 @@ class UserForm extends Component {
 
 UserForm.propTypes = {
   displayed: PropTypes.bool.isRequired,
+  lists: PropTypes.array,
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  organization : PropTypes.object,
+  user : PropTypes.object
 }
 
 UserForm.displayName = 'User Form';

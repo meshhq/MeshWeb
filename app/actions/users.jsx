@@ -15,9 +15,11 @@ export function creatingUser() {
 
 // The action to indicate a list has been created.
 export const CREATED_USER = 'CREATED_USER'
-export function createdUser() {
+export function createdUser(json) {
 	return {
-		type: CREATED_USER
+		type: CREATED_USER,
+		user: json,
+		createdAt: Date.now()
 	}
 }
 
@@ -49,20 +51,23 @@ export function updatingUser() {
 
 // The action to indicate a list has been created.
 export const UPDATED_USER = 'UPDATED_USER'
-export function updatedUser() {
+export function updatedUser(user, json) {
 	return {
-		type: UPDATED_USER
+		type: UPDATED_USER,
+		previousUser: user,
+		updatedUser: json,
+		updatedAt: Date.now()
 	}
 }
 
-export function updateUser(userID, params) {
+export function updateUser(user, params) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(updatingUser())
 			const appID = getState().app.id
-			return PUT(`apps/${appID}/users/${userID}`, params)
-			.then(function(json){
-					dispatch(updatedUser(json))
+			return PUT(`apps/${appID}/users/${user.id}`, params)
+			.then(function(){
+					dispatch(updatedUser(user, params))
 				}
 			)
 		}
@@ -83,20 +88,22 @@ export function deletingUser() {
 
 // The action to indicate a list has been created.
 export const DELETED_USER = 'DELETED_USER'
-export function deletedUser() {
+export function deletedUser(user) {
 	return {
-		type: DELETED_USER
+		type: DELETED_USER,
+		deletedUser: user,
+		deletedAt: Date.now()
 	}
 }
 
-export function deleteUser(userID) {
+export function deleteUser(user) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(deletingUser())
 			const appID = getState().app.id
-			return DELETE(`apps/${appID}/users/${userID}`)
+			return DELETE(`apps/${appID}/users/${user.id}`)
 			.then(function(){
-					dispatch(deletedUser())
+					dispatch(deletedUser(user))
 				}
 			)
 		}
@@ -123,15 +130,15 @@ export function publishedUser() {
 	}
 }
 
-export function publishUser(userID, providers) {
+export function publishUser(user, providers) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(publishingUser())
 			const appID = getState().app.id
 			let body = { 'destination_providers' : providers }
-			return POST(`apps/${appID}/users/${userID}/publish`, body)
+			return POST(`apps/${appID}/users/${user.id}/publish`, body)
 			.then(function(json){
-					dispatch(createdUser(json))
+					dispatch(publishedUser(json))
 				}
 			)
 		}

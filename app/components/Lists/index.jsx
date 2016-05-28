@@ -52,6 +52,10 @@ class ListTable extends Component {
     this.handlePublishList = this._handlePublishList.bind(this)
     this.handleCloseIntegrationForm = this._handleCloseIntegrationForm.bind(this)
 
+    // Cell Selection
+    this.handleCellClick = this._handleCellClick.bind(this)
+    this.handleUpdateList = this._handleUpdateList.bind(this)
+
     // Filter List Handlers
     this.handleFilterListClick = this._handleFilterListClick.bind(this)
 
@@ -65,6 +69,7 @@ class ListTable extends Component {
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
       selectedList: [],
+      selectedObject: null,
       selectedIntegration: null,
       filteredDataList: this.dataList,
       listFormDisplayed: false,
@@ -84,35 +89,95 @@ class ListTable extends Component {
     });
   }
 
+
+  //----------------------------------------------------------------------------
+  // List Searching
+  //----------------------------------------------------------------------------
+
+  _handleSearchLists(e) {
+    let dataList;
+    if (e.target.value) {
+      let filterBy = e.target.value.toLowerCase();
+      let size = this.dataList.getSize();
+      let filteredIndexes = [];
+      for (let index = 0; index < size; index++) {
+        let { name } = this.dataList.getObjectAt(index);
+        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+          filteredIndexes.push(index);
+        }
+      }
+      dataList = new DataListWrapper(this.props.lists, filteredIndexes)
+    } else {
+      dataList = this.dataList
+    }
+    this.setState({
+      filteredDataList: dataList
+    });
+  }
+
+  //----------------------------------------------------------------------------
+  // List Selection
+  //----------------------------------------------------------------------------
+
+  /**
+   * handleSelectOne takes care of handling the event where one list is selected.
+   * @param  {[type]} e The event
+   * @param  {[type]} idx The index for the list.
+   */
+  _handleSelectOne(e, idx) {
+    let selectedList = this.state.selectedList
+    const id = this.state.filteredDataList.getObjectAt(idx)
+    if (e.target.checked) {
+      selectedList.push(id)
+    } else {
+      selectedList.pop(id)
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+  /**
+   * handleSelectAll takes care of handling the event where all users are toggles
+   * @param  {[type]} e The event
+   */
+  _handleSelectAll(e) {
+    let selectedList = []
+    if (e.target.checked) {
+      for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
+        const id = this.state.filteredDataList.getObjectAt(idx)
+        selectedList.push(id)
+      }
+    }
+    this.setState({
+      selectedList: selectedList
+    });
+  }
+
+
   //----------------------------------------------------------------------------
   // New Actiion
   //----------------------------------------------------------------------------
 
-  /**
-   * _handleNewClick handles a click to the `New` action bar button.
-   */
+  // _handleNewClick handles a click to the `New` action bar button.
   _handleNewClick() {
     this.setState({
       listFormDisplayed: true
     });
   }
 
+  // _handleSaveList createa new list via Mesh API.
   _handleSaveList(params) {
-    // Optimistically add the list to the model.
     let list = { 'name': params.name, 'description': params.description }
-    this.props.lists.push(list)
-    this.dataList = new DataListWrapper(this.props.lists)
-
-    // Create list via Mesh API.
     this.props.listActions.createList(list)
     this.setState({
-      filteredDataList: this.dataList,
       listFormDisplayed: false
     });
   }
 
   _handleCloseListForm() {
     this.setState({
+      selectedObject: null,
       listFormDisplayed: false
     });
   }
@@ -147,8 +212,8 @@ class ListTable extends Component {
     });
 
     for (let idx in this.state.selectedList) {
-      let listID = this.state.selectedList[idx]
-      this.props.listActions.publishList(listID, integrations)
+      let list = this.state.selectedList[idx]
+      this.props.listActions.publishList(list, integrations)
     }
 
     this.setState({
@@ -184,15 +249,12 @@ class ListTable extends Component {
 
   _handleDeleteList() {
     for (let idx in this.state.selectedList) {
-      let listID = this.state.selectedList[idx]
-      this.props.lists.splice(idx, 1);
-      this.props.listActions.deleteList(listID)
+      let list = this.state.selectedList[idx]
+      this.props.listActions.deleteList(list)
     }
 
-    this.dataList = new DataListWrapper(this.props.lists)
     this.setState({
       selectedList: [],
-      dataList: this.dataList,
       deleteFormDisplayed: false
     });
   }
@@ -254,76 +316,19 @@ class ListTable extends Component {
   // List Detail
   //----------------------------------------------------------------------------
 
-  /**
-   * _handleShowListDetail handles a click on the actual list in the table.
-   */
-  _handleShowListDetail() {
-    /*
-      1. Present the list detail view.
-     */
+  _handleCellClick(idx) {
+   let list = this.state.filteredDataList.getObjectAt(idx)
+   this.setState({
+     selectedObject: list,
+     listFormDisplayed: true
+   });
   }
 
-  //----------------------------------------------------------------------------
-  // List Searching
-  //----------------------------------------------------------------------------
-
-  _handleSearchLists(e) {
-    let dataList;
-    if (e.target.value) {
-      let filterBy = e.target.value.toLowerCase();
-      let size = this.dataList.getSize();
-      let filteredIndexes = [];
-      for (let index = 0; index < size; index++) {
-        let { name } = this.dataList.getObjectAt(index);
-        if (name.toLowerCase().indexOf(filterBy) !== -1) {
-          filteredIndexes.push(index);
-        }
-      }
-      dataList = new DataListWrapper(this.props.lists, filteredIndexes)
-    } else {
-      dataList = this.dataList
-    }
+  _handleUpdateList(params) {
+    this.props.listActions.updateList(this.state.selectedList, params)
     this.setState({
-      filteredDataList: dataList
-    });
-  }
-
-  //----------------------------------------------------------------------------
-  // List Selection
-  //----------------------------------------------------------------------------
-
-  /**
-   * handleSelectOne takes care of handling the event where one list is selected.
-   * @param  {[type]} e The event
-   * @param  {[type]} idx The index for the list.
-   */
-  _handleSelectOne(e, idx) {
-    let selectedList = this.state.selectedList
-    const id = this.state.filteredDataList.getObjectAt(idx).id
-    if (e.target.checked) {
-      selectedList.push(id)
-    } else {
-      selectedList.pop(id)
-    }
-    this.setState({
-      selectedList: selectedList
-    });
-  }
-
-  /**
-   * handleSelectAll takes care of handling the event where all users are toggles
-   * @param  {[type]} e The event
-   */
-  _handleSelectAll(e) {
-    let selectedList = []
-    if (e.target.checked) {
-      for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
-        const id = this.state.filteredDataList.getObjectAt(idx).id
-        selectedList.push(id)
-      }
-    }
-    this.setState({
-      selectedList: selectedList
+      selectedObject: null,
+      listFormDisplayed: false
     });
   }
 
@@ -342,9 +347,9 @@ class ListTable extends Component {
       <div className={'actions'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
         <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.integrations}/>
-        <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
+        <ListForm displayed={this.state.listFormDisplayed} list={this.state.selectedObject} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} onUpdate={this.handleUpdateList}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
-        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
+        <IntegrationForm displayed={this.state.integrationFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
       </div>
     )
@@ -355,11 +360,12 @@ class ListTable extends Component {
         <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
       </div>
     </Cell>)
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    let nameCell = (<TextCell col="name" data={filteredDataList} />)
-    let idCell = (<TextCell col="id" data={filteredDataList} />)
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
-    let descriptionCell = (<TextCell col="description" data={filteredDataList}/>)
+    let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let userCountCell = (<TextCell col="user_count" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
 
     // Layout the providers table.
     return (
@@ -369,8 +375,8 @@ class ListTable extends Component {
           <Col className="data-table-column" md={12}>
             <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
+              <Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} width={100}/>
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={120}/>
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
             </Table>

@@ -9,43 +9,46 @@
 			font-weight: 300;
 		}
 	}
-	.public_fixedDataTable_main {
-		margin-right: 0px;
-	}
-	.public_fixedDataTableCell_main {
-		background-image: none;
-	}
+
+	//------------------
+	// Table Header
+	//------------------
 
 	.public_fixedDataTable_header {
 		background-image: linear-gradient(white, white);
+		// Header Content
 		.public_fixedDataTableCell_cellContent {
 			font-weight: bold;
 			color: $MeshBlackLight;
 		}
-	}
-
-	.public_fixedDataTableRow_highlighted {
-		background-color: transparent;
-	}
-
-
-	.public_fixedDataTableRow_highlighted {
-		background-color: transparent;
+		.public_fixedDataTableCell_main {
+			background-image: none;
+		}
 	}
 
 	.public_fixedDataTableCell_main {
 		background-color: transparent;
+		.hover {
+			background-color: #F2F2F2;
+		}
+	}
+	.public_fixedDataTableCellGroupLayout:hover {
+		background-color: #F2F2F2;
 	}
 
-	// Commenting out will give the rows an alternating color
 	.public_fixedDataTableRow_main {
 		background-color: transparent;
 	}
 
-	.fixedDataTableRowLayout_rowWrapper {
-		border: 1px solid #black;
-		border-bottom-style: solid;
-		border-bottom-color: $MeshGreyUltraLight;
-		border-bottom-width: 1px;
+	// // Provides the row horizontal lines
+	// .fixedDataTableRowLayout_rowWrapper {
+	// 	border: 1px solid #black;
+	// 	border-bottom-style: solid;
+	// 	border-bottom-color: $MeshGreyUltraLight;
+	// 	border-bottom-width: 1px;
+	// }
+
+	.fixedDataTableCellGroupLayout_cellGroup:hover {
+		background-color: #F2F2F2;
 	}
 }
