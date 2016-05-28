@@ -66,8 +66,8 @@ export function updateUser(user, params) {
 			dispatch(updatingUser())
 			const appID = getState().app.id
 			return PUT(`apps/${appID}/users/${user.id}`, params)
-			.then(function(json){
-					dispatch(updatedUser(user, json))
+			.then(function(){
+					dispatch(updatedUser(user, params))
 				}
 			)
 		}
@@ -130,15 +130,15 @@ export function publishedUser() {
 	}
 }
 
-export function publishUser(userID, providers) {
+export function publishUser(user, providers) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(publishingUser())
 			const appID = getState().app.id
 			let body = { 'destination_providers' : providers }
-			return POST(`apps/${appID}/users/${userID}/publish`, body)
+			return POST(`apps/${appID}/users/${user.id}/publish`, body)
 			.then(function(json){
-					dispatch(createdUser(json))
+					dispatch(publishedUser(json))
 				}
 			)
 		}

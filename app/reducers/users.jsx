@@ -1,5 +1,5 @@
 
-import { REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS, CREATED_USER, UPDATED_USER, DELETED_USER } from '../actions/users'
+import { REFRESH_USER_LIST, REQUEST_USERS, RECEIVE_USERS, CREATED_USER, UPDATED_USER, DELETED_USER, PUBLISHED_USER } from '../actions/users'
 
 const defaultState = {
 	isFetching: false,
@@ -18,7 +18,10 @@ function users(state = defaultState, action) {
 			})
 		case UPDATED_USER:
 			let updatedIdx = updatedUsers.indexOf(action.previousUser);
-			updatedUsers[updatedIdx] = action.updatedUser
+			for (let key in action.updatedUser) {
+				action.previousUser[key] = action.updatedUser[key]
+			}
+			updatedUsers[updatedIdx] = action.previousUser
 			return Object.assign({}, state, {
 				users: updatedUsers,
 				lastUpdated: action.UpdatedAt
@@ -30,6 +33,8 @@ function users(state = defaultState, action) {
 				users: updatedUsers,
 				lastUpdated: action.DeletedAt
 			})
+		case PUBLISHED_USER:
+			return Object.assign({}, state, {})
 		case REFRESH_USER_LIST:
 			return Object.assign({}, state, {
 				didInvalidate: true
@@ -50,5 +55,6 @@ function users(state = defaultState, action) {
 			return state
 	}
 }
+
 
 export default users;

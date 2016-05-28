@@ -16,8 +16,8 @@
 @import '../components/NavPane/NavItem/style';
 
 @import '../components/UserTable/style';
-@import '../components/Lists/style';
-@import '../components/Organizations/style';
+// @import '../components/Lists/style';
+// @import '../components/Organizations/style';
 
 @import '../components/Shared/ProgressView/style';
 @import '../components/Shared/DataTableCells/TextCell/style';
@@ -38,4 +38,5 @@
 @import '../components/ActionBar/ActionGroup/DropdownButton/style';
 
 // Forms
+@import '../components/Forms/UserForm/style';
 @import '../components/Forms/IntegrationForm/style';

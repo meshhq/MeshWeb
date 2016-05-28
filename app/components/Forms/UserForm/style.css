@@ -2,3 +2,58 @@
 	float: right;
 	width: 200px;
 }
+
+p.input-title {
+	font-size: 13px;
+	font-weight: 500;
+}
+
+div.form-group {
+
+	.control-label {
+		font-weight: 300;
+		font-size: 14px;
+	}
+
+	.form-control {
+		color: black;
+		font-weight: 700;
+		font-size: 14px;
+	}
+}
+
+div.initials-bubble {
+	display: inline-block;
+	background-color: #F1F1F1;
+	border-radius: 30px;
+	height: 60px;
+	width: 60px;
+	margin-top: 16px;
+
+	p {
+		color: black;
+		text-align: center;
+		line-height: 60px;
+		font-size: 32px;
+		font-weight: 700;
+	}
+}
+
+div.seperator {
+	margin-top: 20px;
+	margin-bottom: 22px;
+
+	.seperator-line {
+		width: 100%;
+		background-color: $MeshGreyUltraLight;
+		height: 1px;
+	}
+}
+
+h3 {
+	display: inline-block;
+}
+
+p.title {
+	display: inline-block;
+}

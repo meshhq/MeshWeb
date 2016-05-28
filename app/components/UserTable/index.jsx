@@ -62,6 +62,10 @@ class UserTable extends React.Component {
       this.handleAddUserTo = this._handleAddUserTo.bind(this)
       this.handleCloseAddToFrom = this._handleCloseAddToForm.bind(this)
 
+      // Cell Selection
+      this.handleCellClick = this._handleCellClick.bind(this)
+      this.handleUpdateUser = this._handleUpdateUser.bind(this)
+
       // Searching
       this.handleSearch = this._handleSearch.bind(this)
 
@@ -73,8 +77,9 @@ class UserTable extends React.Component {
       this.state = {
         selectedList: [],
         selectedIntegration: null,
+        selectedUser: null,
         filteredDataList: this.dataList,
-        newFormDisplayed: false,
+        userFormDisplayed: false,
         providerFormDisplayed: false,
         deleteFormDisplayed: false,
         addToFormDisplayed: false,
@@ -172,31 +177,22 @@ class UserTable extends React.Component {
      */
     _handleNewClick() {
       this.setState({
-        newFormDisplayed: true
+        userFormDisplayed: true
       });
     }
 
+    // Create list via Mesh API.
     _handleSaveUser(params) {
-      // Optimistically add the list to the model.
-      let user = {
-        'first_name': params.first_name,
-        'last_name': params.last_name,
-        'email': params.email,
-        'phone': params.phone,
-        'organization': params.organization,
-        'website': params.website
-      }
-
-      // Create list via Mesh API.
-      this.props.userActions.createUser(user)
+      this.props.userActions.createUser(params)
       this.setState({
-        newFormDisplayed: false
+        userFormDisplayed: false
       });
     }
 
     _handleCloseUserForm() {
       this.setState({
-        newFormDisplayed: false
+        selectedUser: null,
+        userFormDisplayed: false
       });
     }
 
@@ -230,8 +226,8 @@ class UserTable extends React.Component {
       });
 
       for (let idx in this.state.selectedList) {
-        let userID = this.state.selectedList[idx]
-        this.props.userActions.publishUser(userID, providers)
+        let user = this.state.selectedList[idx]
+        this.props.userActions.publishUser(user, providers)
       }
 
       this.setState({
@@ -326,10 +322,20 @@ class UserTable extends React.Component {
     /**
      * _handleShowUserDetail handles a click on the actual list in the table.
      */
-    _handleShowUserDetail() {
-      /*
-        1. Present the user detail view.
-       */
+     _handleCellClick(idx) {
+       let user = this.state.filteredDataList.getObjectAt(idx)
+       this.setState({
+         selectedUser: user,
+         userFormDisplayed: true
+       });
+     }
+
+    _handleUpdateUser(params) {
+      this.props.userActions.updateUser(this.state.selectedUser, params)
+      this.setState({
+        selectedUser: null,
+        userFormDisplayed: false
+      });
     }
 
     //----------------------------------------------------------------------------
@@ -357,7 +363,6 @@ class UserTable extends React.Component {
         filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
       });
     }
-
   render() {
     const { filteredDataList, selectedList  } = this.state
 
@@ -372,7 +377,7 @@ class UserTable extends React.Component {
       <div className={'actions'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
         <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
-        <UserForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser}/>
+        <UserForm displayed={this.state.userFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser} onUpdate={this.handleUpdateUser} user={this.state.selectedUser}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
         <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishUser}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select a User"} onOK={this.handleCloseErrorForm}/>
@@ -386,14 +391,14 @@ class UserTable extends React.Component {
       </div>
     </Cell>)
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    let firstNameCall = (<TextCell col="first_name" data={filteredDataList} />)
-    let lastNameCell = (<TextCell col="last_name" data={filteredDataList} />)
-    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} />)
-    let titleCell = (<TextCell col="title" data={filteredDataList} />)
-    let emailCell = (<TextCell col="email" data={filteredDataList} />)
-    let phoneCell = (<TextCell col="phone" data={filteredDataList} />)
-    let mobileCell = (<TextCell col="mobile" data={filteredDataList} />)
-    let priorityCell = (<TextCell col="priority" data={filteredDataList} />)
+    let firstNameCall = (<TextCell col="first_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let lastNameCell = (<TextCell col="last_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let phoneCell = (<TextCell col="phone" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let mobileCell = (<TextCell col="mobile" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
 
     return (
       <Grid fluid>

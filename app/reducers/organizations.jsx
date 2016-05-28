@@ -1,4 +1,4 @@
-import { CREATED_ORGANIZATION, UPDATED_ORGANIZATION, DELETED_ORGANIZATION, REFRESH_ORGANIZATION_LIST, REQUEST_ORGANIZATIONS, RECEIVE_ORGANIZATIONS } from '../actions/organizations'
+import { CREATED_ORGANIZATION, UPDATED_ORGANIZATION, DELETED_ORGANIZATION, REFRESH_ORGANIZATION_LIST, REQUEST_ORGANIZATIONS, RECEIVE_ORGANIZATIONS, PUBLISHED_ORGANIZATION } from '../actions/organizations'
 
 const defaultState = {
 	isFetching: false,
@@ -29,6 +29,8 @@ function organizations(state = defaultState, action) {
 				organizations: updatedOrganizations,
 				lastUpdated: action.DeletedAt
 			})
+		case PUBLISHED_ORGANIZATION:
+			return Object.assign({}, state, {})
 		case REFRESH_ORGANIZATION_LIST:
 			return Object.assign({}, state, {
 				didInvalidate: true

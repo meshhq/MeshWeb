@@ -52,6 +52,10 @@ class ListTable extends Component {
     this.handlePublishList = this._handlePublishList.bind(this)
     this.handleCloseIntegrationForm = this._handleCloseIntegrationForm.bind(this)
 
+    // Cell Selection
+    this.handleCellClick = this._handleCellClick.bind(this)
+    this.handleUpdateList = this._handleUpdateList.bind(this)
+
     // Filter List Handlers
     this.handleFilterListClick = this._handleFilterListClick.bind(this)
 
@@ -65,6 +69,7 @@ class ListTable extends Component {
     this.dataList = new DataListWrapper(this.props.lists)
     this.state = {
       selectedList: [],
+      selectedObject: null,
       selectedIntegration: null,
       filteredDataList: this.dataList,
       listFormDisplayed: false,
@@ -172,6 +177,7 @@ class ListTable extends Component {
 
   _handleCloseListForm() {
     this.setState({
+      selectedObject: null,
       listFormDisplayed: false
     });
   }
@@ -310,13 +316,20 @@ class ListTable extends Component {
   // List Detail
   //----------------------------------------------------------------------------
 
-  /**
-   * _handleShowListDetail handles a click on the actual list in the table.
-   */
-  _handleShowListDetail() {
-    /*
-      1. Present the list detail view.
-     */
+  _handleCellClick(idx) {
+   let list = this.state.filteredDataList.getObjectAt(idx)
+   this.setState({
+     selectedObject: list,
+     listFormDisplayed: true
+   });
+  }
+
+  _handleUpdateList(params) {
+    this.props.listActions.updateList(this.state.selectedList, params)
+    this.setState({
+      selectedObject: null,
+      listFormDisplayed: false
+    });
   }
 
   render() {
@@ -334,7 +347,7 @@ class ListTable extends Component {
       <div className={'actions'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
         <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.integrations}/>
-        <ListForm displayed={this.state.listFormDisplayed} onCancel={this.handleCloseListForm} onSave={this.handleSaveList}/>
+        <ListForm displayed={this.state.listFormDisplayed} list={this.state.selectedObject} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} onUpdate={this.handleUpdateList}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
         <IntegrationForm displayed={this.state.integrationFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
@@ -347,11 +360,12 @@ class ListTable extends Component {
         <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
       </div>
     </Cell>)
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    let nameCell = (<TextCell col="name" data={filteredDataList} />)
-    let idCell = (<TextCell col="id" data={filteredDataList} />)
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
-    let descriptionCell = (<TextCell col="description" data={filteredDataList}/>)
+    let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let userCountCell = (<TextCell col="user_count" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
 
     // Layout the providers table.
     return (
@@ -361,8 +375,8 @@ class ListTable extends Component {
           <Col className="data-table-column" md={12}>
             <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
+              <Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} width={100}/>
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={120}/>
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
             </Table>

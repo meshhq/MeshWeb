@@ -48,6 +48,10 @@ class OrganizationTable extends Component {
     this.handlePublishOrganization = this._handlePublishOrganization.bind(this)
     this.handleCloseProviderForm = this._handleCloseProviderForm.bind(this)
 
+    // Cell Selection
+    this.handleCellClick = this._handleCellClick.bind(this)
+    this.handleUpdateOrganization = this._handleUpdateOrganization.bind(this)
+
     // Searching
     this.handleSearch = this._handleSearch.bind(this)
 
@@ -58,9 +62,10 @@ class OrganizationTable extends Component {
     this.dataList = new DataListWrapper(this.props.organizations)
     this.state = {
       selectedList: [],
+      selectedOrganization: null,
       selectedProvider: null,
       filteredDataList: this.dataList,
-      newFormDisplayed: false,
+      organizationFormDisplayed: false,
       providerFormDisplayed: false,
       deleteFormDisplayed: false,
       errorFormDisplayed: false
@@ -167,7 +172,7 @@ class OrganizationTable extends Component {
    */
   _handleNewClick() {
     this.setState({
-      newFormDisplayed: true
+      organizationFormDisplayed: true
     });
   }
 
@@ -176,13 +181,14 @@ class OrganizationTable extends Component {
     let organization = { 'name': params.name, 'description': params.description }
     this.props.organizationActions.createOrganization(organization)
     this.setState({
-      newFormDisplayed: false
+      organizationFormDisplayed: false
     });
   }
 
   _handleCloseOrganizationForm() {
     this.setState({
-      newFormDisplayed: false
+      selectedOrganization: null,
+      organizationFormDisplayed: false
     });
   }
 
@@ -273,13 +279,20 @@ class OrganizationTable extends Component {
   // Show Action
   //----------------------------------------------------------------------------
 
-  /**
-   * _handleShowOrganizationDetail handles a click on the actual list in the table.
-   */
-  _handleShowOrganizationDetail() {
-    /*
-      1. Present the organization detail view.
-     */
+   _handleCellClick(idx) {
+     let organization = this.state.filteredDataList.getObjectAt(idx)
+     this.setState({
+       selectedOrganization: organization,
+       organizationFormDisplayed: true
+     });
+   }
+
+  _handleUpdateOrganization(params) {
+    this.props.organizationActions.updateOrganization(this.state.selectedOrganization, params)
+    this.setState({
+      selectedOrganization: null,
+      organizationFormDisplayed: false
+    });
   }
 
   //----------------------------------------------------------------------------
@@ -321,7 +334,7 @@ class OrganizationTable extends Component {
       <div className={'actions'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
         <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
-        <OrganizationForm displayed={this.state.newFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization}/>
+        <OrganizationForm displayed={this.state.organizationFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization} onUpdate={this.handleUpdateOrganization} organization={this.state.selectedOrganization}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteOrganization}/>
         <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization}  />
         <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select an Organization"} onOK={this.handleCloseErrorForm}/>
@@ -335,13 +348,12 @@ class OrganizationTable extends Component {
       </div>
     </Cell>)
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    let nameCell = (<TextCell col="name" data={filteredDataList} />)
-    let idCell = (<TextCell col="id" data={filteredDataList} />)
-    let descriptionCell = (<TextCell col="description" data={filteredDataList} />)
-    let sizeCell = (<TextCell col="size" data={filteredDataList} />)
-    let industryCell = (<TextCell col="industry" data={filteredDataList} />)
-    let websiteCell = (<TextCell col="website" data={filteredDataList} />)
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList}/>)
+    let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let sizeCell = (<TextCell col="size" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let websiteCell = (<TextCell col="website" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
 
     return (
       <Grid fluid>
@@ -349,14 +361,13 @@ class OrganizationTable extends Component {
         <Row className="data-table-row">
           <Col className="data-table-column" md={12}>
             <Table headerHeight={50} height={1000} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
-              <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={idCell} header={<Cell>{'ID'}</Cell>} width={210}/>
+              <Column cell={radioCell} header={selectAllHeader} width={32} />
               <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
-              <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={50} />
-              <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={200} />
+              <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={60} />
+              <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={180} />
+              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
               <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={140}/ >
               <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
-              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
             </Table>
           </Col>
         </Row>

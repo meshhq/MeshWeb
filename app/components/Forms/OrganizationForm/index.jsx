@@ -1,6 +1,8 @@
 
 import React, { Component, PropTypes } from 'react'
-import { Button, Modal, Input } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
+import OrganizationDetailForm from './OrganizationDetailForm'
+import NewOrganizationForm from './NewOrganizationForm'
 
 class OrganizationForm extends Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class OrganizationForm extends Component {
     this.state = {};
     this.handleChange = this._handleChange.bind(this)
     this.handleSave = this._handleSave.bind(this)
+    this.handleUpdate = this._handleUpdate.bind(this)
   }
 
   _handleChange(stateKey, e) {
@@ -20,28 +23,36 @@ class OrganizationForm extends Component {
     this.props.onSave(this.state)
   }
 
+  _handleUpdate() {
+    this.props.onUpdate(this.state)
+  }
+
+  _newOrganizationModal() {
+    return (
+      <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
+        <NewOrganizationForm onCancel={this.props.onCancel} onChange={this.handleChange} onSave={this.handleSave}/>
+      </Modal>
+    );
+  }
+
+  _organizationDetailModal() {
+    return (
+      <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
+        <OrganizationDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} organization={this.props.organization}/>
+      </Modal>
+    );
+  }
+
   render() {
+    let modal;
+    if (this.props.organization == null) {
+      modal = this._newOrganizationModal()
+    } else {
+      modal = this._organizationDetailModal()
+    }
     return (
       <div>
-        <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-          <Modal.Header closeButton>
-            <Modal.Title>{"New List"}</Modal.Title>
-          </Modal.Header>
-
-
-          <Modal.Body>
-            <Input placeholder="Organization Name" type="text" onChange={this._handleChange.bind(this, 'name')}/>
-            <Input placeholder="Description"type="text" onChange={this._handleChange.bind(this, 'description')}/>
-            <Input placeholder="Size"type="text" onChange={this._handleChange.bind(this, 'size')}/>
-            <Input placeholder="Industry"type="text" onChange={this._handleChange.bind(this, 'industry')}/>
-            <Input placeholder="Website"type="text" onChange={this._handleChange.bind(this, 'website')}/>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
-            <Button bsStyle='success' onClick={this.handleSave}>{"Save"}</Button>
-          </Modal.Footer>
-        </Modal>
+        {modal}
       </div>
     );
   }
@@ -50,7 +61,9 @@ class OrganizationForm extends Component {
 OrganizationForm.propTypes = {
   displayed: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  organization: PropTypes.object
 }
 
 OrganizationForm.displayName = 'Organization Form';
