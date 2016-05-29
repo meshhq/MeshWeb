@@ -11,6 +11,7 @@ import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import DataTable from '../Shared/DataTable'
 
 // Forms
 import UserForm from '../Forms/UserForm'
@@ -373,7 +374,6 @@ class UserTable extends React.Component {
     let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0 };
     let actions = [newAction, publishAction, deleteAction, addToAction];
 
-
     let forms = (
       <div className={'forms'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
@@ -391,36 +391,41 @@ class UserTable extends React.Component {
       </div>
     </Cell>)
 
+    let columns = []
+    columns.push(<TextColumn data={filteredDataList}/>)
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    columns.push(<Column cell={radioCell} header={selectAllHeader} width={32}/>)
+
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>)
+
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>)
+
     let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={250}/>)
+
     let phoneCell = (<TextCell col="phone" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>)
+
     let mobileCell = (<TextCell col="mobile" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>)
+
+    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>)
+
     let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>)
+
+    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>)
 
     return (
       <Grid fluid>
         {forms}
         <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
-        <Row className="data-table-row">
-          <Col className="data-table-column" md={12}>
-            <Table headerHeight={40} height={700} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
-              <TextColumn data={filteredDataList}/>
-              <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>
-              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>
-              <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={250}/>
-              <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
-              <Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>
-              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
-              <Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>
-              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>
-            </Table>
-          </Col>
-        </Row>
+        <DataTable columns={columns} headerHeight={40} height={700} rowCount={filteredDataList.getSize()} rowHeight={35} width={this.props.width} {...this.props}/>
       </Grid>
     );
   }
