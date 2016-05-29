@@ -27,10 +27,10 @@ class DataTable extends Component {
 DataTable.displayName = 'DataTable';
 
 DataTable.propTypes = {
-  columns: PropTypes.object.isRequired,
+  columns: PropTypes.array.isRequired,
   headerHeight: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  rowCount:PropTypes.numberisRequired,
+  rowCount:PropTypes.number.isRequired,
   rowHeight: PropTypes.number.isRequired,
   width:PropTypes.number.isRequired
 }

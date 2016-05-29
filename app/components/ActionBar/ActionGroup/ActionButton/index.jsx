@@ -5,7 +5,7 @@ class ActionButton extends Component {
   render() {
     return (
       <Button onClick={this.props.onButtonClick}>
-        <Glyphicon glyph="star" />
+        <Glyphicon glyph={this.props.glyph} />
         {this.props.title}
       </Button>
     )
@@ -15,6 +15,7 @@ class ActionButton extends Component {
 ActionButton.displayName = 'Action Button';
 
 ActionButton.propTypes = {
+  glyph: PropTypes.string.isRequired,
   onButtonClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 }

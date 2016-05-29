@@ -5,7 +5,7 @@ import NavItem from './NavItem'
 const titles = ['USERS', 'ORGANIZATIONS', 'LISTS', 'INTEGRATIONS']
 
 // Nav Item Glyphs
-const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large', 'glyphicon glyphicon-th-list', 'glyphicon glyphicon-ok']
+const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large', 'glyphicon glyphicon-list-alt', 'glyphicon glyphicon-random']
 
 class NavPane extends Component {
   constructor(props, context) {

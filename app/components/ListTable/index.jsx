@@ -3,16 +3,17 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'underscore'
-import { ToastContainer, ToastMessage } from 'react-toastr'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
+import RadioHeader from '../Shared/DataTableHeaders/RadioHeader'
 import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import DataTable from '../Shared/DataTable'
 
 // Forms
 import ListForm from '../Forms/ListForm'
@@ -23,8 +24,7 @@ import ErrorForm from '../Forms/ErrorForm'
 // Actions
 import * as ListActions from '../../actions/lists'
 
-const { Table, Column, Cell } = FixedDataTable;
-const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+const { Column, Cell } = FixedDataTable;
 
 /**
  * Lists represent the user lists for a application
@@ -60,7 +60,7 @@ class ListTable extends Component {
     this.handleFilterListClick = this._handleFilterListClick.bind(this)
 
     // Searching
-    this.handleSearchLists = this._handleSearchLists.bind(this)
+    this.handleSearch = this._handleSearch.bind(this)
 
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
@@ -94,7 +94,7 @@ class ListTable extends Component {
   // List Searching
   //----------------------------------------------------------------------------
 
-  _handleSearchLists(e) {
+  _handleSearch(e) {
     let dataList;
     if (e.target.value) {
       let filterBy = e.target.value.toLowerCase();
@@ -168,8 +168,7 @@ class ListTable extends Component {
 
   // _handleSaveList createa new list via Mesh API.
   _handleSaveList(params) {
-    let list = { 'name': params.name, 'description': params.description }
-    this.props.listActions.createList(list)
+    this.props.listActions.createList(params)
     this.setState({
       listFormDisplayed: false
     });
@@ -337,16 +336,8 @@ class ListTable extends Component {
     // Data sources.
     const { selectedList, filteredDataList } = this.state
 
-    // Building The List Actions
-    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
-    let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0 };
-    let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0 };
-    let filterAction = { handler: this.handleFilterListClick, title: 'Select Integration', type: 1 };
-    let actions = [newAction, publishAction, deleteAction, filterAction];
-    let actionDivs = (
-      <div className={'actions'}>
-        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
-        <ActionBar actions={actions} onSearchInput={this.handleSearchLists} providers={this.props.integrations}/>
+    let forms = (
+      <div className={'forms'}>
         <ListForm displayed={this.state.listFormDisplayed} list={this.state.selectedObject} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} onUpdate={this.handleUpdateList}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
         <IntegrationForm displayed={this.state.integrationFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
@@ -354,34 +345,48 @@ class ListTable extends Component {
       </div>
     )
 
-    // Setup Out Cells
-    let selectAllHeader = (<Cell>
-      <div className="input-group">
-        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
-      </div>
-    </Cell>)
+    // Building The List Actions
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
+    let publishAction = { handler: this.handlePublishListClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
+    let deleteAction = { handler: this.handleDeleteListClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
+    let filterAction = { handler: this.handleFilterListClick, title: 'Select Integration', type: 1, glyph: 'glyphicon glyphicon-filter' };
+    let actions = [newAction, publishAction, deleteAction, filterAction];
+
+    let columns = []
 
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
+
     let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={nameCell} header={<Cell>{'Name'}</Cell>} key={'name'} width={200}/>)
+
     let userCountCell = (<TextCell col="user_count" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} key={'user_count'} width={100}/>)
+
     let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={120}/>)
+
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} key={'description'} width={600} />)
 
     // Layout the providers table.
     return (
       <Grid fluid>
-        {actionDivs}
-        <Row className="data-table-row">
-          <Col className="data-table-column" md={12}>
-            <Table headerHeight={42} height={1000} rowHeight={42} rowsCount={filteredDataList.getSize()} width={1200} {...this.props}>
-              <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={200}/>
-              <Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} width={100}/>
-              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={120}/>
-              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={600} />
-            </Table>
-          </Col>
-        </Row>
+        {forms}
+        <ActionBar
+          actions={actions}
+          onSearchInput={this.handleSearch}
+          providers={this.props.integrations}
+        />
+        <DataTable
+          columns={columns}
+          headerHeight={40}
+          height={700}
+          rowCount={filteredDataList.getSize()}
+          rowHeight={35}
+          width={this.props.width}
+          {...this.props}
+        />
       </Grid>
     );
   }
@@ -399,7 +404,8 @@ ListTable.propTypes = {
   integrations: PropTypes.array.isRequired,
   listActions: PropTypes.object.isRequired,
   lists: PropTypes.array.isRequired,
-  providers: PropTypes.array.isRequired
+  providers: PropTypes.array.isRequired,
+  width: PropTypes.number.isRequired
 }
 
 function mapStateToProps(state) {

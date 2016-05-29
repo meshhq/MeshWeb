@@ -18,10 +18,10 @@ class ActionGroup extends Component {
       let type = action.type
       switch (type) {
         case buttonType.DEFAULT:
-          return (<ActionButton key={action.title} onButtonClick={action.handler} title={action.title}/>)
+          return (<ActionButton glyph={action.glyph} key={action.title} onButtonClick={action.handler} title={action.title}/>)
 
         case buttonType.DROPDOWN:
-          return (<Dropdown key={action.title} onClick={action.handler} providers={providers} title={action.title}/>)
+          return (<Dropdown glyph={action.glyph} key={action.title} onClick={action.handler} providers={providers} title={action.title}/>)
 
         case buttonType.RADIO:
             break;
