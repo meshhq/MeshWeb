@@ -38,7 +38,7 @@ class ListForm extends Component {
   _listDetailModal() {
     return (
       <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-        <ListDetailForm list={this.props.list} onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate}/>
+        <ListDetailForm list={this.props.list} onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} users={this.props.users}/>
       </Modal>
     );
   }
@@ -63,7 +63,8 @@ ListForm.propTypes = {
   list: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  users: PropTypes.object
 }
 
 ListForm.displayName = 'List Form';

@@ -16,7 +16,6 @@ class Dropdown extends Component {
     let providers = [];
     for (let idx = 0; idx < this.props.providers.length; idx++) {
       let provider = this.props.providers[idx]
-      // console.log(provider)
       let item = (<MenuItem eventKey={provider.type} key={provider.name} >{provider.name} </MenuItem>)
       providers.push(item)
     }

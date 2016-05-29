@@ -79,7 +79,9 @@ class UserTable extends React.Component {
 
     componentWillReceiveProps(nextProps) {
       this.dataList = new DataListWrapper(nextProps.users)
+      let userLists = new DataListWrapper(nextProps.lists)
       this.setState({
+        userLists: userLists,
         filteredDataList: this.dataList
       });
     }
@@ -182,6 +184,7 @@ class UserTable extends React.Component {
     _handleCloseUserForm() {
       this.setState({
         selectedUser: null,
+        userLists: null,
         userFormDisplayed: false
       });
     }
@@ -303,6 +306,7 @@ class UserTable extends React.Component {
      */
      _handleCellClick(idx) {
        let user = this.state.filteredDataList.getObjectAt(idx)
+       //this.props.userActions.getListsForUser(user)
        this.setState({
          selectedUser: user,
          userFormDisplayed: true
@@ -312,6 +316,7 @@ class UserTable extends React.Component {
     _handleUpdateUser(params) {
       this.props.userActions.updateUser(this.state.selectedUser, params)
       this.setState({
+        userLists: null,
         selectedUser: null,
         userFormDisplayed: false
       });
@@ -355,10 +360,30 @@ class UserTable extends React.Component {
 
     let forms = (
       <div className={'forms'}>
-        <UserForm displayed={this.state.userFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser} onUpdate={this.handleUpdateUser} user={this.state.selectedUser}/>
-        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
-        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishUser}  />
-        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select a User"} onOK={this.handleCloseErrorForm}/>
+        <UserForm
+          displayed={this.state.userFormDisplayed}
+          lists={this.state.userLists}
+          onCancel={this.handleCloseUserForm}
+          onSave={this.handleSaveUser}
+          onUpdate={this.handleUpdateUser}
+          user={this.state.selectedUser}
+        />
+        <DeleteForm
+          displayed={this.state.deleteFormDisplayed}
+          onCancel={this.handleCloseDeleteForm}
+          onDelete={this.handleDeleteUser}
+        />
+        <IntegrationForm
+          displayed={this.state.providerFormDisplayed}
+          integrations={this.props.integrations}
+          onCancel={this.handleCloseIntegrationForm}
+          onPublish={this.handlePublishUser}
+        />
+        <ErrorForm
+          displayed={this.state.errorFormDisplayed}
+          error={"Please Select a User"}
+          onOK={this.handleCloseErrorForm}
+        />
       </div>
     )
 
@@ -401,10 +426,8 @@ class UserTable extends React.Component {
         />
         <DataTable
           columns={columns}
-          headerHeight={40}
-          height={700}
+          maxHeight={680}
           rowCount={filteredDataList.getSize()}
-          rowHeight={35}
           width={this.props.width}
           {...this.props}
         />
@@ -422,6 +445,7 @@ UserTable.defaultProps = {
 
 UserTable.propTypes = {
   integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  lists: PropTypes.arrayOf(React.PropTypes.object),
   providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   userActions: PropTypes.object.isRequired,
   users: PropTypes.arrayOf(React.PropTypes.object).isRequired,

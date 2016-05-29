@@ -61,7 +61,7 @@ class UserForm extends Component {
 
 UserForm.propTypes = {
   displayed: PropTypes.bool.isRequired,
-  lists: PropTypes.array,
+  lists: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

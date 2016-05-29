@@ -142,6 +142,7 @@ class App extends Component {
       case 0:
         return (<UserTable
           integrations={integrations}
+          lists={userState.lists}
           providers={providerState.providers}
           users={userState.users}
           width={this.state.width}
@@ -151,6 +152,7 @@ class App extends Component {
           integrations={integrations}
           organizations={organizationState.organizations}
           providers={providerState.providers}
+          users={organizationState.users}
           width={this.state.width}
                 />)
       case 2:
@@ -158,6 +160,7 @@ class App extends Component {
           integrations={integrations}
           lists={listState.lists}
           providers={providerState.providers}
+          users={listState.users}
           width={this.state.width}
                 />)
       case 3:
@@ -222,7 +225,7 @@ App.defaultProps = {
   providers: []
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state) {  
   return {
     activeNavIdx: state.nav,
     appState: state.app,

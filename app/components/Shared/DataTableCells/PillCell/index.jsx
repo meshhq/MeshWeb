@@ -5,20 +5,16 @@ import Pill from '../../Pill'
 
 const { Cell } = FixedDataTable;
 
-const PillCell = ({ rowIndex, data, col, ...props }) => {
-  let provider = data.getObjectAt(rowIndex)[col]
-  if (provider == undefined) {
-    provider = 0;
-  }
-
-  // TODO add color to provider.json and figure out how to get it here.
-  let color = '#E77E3B'
-  let title = 'Some Provider'
+const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
+  let providerType = data.getObjectAt(rowIndex)[col]
+  let provider = providers.find(function(provider) {
+    return provider.type == providerType
+  });
 
   return (
     <div className="pill-cell">
       <Cell {...props}>
-        <Pill color={color} title={title} />
+        <Pill color={provider.color} title={provider.name} />
       </Cell>
     </div>
     )

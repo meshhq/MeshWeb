@@ -49,7 +49,7 @@ class NewUserForm extends Component {
   }
 }
 
-NewUserForm.displayName = 'User Details';
+NewUserForm.displayName = 'New User';
 
 NewUserForm.propTypes = {
   onCancel: PropTypes.func.isRequired,

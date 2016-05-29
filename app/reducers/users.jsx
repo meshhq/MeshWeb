@@ -56,5 +56,4 @@ function users(state = defaultState, action) {
 	}
 }
 
-
 export default users;

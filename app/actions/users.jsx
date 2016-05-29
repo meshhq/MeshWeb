@@ -146,6 +146,41 @@ export function publishUser(user, providers) {
 }
 
 //------------------------------------------------------------------------------
+// GET User Lists
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to publish a list has begun.
+export const GETTING_USER_LISTS = 'GETTING_USER_LISTS'
+export function gettingListsForUser() {
+	return {
+		type: GETTING_USER_LISTS
+	}
+}
+
+// The action to indicate a list has been created.
+export const RECEIVED_USER_LISTS = 'RECEIVED_USER_LISTS'
+export function recievedListsForUser(json) {
+	return {
+		type: RECEIVED_USER_LISTS,
+		lists: json
+	}
+}
+
+export function getListsForUser(user) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(gettingListsForUser())
+			const appID = getState().app.id
+			return GET(`apps/${appID}/users/${user.id}/lists`)
+			.then(function(json){
+					dispatch(recievedListsForUser(json))
+				}
+			)
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
 // Refresh Users
 //------------------------------------------------------------------------------
 
