@@ -19,12 +19,14 @@ class ActionBar extends Component {
   render() {
     return (
       <Row className='action-bar' key={'action'}>
-        <Col className='search-column' key={'search'} md={6} ref={'kev'}>
-          <SearchBar onSearchInput={this.handleSearchInput}/>
-        </Col>
-        <Col className='action-column' key={'action'} md={6} ref={'test'}>
-          <ActionGroup actions={this.props.actions} providers={this.props.providers} />
-        </Col>
+        <div className={'test'}>
+          <Col className='search-column' key={'search'} md={6} ref={'kev'}>
+            <SearchBar onSearchInput={this.handleSearchInput}/>
+          </Col>
+          <Col className='action-column' key={'action'} md={6} ref={'test'}>
+            <ActionGroup actions={this.props.actions} providers={this.props.providers} />
+          </Col>
+        </div>
       </Row>
     )
   }

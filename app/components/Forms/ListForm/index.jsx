@@ -52,9 +52,7 @@ class ListForm extends Component {
     }
     return (
       <div>
-        <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-          {modal}
-        </Modal>
+        {modal}
       </div>
     );
   }

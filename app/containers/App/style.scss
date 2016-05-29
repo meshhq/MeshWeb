@@ -2,6 +2,7 @@
 	background-color: white;
 	display: inline-block;
 	width: 100%;
+	height:100vh;
 	margin: 0px;
 	padding: 0px;
 }
@@ -19,24 +20,16 @@
 }
 
 // Wrapper Container Sytlying
-.main-section {
-	display: inline-block;
-	background-color: blue;
-	width: 100%;
-}
-
 .container-wrapper {
-	background-color: white;
+	background-color: $MeshGreySuperLight;
 	float: left;
 
 	// Todo, change to $NavPaneWidth
 	width: calc(100% - 200px);
 
 	// Todo, change to $NavBarHeight;
-	height: calc(100% - 60px);
+	height: calc(100vh; - 60px);
 	padding-top:1em;
-
-	box-shadow: inset 0px 0px 1px rgba(0,0,0,0.9);
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

@@ -2,15 +2,16 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { ToastContainer, ToastMessage } from 'react-toastr'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
+import RadioHeader from '../Shared/DataTableHeaders/RadioHeader'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import DataTable from '../Shared/DataTable'
 
 // Forms
 import UserForm from '../Forms/UserForm'
@@ -21,18 +22,7 @@ import ErrorForm from '../Forms/ErrorForm'
 // Actions
 import * as UserActions from '../../actions/users'
 
-const { Table, Column, Cell } = FixedDataTable;
-const ToastMessageFactory = React.createFactory(ToastMessage.animation);
-
-const TextColumn = ({ data, ...props }) => {
-  this.displayName = 'TextColumn'
-  let cell = <TextCell {...props} col="test" data={data}/>
-  let headerCell = <Cell {...props}>{'Test'}</Cell>
-
-  return (
-    <Column cell={cell} header={headerCell} width={150}/>
-  )
-}
+const { Column, Cell } = FixedDataTable;
 
 class UserTable extends React.Component {
   constructor(props) {
@@ -224,7 +214,6 @@ class UserTable extends React.Component {
           providers.push(provider.key)
         }
       });
-
       for (let idx in this.state.selectedList) {
         let user = this.state.selectedList[idx]
         this.props.userActions.publishUser(user, providers)
@@ -293,17 +282,7 @@ class UserTable extends React.Component {
     }
 
     _handleAddUserTo(params) {
-      let user = {
-        'first_name': params.first_name,
-        'last_name': params.last_name,
-        'email': params.email,
-        'phone': params.phone,
-        'organization_name': params.organization,
-        'website': params.website
-      }
-
-    // Create list via Mesh API.
-    this.props.userActions.createUser(user)
+    this.props.userActions.createUser(params)
       this.setState({
         addToFormDisplayed: false
       });
@@ -363,20 +342,19 @@ class UserTable extends React.Component {
         filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
       });
     }
+
   render() {
     const { filteredDataList, selectedList  } = this.state
 
     // Setting up our action bar.
-    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
-    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0 };
-    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0 };
-    let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0 };
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
+    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
+    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
+    let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0, glyph: 'glyphicon glyphicon-asterisk' };
     let actions = [newAction, publishAction, deleteAction, addToAction];
 
-    let actionDivs = (
-      <div className={'actions'}>
-        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
-        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
+    let forms = (
+      <div className={'forms'}>
         <UserForm displayed={this.state.userFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser} onUpdate={this.handleUpdateUser} user={this.state.selectedUser}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
         <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishUser}  />
@@ -384,41 +362,52 @@ class UserTable extends React.Component {
       </div>
     )
 
-    // Setup Cells
-    let selectAllHeader = (<Cell>
-      <div className="input-group">
-        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
-      </div>
-    </Cell>)
+    let columns = []
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
+
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={100}/>)
+
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={100}/>)
+
     let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={250}/>)
+
     let phoneCell = (<TextCell col="phone" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} key={'phone'} width={200}/>)
+
     let mobileCell = (<TextCell col="mobile" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} key={'mobile'} width={200}/>)
+
+    let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
+
     let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} key={'priority'} width={100}/>)
+
+    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} key={'title'} width={240}/>)
 
     return (
       <Grid fluid>
-        {actionDivs}
-        <Row className="data-table-row">
-          <Col className="data-table-column" md={12}>
-            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
-              <TextColumn data={filteredDataList}/>
-              <Column cell={radioCell} header={selectAllHeader} width={32}/>
-              <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>
-              <Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} width={100}/>
-              <Column cell={emailCell} header={<Cell>{'Email'}</Cell>} width={250}/>
-              <Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} width={200}/>
-              <Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} width={200}/>
-              <Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} width={200}/>
-              <Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} width={100}/>
-              <Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} width={240}/>
-            </Table>
-          </Col>
-        </Row>
+        {forms}
+        <ActionBar
+          actions={actions}
+          onSearchInput={this.handleSearch}
+          providers={this.props.providers}
+        />
+        <DataTable
+          columns={columns}
+          headerHeight={40}
+          height={700}
+          rowCount={filteredDataList.getSize()}
+          rowHeight={35}
+          width={this.props.width}
+          {...this.props}
+        />
       </Grid>
     );
   }

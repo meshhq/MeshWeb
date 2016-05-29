@@ -2,16 +2,17 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { ToastContainer, ToastMessage } from 'react-toastr'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
 import TextCell from '../Shared/DataTableCells/TextCell'
 import RadioCell from '../Shared/DataTableCells/RadioCell'
+import RadioHeader from '../Shared/DataTableHeaders/RadioHeader'
 import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
+import DataTable from '../Shared/DataTable'
 
 // Forms
 import OrganizationForm from '../Forms/OrganizationForm'
@@ -22,8 +23,7 @@ import ErrorForm from '../Forms/ErrorForm'
 // Actions
 import * as OrganizationActions from '../../actions/organizations'
 
-const { Table, Column, Cell } = FixedDataTable;
-const ToastMessageFactory = React.createFactory(ToastMessage.animation);
+const { Column, Cell } = FixedDataTable;
 
 class OrganizationTable extends Component {
   constructor(props) {
@@ -178,8 +178,7 @@ class OrganizationTable extends Component {
 
   // Create list via Mesh API.
   _handleSaveOrganization(params) {
-    let organization = { 'name': params.name, 'description': params.description }
-    this.props.organizationActions.createOrganization(organization)
+    this.props.organizationActions.createOrganization(params)
     this.setState({
       organizationFormDisplayed: false
     });
@@ -279,13 +278,13 @@ class OrganizationTable extends Component {
   // Show Action
   //----------------------------------------------------------------------------
 
-   _handleCellClick(idx) {
-     let organization = this.state.filteredDataList.getObjectAt(idx)
-     this.setState({
-       selectedOrganization: organization,
-       organizationFormDisplayed: true
-     });
-   }
+  _handleCellClick(idx) {
+   let organization = this.state.filteredDataList.getObjectAt(idx)
+   this.setState({
+     selectedOrganization: organization,
+     organizationFormDisplayed: true
+   });
+  }
 
   _handleUpdateOrganization(params) {
     this.props.organizationActions.updateOrganization(this.state.selectedOrganization, params)
@@ -325,15 +324,8 @@ class OrganizationTable extends Component {
     // Data sources.
     const { selectedList, filteredDataList } = this.state
 
-    // Building Organization Actions
-    let newAction = { handler: this.handleNewClick, title: 'New', type: 0 };
-    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0 };
-    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0 };
-    let actions = [newAction, publishAction, deleteAction];
-    let actionDivs = (
-      <div className={'actions'}>
-        <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
-        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
+    let forms = (
+      <div className={'forms'}>
         <OrganizationForm displayed={this.state.organizationFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization} onUpdate={this.handleUpdateOrganization} organization={this.state.selectedOrganization}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteOrganization}/>
         <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization}  />
@@ -341,36 +333,52 @@ class OrganizationTable extends Component {
       </div>
     )
 
-    // Setup Cells
-    let selectAllHeader = (<Cell>
-      <div className="input-group">
-        <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
-      </div>
-    </Cell>)
+    // Building Organization Actions
+    let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
+    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
+    let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
+    let actions = [newAction, publishAction, deleteAction];
+
+    let columns = []
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
+    columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
+
     let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={nameCell} header={<Cell>{'Name'}</Cell>} key={'name'} width={150}/>)
+
     let sizeCell = (<TextCell col="size" data={filteredDataList} onClick={this.handleCellClick}/>)
-    let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} key={'size'} width={60}/>)
+
     let websiteCell = (<TextCell col="website" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} key={'website'} width={180}/>)
+
+    let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} key={'industry'} width={200}/>)
+
     let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/ >)
+
+    let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>}key={'description'} width={400}/>)
 
     return (
       <Grid fluid>
-        {actionDivs}
-        <Row className="data-table-row">
-          <Col className="data-table-column" md={12}>
-            <Table headerHeight={50} height={1000} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props} >
-              <Column cell={radioCell} header={selectAllHeader} width={32} />
-              <Column cell={nameCell} header={<Cell>{'Name'}</Cell>} width={150} />
-              <Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} width={60} />
-              <Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} width={180} />
-              <Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} width={200} />
-              <Column cell={originCell} header={<Cell>{'Provider'}</Cell>} width={140}/ >
-              <Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} width={400} />
-            </Table>
-          </Col>
-        </Row>
+        {forms}
+        <ActionBar
+          actions={actions}
+          onSearchInput={this.handleSearch}
+          providers={this.props.providers}
+        />
+        <DataTable
+          columns={columns}
+          headerHeight={40}
+          height={700}
+          rowCount={filteredDataList.getSize()}
+          rowHeight={35}
+          width={this.props.width}
+          {...this.props}
+        />
       </Grid>
     )
   }

@@ -4,12 +4,10 @@ $NavPaneWidth: 200px;
 $NavPaneHeight: 1000px;
 
 .navpane {
-	background-color: $MeshWhite;
+	background-color: white;
 	float: left;
 	width: $NavPaneWidth;
 	height:$NavPaneHeight;
-
-	:hover {
-		background-color: none;
-	}
+	height:100vh;
+	border-right: 1px solid $MeshGreyUltraLight
 }

@@ -6,13 +6,14 @@ import { connect } from 'react-redux'
 import React from 'react'
 
 // Components
-import ListTable from '../../components/Lists'
 import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
-import OrganizationTable from '../../components/Organizations'
-import Providers from '../../components/Providers'
 import ProgressView from '../../components/Shared/ProgressView'
+
 import UserTable from '../../components/UserTable'
+import OrganizationTable from '../../components/OrganizationTable'
+import ListTable from '../../components/ListTable'
+import Providers from '../../components/Providers'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -160,7 +161,7 @@ class App extends Component {
           width={this.state.width}
                 />)
       case 3:
-        return (<Providers providerState={providerState}/>)
+        return (<Providers providers={providerState.providers}/>)
     }
   }
 

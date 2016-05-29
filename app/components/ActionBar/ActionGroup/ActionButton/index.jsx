@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react'
+import { Glyphicon, Button } from 'react-bootstrap'
 
 class ActionButton extends Component {
   render() {
     return (
-      <button
-        className="btn btn-default"
-        onClick={this.props.onButtonClick}
-        type="button"
-      >
+      <Button onClick={this.props.onButtonClick}>
+        <Glyphicon glyph={this.props.glyph} />
         {this.props.title}
-      </button>
+      </Button>
     )
   }
 }
@@ -17,6 +15,7 @@ class ActionButton extends Component {
 ActionButton.displayName = 'Action Button';
 
 ActionButton.propTypes = {
+  glyph: PropTypes.string.isRequired,
   onButtonClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired
 }

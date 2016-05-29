@@ -11,10 +11,6 @@ class IntegrationForm extends Component {
     this.state = this._initialState()
   }
 
-  _resetState() {
-      this.state = this._initialState()
-  }
-
   _initialState() {
     let state = {};
     this.props.integrations.map(function(provider) {
@@ -24,8 +20,13 @@ class IntegrationForm extends Component {
     return state
   }
 
+  _resetState() {
+    this.setState (this._initialState())
+  }
+
   _handlePublish() {
     this.props.onPublish(this.state)
+    this._resetState()
   }
 
   _handleChange(e) {
@@ -52,7 +53,6 @@ class IntegrationForm extends Component {
       const currentPairGroup = integrationPairs[Math.floor(i / 2)]
       currentPairGroup.push(this.props.integrations[i])
     }
-
     return integrationPairs
   }
 

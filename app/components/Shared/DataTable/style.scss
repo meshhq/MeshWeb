@@ -1,0 +1,46 @@
+.data-table-row {
+	height: 300px;
+
+	.data-table-column {
+		height: 300px;
+	}
+	.header {
+		margin-bottom: 1.5em;
+
+		h1, h2, h3, h4 {
+			margin-top: 0px;
+			font-weight: 300;
+		}
+	}
+
+	//------------------
+	// Main
+	//------------------
+
+	.public_fixedDataTable_main {
+		height: 200px;
+	}
+
+	//------------------
+	// Table Header
+	//------------------
+
+	.public_fixedDataTable_header {
+		background-image: linear-gradient(white, white);
+
+		.public_fixedDataTableCell_cellContent {
+			font-weight: bold;
+			color: $MeshBlackLight;
+		}
+		.public_fixedDataTableCell_main {
+			background-image: none;
+		}
+	}
+
+	.public_fixedDataTableCell_main {
+			background-color: transparent;
+	}
+	.public_fixedDataTableRow_main:hover {
+		background-color: $MeshBlue;
+	}
+}
