@@ -8,19 +8,29 @@ $NavItemContainerLeftMargin: 24px;
 	align-items: center;
 	background-color: transparent;
 	width: 100%;
-	height: $NavItemHeight;
 	font-size: 1.2em;
+	height: $NavItemHeight;
+
+	:hover {
+		a {
+			color: $MeshBlue;
+		}
+
+		.glyphicon {
+			color: $MeshBlue;
+		}
+	}
 }
 
 .nav-item.active {
-	background-color: $MeshGreyUltraLight;
-	border-left: 4px solid gray;
-}
-.nav-item:hover {
-	border-left: 4px solid gray;
-	padding-left: -3px;
-	color: #FFFFFF;
-	text-decoration: none;
+	a {
+		color: $MeshBlue;
+		text-decoration: none;
+	}
+
+	.glyphicon {
+		color: $MeshBlue;
+	}
 }
 
 .nav-item-container {
@@ -31,23 +41,19 @@ $NavItemContainerLeftMargin: 24px;
 	.glyphicon {
 		vertical-align: middle;
 		float: left;
-		color: black;
+		color: $MeshGreyLight;
 	}
 
 	a {
 		vertical-align: middle;
 		float: left;
-		color: $MeshBlack;
-		font-size: 18px;
-		font-weight: 700px;
+		color: $MeshGreyLight;
+		font-size: 14px;
 		margin-left: 12px;
+		font-weight: 700;
 	}
 
 	a:hover {
 		text-decoration: none;
 	}
-}
-
-.active {
-	font-weight: 500;
 }

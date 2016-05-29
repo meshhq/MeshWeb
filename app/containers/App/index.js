@@ -160,7 +160,7 @@ class App extends Component {
           width={this.state.width}
                 />)
       case 3:
-        return (<Providers providerState={providerState}/>)
+        return (<Providers providers={providerState.providers}/>)
     }
   }
 

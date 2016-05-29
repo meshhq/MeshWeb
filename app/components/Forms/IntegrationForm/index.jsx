@@ -52,7 +52,6 @@ class IntegrationForm extends Component {
       const currentPairGroup = integrationPairs[Math.floor(i / 2)]
       currentPairGroup.push(this.props.integrations[i])
     }
-
     return integrationPairs
   }
 

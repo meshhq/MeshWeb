@@ -279,13 +279,13 @@ class OrganizationTable extends Component {
   // Show Action
   //----------------------------------------------------------------------------
 
-   _handleCellClick(idx) {
-     let organization = this.state.filteredDataList.getObjectAt(idx)
-     this.setState({
-       selectedOrganization: organization,
-       organizationFormDisplayed: true
-     });
-   }
+  _handleCellClick(idx) {
+   let organization = this.state.filteredDataList.getObjectAt(idx)
+   this.setState({
+     selectedOrganization: organization,
+     organizationFormDisplayed: true
+   });
+  }
 
   _handleUpdateOrganization(params) {
     this.props.organizationActions.updateOrganization(this.state.selectedOrganization, params)

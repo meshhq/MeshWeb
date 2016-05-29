@@ -373,10 +373,10 @@ class UserTable extends React.Component {
     let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0 };
     let actions = [newAction, publishAction, deleteAction, addToAction];
 
-    let actionDivs = (
-      <div className={'actions'}>
+
+    let forms = (
+      <div className={'forms'}>
         <ToastContainer className={'toast-top-full-width'} ref={'container'} toastMessageFactory={ToastMessageFactory} />
-        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
         <UserForm displayed={this.state.userFormDisplayed} onCancel={this.handleCloseUserForm} onSave={this.handleSaveUser} onUpdate={this.handleUpdateUser} user={this.state.selectedUser}/>
         <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteUser}/>
         <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishUser}  />
@@ -390,6 +390,7 @@ class UserTable extends React.Component {
         <input aria-label="..." onChange={this.handleSelectAll} type="checkbox"/>
       </div>
     </Cell>)
+
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} onClick={this.handleCellClick}/>)
@@ -402,10 +403,11 @@ class UserTable extends React.Component {
 
     return (
       <Grid fluid>
-        {actionDivs}
+        {forms}
+        <ActionBar actions={actions} onSearchInput={this.handleSearch} providers={this.props.providers}/>
         <Row className="data-table-row">
           <Col className="data-table-column" md={12}>
-            <Table headerHeight={40} height={800} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
+            <Table headerHeight={40} height={700} rowHeight={35} rowsCount={filteredDataList.getSize()} width={this.props.width} {...this.props}>
               <TextColumn data={filteredDataList}/>
               <Column cell={radioCell} header={selectAllHeader} width={32}/>
               <Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} width={100}/>

@@ -1,56 +1,45 @@
-$ProviderCellHeight: 2em;
+$ProviderCellHeight: 3em;
 
 .provider-cell {
 	// Logo
+	border-radius: 10px;
+	border-style: solid;
+	border-color: $MeshGreyUltraLight;
+	border-width: 1px;
 
-	.logo {
+	margin-left: 10px;
+	margin-right: 10px;
+
+	text-align: center;
+
+	.btn {
+		display: block;
+		float: none;
 		margin-left: auto;
-		padding-right: 0px;
+    margin-right: auto;
+		margin-top: 10px;
+		margin-bottom: 16px;
 	}
 
 	.logo-img {
-		min-height: 40px;
-		min-width: 40px;
-		height: 40px;
-		width: 40px;
-
-		margin-bottom: 10px;
-
-		-webkit-transition: all .2s ease-in-out;
+		display: block;
+		float: none;
+		margin-top: 16px;
+		margin-left: auto;
+    margin-right: auto;
 
 		border-radius: 10px;
-		border-style: solid;
-		border-color: $MeshGrey;
-		border-width: 2px;
-	}
+		padding: 6px;
 
-	.logo-img:hover {
-	  filter: none;
-	  -webkit-filter: grayscale(0);
-	  -webkit-transform: scale(1.05);
+		min-height:100px;
+		min-width: 100px;
+		height: 100px;
+		width: 100px;
 	}
-
-	.description {
-		padding-left: 2px;
-	}
-
-	.mini-border {
-		background: $MeshGreyLight;
-		width: 1px;
-		height: 40px;
-		margin-right: 5px;
-		margin-left: 5px;
-		margin-bottom: 10px;
-	}
-
 }
 
 .provider-row {
 	display: flex;
 	align-items: center;
 	margin-bottom: 0.5em;
-}
-
-.switch-container {
-	margin-top: 0.5em;
 }

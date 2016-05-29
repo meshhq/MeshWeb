@@ -10,7 +10,7 @@ export function refreshProviderList() {
 	}
 }
 
-// This function is to indicate that the 
+// This function is to indicate that the
 // network request action has begun
 export const REQUEST_PROVIDERS = 'REQUEST_PROVIDERS'
 export function requestedProviders() {
@@ -37,7 +37,6 @@ export function refreshProviders() {
 						dispatch(receivedProviders(json))
 					}
 				)
-			}		
+			}
 	}
 }
-

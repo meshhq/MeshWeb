@@ -2,14 +2,21 @@
 import React, { PropTypes, Component } from 'react'
 import ProviderCell from './ProviderCells'
 import _ from 'lodash'
+import { Grid, Row } from 'react-bootstrap'
 
 class Providers extends Component {
   constructor(props, context) {
     super(props, context)
+
+    this.handleActivateClick = this._handleActivateClick.bind(this)
   }
 
-  _stubbedHipsterLorem() {
-    return 'Chillwave vice sriracha hella cliche forage. Thundercats artisan iphone, butcher +1 next level keffiyeh fixie narwhal.'
+  _handleActivateClick(providerID) {
+    let pro = this.props.providers.find(function(provider){
+      return provider.id == providerID
+    })
+    pro.name
+    // Activate the integration
   }
 
   _providerWasToggled(providerId, on) {
@@ -17,20 +24,19 @@ class Providers extends Component {
   }
 
   render() {
-    const providersSections = _.map(this.props.providerState.providers, (provider) => {
-      const providerToggled = this._providerWasToggled.bind(this, provider.id)
+    const providersSections = _.map(this.props.providers, (provider) => {
       return (
-        <ProviderCell key={provider.id} logoSrc={provider.logo_url} onToggle={providerToggled} providerDescription={this._stubbedHipsterLorem()} providerName={provider.name}/>
+        <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
       )
     })
 
     // Pack the providers into 3 per row
     const providerRows = []
-    const rowCount = (providersSections.length / 3) + 1
+    const rowCount = (providersSections.length / 4) + 1
     for (let i = 0; i < rowCount; i++) {
-      const providerBaseIdx = (i * 3)
+      const providerBaseIdx = (i * 4)
       const rowContainer = []
-      for (let x = 0; x < 3; x++) {
+      for (let x = 0; x < 4; x++) {
         const providerIdx = providerBaseIdx + x
         if (providerIdx < providersSections.length) {
           rowContainer.push(providersSections[providerIdx])
@@ -42,41 +48,26 @@ class Providers extends Component {
     const providerRowHTML = []
     for (let i = 0; i < providerRows.length; i++) {
       const pr = providerRows[i]
-      const onToggle = this._providerWasToggled.bind(this, pr.id)
       providerRowHTML.push(
-        <div className="row provider-row"
-          key={i}
-          onToggle={onToggle}
-        >
+        <Row className={'provider-row'} key={i}>
           {pr}
-        </div>
+        </Row>
       )
     }
-
-    // Layout the providers in a row
     return (
-      <div className="provider-wrapper"
-        key="provider"
-      >
-        <div className="integrations-container">
-          {providerRowHTML}
-        </div>
-      </div>
+      <Grid fluid>
+        {providerRowHTML}
+      </Grid>
     )
   }
 }
 
-// onToggle: PropTypes.func.isRequired,
-// providerDescription: PropTypes.string.isRequired,
-// providerName: PropTypes.string.isRequired
-
-
 Providers.defaultProps = {
-  providerState: {}
+  provider: {}
 }
 
 Providers.propTypes = {
-  providerState: PropTypes.object.isRequired
+  providers: PropTypes.array.isRequired
 }
 
 Providers.displayName = 'Providers List'

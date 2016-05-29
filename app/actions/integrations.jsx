@@ -1,5 +1,41 @@
 
-import { GET } from '../helpers/api'
+import { GET, POST } from '../helpers/api'
+
+//------------------------------------------------------------------------------
+// Activate Integration
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to create a list has begun.
+export const ACTIVATING_INTEGRATION = 'ACTIVATING_INTEGRATION'
+export function activatingIntegration() {
+	return {
+		type: ACTIVATING_INTEGRATION
+	}
+}
+
+// The action to indicate a list has been created.
+export const ACTIVATED_INTEGRATION = 'ACTIVATED_INTEGRATION'
+export function activatedIntegration(json) {
+	return {
+		type: ACTIVATED_INTEGRATION,
+		user: json,
+		createdAt: Date.now()
+	}
+}
+
+export function activateIntegration(params) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(activatingIntegration())
+			const appID = getState().app.id
+			return POST(`apps/${appID}/integrations`, params)
+			.then(function(json){
+					dispatch(activatedIntegration(json))
+				}
+			)
+		}
+	}
+}
 
 // This action is to indicate the desired
 // refresh of the user table
