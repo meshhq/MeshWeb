@@ -10,7 +10,6 @@ function organizations(state = defaultState, action) {
 	let updatedOrganizations = state.organizations
 	switch(action.type) {
 		case CREATED_ORGANIZATION:
-			console.log(action.organization)
 			updatedOrganizations.splice(0, 0, action.organization);
 			return Object.assign({}, state, {
 				organizations: updatedOrganizations,
