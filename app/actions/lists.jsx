@@ -130,13 +130,13 @@ export function publishedList() {
 	}
 }
 
-export function publishList(listID, providers) {
+export function publishList(list, providers) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(publishingList())
 			const appID = getState().app.id
 			let body = { 'destination_providers' : providers }
-			return POST(`apps/${appID}/lists/${listID}/publish`, body)
+			return POST(`apps/${appID}/lists/${list.id}/publish`, body)
 			.then(function(json){
 					dispatch(createdList(json))
 				}
