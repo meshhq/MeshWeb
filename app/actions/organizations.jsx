@@ -126,7 +126,8 @@ export function publishingOrganization() {
 export const PUBLISHED_ORGANIZATION = 'PUBLISHED_ORGANIZATION'
 export function publishedOrganization() {
 	return {
-		type: PUBLISHED_ORGANIZATION
+		type: PUBLISHED_ORGANIZATION,
+		publishedAt: Date.now()
 	}
 }
 
@@ -139,6 +140,42 @@ export function publishOrganization(organizationID, providers) {
 			return POST(`apps/${appID}/organizations/${organizationID}/publish`, body)
 			.then(function(json){
 					dispatch(createdOrganization(json))
+				}
+			)
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// Fetch Organization Users
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to publish a list has begun.
+export const FETCHING_ORGANIZATION_USERS = 'FETCHING_ORGANIZATION_USERS'
+export function fetchingOrganizationUsers() {
+	return {
+		type: FETCHING_ORGANIZATION_USERS
+	}
+}
+
+// The action to indicate a list has been created.
+export const FETCHED_ORGANIZATION_USERS = 'FETCHED_ORGANIZATION_USERS'
+export function fetchedOrganizationUsers(json) {
+	return {
+		type: FETCHED_ORGANIZATION_USERS,
+		organizationUsers: json,
+		receivedAt: Date.now()
+	}
+}
+
+export function fetchOrganizationUsers(organization) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(fetchingOrganizationUsers())
+			const appID = getState().app.id
+			return GET(`apps/${appID}/organizations/${organization.id}/users`)
+			.then(function(json){
+					dispatch(fetchedOrganizationUsers(json))
 				}
 			)
 		}
