@@ -220,7 +220,6 @@ class ListTable extends Component {
 
     for (let idx in this.state.selectedList) {
       let list = this.state.selectedList[idx]
-      console.log(list)
       this.props.listActions.publishList(list, integrations)
     }
 
