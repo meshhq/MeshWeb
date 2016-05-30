@@ -1,5 +1,5 @@
 
-import { CREATED_LIST, UPDATED_LIST, REFRESH_LISTS, DELETED_LIST, PUBLISHED_LIST, REQUEST_LISTS, RECEIVE_LISTS } from '../actions/lists'
+import { CREATED_LIST, UPDATED_LIST, REFRESH_LISTS, DELETED_LIST, PUBLISHED_LIST, REQUEST_LISTS, RECEIVE_LISTS, RECEIVED_LIST_USERS } from '../actions/lists'
 
 const defaultState = {
 	isFetching: false,
@@ -48,6 +48,13 @@ function lists(state = defaultState, action) {
 				lists: action.lists,
 				lastUpdated: action.ReceivedAt
 			})
+		case RECEIVED_LIST_USERS:
+		return Object.assign({}, state, {
+			didInvalidate: false,
+			isFetching: false,
+			users: action.listUsers,
+			lastUpdated: action.ReceivedAt
+		})
 		default:
 			return state
 	}

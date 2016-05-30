@@ -8,7 +8,7 @@ export default function configureStore(initialState) {
   const create = window.devToolsExtension
     ? window.devToolsExtension()(createStore)
     : createStore
-  
+
   const store = create(
     rootReducer,
     initialState,

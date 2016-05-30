@@ -130,15 +130,51 @@ export function publishedList() {
 	}
 }
 
-export function publishList(listID, providers) {
+export function publishList(list, providers) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
 			dispatch(publishingList())
 			const appID = getState().app.id
 			let body = { 'destination_providers' : providers }
-			return POST(`apps/${appID}/lists/${listID}/publish`, body)
+			return POST(`apps/${appID}/lists/${list.id}/publish`, body)
 			.then(function(json){
 					dispatch(createdList(json))
+				}
+			)
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// Refresh List Users
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to publish a list has begun.
+export const REQUESTING_LIST_USERS = 'REQUESTING_LIST_USERS'
+export function requestingListUsers() {
+	return {
+		type: REQUESTING_LIST_USERS
+	}
+}
+
+// The action to indicate a list has been created.
+export const RECEIVED_LIST_USERS = 'RECEIVED_LIST_USERS'
+export function receivedListUsers(json) {
+	return {
+		type: RECEIVED_LIST_USERS,
+		listUsers: json,
+		receivedAt: Date.now()
+	}
+}
+
+export function getListUsers(list) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(requestingListUsers())
+			const appID = getState().app.id
+			return GET(`apps/${appID}/lists/${list.id}/users`)
+			.then(function(json){
+					dispatch(receivedListUsers(json))
 				}
 			)
 		}

@@ -79,6 +79,13 @@ class ListTable extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    let selectedListUsers = new DataListWrapper(nextProps.users)
+    this.setState({
+      selectedListUsers: selectedListUsers
+    });
+  }
+
   //----------------------------------------------------------------------------
   // Error Handling
   //----------------------------------------------------------------------------
@@ -177,6 +184,7 @@ class ListTable extends Component {
   _handleCloseListForm() {
     this.setState({
       selectedObject: null,
+      selectedListUsers: null,
       listFormDisplayed: false
     });
   }
@@ -317,6 +325,7 @@ class ListTable extends Component {
 
   _handleCellClick(idx) {
    let list = this.state.filteredDataList.getObjectAt(idx)
+   this.props.listActions.getListUsers(list)
    this.setState({
      selectedObject: list,
      listFormDisplayed: true
@@ -327,6 +336,7 @@ class ListTable extends Component {
     this.props.listActions.updateList(this.state.selectedList, params)
     this.setState({
       selectedObject: null,
+      selectedListUsers: null,
       listFormDisplayed: false
     });
   }
@@ -338,10 +348,30 @@ class ListTable extends Component {
 
     let forms = (
       <div className={'forms'}>
-        <ListForm displayed={this.state.listFormDisplayed} list={this.state.selectedObject} onCancel={this.handleCloseListForm} onSave={this.handleSaveList} onUpdate={this.handleUpdateList}/>
-        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteList}/>
-        <IntegrationForm displayed={this.state.integrationFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseIntegrationForm} onPublish={this.handlePublishList}  />
-        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select A List"} onOK={this.handleCloseErrorForm}/>
+        <ListForm
+          displayed={this.state.listFormDisplayed}
+          list={this.state.selectedObject}
+          onCancel={this.handleCloseListForm}
+          onSave={this.handleSaveList}
+          onUpdate={this.handleUpdateList}
+          users={this.state.selectedListUsers}
+        />
+        <DeleteForm
+          displayed={this.state.deleteFormDisplayed}
+          onCancel={this.handleCloseDeleteForm}
+          onDelete={this.handleDeleteList}
+        />
+        <IntegrationForm
+          displayed={this.state.integrationFormDisplayed}
+          integrations={this.props.integrations}
+          onCancel={this.handleCloseIntegrationForm}
+          onPublish={this.handlePublishList}
+        />
+        <ErrorForm
+          displayed={this.state.errorFormDisplayed}
+          error={"Please Select A List"}
+          onOK={this.handleCloseErrorForm}
+        />
       </div>
     )
 
@@ -380,10 +410,8 @@ class ListTable extends Component {
         />
         <DataTable
           columns={columns}
-          headerHeight={40}
-          height={700}
+          maxHeight={680}
           rowCount={filteredDataList.getSize()}
-          rowHeight={35}
           width={this.props.width}
           {...this.props}
         />
@@ -403,6 +431,7 @@ ListTable.defaultProps = {
 ListTable.propTypes = {
   integrations: PropTypes.array.isRequired,
   listActions: PropTypes.object.isRequired,
+  listUsers:PropTypes.array,
   lists: PropTypes.array.isRequired,
   providers: PropTypes.array.isRequired,
   width: PropTypes.number.isRequired

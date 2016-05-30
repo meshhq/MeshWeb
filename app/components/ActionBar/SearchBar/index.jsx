@@ -8,7 +8,7 @@ class SearchBar extends Component {
         <div className="input-group">
           <input
             aria-describedby="basic-addon1"
-            className="form-control"
+            className="form-control search"
             onChange={this.props.onSearchInput}
             placeholder="Search"
             type="text"

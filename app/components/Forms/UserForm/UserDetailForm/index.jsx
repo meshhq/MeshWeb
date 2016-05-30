@@ -2,6 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
 import UserHeader from './UserHeader'
 
+import DataTable from '../../../Shared/DataTable'
+import FixedDataTable from 'fixed-data-table'
+import TextCell from '../../../Shared/DataTableCells/TextCell'
+
+const { Column, Cell } = FixedDataTable;
+
 class UserDetailForm extends Component {
 
   _handleChange(key, event) {
@@ -15,6 +21,29 @@ class UserDetailForm extends Component {
         <Input defaultValue={defaultValue} label={label} onChange={onChange} type="text"/>
       </Col>
     );
+  }
+
+  _listTable() {
+    let test = this._userColumn.bind(this)
+
+    let columns = []
+    let firstNameCall = (<TextCell col="name" data={this.props.lists} onClick={test}/>)
+    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+
+    let lastNameCell = (<TextCell col="user_count" data={this.props.lists} onClick={test}/>)
+    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+
+    return (
+      <Col md={12}>
+        <DataTable
+          columns={columns}
+          maxHeight={300}
+          rowCount={this.props.lists.getSize()}
+          width={540}
+          {...this.props}
+        />
+      </Col>
+    )
   }
 
   _seperator(title) {
@@ -72,6 +101,7 @@ class UserDetailForm extends Component {
 UserDetailForm.displayName = 'User Details';
 
 UserDetailForm.propTypes = {
+  lists: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

@@ -2,14 +2,15 @@ $ProviderCellHeight: 3em;
 
 .provider-cell {
 	// Logo
-	border-radius: 10px;
+	background-color: white;
+	border-radius: 6px;
 	border-style: solid;
 	border-color: $MeshGreyUltraLight;
 	border-width: 1px;
 
 	margin-left: 10px;
 	margin-right: 10px;
-
+	margin-bottom: 10px;
 	text-align: center;
 
 	.btn {

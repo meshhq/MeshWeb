@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
 import ListHeader from './ListHeader'
+import DataTable from '../../../Shared/DataTable'
+import FixedDataTable from 'fixed-data-table'
+import TextCell from '../../../Shared/DataTableCells/TextCell'
+
+const { Column, Cell } = FixedDataTable;
 
 class ListDetailForm extends Component {
 
@@ -26,6 +31,39 @@ class ListDetailForm extends Component {
     );
   }
 
+  _onUserClick() {
+
+  }
+
+  _userTable() {
+    let columns = []
+    if (this.props.users == null) {
+      return columns
+    }
+
+    let test = this._onUserClick.bind(this)
+    let firstNameCall = (<TextCell col="first_name" data={this.props.users} onClick={test}/>)
+    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+
+    let lastNameCell = (<TextCell col="last_name" data={this.props.users} onClick={test}/>)
+    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+
+    let emailCell = (<TextCell col="email" data={this.props.users} onClick={test}/>)
+    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={240}/>)
+
+    return (
+      <Col md={12}>
+        <DataTable
+          columns={columns}
+          maxHeight={300}
+          rowCount={this.props.users.getSize()}
+          width={540}
+          {...this.props}
+        />
+      </Col>
+    )
+  }
+
   render() {
     let list = this.props.list
     return (
@@ -41,6 +79,7 @@ class ListDetailForm extends Component {
             </Row>
             <Row>
               {this._seperator('Users')}
+              {this._userTable()}
             </Row>
           </Grid>
         </Modal.Body>
@@ -60,7 +99,8 @@ ListDetailForm.propTypes = {
   list: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  users: PropTypes.object
 }
 
 export default ListDetailForm

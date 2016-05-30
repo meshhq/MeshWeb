@@ -356,7 +356,7 @@ class OrganizationTable extends Component {
     let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} key={'industry'} width={200}/>)
 
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providers}/>)
     columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/ >)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
@@ -372,10 +372,8 @@ class OrganizationTable extends Component {
         />
         <DataTable
           columns={columns}
-          headerHeight={40}
-          height={700}
+          maxHeight={680}
           rowCount={filteredDataList.getSize()}
-          rowHeight={35}
           width={this.props.width}
           {...this.props}
         />

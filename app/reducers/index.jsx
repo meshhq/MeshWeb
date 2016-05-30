@@ -13,7 +13,7 @@ const meshApp = combineReducers({
   nav,
   providers,
 	integrations,
-  users,
+	users,
   lists,
   organizations
 })
