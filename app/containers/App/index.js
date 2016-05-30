@@ -47,6 +47,11 @@ class App extends Component {
   componentDidMount() {
     this._getWindowWidth()
     this._performInitialSyncWithMesh()
+
+    // TODO: Fix Long Polling with server push.
+    setInterval(this.props.userActions.refreshUsers, 10000);
+    setInterval(this.props.organizationActions.refreshOrganizations, 10000);
+    setInterval(this.props.listActions.refreshLists, 10000);
   }
 
   /**
@@ -225,7 +230,7 @@ App.defaultProps = {
   providers: []
 }
 
-function mapStateToProps(state) {  
+function mapStateToProps(state) {
   return {
     activeNavIdx: state.nav,
     appState: state.app,

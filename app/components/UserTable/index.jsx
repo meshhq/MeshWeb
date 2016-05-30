@@ -79,9 +79,7 @@ class UserTable extends React.Component {
 
     componentWillReceiveProps(nextProps) {
       this.dataList = new DataListWrapper(nextProps.users)
-      let userLists = new DataListWrapper(nextProps.lists)
       this.setState({
-        userLists: userLists,
         filteredDataList: this.dataList
       });
     }

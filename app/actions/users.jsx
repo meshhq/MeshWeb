@@ -126,7 +126,8 @@ export function publishingUser() {
 export const PUBLISHED_USER = 'PUBLISHED_USER'
 export function publishedUser() {
 	return {
-		type: PUBLISHED_USER
+		type: PUBLISHED_USER,
+		publishedAt: Date.now()
 	}
 }
 

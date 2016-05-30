@@ -133,4 +133,3 @@ function appendAuthentication(headers) {
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
 }
-
