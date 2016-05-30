@@ -45,7 +45,6 @@ export function DELETE(path, params) {
  * @return {[type]}         Result Proimise
  */
 function performFetch(request) {
-	console.log(request)
 	return Fetch(request).then((response) => {
 		if (response.ok) {
 			if (response.status === 204) {
@@ -130,7 +129,6 @@ function defaultHeaders() {
 function appendAuthentication(headers) {
 	const authHeader = getAuthToken()
 	if (authHeader) {
-		console.log("Auth Header: ", authHeader)
 		const bearerHeader = 'bearer ' + authHeader
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
