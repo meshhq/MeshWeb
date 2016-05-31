@@ -4,12 +4,15 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ProviderCell from './ProviderCells'
 import _ from 'lodash'
-import { Grid, Row } from 'react-bootstrap'
 
+// Components
+import ProviderCell from './ProviderCells'
+import { Grid, Row } from 'react-bootstrap'
 import CredentialForm from '../Forms/CredentialForm'
 
 // Actions
 import * as IntegrationActions from '../../actions/integrations'
+import * as ProviderActions from '../../actions/providers'
 
 class Providers extends Component {
   constructor(props, context) {
@@ -26,13 +29,25 @@ class Providers extends Component {
   }
 
   _handleActivateClick(providerID) {
-    let pro = this.props.providers.find(function(provider){
+    let pro = this.props.providerState.providers.find(function(provider){
       return provider.id == providerID
     })
+
     this.setState({
       selectedProvider: pro,
       credentialFormDisplayed: true
     });
+    
+    // Check for OAuth Ability
+    if (pro.oauth === true) {
+      this.props.providerActions.requestOAuthURL(pro.name).then((response) => {
+        // response 
+        window.location = response
+        // Received the oauth URL?
+      }, () => {
+        console.log("Fail request OAuth URL")
+      })
+    }
   }
 
   _handleSaveCredentials(provider, params) {
@@ -53,7 +68,7 @@ class Providers extends Component {
   }
 
   render() {
-    const providersSections = _.map(this.props.providers, (provider) => {
+    const providersSections = _.map(this.props.providerState.providers, (provider) => {
       return (
         <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
       )
@@ -103,8 +118,11 @@ class Providers extends Component {
   }
 }
 
+Providers.displayName = 'Providers List'
+
 Providers.defaultProps = {
-  provider: {}
+  providerActions: {},
+  providerState: {}
 }
 
 Providers.propTypes = {
@@ -112,9 +130,9 @@ Providers.propTypes = {
   integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   width: PropTypes.number.isRequired
+  providerActions: PropTypes.object.isRequired,
+  providerState: PropTypes.array.isRequired
 }
-
-Providers.displayName = 'Providers List'
 
 function mapStateToProps(state) {
   return {
@@ -125,7 +143,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    integrationActions: bindActionCreators(IntegrationActions, dispatch)
+    providerActions: bindActionCreators(ProviderActions, dispatch)
   }
 }
 
@@ -133,3 +151,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Providers)
+

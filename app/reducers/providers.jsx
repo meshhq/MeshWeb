@@ -1,8 +1,12 @@
+
 import { REFRESH_PROVIDER_LIST, REQUEST_PROVIDERS, RECEIVE_PROVIDERS } from '../actions/providers'
+import { REQUEST_OAUTH_FOR_PROVIDER, RECEIVE_OAUTH_FOR_PROVIDER } from '../actions/providers'
 
 const defaultState = {
+	isFetchingOAuth: false,
 	isFetching: false,
 	didInvalidate: false,
+	OAuthURL: null,
 	providers: []
 }
 
@@ -23,6 +27,18 @@ function providers(state = defaultState, action) {
 				isFetching: false,
 				providers: action.providers,
 				lastUpdated: action.ReceivedAt
+			})
+		case REQUEST_OAUTH_FOR_PROVIDER:
+			return Object.assign({}, state, {
+				isFetchingOAuth: true,
+				OAuthURL: null,
+				isFetching: false
+			})
+		case RECEIVE_OAUTH_FOR_PROVIDER:
+			return Object.assign({}, state, {
+				isFetchingOAuth: false,
+				OAuthURL: action.url,
+				isFetching: false
 			})
 		default:
 			return state

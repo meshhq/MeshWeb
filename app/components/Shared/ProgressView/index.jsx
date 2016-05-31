@@ -5,9 +5,26 @@ class Spinner extends Component {
   displayName: "App Spinner";
   constructor(props) {
     super(props);
+    this.state = {
+      displayHUD: this.props.loadText.length > 0
+    }
+  }
+
+  // Called when an update to the props occurs
+  componentWillReceiveProps(nextProps) {
+    this._loadingTextWasSet(nextProps.loadingText)
+  }
+
+  _loadingTextWasSet(loadingText) {
+    this.setState({
+      displayHUD: loadingText && loadingText.length > 0
+    })  
   }
 
   _contentForComponent() {
+    const { displayHUD } = this.state
+    const { loadText } = this.props
+
     const normalLoading = (
       <div className="mesh-loader">
         <div className="sk-cube-grid">
@@ -21,23 +38,28 @@ class Spinner extends Component {
           <div className="sk-cube sk-cube8"></div>
           <div className="sk-cube sk-cube9"></div>
         </div>
-        <h1 className="loading-text">{'Loading Mesh...'}</h1>
+        <h1 className="loading-text">{loadText}</h1>
       </div>
       )
 
     const errorLoading = (
       <div className="mesh-loader">
         <h1 className="loading-error">{'Error'}</h1>
-        <h2 className="loading-text">{'There was an error loading Mesh, please try again.'}</h2>
+        <h2 className="loading-text">{'there was an error loading Mesh, please try again'}</h2>
       </div>
       )
 
     let content
     if (this.props.loadError == true) {
       content = errorLoading
-    } else {
+    } else if (displayHUD) {
       content = normalLoading
+    } else {
+      content = (
+        <div></div>
+      )
     }
+
     return content
   }
 
@@ -50,7 +72,8 @@ class Spinner extends Component {
 }
 
 Spinner.propTypes = {
-  loadError: PropTypes.bool.isRequired
+  loadError: PropTypes.bool.isRequired,
+  loadText: PropTypes.string
 }
 
 export default Spinner

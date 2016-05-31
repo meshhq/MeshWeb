@@ -35,6 +35,7 @@ class App extends Component {
     this.state = {
       width: 500,
       initialLoad: false,
+      loadingText: '',
       showLogin: false,
       loadError: false
     };
@@ -60,7 +61,7 @@ class App extends Component {
    */
   _performInitialSyncWithMesh() {
     this.props.appActions.fetchAppIdIfNeeded().then(() => {
-      this.setState({ initialLoad: true })
+      this.setState({ initialLoad: true, loadText: 'mesh is loading', loadError: false })
     }, () => {
       this.setState({ initialLoad: false, loadError: true })
     })
@@ -169,7 +170,7 @@ class App extends Component {
           width={this.state.width}
                 />)
       case 3:
-        return (<Providers providers={providerState.providers}/>)
+        return (<Providers providers={providerState.providers} />)
     }
   }
 
@@ -181,11 +182,12 @@ class App extends Component {
   _contentForApp() {
     if (this.state.initialLoad == false) {
       return (
-        <ProgressView loadError={this.state.loadError}/>
+        <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
       )
     } else {
       return (
         <div>
+          <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
           {this._appComponentForCurrentNavIdx()}
         </div>
       )
