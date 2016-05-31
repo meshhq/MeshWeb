@@ -4,7 +4,7 @@ class Pill extends Component {
   constructor(props, context) {
     super(props, context)
   }
-
+  
   render() {
     let divStyle = { 'backgroundColor': this.props.color }
     return (

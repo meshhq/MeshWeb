@@ -4,23 +4,42 @@ import ProviderCell from './ProviderCells'
 import _ from 'lodash'
 import { Grid, Row } from 'react-bootstrap'
 
+import CredentialForm from '../Forms/CredentialForm'
+
 class Providers extends Component {
   constructor(props, context) {
     super(props, context)
 
     this.handleActivateClick = this._handleActivateClick.bind(this)
+    this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
+    this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
+
+    this.state = {
+      credentialFormDisplayed: false,
+      selectedProvider: null
+    };
   }
 
   _handleActivateClick(providerID) {
     let pro = this.props.providers.find(function(provider){
       return provider.id == providerID
     })
-    pro.name
-    // Activate the integration
+    this.setState({
+      selectedProvider: pro,
+      credentialFormDisplayed: true
+    });
   }
 
-  _providerWasToggled(providerId, on) {
-    return on
+  _handleSaveCredentials() {
+    this.setState({
+      credentialFormDisplayed: false
+    });
+  }
+
+  _handleCloseCredentialForm() {
+    this.setState({
+      credentialFormDisplayed: false
+    });
   }
 
   render() {
@@ -29,6 +48,17 @@ class Providers extends Component {
         <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
       )
     })
+
+    let forms = (
+      <div className={'forms'}>
+        <CredentialForm
+          displayed={this.state.credentialFormDisplayed}
+          onCancel={this.handleCloseCredentialForm}
+          onSave={this.handleSaveCredentials}
+          provider={this.state.selectedProvider}
+        />
+      </div>
+    )
 
     // Pack the providers into 3 per row
     const providerRows = []
@@ -56,6 +86,7 @@ class Providers extends Component {
     }
     return (
       <Grid fluid>
+        {forms}
         {providerRowHTML}
       </Grid>
     )
