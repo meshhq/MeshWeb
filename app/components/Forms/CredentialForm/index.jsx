@@ -18,7 +18,7 @@ class CredentialForm extends Component {
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
           <Modal.Header closeButton>
-            <Modal.Title>{"Publish List"}</Modal.Title>
+            <Modal.Title>{"Hubspot Credentials"}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -30,12 +30,7 @@ class CredentialForm extends Component {
               </Row>
               <Row className='provider-creds-row' key={"columnCount"}>
                 <Col className='provider-creds-column' key={"provider"} md={12}>
-                  <Input defaultValue={"Test"} label={"Creds"} type="text"/>
-                </Col>
-              </Row>
-              <Row className='provider-creds-row' key={"columnCount"}>
-                <Col className='provider-creds-column' key={"provider"} md={12}>
-                  <Input defaultValue={"Test"} label={"Creds"} type="text"/>
+                  <Input label={"API Token"} placeholder={"Enter API Token"} type="text"/>
                 </Col>
               </Row>
             </Grid>
