@@ -40,7 +40,7 @@ class Providers extends Component {
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
-      this.props.providerActions.requestOAuthURL(pro.name).then((response) => {
+      this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
         // response 
         window.location = response
         // Received the oauth URL?

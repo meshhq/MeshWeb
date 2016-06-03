@@ -32,6 +32,7 @@ class App extends Component {
   displayName: "Main App Component";
   constructor(props) {
     super(props);
+    console.log(this.props)
     this.state = {
       width: 500,
       initialLoad: false,
