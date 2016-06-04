@@ -18,7 +18,7 @@ git push origin HEAD
 git checkout -b dev-deployments
 git commit -m "$msg"
 git push origin HEAD
-git checkout -b branch_name
+git checkout -b "$branch_name"
 
 timestamp() {
   date +"%s"
