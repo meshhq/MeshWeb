@@ -19,8 +19,8 @@ console.log(store)
 const boundOAuthRegistration = registerOAuthCall.bind(store)
 
 // Style Sheets
-import './assets/base_assets.scss'
 import './assets/base_scripts'
+import './assets/base_assets.scss'
 
 // Listen for 401s
 EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unauthorized) => {

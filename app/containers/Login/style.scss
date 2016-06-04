@@ -4,7 +4,7 @@
 }
 
 .react-root {
-	background: $MeshWhite;
+	background: $MeshWhiteDark;
 	height: 100%;
 }
 
@@ -24,6 +24,7 @@
 		margin: 0px;
 
 		input {
+			background-color: $MeshWhite;
 			border-radius: 0px;
 		}
 		
@@ -33,6 +34,15 @@
 
 		.pass-form {
 			margin-bottom: 10px;
+		}
+
+		.form-control {
+			background-color: $MeshWhite;
+			font-weight: 300;
+		}
+
+		.form-control:focus {
+			border-color: $MeshBlue;
 		}
 	}
 

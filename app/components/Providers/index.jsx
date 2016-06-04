@@ -2,7 +2,6 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import ProviderCell from './ProviderCells'
 import _ from 'lodash'
 
 // Components

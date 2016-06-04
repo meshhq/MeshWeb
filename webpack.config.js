@@ -12,8 +12,7 @@ var buildPlugins = [
   new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   new webpack.DefinePlugin({
     'process.env': { 
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-      URL: JSON.stringify(process.env.URL || 'remote')
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
     }
   }),
   new webpack.ProvidePlugin({
@@ -24,13 +23,16 @@ var buildPlugins = [
 ]
 
 // Production Build Check
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'prod') {
   buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
         }
     })
   );
+} else if (process.env.NODE_ENV !== 'dev') {
+  // If the ENV isn't set to either dev or prod, then set to local
+  process.env.NODE_ENV = 'local'
 }
 
 module.exports = {
