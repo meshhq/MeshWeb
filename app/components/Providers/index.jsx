@@ -40,7 +40,6 @@ class Providers extends Component {
       'provider_type' : provider.type,
       'credentials' : params
     }
-    console.log(integration)
     this.props.integrationActions.createIntegration(integration)
     this.setState({
       credentialFormDisplayed: false
@@ -64,8 +63,8 @@ class Providers extends Component {
       <div className={'forms'}>
         <CredentialForm
           displayed={this.state.credentialFormDisplayed}
-          onCancel={this.handleCloseCredentialForm}
           onActivate={this.handleSaveCredentials}
+          onCancel={this.handleCloseCredentialForm}
           provider={this.state.selectedProvider}
         />
       </div>
