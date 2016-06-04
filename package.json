@@ -9,12 +9,13 @@
     "start": "webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "local": "URL=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "lint": "eslint . --ext=jsx --ext=js",
-    "build": "NODE_ENV=production webpack --progress --colors",
-    "dev-build": "webpack --progress --colors",
+    "build": "webpack --progress --colors",
+    "build_prod": "NODE_ENV=production webpack --progress --colors",
+    "_deploy": "./lib/deploy.sh",
     "_deploy_aws_prod": "./lib/deploy_aws_production.sh",
     "_deploy_aws_dev": "./lib/deploy_aws_development.sh",
-    "deploy-prod": "npm run build && npm run _deploy_aws_prod",
-    "deploy-dev": "npm run dev-build && npm run _deploy_aws_dev"
+    "deploy-prod": "npm run build_prod && npm run _deploy_aws_prod",
+    "deploy-dev": "npm run build && npm run _deploy_aws_dev"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
