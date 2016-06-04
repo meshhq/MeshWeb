@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
 import OrganizationHeader from './OrganizationHeader'
+import DataTable from '../../../Shared/DataTable'
+import FixedDataTable from 'fixed-data-table'
+import TextCell from '../../../Shared/DataTableCells/TextCell'
+
+const { Column, Cell } = FixedDataTable;
 
 class OrganizationDetailForm extends Component {
 
@@ -35,6 +40,39 @@ class OrganizationDetailForm extends Component {
     );
   }
 
+  _onUserClick() {
+
+  }
+
+  _userTable() {
+    let columns = []
+    if (this.props.users == null) {
+      return columns
+    }
+
+    let handleUserClick = this._onUserClick.bind(this)
+    let firstNameCall = (<TextCell col="first_name" data={this.props.users} onClick={handleUserClick}/>)
+    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+
+    let lastNameCell = (<TextCell col="last_name" data={this.props.users} onClick={handleUserClick}/>)
+    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+
+    let emailCell = (<TextCell col="email" data={this.props.users} onClick={handleUserClick}/>)
+    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={240}/>)
+
+    return (
+      <Col md={12}>
+        <DataTable
+          columns={columns}
+          maxHeight={300}
+          rowCount={this.props.users.getSize()}
+          width={540}
+          {...this.props}
+        />
+      </Col>
+    )
+  }
+
   render() {
     let organization = this.props.organization
     return (
@@ -58,6 +96,7 @@ class OrganizationDetailForm extends Component {
             </Row>
             <Row>
               {this._seperator('Users')}
+              {this._userTable()}
             </Row>
             <Row>
               {this._seperator('Integration Data')}
@@ -80,7 +119,8 @@ OrganizationDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  organization: PropTypes.object.isRequired
+  organization: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired
 }
 
 export default OrganizationDetailForm

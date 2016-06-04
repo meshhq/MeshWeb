@@ -61,32 +61,23 @@ class OrganizationTable extends Component {
     // Setup our data source
     this.dataList = new DataListWrapper(this.props.organizations)
     this.state = {
-      selectedList: [],
-      selectedOrganization: null,
-      selectedProvider: null,
+      deleteFormDisplayed: false,
+      errorFormDisplayed: false,
       filteredDataList: this.dataList,
       organizationFormDisplayed: false,
       providerFormDisplayed: false,
-      deleteFormDisplayed: false,
-      errorFormDisplayed: false
+      selectedList: [],
+      selectedOrganization: null,
+      selectedOrganizationUsers: [],
+      selectedProvider: null
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this._dataList = new DataListWrapper(nextProps.organizations)
+    let selectedOrganizationUsers = new DataListWrapper(nextProps.users)
     this.setState({
-      filteredDataList: this._dataList
+      selectedOrganizationUsers: selectedOrganizationUsers
     });
-  }
-
-  /**
-   * Synthetic provider injected into the provider selection list
-   */
-  _meshProvider() {
-    return {
-      name: 'Mesh',
-      type: 0
-    }
   }
 
   //----------------------------------------------------------------------------
@@ -187,6 +178,7 @@ class OrganizationTable extends Component {
   _handleCloseOrganizationForm() {
     this.setState({
       selectedOrganization: null,
+      selectedOrganizationUsers: [],
       organizationFormDisplayed: false
     });
   }
@@ -279,11 +271,12 @@ class OrganizationTable extends Component {
   //----------------------------------------------------------------------------
 
   _handleCellClick(idx) {
-   let organization = this.state.filteredDataList.getObjectAt(idx)
-   this.setState({
-     selectedOrganization: organization,
-     organizationFormDisplayed: true
-   });
+    let organization = this.state.filteredDataList.getObjectAt(idx)
+    this.props.organizationActions.fetchOrganizationUsers(organization)
+    this.setState({
+      selectedOrganization: organization,
+      organizationFormDisplayed: true
+    });
   }
 
   _handleUpdateOrganization(params) {
@@ -326,10 +319,30 @@ class OrganizationTable extends Component {
 
     let forms = (
       <div className={'forms'}>
-        <OrganizationForm displayed={this.state.organizationFormDisplayed} onCancel={this.handleCloseOrganizationForm} onSave={this.handleSaveOrganization} onUpdate={this.handleUpdateOrganization} organization={this.state.selectedOrganization}/>
-        <DeleteForm displayed={this.state.deleteFormDisplayed} onCancel={this.handleCloseDeleteForm} onDelete={this.handleDeleteOrganization}/>
-        <IntegrationForm displayed={this.state.providerFormDisplayed} integrations={this.props.integrations} onCancel={this.handleCloseProviderForm} onPublish={this.handlePublishOrganization}  />
-        <ErrorForm displayed={this.state.errorFormDisplayed} error={"Please Select an Organization"} onOK={this.handleCloseErrorForm}/>
+        <OrganizationForm
+          displayed={this.state.organizationFormDisplayed}
+          onCancel={this.handleCloseOrganizationForm}
+          onSave={this.handleSaveOrganization}
+          onUpdate={this.handleUpdateOrganization}
+          organization={this.state.selectedOrganization}
+          users={this.state.selectedOrganizationUsers}
+        />
+        <DeleteForm
+          displayed={this.state.deleteFormDisplayed}
+          onCancel={this.handleCloseDeleteForm}
+          onDelete={this.handleDeleteOrganization}
+        />
+        <IntegrationForm
+          displayed={this.state.providerFormDisplayed}
+          integrations={this.props.integrations}
+          onCancel={this.handleCloseProviderForm}
+          onPublish={this.handlePublishOrganization}
+        />
+        <ErrorForm
+          displayed={this.state.errorFormDisplayed}
+          error={"Please Select an Organization"}
+          onOK={this.handleCloseErrorForm}
+        />
       </div>
     )
 

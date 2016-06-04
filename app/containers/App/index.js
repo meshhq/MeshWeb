@@ -49,9 +49,9 @@ class App extends Component {
     this._performInitialSyncWithMesh()
 
     // TODO: Fix Long Polling with server push.
-    setInterval(this.props.userActions.refreshUsers, 10000);
-    setInterval(this.props.organizationActions.refreshOrganizations, 10000);
-    setInterval(this.props.listActions.refreshLists, 10000);
+    setInterval(this.props.userActions.refreshUsers, 20000);
+    setInterval(this.props.organizationActions.refreshOrganizations, 20000);
+    setInterval(this.props.listActions.refreshLists, 20000);
   }
 
   /**

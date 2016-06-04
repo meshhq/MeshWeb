@@ -345,7 +345,7 @@ class ListTable extends Component {
 
     // Data sources.
     const { selectedList, filteredDataList } = this.state
-
+  
     let forms = (
       <div className={'forms'}>
         <ListForm

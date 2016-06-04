@@ -1,26 +1,55 @@
 
 import React, { PropTypes, Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import ProviderCell from './ProviderCells'
 import _ from 'lodash'
 import { Grid, Row } from 'react-bootstrap'
+
+import CredentialForm from '../Forms/CredentialForm'
+
+// Actions
+import * as IntegrationActions from '../../actions/integrations'
 
 class Providers extends Component {
   constructor(props, context) {
     super(props, context)
 
     this.handleActivateClick = this._handleActivateClick.bind(this)
+    this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
+    this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
+
+    this.state = {
+      credentialFormDisplayed: false,
+      selectedProvider: null
+    };
   }
 
   _handleActivateClick(providerID) {
     let pro = this.props.providers.find(function(provider){
       return provider.id == providerID
     })
-    pro.name
-    // Activate the integration
+    this.setState({
+      selectedProvider: pro,
+      credentialFormDisplayed: true
+    });
   }
 
-  _providerWasToggled(providerId, on) {
-    return on
+  _handleSaveCredentials(provider, params) {
+    let integration = {
+      'provider_type' : provider.type,
+      'credentials' : params
+    }
+    this.props.integrationActions.createIntegration(integration)
+    this.setState({
+      credentialFormDisplayed: false
+    });
+  }
+
+  _handleCloseCredentialForm() {
+    this.setState({
+      credentialFormDisplayed: false
+    });
   }
 
   render() {
@@ -29,6 +58,17 @@ class Providers extends Component {
         <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
       )
     })
+
+    let forms = (
+      <div className={'forms'}>
+        <CredentialForm
+          displayed={this.state.credentialFormDisplayed}
+          onActivate={this.handleSaveCredentials}
+          onCancel={this.handleCloseCredentialForm}
+          provider={this.state.selectedProvider}
+        />
+      </div>
+    )
 
     // Pack the providers into 3 per row
     const providerRows = []
@@ -56,6 +96,7 @@ class Providers extends Component {
     }
     return (
       <Grid fluid>
+        {forms}
         {providerRowHTML}
       </Grid>
     )
@@ -67,9 +108,28 @@ Providers.defaultProps = {
 }
 
 Providers.propTypes = {
-  providers: PropTypes.array.isRequired
+  integrationActions: PropTypes.object.isRequired,
+  integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  width: PropTypes.number.isRequired
 }
 
 Providers.displayName = 'Providers List'
 
-export default Providers
+function mapStateToProps(state) {
+  return {
+    providerState: state.providers,
+    integrationState: state.integrations
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    integrationActions: bindActionCreators(IntegrationActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Providers)

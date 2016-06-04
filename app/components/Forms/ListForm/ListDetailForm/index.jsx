@@ -41,14 +41,14 @@ class ListDetailForm extends Component {
       return columns
     }
 
-    let test = this._onUserClick.bind(this)
-    let firstNameCall = (<TextCell col="first_name" data={this.props.users} onClick={test}/>)
+    let handleUserClick = this._onUserClick.bind(this)
+    let firstNameCall = (<TextCell col="first_name" data={this.props.users} onClick={handleUserClick}/>)
     columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
 
-    let lastNameCell = (<TextCell col="last_name" data={this.props.users} onClick={test}/>)
+    let lastNameCell = (<TextCell col="last_name" data={this.props.users} onClick={handleUserClick}/>)
     columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
 
-    let emailCell = (<TextCell col="email" data={this.props.users} onClick={test}/>)
+    let emailCell = (<TextCell col="email" data={this.props.users} onClick={handleUserClick}/>)
     columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={240}/>)
 
     return (

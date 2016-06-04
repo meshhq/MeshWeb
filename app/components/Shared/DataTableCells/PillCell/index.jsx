@@ -7,6 +7,10 @@ const { Cell } = FixedDataTable;
 
 const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
   let providerType = data.getObjectAt(rowIndex)[col]
+  if (providerType == 0) {
+    providerType = 1000
+  }
+
   let provider = providers.find(function(provider) {
     return provider.type == providerType
   });

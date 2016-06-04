@@ -9,7 +9,8 @@ import { FETCHING_LIST_USERS, FETCHED_LIST_USERS } from '../actions/lists'
 const defaultState = {
 	isFetching: false,
 	didInvalidate: false,
-	lists: []
+	lists: [],
+	users: []
 }
 
 function lists(state = defaultState, action) {
@@ -111,6 +112,7 @@ function lists(state = defaultState, action) {
 		//--------------------------------------------------------------
 		// Fetching List Users
 		//--------------------------------------------------------------
+
 		case FETCHING_LIST_USERS:
 			return Object.assign({}, state, {
 				didInvalidate: true

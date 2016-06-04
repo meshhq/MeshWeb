@@ -30,7 +30,11 @@ class OrganizationForm extends Component {
   _newOrganizationModal() {
     return (
       <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-        <NewOrganizationForm onCancel={this.props.onCancel} onChange={this.handleChange} onSave={this.handleSave}/>
+        <NewOrganizationForm
+          onCancel={this.props.onCancel}
+          onChange={this.handleChange}
+          onSave={this.handleSave}
+        />
       </Modal>
     );
   }
@@ -38,7 +42,13 @@ class OrganizationForm extends Component {
   _organizationDetailModal() {
     return (
       <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-        <OrganizationDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} organization={this.props.organization}/>
+        <OrganizationDetailForm
+          onCancel={this.props.onCancel}
+          onChange={this.handleChange}
+          onUpdate={this.handleUpdate}
+          organization={this.props.organization}
+          users={this.props.users}
+        />
       </Modal>
     );
   }
@@ -63,7 +73,8 @@ OrganizationForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  organization: PropTypes.object
+  organization: PropTypes.object,
+  users: PropTypes.array
 }
 
 OrganizationForm.displayName = 'Organization Form';

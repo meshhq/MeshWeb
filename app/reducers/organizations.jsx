@@ -8,7 +8,8 @@ import { FETCHING_ORGANIZATION_USERS, FETCHED_ORGANIZATION_USERS } from '../acti
 const defaultState = {
 	isFetching: false,
 	didInvalidate: false,
-	organizations: []
+	organizations: [],
+	users: []
 }
 
 function organizations(state = defaultState, action) {
