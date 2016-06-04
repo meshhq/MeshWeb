@@ -1,10 +1,15 @@
 
 import React, { PropTypes, Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import ProviderCell from './ProviderCells'
 import _ from 'lodash'
 import { Grid, Row } from 'react-bootstrap'
 
 import CredentialForm from '../Forms/CredentialForm'
+
+// Actions
+import * as IntegrationActions from '../../actions/integrations'
 
 class Providers extends Component {
   constructor(props, context) {
@@ -30,7 +35,13 @@ class Providers extends Component {
     });
   }
 
-  _handleSaveCredentials() {
+  _handleSaveCredentials(provider, params) {
+    let integration = {
+      'provider_type' : provider.type,
+      'credentials' : params
+    }
+    console.log(integration)
+    this.props.integrationActions.createIntegration(integration)
     this.setState({
       credentialFormDisplayed: false
     });
@@ -54,7 +65,7 @@ class Providers extends Component {
         <CredentialForm
           displayed={this.state.credentialFormDisplayed}
           onCancel={this.handleCloseCredentialForm}
-          onSave={this.handleSaveCredentials}
+          onActivate={this.handleSaveCredentials}
           provider={this.state.selectedProvider}
         />
       </div>
@@ -98,9 +109,28 @@ Providers.defaultProps = {
 }
 
 Providers.propTypes = {
-  providers: PropTypes.array.isRequired
+  integrationActions: PropTypes.object.isRequired,
+  integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  width: PropTypes.number.isRequired
 }
 
 Providers.displayName = 'Providers List'
 
-export default Providers
+function mapStateToProps(state) {
+  return {
+    providerState: state.providers,
+    integrationState: state.integrations
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    integrationActions: bindActionCreators(IntegrationActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Providers)

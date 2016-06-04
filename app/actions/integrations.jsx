@@ -2,6 +2,45 @@
 import { GET, POST } from '../helpers/api'
 
 //------------------------------------------------------------------------------
+// Creating Integration
+//------------------------------------------------------------------------------
+
+// This action is to indicate a network request to create a list has begun.
+export const CREATING_INTEGRATION = 'CREATING_INTEGRATION'
+export function creatingIntegration() {
+	return {
+		type: CREATING_INTEGRATION
+	}
+}
+
+// The action to indicate a list has been created.
+export const CREATED_INTEGRATION = 'CREATED_INTEGRATION'
+export function createdIntegration(json) {
+	return {
+		type: CREATED_INTEGRATION,
+		user: json,
+		createdAt: Date.now()
+	}
+}
+
+export function createIntegration(params) {
+	return (dispatch, getState) => {
+		if (getState().app.id) {
+			dispatch(creatingIntegration())
+			const appID = getState().app.id
+			return POST(`apps/${appID}/integrations`, params)
+			.then(function(json){
+					dispatch(createdIntegration(json))
+					dispatch(activateIntegration(json))
+
+				}
+			)
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------
 // Activate Integration
 //------------------------------------------------------------------------------
 
@@ -28,7 +67,7 @@ export function activateIntegration(params) {
 		if (getState().app.id) {
 			dispatch(activatingIntegration())
 			const appID = getState().app.id
-			return POST(`apps/${appID}/integrations`, params)
+			return POST(`apps/${appID}/integrations/${params.id}/activate`)
 			.then(function(json){
 					dispatch(activatedIntegration(json))
 				}
