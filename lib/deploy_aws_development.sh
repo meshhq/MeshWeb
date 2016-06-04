@@ -14,12 +14,6 @@ git commit -m "$msg"
 branch_name=$(git name-rev --name-only HEAD)
 git push origin HEAD
 
-# Commit to dev-deploy branch
-git checkout -b dev-deployments
-git commit -m "$msg"
-git push origin HEAD
-git checkout -b "$branch_name"
-
 timestamp() {
   date +"%s"
 }
