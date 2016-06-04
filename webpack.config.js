@@ -5,6 +5,7 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var staticPath = path.resolve(__dirname, 'static');
 var appPath = path.resolve(__dirname, 'app');
 var assetsPath = path.resolve(__dirname, 'app', 'assets');
+var staticPath = path.resolve(__dirname, 'public');
 
 // Base plugin set
 var buildPlugins = [
@@ -13,7 +14,7 @@ var buildPlugins = [
     'process.env': { 
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       URL: JSON.stringify(process.env.URL || 'remote')
-    },
+    }
   }),
   new webpack.ProvidePlugin({
       $: 'jquery',
@@ -24,7 +25,6 @@ var buildPlugins = [
 
 // Production Build Check
 if (process.env.NODE_ENV == 'production') {
-  staticPath = path.resolve(__dirname, 'public');
   buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
