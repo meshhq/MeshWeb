@@ -129,7 +129,7 @@ Providers.propTypes = {
   integrationActions: PropTypes.object.isRequired,
   integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
   providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
   providerActions: PropTypes.object.isRequired,
   providerState: PropTypes.array.isRequired
 }
