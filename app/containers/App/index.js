@@ -10,10 +10,6 @@ import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
 import ProgressView from '../../components/Shared/ProgressView'
 
-import UserTable from '../../components/UserTable'
-import OrganizationTable from '../../components/OrganizationTable'
-import ListTable from '../../components/ListTable'
-import Providers from '../../components/Providers'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -121,57 +117,6 @@ class App extends Component {
 
     if (foundProvider != null || on) {
       // TODO - ADJUST INTEGRATION
-    }
-  }
-
-  /**
-   * Main window component switch
-   * @param  {Integer} navIdx
-   * @return {[JSX HTML]} HTML for container
-   */
-  _appComponentForCurrentNavIdx() {
-    const { userState, providerState, activeNavIdx, listState, organizationState, integrationState } = this.props
-
-    let integrations = []
-    for (let i = 0; i < integrationState.integrations.length; i++) {
-      let integration = integrationState.integrations[i]
-      if (integration.provider_type == undefined) {
-        integrations.push(providerState.providers[0])
-      } else {
-        let provider = providerState.providers.find(function(provider){
-          return provider.type == integration.provider_type
-        });
-        integrations.push(provider)
-      }
-    }
-
-    switch(activeNavIdx) {
-      case 0:
-        return (<UserTable
-          integrations={integrations}
-          lists={userState.lists}
-          providers={providerState.providers}
-          users={userState.users}
-          width={this.state.width}
-                />)
-      case 1:
-        return (<OrganizationTable
-          integrations={integrations}
-          organizations={organizationState.organizations}
-          providers={providerState.providers}
-          users={organizationState.users}
-          width={this.state.width}
-                />)
-      case 2:
-        return (<ListTable
-          integrations={integrations}
-          lists={listState.lists}
-          providers={providerState.providers}
-          users={listState.users}
-          width={this.state.width}
-                />)
-      case 3:
-        return (<Providers providers={providerState.providers} />)
     }
   }
 

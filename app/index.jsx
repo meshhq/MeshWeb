@@ -12,10 +12,15 @@ import EventEmitter from './helpers/eventEmitter'
 import { UNAUTHORIZED_ACCESS_NOTIFICATION } from './helpers/api'
 import configureStore from './store'
 
+// Main Components
+import UserTable from './components/UserTable'
+import OrganizationTable from './components/OrganizationTable'
+import ListTable from './components/ListTable'
+import Providers from './components/Providers'
+
 const store = configureStore()
 
 // Binding Dispatch To Reg Oauth
-console.log(store)
 const boundOAuthRegistration = registerOAuthCall.bind(store)
 
 // Style Sheets
@@ -33,8 +38,12 @@ EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unau
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route component={App} path="/">
-        <Route onEnter={boundOAuthRegistration} path="oauth/:provider" >
+      <Route component={App} path={'/'} >
+        <Route component={UserTable} path={'users'} />
+        <Route component={OrganizationTable} path={'organizations'} />
+        <Route component={ListTable} path={'lists'} />
+        <Route component={Providers} path={'providers'} />
+        <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'}>
           <Redirect from="/" to="/" />
         </Route>
       </Route>
