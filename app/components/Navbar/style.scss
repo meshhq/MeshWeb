@@ -1,8 +1,7 @@
 // Component Imports
 
-.navbarDefault {
-	background-color: $MeshNavBlue;
-	border-bottom: 2px solid $MeshBlue;
+.navbar-default {
+	background-color: $MeshWhite;
 	min-height: $NavBarHeight;
 	height: $NavBarHeight;
 	border-radius: 0px;
@@ -14,6 +13,10 @@
 		height:$NavBarHeight;
 
 		.navbar-header {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+
 			max-height: $NavBarHeight;
 			height:$NavBarHeight;
 
@@ -24,74 +27,67 @@
 		}
 	}
 
-	// Text Coloring
-	a {
-		color: white;
-	}
-
-	a:hover {
-		text-decoration: none;
-	}
-
-	a.bold {
-		font-weight: 700;
-	}
-
-	a.light {
-		font-weight: 600;
-	}
-
-	a.navbar-header-brand {
-		color: white;
-		float: left;
-		height: 50px;
-		padding: 15px 15px;
-		line-height: 20px;
-		font-size: 26px;
-		font-weight: 700;
-	}
-
-	ul {
-		margin-top: 0px;
+	.right-links-wrapper {
 		height: 100%;
 	}
-
-	// Nav Items
-	li {
-		padding: 10px 5px;
-
-		a {
-			font-weight: 700;
-			padding: 10px 10px;
-			height: 100%;
-			font-size: 14px;
-		}
-
-		a:active {
-			background-color: #3399ff;
-		}
-
-		a:focus {
-			background-color: #3399ff;
+	
+	.logo-box {
+		img {
+			align-self: flex-start;
+			max-width: 150px;
 		}
 	}
 
-	.active {
-		a {
-			border-bottom: 3px solid $MeshBlue;
-			color: $MeshWhite;
+	// Right Buttons
+	.navbar-right {
+		height:100%;
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		font-size: 1.2em;
+
+		a.light {
 			font-weight: 400;
+		}	
+
+		.top-nav-link {
+			a:hover {
+				text-decoration: none;
+				color: $MeshBlue;				
+			}
 		}
+
+		.profile-line {
+			display:flex;
+			align-items: center;
+			justify-content: center;
+
+			a {
+				display: inline;
+				padding-right: 15px;
+				color: $MeshBlackLight;
+				font-weight: 500;
+			}
+
+			a:hover {
+				text-decoration: none;
+				color: $MeshBlue;				
+			}
+
+			img {
+				display: inline;
+			}
+		}
+
+		// Avatar img
+		.avatar {
+			width: 30px;
+			border: 1px solid $MeshBlueLight;
+			margin-right: 20px;
+		}
+
 	}
+
 }
 
 
-.nav {
-	li {
-		a:hover {
-			text-decoration: none;
-			background: none;
-		}
-	}
-
-}

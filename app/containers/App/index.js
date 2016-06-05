@@ -200,10 +200,14 @@ class App extends Component {
     const appContent = this._contentForApp()
     return (
       <div className="react-root">
-        <NavBar accountName="KEVIN COLEMAN" activeNavIdx={activeNavIdx} navTitles={navTitles} onNavChange={this.handleNavBarClick} />
-        <NavPane activeNavIdx={activeNavIdx} onNavChange={this.handleNavPaneClick}/>
-        <div className="container-wrapper">
-          {appContent}
+        <div className='top-nav-wrapper'>
+          <NavBar accountName="Kevin" activeNavIdx={activeNavIdx} navTitles={navTitles} onNavChange={this.handleNavBarClick} />
+        </div>
+        <div className='content-wrapper'>
+          <NavPane activeNavIdx={activeNavIdx} onNavChange={this.handleNavPaneClick}/>
+          <div className="container-wrapper">
+            {appContent}
+          </div>          
         </div>
       </div>
     )

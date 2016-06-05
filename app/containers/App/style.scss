@@ -19,9 +19,13 @@
 	}
 }
 
+.content-wrapper {
+	border-top: 1px solid $MeshGrey;
+}
+
 // Wrapper Container Sytlying
 .container-wrapper {
-	background-color: $MeshGreySuperLight;
+	background-color: $MeshWhiteLight;
 	float: left;
 
 	// Todo, change to $NavPaneWidth

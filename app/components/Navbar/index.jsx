@@ -1,8 +1,12 @@
 
 import React, { PropTypes, Component } from 'react'
 
+// Assets
+import logo from '../../assets/images/mesh_logo.png'
+import avatar from '../../assets/images/default-avatar-1.png'
+
 // Nav Item Titles
-const titles = ['DOCUMENTATION', 'SUPPORT']
+const titles = ['Documentation', 'Support']
 
 class NavBar extends Component {
   constructor(props, context) {
@@ -16,15 +20,14 @@ class NavBar extends Component {
   render() {
 
     const navItems = []
-    for(let count = 0; count < 2; count++) {
+    for(let count = 0; count < titles.length; count++) {
       let title = titles[count]
       // let glyph = glyphs[count]
       let onClick = this._handleNavItemWasClicked.bind(this, count)
       let item = (
-        <li key={title}>
+        <li className="top-nav-link" key={title}>
           <a className="light"
             href="#"
-
             onClick={onClick}
           >
           {title}
@@ -35,7 +38,7 @@ class NavBar extends Component {
     }
 
     return (
-      <nav className="navbarDefault">
+      <nav className="navbar-default">
         <div className="container">
           <div className="navbar-header">
             <button aria-expanded="false"
@@ -45,22 +48,23 @@ class NavBar extends Component {
               type="button"
             >
             </button>
-            <a className="navbar-header-brand"
-              href="#"
-            >
-              {'MESH'}
-            </a>
+            <div className="logo-box">
+              <img className="img-responsive logo" src={logo} />
+            </div>
           </div>
+
           <ul className="nav navbar-nav navbar-right">
             {navItems}
-            <li>
+            <li className="profile-line">
               <a className="bold"
                 href="#"
               >
                 {this.props.accountName}
               </a>
+              <img className="img-responsive img-circle avatar" src={avatar} />
             </li>
           </ul>
+
         </div>
       </nav>
     )
