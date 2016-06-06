@@ -38,11 +38,11 @@ EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unau
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route component={App} path={'/'} >
+      <Route component={App} onEnter={requireAuth} path={'/'} >
         <Route component={UserTable} path={'users'} />
         <Route component={OrganizationTable} path={'organizations'} />
         <Route component={ListTable} path={'lists'} />
-        <Route component={Providers} path={'providers'} />
+        <Route component={Providers} path={'integrations'} />
         <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'}>
           <Redirect from="/" to="/" />
         </Route>

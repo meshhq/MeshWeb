@@ -63,6 +63,7 @@ class UserTable extends React.Component {
       this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
       // Setup our data source
+      
       this.dataList = new DataListWrapper(this.props.users)
       this.state = {
         selectedList: [],
