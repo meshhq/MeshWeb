@@ -32,8 +32,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this._getWindowWidth()
     this._performInitialSyncWithMesh()
+    this._getWindowWidth()
 
     // TODO: Fix Long Polling with server push.
     setInterval(this.props.userActions.refreshUsers, 20000);
@@ -59,10 +59,9 @@ class App extends Component {
    */
   _getWindowWidth() {
     let dom = ReactDOM.findDOMNode(this)
-
-    // TODO: Coleman - Change hardcoded width.
-    const width = dom.clientWidth - 230
-    this.setState({ width: width })
+    const height = dom.querySelectorAll('div.container-wrapper')[0].clientHeight
+    const width = dom.querySelectorAll('div.container-wrapper')[0].clientWidth
+    this.setState({ containerWidth: width, containerHeight: height })
   }
 
   /**
@@ -76,10 +75,18 @@ class App extends Component {
         <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
       )
     } else {
+      // Inject props into children
+      const { containerWidth, containerHeight } = this.state
+      const childrenWithProps = React.Children.map(this.props.children, (child) => {
+        return React.cloneElement(child, {
+          containerWidth: containerWidth,
+          containerHeight: containerHeight
+        })
+      })
       return (
         <div>
           <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
-          {this.props.children}
+          {childrenWithProps}
         </div>
       )
     }
@@ -98,7 +105,7 @@ class App extends Component {
           <NavPane currentPath={pathname} />
           <div className="container-wrapper">
             <div className="container-fluid">
-              {appContent}              
+              {appContent}
             </div>
           </div>          
         </div>

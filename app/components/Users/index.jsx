@@ -1,5 +1,6 @@
 
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Grid } from 'react-bootstrap'
@@ -79,10 +80,24 @@ class UserTable extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      this.dataList = new DataListWrapper(nextProps.users)
+      this.dataList = new DataListWrapper(nextProps.userState.users)
       this.setState({
         filteredDataList: this.dataList
       });
+    }
+
+    componentDidMount() {
+      this._getActionBarHeight()
+    }
+
+    /**
+     * Helper for determining the viewport width after
+     * component mount. Needed for the FB table to calc correctly
+     */
+    _getActionBarHeight() {
+      let dom = ReactDOM.findDOMNode(this)
+      const height = dom.querySelectorAll('div.action-bar')[0].clientHeight
+      this.setState({ actionBarHeight: height })
     }
 
     //----------------------------------------------------------------------------
@@ -348,7 +363,10 @@ class UserTable extends React.Component {
     }
 
   render() {
-    const { filteredDataList, selectedList  } = this.state
+    const { filteredDataList, selectedList } = this.state
+
+    // Revised container Height for Table
+    const tableContainerHeight = this.props.containerHeight - this.state.actionBarHeight
 
     // Setting up our action bar.
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
@@ -391,30 +409,23 @@ class UserTable extends React.Component {
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
     columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
 
+    let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={250}/>)
+
     let firstNameCall = (<TextCell col="first_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={100}/>)
 
     let lastNameCell = (<TextCell col="last_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={100}/>)
 
-    let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={250}/>)
-
     let phoneCell = (<TextCell col="phone" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={phoneCell} header={<Cell>{'Phone'}</Cell>} key={'phone'} width={200}/>)
-
-    let mobileCell = (<TextCell col="mobile" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={mobileCell} header={<Cell>{'Mobile'}</Cell>} key={'mobile'} width={200}/>)
 
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
 
     let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} key={'priority'} width={100}/>)
-
-    let titleCell = (<TextCell col="title" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} key={'title'} width={240}/>)
-
     return (
       <div className="users-component">
         <div className="modals-container">
@@ -430,10 +441,10 @@ class UserTable extends React.Component {
         <div className="table">
           <DataTable
             columns={columns}
-            maxHeight={680}
             rowCount={filteredDataList.getSize()}
-            width={500}
+            maxHeight={tableContainerHeight}
             {...this.props}
+            containerHeight={tableContainerHeight}
           />
         </div>
       </div>
@@ -445,7 +456,7 @@ UserTable.displayName = 'User Table';
 
 UserTable.defaultProps = {
   users: [],
-  width: 0
+  width: 1000
 }
 
 UserTable.propTypes = {
