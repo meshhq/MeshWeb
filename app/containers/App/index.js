@@ -107,7 +107,7 @@ class App extends Component {
             <div className="container-fluid">
               {appContent}
             </div>
-          </div>          
+          </div>
         </div>
       </div>
     )

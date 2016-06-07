@@ -13,6 +13,7 @@ import RadioHeader from '../Shared/DataTableHeaders/RadioHeader'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import DataTable from '../Shared/DataTable'
+import SideDetailView from '../Shared/SideDetailView'
 
 // Forms
 import UserForm from '../Forms/UserForm'
@@ -431,6 +432,9 @@ class UserTable extends React.Component {
         <div className="modals-container">
           {forms}
         </div>
+        <div className="detail-side-pane">
+          <SideDetailView />
+        </div>
         <div className="action-bar">
           <ActionBar
             actions={actions}
@@ -441,10 +445,10 @@ class UserTable extends React.Component {
         <div className="table">
           <DataTable
             columns={columns}
-            rowCount={filteredDataList.getSize()}
-            maxHeight={tableContainerHeight}
-            {...this.props}
             containerHeight={tableContainerHeight}
+            maxHeight={tableContainerHeight}
+            rowCount={filteredDataList.getSize()}
+            {...this.props}
           />
         </div>
       </div>

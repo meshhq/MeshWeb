@@ -1,0 +1,98 @@
+.side-detail {
+	width: 30%;
+	height: 100%;
+	position: absolute;
+	right: 0px;
+	background-color: $MeshWhite;
+	z-index: 2;
+	box-shadow: -2px 0px 10px $MeshGreyDark;
+
+	.container-fluid {
+		position: relative;
+	}
+
+	.row {
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-direction: row;
+		flex-direction: row;
+	}
+	
+	// Nav (Top)
+	.nav {
+		border-bottom: 1px solid $MeshGreyLight;
+
+		// Nav Portion
+		.back-button {
+			display: flex;
+			align-content: center;
+			.back-container {
+				margin-top: 15px;
+
+				a {
+					font-size: 1.25em;
+					font-weight: 300;
+				}
+			}
+		}
+
+		.title {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			margin-top: 12px;
+			font-size: 1.5em;
+			font-weight: 300;
+			.title-wrapper {
+				height: 100%;
+			}
+		}
+	}
+	
+	// Hero
+	.user-hero {
+		// Border
+		border-bottom: 1px solid $MeshGrey;
+		background-color: $MeshWhiteDark;
+
+		.profile-pic-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.avatar {
+			width: 80px;
+			margin: 5px 0px;
+			border: 1px solid $MeshGreyDark;
+		}
+		
+		.profile-info-container {
+			// Flex
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-direction: row;
+			flex-direction: row;
+			margin-left: 0px;
+			padding-left: 0px;
+			dl {
+				margin-top: auto;
+				margin-bottom: auto;
+			}
+		}
+	}
+
+	// Details
+	.mesh-details {
+		padding-top: 15px;
+	}
+
+	.mesh-details {
+		min-height: 50px;
+	}
+
+	.provider-details {
+		min-height: 50px;
+	}
+
+}
