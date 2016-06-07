@@ -4,10 +4,12 @@ import { Glyphicon, Button } from 'react-bootstrap'
 class ActionButton extends Component {
   render() {
     return (
-      <Button onClick={this.props.onButtonClick}>
-        <Glyphicon glyph={this.props.glyph} />
-        {this.props.title}
-      </Button>
+      <div className="action-button-container">
+        <Button onClick={this.props.onButtonClick}>
+          <Glyphicon glyph={this.props.glyph} />
+          {this.props.title}
+        </Button>
+      </div>
     )
   }
 }

@@ -64,7 +64,7 @@ class UserTable extends React.Component {
 
       // Setup our data source
       
-      this.dataList = new DataListWrapper(this.props.users)
+      this.dataList = new DataListWrapper(this.props.userState.users)
       this.state = {
         selectedList: [],
         selectedIntegration: null,
@@ -111,7 +111,7 @@ class UserTable extends React.Component {
             filteredIndexes.push(index);
           }
         }
-        dataList = new DataListWrapper(this.props.users, filteredIndexes)
+        dataList = new DataListWrapper(this.props.userState.users, filteredIndexes)
       } else {
         dataList = this.dataList
       }
@@ -209,7 +209,7 @@ class UserTable extends React.Component {
 
     _handlePublishUser(params) {
       let providers = [];
-      this.props.providers.map(function(provider) {
+      this.props.providerState.providers.map(function(provider) {
         let name = provider['name']
         let shouldPublish = params[name]
         if (shouldPublish === true) {
@@ -343,7 +343,7 @@ class UserTable extends React.Component {
       }
 
       this.setState({
-        filteredDataList: new DataListWrapper(this.props.users, filteredIndexes)
+        filteredDataList: new DataListWrapper(this.props.userState.users, filteredIndexes)
       });
     }
 
@@ -374,7 +374,7 @@ class UserTable extends React.Component {
         />
         <IntegrationForm
           displayed={this.state.providerFormDisplayed}
-          integrations={this.props.integrations}
+          integrations={this.props.integrationState.integrations}
           onCancel={this.handleCloseIntegrationForm}
           onPublish={this.handlePublishUser}
         />
@@ -416,21 +416,27 @@ class UserTable extends React.Component {
     columns.push(<Column cell={titleCell} header={<Cell>{'Tilte'}</Cell>} key={'title'} width={240}/>)
 
     return (
-      <Grid fluid>
-        {forms}
-        <ActionBar
-          actions={actions}
-          onSearchInput={this.handleSearch}
-          providers={this.props.providers}
-        />
-        <DataTable
-          columns={columns}
-          maxHeight={680}
-          rowCount={filteredDataList.getSize()}
-          width={this.props.width}
-          {...this.props}
-        />
-      </Grid>
+      <div className="users-component">
+        <div className="modals-container">
+          {forms}
+        </div>
+        <div className="action-bar">
+          <ActionBar
+            actions={actions}
+            onSearchInput={this.handleSearch}
+            providers={this.props.providerState.providers}
+          />
+        </div>
+        <div className="table">
+          <DataTable
+            columns={columns}
+            maxHeight={680}
+            rowCount={filteredDataList.getSize()}
+            width={500}
+            {...this.props}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -443,16 +449,19 @@ UserTable.defaultProps = {
 }
 
 UserTable.propTypes = {
-  integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  lists: PropTypes.arrayOf(React.PropTypes.object),
-  providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  integrationState: PropTypes.object.isRequired,
+  listState: PropTypes.object.isRequired,
+  providerState: PropTypes.object.isRequired,
   userActions: PropTypes.object.isRequired,
-  users: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  userState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }
 
 function mapStateToProps(state) {
   return {
+    integrationState: state.integrations,
+    listState: state.lists,
+    providerState: state.providers,
     userState: state.users
   }
 }

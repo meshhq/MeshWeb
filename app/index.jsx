@@ -1,5 +1,5 @@
 
-import { Router, Route, Redirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom'
 import React from 'react'
@@ -13,9 +13,9 @@ import { UNAUTHORIZED_ACCESS_NOTIFICATION } from './helpers/api'
 import configureStore from './store'
 
 // Main Components
-import UserTable from './components/UserTable'
-import OrganizationTable from './components/OrganizationTable'
-import ListTable from './components/ListTable'
+import Users from './components/Users'
+import Organizations from './components/Organizations'
+import Lists from './components/Lists'
 import Providers from './components/Providers'
 
 const store = configureStore()
@@ -39,12 +39,12 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route component={App} onEnter={requireAuth} path={'/'} >
-        <Route component={UserTable} path={'users'} />
-        <Route component={OrganizationTable} path={'organizations'} />
-        <Route component={ListTable} path={'lists'} />
+        <IndexRedirect to="/users" />
+        <Route component={Users} path={'users'} />
+        <Route component={Organizations} path={'organizations'} />
+        <Route component={Lists} path={'lists'} />
         <Route component={Providers} path={'integrations'} />
         <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'}>
-          <Redirect from="/" to="/" />
         </Route>
       </Route>
       <Route component={Login} path="/login" />

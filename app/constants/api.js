@@ -1,7 +1,6 @@
 
 // Base Mesh URL
 let _url = ''
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV == 'local') {
 	_url = 'http://localhost:3000'
 } else if (process.env.NODE_ENV == 'dev') {

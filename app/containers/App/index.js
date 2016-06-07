@@ -14,10 +14,8 @@ import ProgressView from '../../components/Shared/ProgressView'
 // Actions
 import * as AppActions from '../../actions/application'
 import * as ListActions from '../../actions/lists'
-import * as NavActions from '../../actions/nav'
 import * as OrganizationActions from '../../actions/organizations'
 import * as IntegrationActions from '../../actions/integrations'
-import * as ProviderActions from '../../actions/providers'
 import * as UserActions from '../../actions/users'
 
 class App extends Component {
@@ -99,7 +97,9 @@ class App extends Component {
         <div className='content-wrapper'>
           <NavPane currentPath={pathname} />
           <div className="container-wrapper">
-            {appContent}
+            <div className="container-fluid">
+              {appContent}              
+            </div>
           </div>          
         </div>
       </div>
@@ -114,7 +114,6 @@ App.propTypes = {
   listActions: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
-  providerActions: PropTypes.object.isRequired,
   userActions: PropTypes.object.isRequired
 }
 
@@ -132,10 +131,8 @@ function mapDispatchToProps(dispatch) {
   return {
     appActions: bindActionCreators(AppActions, dispatch),
     listActions: bindActionCreators(ListActions, dispatch),
-    navActions: bindActionCreators(NavActions, dispatch),
     organizationActions: bindActionCreators(OrganizationActions, dispatch),
     integrationActions: bindActionCreators(IntegrationActions, dispatch),
-    providerActions: bindActionCreators(ProviderActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
   }
 }

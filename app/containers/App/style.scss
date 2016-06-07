@@ -33,7 +33,10 @@
 
 	// Todo, change to $NavBarHeight;
 	height: calc(100vh; - 60px);
-	padding-top:1em;
+}
+
+.container-fluid {
+	
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

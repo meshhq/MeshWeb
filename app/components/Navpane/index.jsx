@@ -30,7 +30,7 @@ class NavPane extends Component {
         active = true
       }
 
-      navItems.push(<NavItem active={active} glyph={glyph} title={title}/>)
+      navItems.push(<NavItem active={active} glyph={glyph} key={i} title={title}/>)
     }
 
     return (

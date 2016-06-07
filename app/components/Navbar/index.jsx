@@ -13,22 +13,16 @@ class NavBar extends Component {
     super(props, context)
   }
 
-  _handleNavItemWasClicked(idx) {
-    this.props.onNavChange(idx)
-  }
-
   render() {
 
     const navItems = []
     for(let count = 0; count < titles.length; count++) {
       let title = titles[count]
       // let glyph = glyphs[count]
-      let onClick = this._handleNavItemWasClicked.bind(this, count)
       let item = (
         <li className="top-nav-link" key={title}>
           <a className="light"
             href="#"
-            onClick={onClick}
           >
           {title}
           </a>
@@ -74,10 +68,7 @@ class NavBar extends Component {
 // navTitles [Array<String>] is the section titles
 // activeSection [Number] is the current selection
 NavBar.propTypes = {
-  accountName: PropTypes.string.isRequired,
-  activeNavIdx: PropTypes.number.isRequired,
-  navTitles: PropTypes.array.isRequired,
-  onNavChange: PropTypes.func.isRequired
+  accountName: PropTypes.string.isRequired
 }
 
 // Display Name

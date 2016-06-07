@@ -9,7 +9,6 @@ class NavItem extends Component {
   }
 
   render() {
-    console.log(this.props.active)
     const klassName = this.props.active ? 'nav-item active' : 'nav-item'
     const lowercaseName = this.props.title.toLowerCase()
     return (
