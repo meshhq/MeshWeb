@@ -42,7 +42,7 @@ function lists(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case UPDATED_LIST:
+		case UPDATED_LIST: {
 			let updatedIdx = updatedLists.indexOf(action.previousList);
 			for (let key in action.updatedList) {
 				action.previousList[key] = action.updatedList[key]
@@ -53,7 +53,8 @@ function lists(state = defaultState, action) {
 				isFetching: false,
 				lists: updatedLists,
 				lastUpdated: action.UpdatedAt
-			})
+			})			
+		}
 
 		//--------------------------------------------------------------
 		// Delete List
@@ -63,7 +64,7 @@ function lists(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case DELETED_LIST:
+		case DELETED_LIST: {
 			let deletedIdx = updatedLists.indexOf(action.deletedList);
 			updatedLists.splice(deletedIdx, 1)
 			return Object.assign({}, state, {
@@ -72,6 +73,7 @@ function lists(state = defaultState, action) {
 				lists: updatedLists,
 				lastUpdated: action.DeletedAt
 			})
+		}
 
 		//--------------------------------------------------------------
 		// Publish List

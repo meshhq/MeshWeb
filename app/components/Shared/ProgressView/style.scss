@@ -1,28 +1,3 @@
-.loading-text {
-	display: block;
-	text-align: center;
-	margin-top: 1em;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 100;
-}
-
-.loading-error {
-	display: block;
-	text-align: center;
-	margin-top: 0em;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;	
-}
-
-.sk-cube-grid {
-	margin-top: 10em;
-	height: 12em;
-	width: 12em;
-	.sk-cube {
-		background-color: #fff;
-	}
-}
-
 .mesh-loader {
 	width: 100%;
 	height: 100%;
@@ -32,4 +7,28 @@
 	top: 0;
 	left: 0;
 	z-index: 10;
+
+	.loading-text {
+		display: block;
+		text-align: center;
+		margin-top: 1em;
+		font-weight: 100;
+	}
+
+	.loading-error {
+		display: block;
+		text-align: center;
+		margin-top: 0em;
+		font-weight: 400;	
+		margin-top: 3em;
+	}
+
+	.sk-cube-grid {
+		margin-top: 10em;
+		height: 12em;
+		width: 12em;
+		.sk-cube {
+			background-color: $MeshWhite;
+		}
+	}
 }

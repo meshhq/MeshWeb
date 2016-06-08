@@ -5,7 +5,7 @@ class UserHeader extends Component {
   render() {
     let user = this.props.user
     return (
-      <Grid fluid className={'user-header'}>
+      <Grid className={'user-header'} fluid>
         <Row>
           <Col md={2}>
             <div className={'initials-bubble'}>

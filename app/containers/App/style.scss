@@ -19,9 +19,13 @@
 	}
 }
 
+.content-wrapper {
+	border-top: 1px solid $MeshGrey;
+}
+
 // Wrapper Container Sytlying
 .container-wrapper {
-	background-color: $MeshGreySuperLight;
+	background-color: $MeshWhiteLight;
 	float: left;
 
 	// Todo, change to $NavPaneWidth
@@ -29,7 +33,10 @@
 
 	// Todo, change to $NavBarHeight;
 	height: calc(100vh; - 60px);
-	padding-top:1em;
+}
+
+.container-fluid {
+	
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

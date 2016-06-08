@@ -19,7 +19,8 @@ var buildPlugins = [
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery'
-  })
+  }),
+  new webpack.OldWatchingPlugin()
 ]
 
 // Production Build Check
@@ -81,7 +82,8 @@ module.exports = {
 
       // Assets
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' }
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
+      { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: 'file-loader' }
     ]
   },
   resolve: {

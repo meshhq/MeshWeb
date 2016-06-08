@@ -3,6 +3,7 @@ import React, { Component, PropTypes  } from 'react'
 
 class SearchBar extends Component {
   render() {
+    const placeholder = this.props.placeholder || 'Search'
     return (
       <div className="search-box">
         <div className="input-group">
@@ -10,7 +11,7 @@ class SearchBar extends Component {
             aria-describedby="basic-addon1"
             className="form-control search"
             onChange={this.props.onSearchInput}
-            placeholder="Search"
+            placeholder={placeholder}
             type="text"
           />
         </div>
@@ -22,7 +23,8 @@ class SearchBar extends Component {
 SearchBar.displayName = 'Search Bar';
 
 SearchBar.propTypes = {
-  onSearchInput: PropTypes.func.isRequired
+  onSearchInput: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
 }
 
 export default SearchBar

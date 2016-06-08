@@ -1,0 +1,11 @@
+.radio-table-header {
+	.input-group {
+		display: flex;
+		align-items: center;
+		input {
+			height: inherit;
+			margin-top: 0.5em;
+			margin-left: 0.1em;
+		}		
+	}
+}

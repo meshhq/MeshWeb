@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 // Components
 import ProviderCell from './ProviderCells'
-import { Grid, Row } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import CredentialForm from '../Forms/CredentialForm'
 
 // Actions
@@ -43,8 +43,6 @@ class Providers extends Component {
         // response 
         window.location = response
         // Received the oauth URL?
-      }, () => {
-        console.log("Fail request OAuth URL")
       })
     }
   }
@@ -109,10 +107,14 @@ class Providers extends Component {
       )
     }
     return (
-      <Grid fluid>
-        {forms}
-        {providerRowHTML}
-      </Grid>
+      <div className="providers-component">
+        <div className="forms">
+          {forms}
+        </div>
+        <div className="provider-rows">
+          {providerRowHTML}
+        </div>
+      </div>
     )
   }
 }
@@ -126,11 +128,9 @@ Providers.defaultProps = {
 
 Providers.propTypes = {
   integrationActions: PropTypes.object.isRequired,
-  integrations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  providers: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  width: PropTypes.number.isRequired,
+  integrationState: PropTypes.object.isRequired,
   providerActions: PropTypes.object.isRequired,
-  providerState: PropTypes.array.isRequired
+  providerState: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
@@ -142,6 +142,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    integrationActions: bindActionCreators(IntegrationActions, dispatch),
     providerActions: bindActionCreators(ProviderActions, dispatch)
   }
 }

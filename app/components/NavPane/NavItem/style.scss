@@ -1,7 +1,7 @@
 
 $NavItemHeight: 60px;
 $NavItemContainerTopPadding: 28px;
-$NavItemContainerLeftMargin: 24px;
+$NavItemContainerLeftMargin: 12px;
 
 .nav-item {
 	display: flex;
@@ -13,12 +13,23 @@ $NavItemContainerLeftMargin: 24px;
 
 	:hover {
 		a {
-			color: $MeshBlue;
+			color: $MeshBlueLight;
 		}
 
 		.glyphicon {
 			color: $MeshBlue;
 		}
+	}
+}
+
+.nav-item-left-hlbox-container {
+	display: flex;
+	align-items: center;
+
+	.nav-item-left-hlbox {
+		background-color: none;
+		height: 40px;
+		width: 3px;
 	}
 }
 
@@ -31,6 +42,10 @@ $NavItemContainerLeftMargin: 24px;
 	.glyphicon {
 		color: $MeshBlue;
 	}
+
+	.nav-item-left-hlbox {
+		background-color: $MeshBlue;
+	}
 }
 
 .nav-item-container {
@@ -41,13 +56,13 @@ $NavItemContainerLeftMargin: 24px;
 	.glyphicon {
 		vertical-align: middle;
 		float: left;
-		color: $MeshGreyLight;
+		color: $MeshGreyDark;
 	}
 
 	a {
 		vertical-align: middle;
 		float: left;
-		color: $MeshGreyLight;
+		color: $MeshGreyDark;
 		font-size: 14px;
 		margin-left: 12px;
 		font-weight: 700;

@@ -1,42 +1,59 @@
-.data-table-row {
+.datatable-wrapper {
+	margin-left: -15px;
 
-	.header {
-		margin-bottom: 1.5em;
+	.data-table-row {
 
-		h1, h2, h3, h4 {
-			margin-top: 0px;
-			font-weight: 300;
+		.data-table-column {
+			padding-right: 0px;
 		}
-	}
 
-	//------------------
-	// Main
-	//------------------
+		.header {
+			margin-bottom: 1.5em;
 
-	.public_fixedDataTable_main {
-		height: 200px;
-	}
-
-	//------------------
-	// Table Header
-	//------------------
-
-	.public_fixedDataTable_header {
-		background-image: linear-gradient(white, white);
-
-		.public_fixedDataTableCell_cellContent {
-			font-weight: bold;
-			color: $MeshBlackLight;
+			h1, h2, h3, h4 {
+				margin-top: 0px;
+				font-weight: 300;
+			}
 		}
+
+		//------------------
+		// Main
+		//------------------
+
+		.public_fixedDataTable_main {
+			width: 1000px;
+			height: 200px;
+			border: none;
+		}
+
+		// Highlighted Row
+		.public_fixedDataTableRow_highlighted {
+			background-color: $MeshOffWhiteBlue;
+		}
+
+		//------------------
+		// Table Header
+		//------------------
+
+		.public_fixedDataTable_header {
+			background-image: linear-gradient(white, white);
+
+			.public_fixedDataTableCell_cellContent {
+				font-weight: bold;
+				color: $MeshBlackLight;
+			}
+			.public_fixedDataTableCell_main {
+				background-image: none;
+			}
+		}
+
 		.public_fixedDataTableCell_main {
-			background-image: none;
+				background-color: transparent;
 		}
-	}
 
-	.public_fixedDataTableCell_main {
-			background-color: transparent;
-	}
-	.public_fixedDataTableRow_main:hover {
-		background-color: $MeshBlue;
+		.public_fixedDataTableRow_main:hover {
+			background-color: #E6E9EB;
+		}
+
 	}
 }

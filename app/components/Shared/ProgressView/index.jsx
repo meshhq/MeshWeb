@@ -44,7 +44,7 @@ class Spinner extends Component {
 
     const errorLoading = (
       <div className="mesh-loader">
-        <h1 className="loading-error">{'Error'}</h1>
+        <h1 className="loading-error">{'error'}</h1>
         <h2 className="loading-text">{'there was an error loading Mesh, please try again'}</h2>
       </div>
       )

@@ -1,3 +1,4 @@
+
 import React, { Component, PropTypes } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import FixedDataTable from 'fixed-data-table'
@@ -7,30 +8,32 @@ let HEADER_HEIGHT = 40
 let ROW_HEIGHT = 35
 
 class DataTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: 2500
+    };
+  }
+
   render() {
-    let rowsHeight = (this.props.rowCount * ROW_HEIGHT)
-    let tableHeight = rowsHeight + HEADER_HEIGHT + 5
-
-    let height = tableHeight
-    if (tableHeight > this.props.maxHeight) {
-      height = this.props.maxHeight
-    }
-
     return (
-      <Row className="data-table-row">
-        <Col className="data-table-column" md={12}>
-          <Table
-            headerHeight={HEADER_HEIGHT}
-            height={height}
-            rowHeight={ROW_HEIGHT}
-            rowsCount={this.props.rowCount}
-            width={this.props.width}
-            {...this.props}
-          >
-            {this.props.columns}
-          </Table>
-        </Col>
-      </Row>
+      <div className="datatable-wrapper">
+        <Row className="data-table-row">
+          <Col className="data-table-column" md={12}>
+            <Table
+              {...this.props}
+              headerHeight={HEADER_HEIGHT}
+              height={this.props.containerHeight - 57}
+              maxHeight={this.props.containerHeight}
+              rowHeight={ROW_HEIGHT}
+              rowsCount={this.props.rowCount}
+              width={this.props.containerWidth}
+            >
+              {this.props.columns}
+            </Table>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
@@ -39,6 +42,8 @@ DataTable.displayName = 'DataTable';
 
 DataTable.propTypes = {
   columns: PropTypes.array.isRequired,
+  containerHeight: PropTypes.number.isRequired,
+  containerWidth: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,
   rowCount:PropTypes.number.isRequired,
   width:PropTypes.number.isRequired

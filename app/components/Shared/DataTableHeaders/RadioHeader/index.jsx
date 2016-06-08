@@ -7,8 +7,10 @@ const RadioHeader = ({ ...props }) => {
   let onSelectAll = props.onSelectAll.bind(this)
   return (
     <Cell>
-      <div className="input-group">
-        <input aria-label="..." className='radio-header-input' onChange={onSelectAll} type="checkbox"/>
+      <div className="radio-table-header">
+        <div className="input-group">
+          <input aria-label="..." className='radio-header-input' onChange={onSelectAll} type="checkbox"/>
+        </div>
       </div>
     </Cell>
   );

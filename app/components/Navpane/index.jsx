@@ -2,35 +2,35 @@ import React, { PropTypes, Component } from 'react'
 import NavItem from './NavItem'
 
 // Nav Item Titles
-const titles = ['USERS', 'ORGANIZATIONS', 'LISTS', 'INTEGRATIONS']
-
-// Nav Item Glyphs
-const glyphs = ['glyphicon glyphicon-user', 'glyphicon glyphicon-th-large', 'glyphicon glyphicon-list-alt', 'glyphicon glyphicon-random']
+import NavTitlesAndGlyphs from '../../constants/navSections'
 
 class NavPane extends Component {
   constructor(props, context) {
     super(props, context)
   }
 
-  _handleNavItemWasClicked(idx) {
-    this.props.onNavChange(idx)
-  }
-
   render() {
 
-    const navItems = []
-    for(let count = 0; count < 4; count++) {
-      let title = titles[count]
-      let glyph = glyphs[count]
-      let onClick = this._handleNavItemWasClicked.bind(this, count)
 
-      let item
-      if (count == this.props.activeNavIdx) {
-        item = (<NavItem active glyph={glyph} key={title} onClick={onClick} title={title}/>)
-      } else {
-        item = (<NavItem active={false} glyph={glyph} key={title} onClick={onClick} title={title}/>)
+    // Ge the current path and look as the base path component
+    let pathName = ''
+    const pathComponents = this.props.currentPath.split('/')
+    if (pathComponents.length > 1) {
+      pathName = pathComponents[1].toLowerCase()
+    }
+
+    const navItems = []
+    for(let i = 0; i < NavTitlesAndGlyphs.length; i++) {
+      const titleGlyphPair = NavTitlesAndGlyphs[i]
+      const title = titleGlyphPair.title
+      const glyph = titleGlyphPair.glyph
+
+      let active = false
+      if (title.toLowerCase() === pathName) {
+        active = true
       }
-      navItems.push(item)
+
+      navItems.push(<NavItem active={active} glyph={glyph} key={i} title={title}/>)
     }
 
     return (
@@ -44,8 +44,7 @@ class NavPane extends Component {
 NavPane.displayName = 'Navigation Pane';
 
 NavPane.propTypes = {
-  activeNavIdx: PropTypes.number.isRequired,
-  onNavChange: PropTypes.func.isRequired
+  currentPath: PropTypes.string.isRequired
 }
 
 export default NavPane

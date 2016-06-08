@@ -4,7 +4,7 @@
 @import './bowerComponents/SpinKit/scss/spinners/9-cube-grid.scss';
 
 // Package
-@import '__base';
+@import './__base';
 @import '../containers/App/style';
 @import '../containers/Login/style';
 
@@ -15,9 +15,9 @@
 @import '../components/NavPane/style';
 @import '../components/NavPane/NavItem/style';
 
-@import '../components/UserTable/style';
-@import '../components/OrganizationTable/style';
-@import '../components/ListTable/style';
+@import '../components/Users/style';
+@import '../components/Organizations/style';
+@import '../components/Lists/style';
 
 @import '../components/Shared/ProgressView/style';
 @import '../components/Shared/DataTableCells/TextCell/style';
@@ -26,6 +26,7 @@
 @import '../components/Shared/DataTableHeaders/RadioHeader/style';
 @import '../components/Shared/Pill/style';
 @import '../components/Shared/DataTable/style';
+@import '../components/Shared/SideDetailView/style';
 
 // Providers
 @import '../components/Providers/style';
