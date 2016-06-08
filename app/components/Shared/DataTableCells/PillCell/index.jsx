@@ -15,10 +15,20 @@ const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
     return provider.type == providerType
   });
 
+  const pillDivStyle = {
+    color: provider.color
+  }
+
+  const pillStyle = {
+    borderColor: provider.color
+  }
+
   return (
     <div className="pill-cell">
       <Cell {...props}>
-        <Pill color={provider.color} title={provider.name} />
+        <div className="provider-pill" style={pillDivStyle} >
+          <p style={pillStyle}>{provider.name}</p>
+        </div>
       </Cell>
     </div>
     )

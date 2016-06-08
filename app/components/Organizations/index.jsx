@@ -59,7 +59,7 @@ class OrganizationTable extends Component {
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
     // Setup our data source
-    this.dataList = new DataListWrapper(this.props.organizations)
+    this.dataList = new DataListWrapper(this.props.organizationState.organizations)
     this.state = {
       deleteFormDisplayed: false,
       errorFormDisplayed: false,
@@ -106,7 +106,7 @@ class OrganizationTable extends Component {
           filteredIndexes.push(index);
         }
       }
-      dataList = new DataListWrapper(this.props.organizations, filteredIndexes)
+      dataList = new DataListWrapper(this.props.organizationState.organizations, filteredIndexes)
     } else {
       dataList = this.dataList
     }
@@ -204,7 +204,7 @@ class OrganizationTable extends Component {
 
   _handlePublishOrganization(params) {
     let providers = [];
-    this.props.providers.map(function(provider) {
+    this.props.providerState.providers.map(function(provider) {
       let name = provider['name']
       let shouldPublish = params[name]
       if (shouldPublish === true) {
@@ -309,7 +309,7 @@ class OrganizationTable extends Component {
     }
 
     this.setState({
-      filteredDataList: new DataListWrapper(this.props.organizations, filteredIndexes)
+      filteredDataList: new DataListWrapper(this.props.organizationState.organizations, filteredIndexes)
     });
   }
 
@@ -334,7 +334,7 @@ class OrganizationTable extends Component {
         />
         <IntegrationForm
           displayed={this.state.providerFormDisplayed}
-          integrations={this.props.integrations}
+          integrations={this.props.integrationState.integrations}
           onCancel={this.handleCloseProviderForm}
           onPublish={this.handlePublishOrganization}
         />
@@ -369,28 +369,34 @@ class OrganizationTable extends Component {
     let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} key={'industry'} width={200}/>)
 
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providers}/>)
-    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/ >)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providerState.providers}/>)
+    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/>)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>}key={'description'} width={400}/>)
 
     return (
-      <Grid fluid>
-        {forms}
-        <ActionBar
-          actions={actions}
-          onSearchInput={this.handleSearch}
-          providers={this.props.providers}
-        />
-        <DataTable
-          columns={columns}
-          maxHeight={680}
-          rowCount={filteredDataList.getSize()}
-          width={this.props.width}
-          {...this.props}
-        />
-      </Grid>
+      <div className="organizations-component">
+        <div className="modals-container">
+          {forms}
+        </div>
+        <div className="action-bar">
+          <ActionBar
+            actions={actions}
+            onSearchInput={this.handleSearch}
+            providers={this.props.providerState.providers}
+          />
+        </div>
+        <div className="table">
+          <DataTable
+            columns={columns}
+            maxHeight={680}
+            rowCount={filteredDataList.getSize()}
+            width={this.props.width}
+            {...this.props}
+          />
+        </div>
+      </div>
     )
   }
 }
@@ -404,16 +410,18 @@ OrganizationTable.defaultProps = {
 }
 
 OrganizationTable.propTypes = {
-  integrations: PropTypes.array.isRequired,
+  integrationState: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
-  organizations: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  providers: PropTypes.array.isRequired,
+  organizationState: PropTypes.object.isRequired,
+  providerState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    organizationState: state.organizations
+    integrationState: state.integrations,
+    organizationState: state.organizations,
+    providerState: state.providers
   }
 }
 
