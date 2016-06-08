@@ -57,6 +57,17 @@ class UserDetailForm extends Component {
 
   render() {
     let user = this.props.user
+
+    let footer = null
+    if (this.props.displayActionButtons) {
+      footer = (
+        <Modal.Footer>
+          <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
+          <Button bsStyle='success' onClick={this.props.onUpdate}>{"Update"}</Button>
+        </Modal.Footer>
+      )
+    }
+
     return (
       <div>
         <Modal.Body>
@@ -88,11 +99,7 @@ class UserDetailForm extends Component {
             </Row>
           </Grid>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
-          <Button bsStyle='success' onClick={this.props.onUpdate}>{"Update"}</Button>
-        </Modal.Footer>
+        {footer}
       </div>
     );
   }
@@ -100,7 +107,12 @@ class UserDetailForm extends Component {
 
 UserDetailForm.displayName = 'User Details';
 
+UserDetailForm.defaultProps = {
+  displayActionButtons: true
+}
+
 UserDetailForm.propTypes = {
+  displayActionButtons: PropTypes.bool,
   lists: PropTypes.object,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

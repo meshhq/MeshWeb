@@ -1,6 +1,12 @@
 
 import React, { PropTypes, Component } from 'react'
-import avatar from '../../../assets/images/default-avatar-1.png'
+
+// Components
+import UserDetailForm from '../../Forms/UserForm/UserDetailForm'
+
+// Assets
+// import avatar from '../assets/images/default-avatar-1.png'
+
 
 class SideDetail extends Component {
   displayName: "App Side Detail View";
@@ -12,6 +18,16 @@ class SideDetail extends Component {
 
 
   render() {
+    const fakeUser = {
+      first_name: 'Bob',
+      last_name: 'Bob',
+      email: 'Bob',
+      phone: 'Bob',
+      website: 'Bob',
+      organization_name: 'Bob'
+    }
+
+
     return (
       <div className="side-detail">
         <div className="container-fluid">
@@ -29,7 +45,30 @@ class SideDetail extends Component {
             <div className="col-xs-1 spacer">
             </div>
           </div>
-          <div className="row user-hero">
+          <div className="row">
+            <UserDetailForm 
+              displayActionButtons={false}
+              onCancel={function(){}} 
+              onChange={function(){}} 
+              onUpdate={function(){}} 
+              user={fakeUser}
+            />
+          </div>
+        </div>
+      </div>
+    )  
+  }
+}
+
+SideDetail.propTypes = {
+  user: PropTypes.object
+}
+
+export default SideDetail
+
+/**
+ * Shelved code - to delete
+ *           <div className="row user-hero">
             <div className="col-xs-3 profile-pic-container">
               <img alt={avatar} className="img-responsive img-circle avatar" src={avatar}/>
             </div>
@@ -82,14 +121,5 @@ class SideDetail extends Component {
               </address>
             </div>
           </div>
-        </div>
-      </div>
-    )  
-  }
-}
 
-SideDetail.propTypes = {
-  user: PropTypes.object
-}
-
-export default SideDetail
+ */
