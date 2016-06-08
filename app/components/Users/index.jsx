@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Grid } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -23,6 +22,9 @@ import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
 import * as UserActions from '../../actions/users'
+
+// Transitions
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 const { Column, Cell } = FixedDataTable;
 
@@ -73,6 +75,7 @@ class UserTable extends React.Component {
         selectedUser: null,
         filteredDataList: this.dataList,
         userFormDisplayed: false,
+        sideDetailDisplayed: false,
         providerFormDisplayed: false,
         deleteFormDisplayed: false,
         addToFormDisplayed: false,
@@ -184,7 +187,8 @@ class UserTable extends React.Component {
      */
     _handleNewClick() {
       this.setState({
-        userFormDisplayed: true
+        userFormDisplayed: true,
+        sideDetailDisplayed: false
       });
     }
 
@@ -192,7 +196,8 @@ class UserTable extends React.Component {
     _handleSaveUser(params) {
       this.props.userActions.createUser(params)
       this.setState({
-        userFormDisplayed: false
+        userFormDisplayed: false,
+        sideDetailDisplayed: false
       });
     }
 
@@ -200,7 +205,8 @@ class UserTable extends React.Component {
       this.setState({
         selectedUser: null,
         userLists: null,
-        userFormDisplayed: false
+        userFormDisplayed: false,
+        sideDetailDisplayed: false
       });
     }
 
@@ -324,7 +330,8 @@ class UserTable extends React.Component {
        //this.props.userActions.getListsForUser(user)
        this.setState({
          selectedUser: user,
-         userFormDisplayed: true
+         userFormDisplayed: false,
+         sideDetailDisplayed: true
        });
      }
 
@@ -333,7 +340,8 @@ class UserTable extends React.Component {
       this.setState({
         userLists: null,
         selectedUser: null,
-        userFormDisplayed: false
+        userFormDisplayed: false,
+        sideDetailDisplayed: false
       });
     }
 
@@ -364,7 +372,7 @@ class UserTable extends React.Component {
     }
 
   render() {
-    const { filteredDataList, selectedList } = this.state
+    const { filteredDataList, selectedList, sideDetailDisplayed } = this.state
 
     // Revised container Height for Table
     const tableContainerHeight = this.props.containerHeight - this.state.actionBarHeight
@@ -405,6 +413,13 @@ class UserTable extends React.Component {
       </div>
     )
 
+    let sideDetail = null
+    if (sideDetailDisplayed === true) {
+      sideDetail = (
+        <SideDetailView key="side-detail" onExit={this.handleCloseUserForm} />
+      )
+    }
+
     let columns = []
 
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
@@ -433,7 +448,9 @@ class UserTable extends React.Component {
           {forms}
         </div>
         <div className="detail-side-pane">
-          <SideDetailView />
+          <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={900} transitionLeaveTimeout={300}>
+            {sideDetail}
+          </ReactCSSTransitionGroup>
         </div>
         <div className="action-bar">
           <ActionBar

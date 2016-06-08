@@ -1,6 +1,5 @@
 
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import { Row, Col } from 'react-bootstrap'
 import FixedDataTable from 'fixed-data-table'
 const { Table } = FixedDataTable;
@@ -25,6 +24,7 @@ class DataTable extends Component {
               {...this.props}
               headerHeight={HEADER_HEIGHT}
               maxHeight={this.props.containerHeight}
+              height={this.props.containerHeight - 57}
               rowHeight={ROW_HEIGHT}
               rowsCount={this.props.rowCount}
               width={this.props.containerWidth}

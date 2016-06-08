@@ -14,6 +14,13 @@ class SideDetail extends Component {
     super(props);
     this.state = {
     }
+
+    this.handleOnExitClicked = this._handleOnExitClicked.bind(this)
+  }
+
+  _handleOnExitClicked(e) {
+    e.preventDefault()
+    this.props.onExit()
   }
 
 
@@ -29,12 +36,12 @@ class SideDetail extends Component {
 
 
     return (
-      <div className="side-detail">
+      <div className="side-detail" key="side-detail">
         <div className="container-fluid">
           <div className="row nav">
             <div className="col-xs-1 back-button">
               <div className="back-container">
-                <a href="" >{'Exit'}</a>
+                <a href="" onClick={this.handleOnExitClicked} >{'Exit'}</a>
               </div>
             </div>
             <div className="col-xs-10 title">
@@ -61,6 +68,7 @@ class SideDetail extends Component {
 }
 
 SideDetail.propTypes = {
+  onExit: PropTypes.func.isRequired,
   user: PropTypes.object
 }
 
