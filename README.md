@@ -32,10 +32,18 @@ The web app will be available at `localhost:5000
 
 ## Deployment
 
-To deploy the app, simply run
+To deploy the app to our dev instance, simply run
 
 ```
-$ npm deploy
+$ npm run deploy-dev
+// http://dev.app.meshdata.io
+```
+
+To deploy the app to our prod instance, simply run
+
+```
+$ npm run deploy-prod
+// http://app.meshdata.io
 ```
 
 The app will be available shortly at our remote hosting site.
