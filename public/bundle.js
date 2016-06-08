@@ -9844,7 +9844,7 @@ webpackJsonp([1],[
 	if (false) {
 		_url = 'http://localhost:3000';
 	} else if (true) {
-		_url = 'http://dev.api.meshdata.io/';
+		_url = 'https://dev.api.meshdata.io/';
 	} else {
 		_url = 'https://api.meshdata.io/';
 	}
