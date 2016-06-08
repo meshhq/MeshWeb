@@ -23690,7 +23690,7 @@ webpackJsonp([1],[
 	RadioCell.propTypes = {
 	  col: _react.PropTypes.string.isRequired,
 	  data: _react.PropTypes.object.isRequired,
-	  onChange: _react.PropTypes.function,
+	  onChange: _react.PropTypes.func,
 	  rowIndex: _react.PropTypes.number,
 	  selectedList: _react.PropTypes.array.isRequired
 	};
