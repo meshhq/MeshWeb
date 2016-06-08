@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Grid } from 'react-bootstrap'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
