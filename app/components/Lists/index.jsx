@@ -66,7 +66,7 @@ class ListTable extends Component {
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
     // Generate the Dta wrapper for the lists.
-    this.dataList = new DataListWrapper(this.props.lists)
+    this.dataList = new DataListWrapper(this.props.listState.lists)
     this.state = {
       selectedList: [],
       selectedObject: null,
@@ -80,7 +80,7 @@ class ListTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let selectedListUsers = new DataListWrapper(nextProps.users)
+    let selectedListUsers = new DataListWrapper(nextProps.listState.users)
     this.setState({
       selectedListUsers: selectedListUsers
     });
@@ -113,7 +113,7 @@ class ListTable extends Component {
           filteredIndexes.push(index);
         }
       }
-      dataList = new DataListWrapper(this.props.lists, filteredIndexes)
+      dataList = new DataListWrapper(this.props.listState.lists, filteredIndexes)
     } else {
       dataList = this.dataList
     }
@@ -210,7 +210,7 @@ class ListTable extends Component {
 
   _handlePublishList(params) {
     let integrations = [];
-    this.props.integrations.map(function(integration) {
+    this.props.integrationState.integrations.map(function(integration) {
       let name = integration['name']
       let shouldPublish = params[name]
       if (shouldPublish === true) {
@@ -284,7 +284,7 @@ class ListTable extends Component {
     let integration
     let integrationType
     if (idx) {
-      integration = this.props.integrations.find(function(integration){
+      integration = this.props.integrationState.integrations.find(function(integration){
         return integration.type === idx
       });
       integrationType = integration.type
@@ -297,7 +297,7 @@ class ListTable extends Component {
           let filteredLists = this._filteredLists()
           this.dataList = new DataListWrapper(filteredLists)
         } else {
-          this.dataList = new DataListWrapper(this.props.lists)
+          this.dataList = new DataListWrapper(this.props.listState.lists)
         }
         this.setState({ filteredDataList: this.dataList })
     });
@@ -305,7 +305,7 @@ class ListTable extends Component {
   }
 
   _filteredLists() {
-     let lists = _.filter(this.props.lists, (list) => {
+     let lists = _.filter(this.props.listState.lists, (list) => {
       const hasName = list.hasOwnProperty('name')
       const isCurrentIntegration = list.origin_provider == this.state.selectedIntegration
       return hasName && isCurrentIntegration
@@ -314,7 +314,7 @@ class ListTable extends Component {
   }
 
   _filteredIntegrations() {
-    return _.filter(this.props.integrations, (integration) => {
+    return _.filter(this.props.integrationState.integrations, (integration) => {
       return integration.type == this.state.selectedIntegration.type
     })
   }
@@ -363,7 +363,7 @@ class ListTable extends Component {
         />
         <IntegrationForm
           displayed={this.state.integrationFormDisplayed}
-          integrations={this.props.integrations}
+          integrations={this.props.integrationState.integrations}
           onCancel={this.handleCloseIntegrationForm}
           onPublish={this.handlePublishList}
         />
@@ -383,7 +383,6 @@ class ListTable extends Component {
     let actions = [newAction, publishAction, deleteAction, filterAction];
 
     let columns = []
-
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
     columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
 
@@ -393,7 +392,7 @@ class ListTable extends Component {
     let userCountCell = (<TextCell col="user_count" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} key={'user_count'} width={100}/>)
 
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providerState.providers}/>)
     columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={120}/>)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
@@ -401,21 +400,27 @@ class ListTable extends Component {
 
     // Layout the providers table.
     return (
-      <Grid fluid>
-        {forms}
-        <ActionBar
-          actions={actions}
-          onSearchInput={this.handleSearch}
-          providers={this.props.integrations}
-        />
-        <DataTable
-          columns={columns}
-          maxHeight={680}
-          rowCount={filteredDataList.getSize()}
-          width={this.props.width}
-          {...this.props}
-        />
-      </Grid>
+      <div className="users-component">
+        <div className="modals-container">
+          {forms}
+        </div>
+        <div className="action-bar">
+          <ActionBar
+            actions={actions}
+            onSearchInput={this.handleSearch}
+            providers={this.props.integrationState.integrations}
+          />
+        </div>
+        <div className="table">
+          <DataTable
+            columns={columns}
+            maxHeight={680}
+            rowCount={filteredDataList.getSize()}
+            width={this.props.width}
+            {...this.props}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -425,21 +430,23 @@ ListTable.displayName = 'Lists'
 
 ListTable.defaultProps = {
   currentCompany: '',
-  lists: []
+  width: 1000
 }
 
 ListTable.propTypes = {
-  integrations: PropTypes.array.isRequired,
+  integrationState: PropTypes.object.isRequired,
   listActions: PropTypes.object.isRequired,
-  listUsers:PropTypes.array,
-  lists: PropTypes.array.isRequired,
-  providers: PropTypes.array.isRequired,
+  listState: PropTypes.object.isRequired,
+  listUsers: PropTypes.array,
+  providerState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    listState: state.lists
+    integrationState: state.integrations,
+    listState: state.lists,
+    providerState: state.providers
   }
 }
 

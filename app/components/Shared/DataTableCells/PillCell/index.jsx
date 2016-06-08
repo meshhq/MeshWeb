@@ -1,7 +1,6 @@
 
 import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
-import Pill from '../../Pill'
 
 const { Cell } = FixedDataTable;
 
@@ -10,7 +9,7 @@ const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
   if (providerType == 0) {
     providerType = 1000
   }
-
+  
   let provider = providers.find(function(provider) {
     return provider.type == providerType
   });
@@ -36,7 +35,8 @@ const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
 
 PillCell.propTypes = {
 	col: PropTypes.string.isRequired,
-	data: PropTypes.object.isRequired
+	data: PropTypes.object.isRequired,
+  providers: PropTypes.array.isRequired
 }
 
 PillCell.displayName = 'Pill Cell'
