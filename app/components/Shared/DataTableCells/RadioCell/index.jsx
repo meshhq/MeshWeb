@@ -32,7 +32,7 @@ const RadioCell = ({ data, rowIndex, selectedList, col, onChange, ...props }) =>
 RadioCell.propTypes = {
   col: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
-  onChange: PropTypes.function.isRequired,
+  onChange: PropTypes.function,
   rowIndex: PropTypes.number,
   selectedList: PropTypes.array.isRequired
 }
