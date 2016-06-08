@@ -36,7 +36,8 @@ const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
 PillCell.propTypes = {
 	col: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
-  providers: PropTypes.array.isRequired
+  providers: PropTypes.array.isRequired,
+  rowIndex: PropTypes.number
 }
 
 PillCell.displayName = 'Pill Cell'

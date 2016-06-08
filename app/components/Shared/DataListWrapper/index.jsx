@@ -4,10 +4,6 @@ class DataListWrapper {
     if (filteredMapping === undefined) {
       const mapping = []
 
-      if (data === undefined) {
-        console.log("stop")
-      }
-
       for (let i = 0; i < data.length; i++) {
         mapping.push(i)
       }

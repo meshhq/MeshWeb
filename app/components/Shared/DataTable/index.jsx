@@ -23,8 +23,8 @@ class DataTable extends Component {
             <Table
               {...this.props}
               headerHeight={HEADER_HEIGHT}
-              maxHeight={this.props.containerHeight}
               height={this.props.containerHeight - 57}
+              maxHeight={this.props.containerHeight}
               rowHeight={ROW_HEIGHT}
               rowsCount={this.props.rowCount}
               width={this.props.containerWidth}
@@ -42,6 +42,8 @@ DataTable.displayName = 'DataTable';
 
 DataTable.propTypes = {
   columns: PropTypes.array.isRequired,
+  containerHeight: PropTypes.number.isRequired,
+  containerWidth: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,
   rowCount:PropTypes.number.isRequired,
   width:PropTypes.number.isRequired

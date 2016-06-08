@@ -40,7 +40,7 @@ function users(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case UPDATED_USER:
+		case UPDATED_USER: {
 			let updatedIdx = updatedUsers.indexOf(action.previousUser);
 			for (let key in action.updatedUser) {
 				action.previousUser[key] = action.updatedUser[key]
@@ -52,6 +52,7 @@ function users(state = defaultState, action) {
 				users: updatedUsers,
 				lastUpdated: action.UpdatedAt
 			})
+		}
 
 		//--------------------------------------------------------------
 		// Delete User
@@ -61,13 +62,14 @@ function users(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case DELETED_USER:
+		case DELETED_USER: {
 			let deletedIdx = updatedUsers.indexOf(action.deletedUser);
 			updatedUsers.splice(deletedIdx, 1)
 			return Object.assign({}, state, {
 				users: updatedUsers,
 				lastUpdated: action.DeletedAt
 			})
+		}
 
 		//--------------------------------------------------------------
 		// Publish  User

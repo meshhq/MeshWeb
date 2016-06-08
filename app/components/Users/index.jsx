@@ -83,15 +83,17 @@ class UserTable extends React.Component {
       };
     }
 
+    // First: Mounted
+    componentDidMount() {
+      this._getActionBarHeight()
+    }
+
+    // First: Received props
     componentWillReceiveProps(nextProps) {
       this.dataList = new DataListWrapper(nextProps.userState.users)
       this.setState({
         filteredDataList: this.dataList
       });
-    }
-
-    componentDidMount() {
-      this._getActionBarHeight()
     }
 
     /**
@@ -448,7 +450,7 @@ class UserTable extends React.Component {
           {forms}
         </div>
         <div className="detail-side-pane">
-          <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={900} transitionLeaveTimeout={300}>
+          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={300} transitionName="example">
             {sideDetail}
           </ReactCSSTransitionGroup>
         </div>
@@ -481,6 +483,7 @@ UserTable.defaultProps = {
 }
 
 UserTable.propTypes = {
+  containerHeight: PropTypes.number,
   integrationState: PropTypes.object.isRequired,
   listState: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,

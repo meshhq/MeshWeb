@@ -43,8 +43,6 @@ class Providers extends Component {
         // response 
         window.location = response
         // Received the oauth URL?
-      }, () => {
-        console.log("Fail request OAuth URL")
       })
     }
   }

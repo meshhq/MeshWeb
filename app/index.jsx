@@ -44,8 +44,7 @@ ReactDOM.render(
         <Route component={Organizations} path={'organizations'} />
         <Route component={Lists} path={'lists'} />
         <Route component={Providers} path={'integrations'} />
-        <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'}>
-        </Route>
+        <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'} />
       </Route>
       <Route component={Login} path="/login" />
     </Router>

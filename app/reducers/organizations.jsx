@@ -41,7 +41,7 @@ function organizations(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case UPDATED_ORGANIZATION:
+		case UPDATED_ORGANIZATION: {
 			let updatedIdx = updatedOrganizations.indexOf(action.previousOrganization);
 			for (let key in action.updatedOrganization) {
 				action.previousOrganization[key] = action.updatedOrganization[key]
@@ -53,6 +53,7 @@ function organizations(state = defaultState, action) {
 				organizations: updatedOrganizations,
 				lastUpdated: action.UpdatedAt
 			})
+		}
 
 		//--------------------------------------------------------------
 		// Delete Users
@@ -62,7 +63,7 @@ function organizations(state = defaultState, action) {
 			return Object.assign({}, state, {
 				didInvalidate: true
 			})
-		case DELETED_ORGANIZATION:
+		case DELETED_ORGANIZATION: {
 			let deletedIdx = updatedOrganizations.indexOf(action.deletedOrganization);
 			updatedOrganizations.splice(deletedIdx, 1)
 			return Object.assign({}, state, {
@@ -71,7 +72,8 @@ function organizations(state = defaultState, action) {
 				organizations: updatedOrganizations,
 				lastUpdated: action.DeletedAt
 			})
-
+		}
+		
 		//--------------------------------------------------------------
 		// Publish Organization
 		//--------------------------------------------------------------

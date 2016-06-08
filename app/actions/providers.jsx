@@ -91,6 +91,7 @@ export function requestOAuthURL(providerName) {
 					resolve(json.url)
 				}).catch(() => {
 					dispatch(receivedOAuthURLForProvider())
+					reject()
 				})
 		})
 		return oAuthPromise
@@ -113,6 +114,7 @@ export function registerOAuthCodeWithMesh(providerName, OAuthCode) {
 					resolve()
 				}).catch(() => {
 					dispatch(receivedOAuthURLForProvider())
+					reject()
 				})
 		})
 		return oAuthPromise
