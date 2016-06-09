@@ -16,6 +16,7 @@ class SideDetail extends Component {
     }
 
     this.handleOnExitClicked = this._handleOnExitClicked.bind(this)
+    this.handleOnExitClicked = this._handleOnExitClicked.bind(this)
   }
 
   _handleOnExitClicked(e) {
@@ -23,43 +24,43 @@ class SideDetail extends Component {
     this.props.onExit()
   }
 
+  _handleRefreshClicked(e) {
+    e.preventDefault()
+    this.props.onExit()
+  }
 
   render() {
-    const fakeUser = {
-      first_name: 'Bob',
-      last_name: 'Bob',
-      email: 'Bob',
-      phone: 'Bob',
-      website: 'Bob',
-      organization_name: 'Bob'
-    }
-
-
     return (
       <div className="side-detail" key="side-detail">
         <div className="container-fluid">
           <div className="row nav">
-            <div className="col-xs-1 back-button">
+            <div className="col-xs-3 back-button">
               <div className="back-container">
                 <a href="" onClick={this.handleOnExitClicked} >{'Exit'}</a>
               </div>
             </div>
-            <div className="col-xs-10 title">
+            <div className="col-xs-6 title">
               <div className="title-wrapper"> 
                 <p>{'User Detail'}</p>
               </div>
             </div>
-            <div className="col-xs-1 spacer">
+            <div className="col-xs-3 refresh-button">
+              <div className="refresh-container">
+                <a href="" onClick={this.handleOnExitClicked} >{'Refresh'}</a>
+              </div>
             </div>
           </div>
           <div className="row">
-            <UserDetailForm 
-              displayActionButtons={false}
-              onCancel={function(){}} 
-              onChange={function(){}} 
-              onUpdate={function(){}} 
-              user={fakeUser}
-            />
+            <div className="col-xs-12 spacer">
+              <UserDetailForm
+                displayActionButtons={false}
+                onCancel={function(){}} 
+                onChange={function(){}} 
+                onUpdate={function(){}} 
+                providers={this.props.providers}
+                user={this.props.detailUser}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -67,67 +68,16 @@ class SideDetail extends Component {
   }
 }
 
+SideDetail.defautProps = {
+  isFetchingDetailUser: false
+}
+
 SideDetail.propTypes = {
+  detailUser: PropTypes.object.isRequired,
+  isFetchingDetailUser: PropTypes.bool.isRequired,
   onExit: PropTypes.func.isRequired,
-  user: PropTypes.object
+  providers: PropTypes.array,
+  refreshUser: PropTypes.func
 }
 
 export default SideDetail
-
-/**
- * Shelved code - to delete
- *           <div className="row user-hero">
-            <div className="col-xs-3 profile-pic-container">
-              <img alt={avatar} className="img-responsive img-circle avatar" src={avatar}/>
-            </div>
-            <div className="col-xs-9 profile-info-container">
-              <dl className="user-info">
-                <dt>{'Name / Email'}</dt>
-                <dd>{'Taylor'}</dd>
-                <dd>{'Taylor@gmail.com'}</dd>
-              </dl>
-            </div>
-          </div>
-          <div className="row mesh-details">
-            <div className="col-xs-12">
-              <strong>Contact Details</strong>
-            </div>
-            <div className="col-xs-6">
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-            </div>
-            <div className="col-xs-6">
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-              <address>
-                <strong>Full Name</strong><br></br>
-                <a href="mailto:#">first.last@example.com</a>
-              </address>
-            </div>
-          </div>
-
- */

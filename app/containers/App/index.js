@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
+import _ from 'underscore'
 
 // Components
 import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
 import ProgressView from '../../components/Shared/ProgressView'
-
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -20,15 +20,16 @@ import * as UserActions from '../../actions/users'
 
 class App extends Component {
   displayName: "Main App Component";
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       width: 500,
       initialLoad: false,
-      loadingText: '',
       showLogin: false,
       loadError: false
     };
+    this.getWindowWidth = this._getWindowWidth.bind(this)
+    this.loadingText = this._loadingText.bind(this)
   }
 
   componentDidMount() {
@@ -36,9 +37,21 @@ class App extends Component {
     this._getWindowWidth()
 
     // TODO: Fix Long Polling with server push.
-    setInterval(this.props.userActions.refreshUsers, 20000);
-    setInterval(this.props.organizationActions.refreshOrganizations, 20000);
-    setInterval(this.props.listActions.refreshLists, 20000);
+    // TH - Turning off for now
+    // setInterval(this.props.userActions.refreshUsers, 20000);
+    // setInterval(this.props.organizationActions.refreshOrganizations, 20000);
+    // setInterval(this.props.listActions.refreshLists, 20000);
+
+    // Listen for the window size change
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.getWindowWidth()
   }
 
   /**
@@ -65,14 +78,29 @@ class App extends Component {
   }
 
   /**
+   * loadingText listens to each state's 
+   * @return {[type]} [description]
+   */
+  _loadingText() {
+    for (const propKey in this.props) {
+      const prop = this.props[propKey]
+      if (_.isString(prop.hudMessage) && prop.hudMessage.length > 0) {
+        return prop.hudMessage
+      }
+    }
+    return ''
+  }
+
+  /**
    * We use this to determine whether the app is
    * still loading its content. We display a loading hud if not
    * @return {[JSX HTML]} [App Main Content]
    */
   _contentForApp() {
+    const loadingText = this.loadingText()
     if (this.state.initialLoad == false) {
       return (
-        <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
+        <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
       )
     } else {
       // Inject props into children
@@ -85,7 +113,7 @@ class App extends Component {
       })
       return (
         <div>
-          <ProgressView loadError={this.state.loadError} loadText={this.state.loadingText}/>
+          <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
           {childrenWithProps}
         </div>
       )
@@ -130,7 +158,10 @@ App.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    appState: state.app
+    appState: state.app,
+    userState: state.users,
+    providerState: state.providers,
+    integrationState: state.integrations
   }
 }
 

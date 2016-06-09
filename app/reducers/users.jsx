@@ -4,10 +4,14 @@ import { CREATING_USER, CREATED_USER } from '../actions/users'
 import { UPDATING_USER, UPDATED_USER } from '../actions/users'
 import { DELETING_USER, DELETED_USER } from '../actions/users'
 import { PUBLISHING_USER, PUBLISHED_USER } from '../actions/users'
+import { REQUESTED_DETAIL_USER, RECEIVED_DETAIL_USER_RESPONSE } from '../actions/users'
 
 const defaultState = {
-	isFetching: false,
+	detailUser: null,
 	didInvalidate: false,
+	hudMessage: '',
+	isFetchingAll: false,
+	isFetchingDetail: false,
 	users: []
 }
 
@@ -27,7 +31,7 @@ function users(state = defaultState, action) {
 			updatedUsers.splice(0, 0, action.user);
 			return Object.assign({}, state, {
 				didInvalidate: false,
-				isFetching: false,
+				isFetchingAll: false,
 				users: updatedUsers,
 				lastUpdated: action.createdAt
 			})
@@ -48,7 +52,7 @@ function users(state = defaultState, action) {
 			updatedUsers[updatedIdx] = action.previousUser
 			return Object.assign({}, state, {
 				didInvalidate: false,
-				isFetching: false,
+				isFetchingAll: false,
 				users: updatedUsers,
 				lastUpdated: action.UpdatedAt
 			})
@@ -82,7 +86,7 @@ function users(state = defaultState, action) {
 		case PUBLISHED_USER:
 			return Object.assign({}, state, {
 				didInvalidate: false,
-				isFetching: false,
+				isFetchingAll: false,
 				lastUpdated: action.PublishedAt
 			})
 
@@ -97,15 +101,30 @@ function users(state = defaultState, action) {
 		case REQUEST_USERS:
 			return Object.assign({}, state, {
 				didInvalidate: false,
-				isFetching: true
+				isFetchingAll: true
 			})
 		case RECEIVE_USERS:
 			return Object.assign({}, state, {
 				didInvalidate: false,
-				isFetching: false,
+				isFetchingAll: false,
 				users: action.users,
 				lastUpdated: action.ReceivedAt
 			})
+
+		//--------------------------------------------------------------
+		// Get Detail User
+		//--------------------------------------------------------------
+
+		case REQUESTED_DETAIL_USER:
+			return Object.assign({}, state, {
+				isFetchingDetail: true
+			})
+		case RECEIVED_DETAIL_USER_RESPONSE: {
+			return Object.assign({}, state, {
+				isFetchingDetail: false,
+				detailUser: action.detailUser
+			})
+		}
 
 		default:
 			return state

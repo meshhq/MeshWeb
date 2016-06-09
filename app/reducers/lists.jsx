@@ -10,6 +10,7 @@ const defaultState = {
 	isFetching: false,
 	didInvalidate: false,
 	lists: [],
+	hudMessage: null,
 	users: []
 }
 

@@ -73,7 +73,7 @@ class OrganizationTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let selectedOrganizationUsers = new DataListWrapper(nextProps.users)
+    let selectedOrganizationUsers = new DataListWrapper(nextProps.organizationState.users)
     this.setState({
       selectedOrganizationUsers: selectedOrganizationUsers
     });

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
+import { Modal, Col, Button } from 'react-bootstrap'
 import UserHeader from './UserHeader'
+import _ from 'underscore'
 
 import DataTable from '../../../Shared/DataTable'
 import FixedDataTable from 'fixed-data-table'
@@ -9,41 +10,103 @@ import TextCell from '../../../Shared/DataTableCells/TextCell'
 const { Column, Cell } = FixedDataTable;
 
 class UserDetailForm extends Component {
+  displayName: 'User Details';
+  constructor(props, context) {
+    super(props, context);
+
+    // Binding methods
+    this.contentForInfo = this._contentForInfo.bind(this)
+    this.contentForLists = this._contentForLists.bind(this)
+    this.providerForTypeID = this._providerForTypeID.bind(this)
+    this.contentForSupportTickets = this._contentForSupportTickets.bind(this)
+    this.contentForTransactions = this._contentForTransactions.bind(this)
+  }
 
   _handleChange(key, event) {
     this.props.onChange(key, event)
   }
 
-  _userColumn(key, label, defaultValue) {
-    let onChange = this._handleChange.bind(this, key)
-    return (
-      <Col md={6} ref={key}>
-        <Input defaultValue={defaultValue} label={label} onChange={onChange} type="text"/>
-      </Col>
-    );
+  _contentForInfo(label, value, full = false, contentId = '') {
+    if (value) {
+      // Need to format and perform checks based on type
+      let formattedValue = null
+
+      // String check
+      if (_.isString(value) && value.length > 0) {
+        formattedValue = value
+      }
+
+      // Number check
+      if (_.isNumber(value)) {
+        formattedValue = value.toLocaleString()
+      }
+
+      if (formattedValue) {
+        return (
+          <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={formattedValue + contentId}>
+            <dt>{label}</dt>
+            <dd>{formattedValue}</dd>
+          </div>
+        )
+      }
+    }
   }
 
-  _listTable() {
-    let test = this._userColumn.bind(this)
+  _contentForLists(lists) {
+    let listsContent = []
+    for (let i = 0; i < lists.length; i++) {
+      const list = lists[i]
+      const provider = this.providerForTypeID(list.origin_provider)
+      listsContent.push(
+        <div className="col-xs-12 lineitem-title">
+          <h5>{list.name}</h5>
+        </div>
+      )
+      listsContent.push(this.contentForInfo('user count', list.user_count))
+      listsContent.push(this.contentForInfo('description', list.description, true))
+      listsContent.push(this.contentForInfo('integration', provider.name, true, list.id))
+    }
+    return listsContent
+  }
 
-    let columns = []
-    let firstNameCall = (<TextCell col="name" data={this.props.lists} onClick={test}/>)
-    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+  _contentForSupportTickets(tickets) {
+    let ticketsContent = []
+    for (let i = 0; i < tickets.length; i++) {
+      const ticket = tickets[i]
+      const provider = this.providerForTypeID(ticket.origin_provider)
+      ticketsContent.push(
+        <div className="col-xs-12 lineitem-title">
+          <h5>{'Support Ticket Title'}</h5>
+        </div>
+      )
+      ticketsContent.push(this.contentForInfo('description', ticket.description, true))
+      ticketsContent.push(this.contentForInfo('integration', provider.name, true, ticket.id))
+    }
+    return ticketsContent
+  }
 
-    let lastNameCell = (<TextCell col="user_count" data={this.props.lists} onClick={test}/>)
-    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+  _contentForTransactions(transactions) {
+    let transactionContent = []
+    for (let i = 0; i < transactions.length; i++) {
+      const transaction = transactions[i]
+      const provider = this.providerForTypeID(transaction.origin_provider)
+      transactionContent.push(
+        <div className="col-xs-12 lineitem-title">
+          <h5>{'Transaction Title'}</h5>
+        </div>
+      )
+      transactionContent.push(this.contentForInfo('amount', transaction.amount, true))
+      transactionContent.push(this.contentForInfo('integration', provider.name, true, transaction.id))
+    }
+    return transactionContent 
+  }
 
-    return (
-      <Col md={12}>
-        <DataTable
-          columns={columns}
-          maxHeight={300}
-          rowCount={this.props.lists.getSize()}
-          width={540}
-          {...this.props}
-        />
-      </Col>
-    )
+  _providerForTypeID(typeID) {
+    return _.find(this.props.providers, (provider) => {
+      if (provider.type === typeID) {
+        return provider
+      }
+    })
   }
 
   _seperator(title) {
@@ -57,7 +120,6 @@ class UserDetailForm extends Component {
 
   render() {
     let user = this.props.user
-
     let footer = null
     if (this.props.displayActionButtons) {
       footer = (
@@ -68,44 +130,144 @@ class UserDetailForm extends Component {
       )
     }
 
-    return (
-      <div>
-        <Modal.Body>
-          <UserHeader user={this.props.user}/>
-        </Modal.Body>
+    /**
+     * User Info
+     */
+    const userContent = (
+      <div className="row personal-info">
+        <div className="col-xs-12">
+          <h4>{'Personal Info'}</h4>
+        </div>
+        <dl className="dl-horizontal">
+          {this.contentForInfo('email', user.email, true)}
+          {this.contentForInfo('first name', user.first_name)}
+          {this.contentForInfo('last name', user.last_name)}
+          {this.contentForInfo('title', user.title)}
+          {this.contentForInfo('phone', user.phone)}
+          {this.contentForInfo('description', user.description, true)}
+        </dl>
+      </div>
+    )
 
-        <Modal.Body>
-          <Grid fluid>
-            <Row>
-              {this._userColumn('first_name', 'First Name', user.first_name)}
-              {this._userColumn('last_name', 'Last Name', user.last_name)}
-            </Row>
-            <Row>
-              {this._userColumn('email', 'Email', user.email)}
-              {this._userColumn('phone', 'Phone', user.phone)}
-            </Row>
-            <Row>
-              {this._seperator('Organization')}
-            </Row>
-            <Row>
-              {this._userColumn('organization_name', 'Organization', user.organization_name)}
-              {this._userColumn('website', 'Website', user.website)}
-            </Row>
-            <Row>
-              {this._seperator('Lists')}
-            </Row>
-            <Row>
-              {this._seperator('Integration Data')}
-            </Row>
-          </Grid>
-        </Modal.Body>
+    /**
+     * Organization
+     */
+    let orgSection = null
+    if (user.organization) {
+      // Find provider if given
+      const provider = this.providerForTypeID(user.organization.origin_provider)
+
+      orgSection = (
+        <div className="row organization">
+          <div className="col-xs-12">
+            <h4>{'Organization'}</h4>
+          </div>
+          <div className="col-xs-12">
+            <dl className="dl-horizontal">
+              {this.contentForInfo('name', user.organization.name, true)}
+              {this.contentForInfo('industry', user.organization.industry, true)}
+              {this.contentForInfo('description', user.organization.description, true)}
+              {this.contentForInfo('annual rev', user.organization.annual_revenue)}
+              {this.contentForInfo('head count', user.organization.size)}
+              {this.contentForInfo('mesh users', user.organization.user_count)}
+              {this.contentForInfo('website', user.organization.website, true)}
+              {this.contentForInfo('integration', provider.name, true)}
+            </dl>
+          </div>
+        </div>  
+      )    
+    }
+
+    /**
+     * Lists
+     */
+    let listSection = null
+    if (user.lists) {
+      const listsContent = this.contentForLists(user.lists)
+      if (listsContent && listsContent.length) {
+        listSection = (
+          <div className="row lists">
+            <div className="col-xs-12">
+              <h4>{'Lists'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {listsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }  
+    }
+
+    /**
+     * Tickets
+     */
+    let ticketsSection = null
+    if (user.tickets) {
+      const ticketsContent = this.contentForSupportTickets(user.tickets)
+      if (ticketsContent && ticketsContent.length) {
+        ticketsSection = (
+          <div className="row lists">
+            <div className="col-xs-12">
+              <h4>{'Support Tickets'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {ticketsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }      
+    }
+
+    /**
+     * Transactions
+     */
+    let transactionsSection = null
+    if (user.tickets) {
+      const transactionsContent = this.contentForTransactions(user.transactions)
+      if (transactionsContent && transactionsContent.length) {
+        transactionsSection = (
+          <div className="row lists">
+            <div className="col-xs-12">
+              <h4>{'Transactions'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {transactionsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }      
+    }
+
+    return (
+      <div className="user-detail-form">
+        <div>
+          <UserHeader user={this.props.user}/>
+        </div>
+
+        <div className="user-content">
+          
+          {userContent}
+
+          {orgSection}
+                      
+          {listSection}
+
+          {ticketsSection}
+
+          {transactionsSection}
+
+        </div>
         {footer}
       </div>
     );
   }
 }
-
-UserDetailForm.displayName = 'User Details';
 
 UserDetailForm.defaultProps = {
   displayActionButtons: true
@@ -117,6 +279,7 @@ UserDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  providers: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
 }
 

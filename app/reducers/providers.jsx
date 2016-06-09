@@ -6,6 +6,7 @@ const defaultState = {
 	isFetchingOAuth: false,
 	isFetching: false,
 	didInvalidate: false,
+	hudMessage: '',
 	OAuthURL: null,
 	providers: []
 }

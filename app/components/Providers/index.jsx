@@ -31,19 +31,20 @@ class Providers extends Component {
     let pro = this.props.providerState.providers.find(function(provider){
       return provider.id == providerID
     })
-
-    this.setState({
-      selectedProvider: pro,
-      credentialFormDisplayed: true
-    });
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
       this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
+        this.props.providerActions.requestedOAuthForProvider()
         // response 
-        window.location = response
+        // window.location = response
         // Received the oauth URL?
       })
+    } else {
+      this.setState({
+        selectedProvider: pro,
+        credentialFormDisplayed: true
+      });
     }
   }
 
