@@ -36,9 +36,7 @@ class Providers extends Component {
     if (pro.oauth === true) {
       this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
         this.props.providerActions.requestedOAuthForProvider()
-        // response 
-        // window.location = response
-        // Received the oauth URL?
+        window.location = response
       })
     } else {
       this.setState({

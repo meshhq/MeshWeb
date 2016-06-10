@@ -79,7 +79,7 @@ class UserDetailForm extends Component {
 
       const provider = this.providerForTypeID(list.origin_provider)
       listsContent.push(
-        <OverlayTrigger overlay={tooltip} placement="top" key={list.id} >
+        <OverlayTrigger key={list.id} overlay={tooltip} placement="top" >
           <a href="#" onClick={this.linkClicked}>
             {this.contentForInfo('title', list.name, list.id)}
           </a>

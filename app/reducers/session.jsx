@@ -4,7 +4,7 @@ import { SUBMITTED_LOGIN, RECEIVED_CHALLENGE, LOGIN_SUCCESS } from '../actions/u
 const defaultState = {
 	isLoggingIn: false,
 	challenge: false,
-	hudMessage: '',
+	hudMessage: ''
 }
 
 function session(state = defaultState, action) {
