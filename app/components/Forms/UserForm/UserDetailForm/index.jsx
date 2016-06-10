@@ -240,7 +240,6 @@ class UserDetailForm extends Component {
 
   render() {
     let user = this.props.user
-    console.log(user)
     /**
      * Conditional Footer
      */
