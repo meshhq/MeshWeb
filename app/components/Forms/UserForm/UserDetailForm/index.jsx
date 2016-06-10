@@ -1,49 +1,232 @@
+
 import React, { Component, PropTypes } from 'react'
-import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
+import { Modal, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import Pill from '../../../Shared/Pill'
 import UserHeader from './UserHeader'
-
-import DataTable from '../../../Shared/DataTable'
-import FixedDataTable from 'fixed-data-table'
-import TextCell from '../../../Shared/DataTableCells/TextCell'
-
-const { Column, Cell } = FixedDataTable;
+import _ from 'underscore'
 
 class UserDetailForm extends Component {
+  displayName: 'User Details';
+  constructor(props, context) {
+    super(props, context);
 
-  _handleChange(key, event) {
-    this.props.onChange(key, event)
+    // Binding methods
+    this.contentForInfo = this._contentForInfo.bind(this)
+    this.contentForLists = this._contentForLists.bind(this)
+    this.providerForTypeID = this._providerForTypeID.bind(this)
+    this.contentForSupportTickets = this._contentForSupportTickets.bind(this)
+    this.contentForTransactions = this._contentForTransactions.bind(this)
+    this.linkClicked = this._linkClicked.bind(this)
+    this.transactionsTableWithTransactions = this._transactionsTableWithTransactions.bind(this)
+    this.providerPillsForTypeIDs = this._providerPillsForTypeIDs.bind(this)
+    this.supportTicketsTableWithTickets = this._supportTicketsTableWithTickets.bind(this)
   }
 
-  _userColumn(key, label, defaultValue) {
-    let onChange = this._handleChange.bind(this, key)
-    return (
-      <Col md={6} ref={key}>
-        <Input defaultValue={defaultValue} label={label} onChange={onChange} type="text"/>
-      </Col>
-    );
+  // Main formatter for label/value
+  _contentForInfo(label, value, full = false, contentId = '') {
+    if (value) {
+      // Need to format and perform checks based on type
+      let formattedValue = null
+
+      // String check
+      if (_.isString(value) && value.length > 0) {
+
+        // Look for email or site labels
+        if (label === 'email' || label === 'website') {
+          formattedValue = (
+            <a href="#" onClick={this.linkClicked}>{value}</a>
+          )
+        } else {
+          formattedValue = value
+        }
+      }
+
+      // Number check
+      if (_.isNumber(value)) {
+        formattedValue = value.toLocaleString()
+      }
+
+      // Object
+      if (value) {
+        formattedValue = value
+      }
+
+      // If theres a value, return html
+      if (formattedValue) {
+        return (
+          <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={label + contentId}>
+            <dt>{label}</dt>
+            <dd>{formattedValue}</dd>
+          </div>
+        )
+      }
+    }
   }
 
-  _listTable() {
-    let test = this._userColumn.bind(this)
+  _linkClicked(e) {
+    e.preventDefault()
+  }
 
-    let columns = []
-    let firstNameCall = (<TextCell col="name" data={this.props.lists} onClick={test}/>)
-    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+  _contentForLists(lists) {
+    let listsContent = []
+    for (let i = 0; i < lists.length; i++) {
+      const list = lists[i]
 
-    let lastNameCell = (<TextCell col="user_count" data={this.props.lists} onClick={test}/>)
-    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+      const tooltip = (
+        <Tooltip id={list.id}><strong>{'List Link'}</strong><br></br>{' This links out to the user list that resides in the integration.'}</Tooltip>
+      )
 
-    return (
-      <Col md={12}>
-        <DataTable
-          columns={columns}
-          maxHeight={300}
-          rowCount={this.props.lists.getSize()}
-          width={540}
-          {...this.props}
-        />
-      </Col>
+      const provider = this.providerForTypeID(list.origin_provider)
+      listsContent.push(
+        <OverlayTrigger key={list.id} overlay={tooltip} placement="top" >
+          <a href="#" onClick={this.linkClicked}>
+            {this.contentForInfo('title', list.name, list.id)}
+          </a>
+        </OverlayTrigger>
+      )
+      listsContent.push(this.contentForInfo('User Count', list.user_count, list.id))
+      listsContent.push(this.contentForInfo('Description', list.description, true, list.id))
+      listsContent.push(this.contentForInfo('Integration', provider.name, true, list.id))
+    }
+    return listsContent
+  }
+
+  _contentForSupportTickets(tickets) {
+    return this.supportTicketsTableWithTickets(tickets)
+  }
+
+  _supportTicketsTableWithTickets(tickets) {
+    // Standard Tooltip
+    const headers = (
+      <tr>
+        <th>{'Date'}</th>
+        <th>{'Origin'}</th>
+        <th>{'Number'}</th>
+        <th>{'Subject'}</th>
+      </tr>
     )
+
+    const rows = _.map(tickets, (ticket, idx) => {
+      const tooltip = (
+        <Tooltip id={ticket.id}><strong>{'Support Ticket Link'}</strong><br></br>{'Links to your support ticket'}</Tooltip>
+      )
+      const providerIDs = _.allKeys(ticket.integration_data)
+      const createdDate = new Date(ticket.created_at)
+      const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
+      return (        
+        <tr className='ticket-row' key={idx}>
+          <td scope='row'>{createdShortDate}</td>
+          <td scope='pill-row'>{this.providerPillsForTypeIDs(providerIDs)}</td>
+          <td>
+            <OverlayTrigger overlay={tooltip} placement="top" >
+              <a href="#" onClick={this.linkClicked}>
+                <p>{'300'}</p>
+              </a>
+            </OverlayTrigger>
+          </td>
+          <td>{ticket.description}</td>
+        </tr>
+      )
+    })
+
+    return (
+      <table className='table'>
+        <thead>
+          {headers}
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
+    )
+  }
+
+  _contentForTransactions(transactions) {
+    return this.transactionsTableWithTransactions(transactions)
+  }
+
+  _transactionsTableWithTransactions(transactions) {
+    // Standard Tooltip
+    const headers = (
+      <tr>
+        <th>{'Date'}</th>
+        <th>{'Origin'}</th>
+        <th>{'Description'}</th>
+        <th>{'Amount'}</th>
+      </tr>
+    )
+
+    const rows = _.map(transactions, (transaction, idx) => {
+      const tooltip = (
+        <Tooltip id={transaction.id}><strong>{'Transaction Link'}</strong><br></br>{'Links to your transaction'}</Tooltip>
+      )
+
+      // Date
+      const createdDate = new Date(transaction.created_at)
+      const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
+
+      // Providers
+      const providerIDs = _.allKeys(transaction.integration_data)
+      const providerPillContent = this.providerPillsForTypeIDs(providerIDs)
+      return (        
+        <tr className='transaction-row' key={idx}>
+          <td scope='row'>{createdShortDate}</td>
+          <td scope='pill-row'>{providerPillContent}</td>
+          <td>{transaction.amount}</td>
+          <td>
+            <OverlayTrigger overlay={tooltip} placement="top" >
+              <a href="#" onClick={this.linkClicked}>
+                {transaction.description}
+              </a>
+            </OverlayTrigger>
+          </td>
+        </tr>
+      )
+    })
+
+    return (
+      <table className='table'>
+        <thead>
+          {headers}
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
+    )
+  }
+
+  _providerForTypeID(typeID) {
+    // Type Checking for Number
+    if (!_.isNumber(typeID)) {
+      typeID = Number(typeID)
+    }
+
+    return _.find(this.props.providers, (provider) => {
+      if (provider.type === typeID) {
+        return provider
+      }
+    })
+  }
+
+  _providerPillsForTypeIDs(typeIDs) {
+    const pills = _.map(typeIDs, (typeID) => {
+      const provider = this.providerForTypeID(typeID)
+      const tooltip = (
+        <Tooltip id={typeID}><strong>{'Provider Link'}</strong><br></br>{' This links out to the resource in the integration.'}</Tooltip>
+      )
+      if (!provider) {
+        return null
+      }
+      return (
+        <div className='provider-pill-wrapper' key={typeID}>
+          <OverlayTrigger overlay={tooltip} placement="top" >
+            <Pill color={provider.color} title={provider.name}/>
+          </OverlayTrigger>
+        </div>
+      )
+    })
+    return pills
   }
 
   _seperator(title) {
@@ -57,7 +240,9 @@ class UserDetailForm extends Component {
 
   render() {
     let user = this.props.user
-
+    /**
+     * Conditional Footer
+     */
     let footer = null
     if (this.props.displayActionButtons) {
       footer = (
@@ -68,44 +253,151 @@ class UserDetailForm extends Component {
       )
     }
 
-    return (
-      <div>
-        <Modal.Body>
-          <UserHeader user={this.props.user}/>
-        </Modal.Body>
+    /**
+     * User Info
+     */
 
-        <Modal.Body>
-          <Grid fluid>
-            <Row>
-              {this._userColumn('first_name', 'First Name', user.first_name)}
-              {this._userColumn('last_name', 'Last Name', user.last_name)}
-            </Row>
-            <Row>
-              {this._userColumn('email', 'Email', user.email)}
-              {this._userColumn('phone', 'Phone', user.phone)}
-            </Row>
-            <Row>
-              {this._seperator('Organization')}
-            </Row>
-            <Row>
-              {this._userColumn('organization_name', 'Organization', user.organization_name)}
-              {this._userColumn('website', 'Website', user.website)}
-            </Row>
-            <Row>
-              {this._seperator('Lists')}
-            </Row>
-            <Row>
-              {this._seperator('Integration Data')}
-            </Row>
-          </Grid>
-        </Modal.Body>
+    // Find provider if given
+    const userProviders = _.allKeys(user.integration_data)
+    const userProviderContent = this.providerPillsForTypeIDs(userProviders)
+    const userContent = (
+      <div className="row personal-info">
+        <div className="col-xs-12">
+          <h4>{'Personal'}</h4>
+        </div>
+        <div className="col-xs-12">
+          <dl className="dl-horizontal">
+            {this.contentForInfo('Email', user.email, true)}
+            {this.contentForInfo('First Name', user.first_name, true)}
+            {this.contentForInfo('Last Name', user.last_name, true)}
+            {this.contentForInfo('Title', user.title, true)}
+            {this.contentForInfo('Phone', user.phone, true)}
+            {this.contentForInfo('Integrations', userProviderContent, true)}
+          </dl>
+        </div>
+      </div>
+    )
+
+    /**
+     * Organization
+     */
+    let orgSection = null
+    if (user.organization) {
+
+      // Find provider if given
+      const orgProviders = _.allKeys(user.organization.integration_data)
+      const orgProviderContent = this.providerPillsForTypeIDs(orgProviders)
+
+      orgSection = (
+        <div className="row organization">
+          <div className="col-xs-12">
+            <h4>{'Organization'}</h4>
+          </div>
+          <div className="col-xs-12">
+            <dl className="dl-horizontal">
+              {this.contentForInfo('Name', user.organization.name, true)}
+              {this.contentForInfo('Industry', user.organization.industry, true)}
+              {this.contentForInfo('Annual Rev', user.organization.annual_revenue, true)}
+              {this.contentForInfo('Head Count', user.organization.size, true)}
+              {this.contentForInfo('Mesh Users', user.organization.user_count, true)}
+              {this.contentForInfo('Website', user.organization.website, true)}
+              {this.contentForInfo('Integrations', orgProviderContent, true)}
+            </dl>
+          </div>
+        </div>  
+      )    
+    }
+
+    /**
+     * Lists
+     */
+    let listSection = null
+    if (user.lists) {
+      const listsContent = this.contentForLists(user.lists)
+      if (listsContent && listsContent.length) {
+        listSection = (
+          <div className="row lists">
+            <div className="col-xs-12">
+              <h4>{'Lists'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {listsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }  
+    }
+
+    /**
+     * Tickets
+     */
+    let ticketsSection = null
+    if (user.tickets) {
+      const ticketsContent = this.contentForSupportTickets(user.tickets)
+      if (ticketsContent) {
+        ticketsSection = (
+          <div className="row tickets">
+            <div className="col-xs-12">
+              <h4>{'Support Tickets'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {ticketsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }      
+    }
+
+    /**
+     * Transactions
+     */
+    let transactionsSection = null
+    if (user.tickets) {
+      const transactionsContent = this.contentForTransactions(user.transactions)
+      if (transactionsContent) {
+        transactionsSection = (
+          <div className="row transactions">
+            <div className="col-xs-12">
+              <h4>{'Transactions'}</h4>
+            </div>
+            <div className="col-xs-12">
+              <dl className="dl-horizontal">
+                {transactionsContent}
+              </dl>
+            </div>
+          </div>
+        )
+      }      
+    }
+
+    return (
+      <div className="user-detail-form">
+        <div>
+          <UserHeader user={this.props.user}/>
+        </div>
+
+        <div className="user-content">
+          
+          {userContent}
+
+          {orgSection}
+
+          {ticketsSection}
+
+          {transactionsSection}
+
+          {listSection}
+
+        </div>
         {footer}
       </div>
     );
   }
 }
-
-UserDetailForm.displayName = 'User Details';
 
 UserDetailForm.defaultProps = {
   displayActionButtons: true
@@ -117,6 +409,7 @@ UserDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  providers: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
 }
 

@@ -1,16 +1,80 @@
-div.initials-bubble {
-	display: inline-block;
-	background-color: #F1F1F1;
-	border-radius: 30px;
-	height: 60px;
-	width: 60px;
-	margin-top: 16px;
+.user-detail-form {
 
-	p {
-		color: black;
-		text-align: center;
-		line-height: 60px;
-		font-size: 32px;
-		font-weight: 700;
+	.user-content {
+		margin-bottom: 2em;
+	}
+
+	.row {
+		padding: 10px 0px;
+	}
+
+	.col-xs-12 {
+		display: inline-block;
+	}
+
+	dl {
+		margin-bottom: 0px;
+	}
+
+	dt {
+		width: 80px;
+		text-align: left;
+		font-weight: 300;
+	}
+
+	dd {
+		margin-left: 90px;
+		font-weight: 400;
+	}
+	
+	.header-row {
+		background-color: $MeshWhiteDark;
+	}
+
+	.user-detail-form {
+		color: $MeshBlack;
+	}	
+
+	.info-field {
+		padding-top: 5px;
+	}
+
+	.lineitem-title {
+		margin-top: 10px;
+	}
+
+	h5 {
+		font-weight: 500;
+	}
+
+	a {
+		color: $MeshBlueDark;
+	}
+
+	table {
+		a {
+			font-weight: 400;
+		}
+			
+		tr {
+			max-height: 50px;
+		}
+
+		td {
+		    max-width: 150px;
+		    max-height: 50px;
+		    overflow: hidden;
+		}
+	}
+
+	.transaction-row {
+		.pill-row {
+			padding: 0px;
+		}
+	}
+
+	.provider-pill-wrapper {
+		display: inline;
+		padding-right: 5px;
 	}
 }

@@ -1,7 +1,7 @@
 // Vendor
 @import './vendor/fixed-table-style.css';
-@import './bowerComponents/bootstrap/dist/css/bootstrap.min.css';
 @import './bowerComponents/SpinKit/scss/spinners/9-cube-grid.scss';
+@import './bowerComponents/bootstrap/dist/css/bootstrap.min.css';
 
 // Package
 @import './__base';
@@ -42,5 +42,9 @@
 
 // Forms
 @import '../components/Forms/UserForm/style';
+@import '../components/Forms/UserForm/UserDetailForm/style';
+@import '../components/Forms/UserForm/UserDetailForm/UserHeader/style';
+@import '../components/Forms/OrganizationForm/OrganizationDetailForm/style';
+@import '../components/Forms/OrganizationForm/OrganizationDetailForm/OrganizationHeader/style';
 @import '../components/Forms/IntegrationForm/style';
 @import '../components/Forms/CredentialForm/style';

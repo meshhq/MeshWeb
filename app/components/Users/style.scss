@@ -3,21 +3,21 @@
 		margin-bottom: 0px;
 	}
 
-	.example-enter {
-	  opacity: 0.01;
+	.user-panel-enter {
+	  right: -40%;
 	}
 
-	.example-enter.example-enter-active {
-	  opacity: 1;
-	  transition: opacity 500ms ease-in;
+	.user-panel-enter.user-panel-enter-active {
+	  right: 0px;
+	  transition: right 500ms ease-out;
 	}
 
-	.example-leave {
-	  opacity: 1;
+	.user-panel-leave {
+	  right: 0px;
 	}
 
-	.example-leave.example-leave-active {
-	  opacity: 0.01;
-	  transition: opacity 300ms ease-in;
+	.user-panel-leave.user-panel-leave-active {
+		right: -40%;
+		transition: right 500ms ease-in;
 	}
 }

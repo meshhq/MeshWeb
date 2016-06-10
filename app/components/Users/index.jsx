@@ -29,8 +29,8 @@ const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 const { Column, Cell } = FixedDataTable;
 
 class UserTable extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
       // User Selection
       this.handleSelectOne = this._handleSelectOne.bind(this)
@@ -329,7 +329,7 @@ class UserTable extends React.Component {
      */
      _handleCellClick(idx) {
        let user = this.state.filteredDataList.getObjectAt(idx)
-       //this.props.userActions.getListsForUser(user)
+       this.props.userActions.requestDetailUser(user)
        this.setState({
          selectedUser: user,
          userFormDisplayed: false,
@@ -417,8 +417,20 @@ class UserTable extends React.Component {
 
     let sideDetail = null
     if (sideDetailDisplayed === true) {
+      let user = this.state.selectedUser
+      if (this.props.userState.detailUser) {
+        user = this.props.userState.detailUser
+      }
+      const { isFetchingDetail } = this.props.userState
       sideDetail = (
-        <SideDetailView key="side-detail" onExit={this.handleCloseUserForm} />
+        <SideDetailView 
+          detailUser={user} 
+          isFetchingDetailUser={isFetchingDetail} 
+          key="side-detail" 
+          onExit={this.handleCloseUserForm}
+          panelRelativeWidth="40%"
+          providers={this.props.providerState.providers}
+        />
       )
     }
 
@@ -442,15 +454,13 @@ class UserTable extends React.Component {
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
 
-    let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} key={'priority'} width={100}/>)
     return (
       <div className="users-component">
         <div className="modals-container">
           {forms}
         </div>
         <div className="detail-side-pane">
-          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={300} transitionName="example">
+          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={500} transitionName="user-panel">
             {sideDetail}
           </ReactCSSTransitionGroup>
         </div>

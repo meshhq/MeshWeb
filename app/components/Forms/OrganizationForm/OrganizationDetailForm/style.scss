@@ -1,16 +1,46 @@
-div.initials-bubble {
-	display: inline-block;
-	background-color: #F1F1F1;
-	border-radius: 30px;
-	height: 60px;
-	width: 60px;
-	margin-top: 16px;
+.org-detail-form {
 
-	p {
-		color: black;
-		text-align: center;
-		line-height: 60px;
-		font-size: 32px;
-		font-weight: 700;
+	.row {
+		padding: 10px 0px;
+	}
+
+	.col-xs-12 {
+		display: inline-block;
+	}
+
+	dt {
+		width: 80px;
+		text-align: left;
+		font-weight: 300;
+	}
+
+	dd {
+		margin-left: 90px;
+		font-weight: 400;
+	}
+	
+	
+	.header-row {
+		background-color: $MeshWhiteDark;
+	}
+
+	.org-detail-form {
+		color: $MeshBlack;
+	}	
+
+	.info-field {
+		padding-top: 5px;
+	}
+
+	.lineitem-title {
+		margin-top: 10px;
+	}
+
+	.person-row {
+		cursor: pointer;
+	}
+
+	h5 {
+		font-weight: 300;
 	}
 }

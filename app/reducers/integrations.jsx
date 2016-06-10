@@ -3,6 +3,7 @@ import { REFRESH_INTEGRATION_LIST, REQUEST_INTEGRATIONS, RECEIVE_INTEGRATIONS } 
 const defaultState = {
 	isFetching: false,
 	didInvalidate: false,
+	hudMessage: '',
 	integrations: []
 }
 

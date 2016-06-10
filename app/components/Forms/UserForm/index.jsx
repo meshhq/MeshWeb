@@ -39,7 +39,7 @@ class UserForm extends Component {
   _userDetailModal() {
     return (
       <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-        <UserDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} user={this.props.user}/>
+        <UserDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} providers={[]} user={this.props.user}/>
       </Modal>
     );
   }
@@ -66,6 +66,7 @@ UserForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   organization : PropTypes.object,
+  providers: PropTypes.array,
   user : PropTypes.object
 }
 

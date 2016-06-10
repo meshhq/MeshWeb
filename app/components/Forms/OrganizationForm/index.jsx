@@ -11,6 +11,7 @@ class OrganizationForm extends Component {
     this.handleChange = this._handleChange.bind(this)
     this.handleSave = this._handleSave.bind(this)
     this.handleUpdate = this._handleUpdate.bind(this)
+    this.orgUserSelected = this._orgUserSelected.bind(this)
   }
 
   _handleChange(stateKey, e) {
@@ -25,6 +26,10 @@ class OrganizationForm extends Component {
 
   _handleUpdate() {
     this.props.onUpdate(this.state)
+  }
+
+  _orgUserSelected() {
+
   }
 
   _newOrganizationModal() {
@@ -45,9 +50,11 @@ class OrganizationForm extends Component {
         <OrganizationDetailForm
           onCancel={this.props.onCancel}
           onChange={this.handleChange}
+          onSelectOrgUser={this.orgUserSelected}
           onUpdate={this.handleUpdate}
           organization={this.props.organization}
-          users={this.props.users}
+          providers={[]}
+          users={[]}
         />
       </Modal>
     );

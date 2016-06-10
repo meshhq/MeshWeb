@@ -1,27 +1,19 @@
 .side-detail {
-	width: 30%;
 	height: 100%;
 	position: absolute;
-	right: 0px;
 	background-color: $MeshWhite;
-	z-index: 2;
+	z-index: 100;
 	box-shadow: -2px 0px 10px $MeshGreyDark;
-
-	.container-fluid {
-		position: relative;
-	}
+	right: 0px;
+	overflow: auto;
+	border-radius: 5px;
 
 	.row {
-		display: -webkit-flex;
-		display: flex;
-		-webkit-flex-direction: row;
-		flex-direction: row;
+		border-bottom: 1px solid $MeshGrey;
 	}
 	
 	// Nav (Top)
 	.nav {
-		border-bottom: 1px solid $MeshGreyLight;
-
 		// Nav Portion
 		.back-button {
 			display: flex;
@@ -32,6 +24,19 @@
 				a {
 					font-size: 1.25em;
 					font-weight: 300;
+				}
+			}
+		}
+
+		.refresh-button {
+			display: flex;
+			align-content: right;
+			justify-content: flex-end;
+			.refresh-container {
+				margin-top: 15px;
+				a {
+					font-size: 1.25em;
+					font-weight: 400;
 				}
 			}
 		}

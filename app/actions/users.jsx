@@ -225,3 +225,42 @@ export function refreshUsers() {
 		}
 	}
 }
+
+//------------------------------------------------------------------------------
+// Refresh Users
+//------------------------------------------------------------------------------
+
+// This action is to indicate the desired
+// refresh of the user table
+export const REQUESTED_DETAIL_USER = 'REQUEST_DETAIL_USER'
+export function requestedDetailUser(currentUser) {
+	return {
+		type: REQUESTED_DETAIL_USER,
+		detailUser: currentUser
+	}
+}
+
+// This function is to indicate that the
+// network request action has begun
+export const RECEIVED_DETAIL_USER_RESPONSE = 'RECEIVE_DETAIL_USER_RESPONSE'
+export function receivedDetailUser(json) {
+	return {
+		type: RECEIVED_DETAIL_USER_RESPONSE,
+		detailUser: json
+	}
+}
+
+// requestDetailUser sends a request for the 
+export function requestDetailUser(user) {
+	return (dispatch, getState) => {
+		dispatch(requestedDetailUser(user))
+		if (getState().app.id) {
+			const appId = getState().app.id
+			return GET(`apps/${appId}/users/${user.id}/full`)
+			.then(function(json){
+					dispatch(receivedDetailUser(json))
+				}
+			)
+		}
+	}
+}

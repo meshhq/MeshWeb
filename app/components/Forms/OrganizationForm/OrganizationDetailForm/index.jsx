@@ -1,125 +1,184 @@
-import React, { Component, PropTypes } from 'react'
-import { Modal, Grid, Row, Col, Input, Button } from 'react-bootstrap'
-import OrganizationHeader from './OrganizationHeader'
-import DataTable from '../../../Shared/DataTable'
-import FixedDataTable from 'fixed-data-table'
-import TextCell from '../../../Shared/DataTableCells/TextCell'
 
-const { Column, Cell } = FixedDataTable;
+import React, { Component, PropTypes } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import OrganizationHeader from './OrganizationHeader'
+import _ from 'underscore'
 
 class OrganizationDetailForm extends Component {
+  displayName: 'Organization Details';
+  constructor(props, context) {
+    super(props, context);
 
-  _handleChange(key, event) {
-    this.props.onChange(key, event)
+    // Binding methods
+    this.contentForInfo = this._contentForInfo.bind(this)
+    this.providerForTypeID = this._providerForTypeID.bind(this)
+    this.usersTableWithUsers = this._usersTableWithUsers.bind(this)
+    this.onSelectedUser = this._onSelectedUser.bind(this)
   }
 
-  _organizationColumn(key, label, defaultValue) {
-    let onChange = this._handleChange.bind(this, key)
-    return (
-      <Col md={6} ref={key}>
-        <Input defaultValue={defaultValue} label={label} onChange={onChange} type="text"/>
-      </Col>
-    );
-  }
+  _contentForInfo(label, value, full = false, contentId = '') {
+    if (value) {
+      // Need to format and perform checks based on type
+      let formattedValue = null
 
-  _descriptionColumn(key, label, defaultValue) {
-    let onChange = this._handleChange.bind(this, key)
-    return (
-      <Col md={12} ref={key}>
-        <Input defaultValue={defaultValue} label={label} onChange={onChange} type="text"/>
-      </Col>
-    );
-  }
+      // String check
+      if (_.isString(value) && value.length > 0) {
+        formattedValue = value
+      }
 
-  _seperator(title) {
-    return (
-      <Col className={'seperator'} md={12}>
-        <h4>{title}</h4>
-        <div className={'seperator-line'}/>
-      </Col>
-    );
-  }
+      // Number check
+      if (_.isNumber(value)) {
+        formattedValue = value.toLocaleString()
+      }
 
-  _onUserClick() {
-
-  }
-
-  _userTable() {
-    let columns = []
-    if (this.props.users == null) {
-      return columns
+      // If theres a value, return html
+      if (formattedValue) {
+        return (
+          <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={formattedValue + contentId}>
+            <dt>{label}</dt>
+            <dd>{formattedValue}</dd>
+          </div>
+        )
+      }
     }
+  }
 
-    let handleUserClick = this._onUserClick.bind(this)
-    let firstNameCall = (<TextCell col="first_name" data={this.props.users} onClick={handleUserClick}/>)
-    columns.push(<Column cell={firstNameCall} header={<Cell>{'First Name'}</Cell>} key={'first_name'} width={150}/>)
+  _providerForTypeID(typeID) {
+    return _.find(this.props.providers, (provider) => {
+      if (provider.type === typeID) {
+        return provider
+      }
+    })
+  }
 
-    let lastNameCell = (<TextCell col="last_name" data={this.props.users} onClick={handleUserClick}/>)
-    columns.push(<Column cell={lastNameCell} header={<Cell>{'Last Name'}</Cell>} key={'last_name'} width={150}/>)
+  _onSelectedUser(user) {
+    this.props.onSelectOrgUser(user)
+  }
 
-    let emailCell = (<TextCell col="email" data={this.props.users} onClick={handleUserClick}/>)
-    columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={240}/>)
+  _usersTableWithUsers(users) {
+    const headers = (
+      <tr>
+        <th>{'email'}</th>
+        <th>{'first name'}</th>
+        <th>{'last name'}</th>
+      </tr>
+    )
+
+    const rows = _.map(users, (user, idx) => {
+      const boundSelectUser = this.onSelectedUser.bind(this, user)
+      return (        
+        <tr className='person-row' key={idx} onClick={boundSelectUser}>
+          <th scope='row'>{user.email}</th>
+          <td>{user.first_name}</td>
+          <td>{user.last_name}</td>
+        </tr>
+    )
+    })
 
     return (
-      <Col md={12}>
-        <DataTable
-          columns={columns}
-          maxHeight={300}
-          rowCount={this.props.users.getSize()}
-          width={540}
-          {...this.props}
-        />
-      </Col>
+      <table className='table table-hover'>
+        <thead>
+          {headers}
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
     )
   }
 
   render() {
-    let organization = this.props.organization
-    return (
-      <div>
-        <Modal.Body>
-          <OrganizationHeader organization={this.props.organization}/>
-        </Modal.Body>
+    const { organization } = this.props
 
-        <Modal.Body>
-          <Grid fluid>
-            <Row>
-              {this._organizationColumn('name', 'Organization Name', organization.name)}
-              {this._organizationColumn('website', 'Website', organization.website)}
-            </Row>
-            <Row>
-              {this._organizationColumn('size', 'Size', organization.size)}
-              {this._organizationColumn('industry', 'Industry', organization.industry)}
-            </Row>
-            <Row>
-              {this._descriptionColumn('description', 'Description', organization.description)}
-            </Row>
-            <Row>
-              {this._seperator('Users')}
-              {this._userTable()}
-            </Row>
-            <Row>
-              {this._seperator('Integration Data')}
-            </Row>
-          </Grid>
-        </Modal.Body>
-
+    /**
+     * Conditional Footer
+     */
+    let footer = null
+    if (this.props.displayActionButtons) {
+      footer = (
         <Modal.Footer>
           <Button onClick={this.props.onCancel}>{"Cancel"}</Button>
           <Button bsStyle='success' onClick={this.props.onUpdate}>{"Update"}</Button>
         </Modal.Footer>
+      )
+    }
+
+    /**
+     * Organization
+     */
+
+    // Find provider if given
+    const provider = this.providerForTypeID(organization.origin_provider)
+    let providerContent = null
+    if (provider) {
+      providerContent = this.contentForInfo('integration', provider.name, true)
+    }
+
+    const orgSection = (
+      <div className="row organization">
+        <div className="col-xs-12">
+          <dl className="dl-horizontal">
+            {this.contentForInfo('name', organization.name, true)}
+            {this.contentForInfo('industry', organization.industry, true)}
+            {this.contentForInfo('description', organization.description, true)}
+            {this.contentForInfo('annual rev', organization.annual_revenue, true)}
+            {this.contentForInfo('head count', organization.size, true)}
+            {this.contentForInfo('mesh users', organization.user_count)}
+            {this.contentForInfo('website', organization.website, true)}
+            {providerContent}
+          </dl>
+        </div>
+      </div>  
+    )
+
+    let usersTable = null
+    if (this.props.users) {
+      const table = this.usersTableWithUsers(this.props.users)
+      usersTable = (
+        <div className="row lists">
+          <div className="col-xs-12">
+            <h4>{'Users In ' + this.props.organization.name}</h4>
+          </div>
+          <div className="col-xs-12">
+            <dl className="dl-horizontal">
+              {table}
+            </dl>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="org-detail-form">
+        <div>
+          <OrganizationHeader organization={organization}/>
+        </div>
+
+        <div className="org-content">
+          
+          {orgSection}
+                      
+          {usersTable}
+
+        </div>
+        {footer}
       </div>
     );
   }
 }
 
-OrganizationDetailForm.displayName = 'Organization Details';
+OrganizationDetailForm.defaultProps = {
+  displayActionButtons: true
+}
 
 OrganizationDetailForm.propTypes = {
+  displayActionButtons: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onSelectOrgUser: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
+  providers: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired
 }
 

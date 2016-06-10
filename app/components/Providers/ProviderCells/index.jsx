@@ -13,9 +13,11 @@ const ProviderCell = ({ providerID, onActivateClick, providerName, logoSrc }) =>
 
   return (
     <Col className={'provider-cell'} md={3}>
-      <img className="logo-img img-responsive" src={imgSrc}/>
-      <h4>{providerName}</h4>
-      <Button bsStyle='success' onClick={handleActivateClick}>{"Activate"}</Button>
+      <div className='provider-container'>
+        <img className="logo img-responsive" src={imgSrc}/>
+        <h4>{providerName}</h4>
+        <Button bsStyle='success' onClick={handleActivateClick}>{"Activate"}</Button>
+      </div>
     </Col>
   );
 }

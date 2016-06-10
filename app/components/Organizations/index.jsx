@@ -12,6 +12,7 @@ import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import DataTable from '../Shared/DataTable'
+import SideDetailView from '../Shared/SideDetailView'
 
 // Forms
 import OrganizationForm from '../Forms/OrganizationForm'
@@ -21,6 +22,10 @@ import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
 import * as OrganizationActions from '../../actions/organizations'
+import * as UserActions from '../../actions/users'
+
+// Transitions
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 const { Column, Cell } = FixedDataTable;
 
@@ -36,6 +41,7 @@ class OrganizationTable extends Component {
     this.handleNewClick = this._handleNewClick.bind(this)
     this.handleSaveOrganization = this._handleSaveOrganization.bind(this)
     this.handleCloseOrganizationForm = this._handleCloseOrganizationForm.bind(this)
+    this.handleCloseUserForm = this._handleCloseUserForm.bind(this)
 
     // Delete Organization Handlers
     this.handleDeleteClick = this._handleDeleteClick.bind(this)
@@ -50,6 +56,7 @@ class OrganizationTable extends Component {
     // Cell Selection
     this.handleCellClick = this._handleCellClick.bind(this)
     this.handleUpdateOrganization = this._handleUpdateOrganization.bind(this)
+    this.handleShowingSelectedUser = this._handleShowingSelectedUser.bind(this)
 
     // Searching
     this.handleSearch = this._handleSearch.bind(this)
@@ -68,14 +75,15 @@ class OrganizationTable extends Component {
       selectedList: [],
       selectedOrganization: null,
       selectedOrganizationUsers: [],
-      selectedProvider: null
+      selectedProvider: null,
+      orgSideDetailDisplayed: false,
+      userSideDetailDisplayed: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    let selectedOrganizationUsers = new DataListWrapper(nextProps.users)
     this.setState({
-      selectedOrganizationUsers: selectedOrganizationUsers
+      selectedOrganizationUsers: nextProps.organizationState.users
     });
   }
 
@@ -178,7 +186,14 @@ class OrganizationTable extends Component {
     this.setState({
       selectedOrganization: null,
       selectedOrganizationUsers: [],
-      organizationFormDisplayed: false
+      organizationFormDisplayed: false,
+      orgSideDetailDisplayed: false
+    });
+  }
+
+  _handleCloseUserForm() {
+    this.setState({
+      userSideDetailDisplayed: false
     });
   }
 
@@ -274,7 +289,9 @@ class OrganizationTable extends Component {
     this.props.organizationActions.fetchOrganizationUsers(organization)
     this.setState({
       selectedOrganization: organization,
-      organizationFormDisplayed: true
+      organizationFormDisplayed: false,
+      orgSideDetailDisplayed: true,
+      userSideDetailDisplayed: false
     });
   }
 
@@ -283,6 +300,14 @@ class OrganizationTable extends Component {
     this.setState({
       selectedOrganization: null,
       organizationFormDisplayed: false
+    });
+  }
+
+  _handleShowingSelectedUser(user) {
+    this.props.userActions.requestDetailUser(user)
+    this.setState({
+      userSideDetailDisplayed: true,
+      selectedUser: user
     });
   }
 
@@ -314,7 +339,7 @@ class OrganizationTable extends Component {
 
   render() {
     // Data sources.
-    const { selectedList, filteredDataList } = this.state
+    const { selectedList, filteredDataList, orgSideDetailDisplayed, userSideDetailDisplayed } = this.state
 
     let forms = (
       <div className={'forms'}>
@@ -324,7 +349,6 @@ class OrganizationTable extends Component {
           onSave={this.handleSaveOrganization}
           onUpdate={this.handleUpdateOrganization}
           organization={this.state.selectedOrganization}
-          users={this.state.selectedOrganizationUsers}
         />
         <DeleteForm
           displayed={this.state.deleteFormDisplayed}
@@ -350,6 +374,47 @@ class OrganizationTable extends Component {
     let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
     let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
     let actions = [newAction, publishAction, deleteAction];
+
+    /**
+     * Organization Side Panel
+     */
+    let orgSideDetail = null
+    if (orgSideDetailDisplayed === true) {
+      let org = this.state.selectedOrganization
+      orgSideDetail = (
+        <SideDetailView 
+          detailOrg={org}
+          key="org-side-detail" 
+          onExit={this.handleCloseOrganizationForm}
+          onSelectOrgUser={this.handleShowingSelectedUser}
+          panelRelativeWidth="40%"
+          providers={this.props.providerState.providers}
+          users={this.state.selectedOrganizationUsers}
+        />
+      )
+    }
+
+    /**
+     * User Detail Side Panel
+     */
+    let userSideDetail = null
+    if (userSideDetailDisplayed === true) {
+      let user = this.state.selectedUser
+      if (this.props.userState.detailUser) {
+        user = this.props.userState.detailUser
+      }
+      userSideDetail = (
+        <SideDetailView
+          detailUser={user}
+          isFetchingDetailUser={this.props.userState.isFetchingDetail} 
+          key="user-side-detail" 
+          onExit={this.handleCloseUserForm}
+          panelRelativeWidth="39%"
+          providers={this.props.providerState.providers}
+          style={{ width: '90%' }}
+        />
+      )
+    }
 
     let columns = []
 
@@ -378,6 +443,14 @@ class OrganizationTable extends Component {
       <div className="organizations-component">
         <div className="modals-container">
           {forms}
+        </div>
+        <div className="detail-side-pane">
+          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={900} transitionName="org-panel">
+            {orgSideDetail}
+          </ReactCSSTransitionGroup>
+          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={900} transitionName="user-panel">
+            {userSideDetail}
+          </ReactCSSTransitionGroup>
         </div>
         <div className="action-bar">
           <ActionBar
@@ -409,10 +482,13 @@ OrganizationTable.defaultProps = {
 }
 
 OrganizationTable.propTypes = {
+  containerHeight: PropTypes.number,
   integrationState: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
   organizationState: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
+  userActions: PropTypes.object.isRequired,
+  userState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
 }
 
@@ -420,13 +496,15 @@ function mapStateToProps(state) {
   return {
     integrationState: state.integrations,
     organizationState: state.organizations,
-    providerState: state.providers
+    providerState: state.providers,
+    userState: state.users
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    organizationActions: bindActionCreators(OrganizationActions, dispatch)
+    organizationActions: bindActionCreators(OrganizationActions, dispatch),
+    userActions: bindActionCreators(UserActions, dispatch)
   }
 }
 
