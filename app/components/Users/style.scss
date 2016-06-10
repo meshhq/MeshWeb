@@ -9,7 +9,7 @@
 
 	.user-panel-enter.user-panel-enter-active {
 	  right: 0px;
-	  transition: right 500ms ease-in;
+	  transition: right 500ms ease-out;
 	}
 
 	.user-panel-leave {

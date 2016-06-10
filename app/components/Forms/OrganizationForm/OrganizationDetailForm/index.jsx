@@ -13,6 +13,7 @@ class OrganizationDetailForm extends Component {
     this.contentForInfo = this._contentForInfo.bind(this)
     this.providerForTypeID = this._providerForTypeID.bind(this)
     this.usersTableWithUsers = this._usersTableWithUsers.bind(this)
+    this.onSelectedUser = this._onSelectedUser.bind(this)
   }
 
   _contentForInfo(label, value, full = false, contentId = '') {
@@ -50,6 +51,10 @@ class OrganizationDetailForm extends Component {
     })
   }
 
+  _onSelectedUser(user) {
+    this.props.onSelectOrgUser(user)
+  }
+
   _usersTableWithUsers(users) {
     const headers = (
       <tr>
@@ -60,13 +65,14 @@ class OrganizationDetailForm extends Component {
     )
 
     const rows = _.map(users, (user, idx) => {
-      return (
-        <tr key={idx}>
+      const boundSelectUser = this.onSelectedUser.bind(this, user)
+      return (        
+        <tr className='person-row' key={idx} onClick={boundSelectUser}>
           <th scope='row'>{user.email}</th>
           <td>{user.first_name}</td>
           <td>{user.last_name}</td>
         </tr>
-      )
+    )
     })
 
     return (

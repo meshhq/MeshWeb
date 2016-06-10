@@ -60,8 +60,13 @@ class SideDetail extends Component {
       )
     }
 
+    // Panel Width Injection
+    const panelWidth = this.props.panelRelativeWidth
+    const panelStyle = { width: panelWidth }
+    console.log(panelStyle)
+
     return (
-      <div className="side-detail" key="side-detail">
+      <div className="side-detail" key="side-detail" style={panelStyle} >
         <div className="container-fluid">
           <div className="row nav">
             <div className="col-xs-3 back-button">
@@ -101,6 +106,7 @@ SideDetail.propTypes = {
   isFetchingDetailUser: PropTypes.bool,
   onExit: PropTypes.func.isRequired,
   onSelectOrgUser: PropTypes.func,
+  panelRelativeWidth: PropTypes.string.isRequired,
   providers: PropTypes.array.isRequired,
   refreshResource: PropTypes.func,
   users: PropTypes.array

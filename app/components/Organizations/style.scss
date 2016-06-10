@@ -4,9 +4,12 @@
 	  right: -40%;
 	}
 
+	/**
+	 * Org Panel Side Animation Props
+	 */
 	.org-panel-enter.org-panel-enter-active {
 	  right: 0px;
-	  transition: right 500ms ease-in;
+	  transition: right 500ms ease-out;
 	}
 
 	.org-panel-leave {
@@ -17,4 +20,26 @@
 		right: -40%;
 		transition: right 500ms ease-in;
 	}
+	
+	/**
+	 * User Panel Side Animation Props
+	 */
+	.user-panel-enter {
+	  right: -40%;
+	}
+
+	.user-panel-enter.user-panel-enter-active {
+	  right: 0px;
+	  transition: right 500ms ease-out;
+	}
+
+	.user-panel-leave {
+	  right: 0px;
+	}
+
+	.user-panel-leave.user-panel-leave-active {
+		right: -40%;
+		transition: right 500ms ease-in;
+	}
+
 }

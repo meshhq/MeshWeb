@@ -428,6 +428,7 @@ class UserTable extends React.Component {
           isFetchingDetailUser={isFetchingDetail} 
           key="side-detail" 
           onExit={this.handleCloseUserForm}
+          panelRelativeWidth="40%"
           providers={this.props.providerState.providers}
         />
       )
