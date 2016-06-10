@@ -12,6 +12,10 @@
 		display: inline-block;
 	}
 
+	dl {
+		margin-bottom: 0px;
+	}
+
 	dt {
 		width: 80px;
 		text-align: left;
@@ -51,11 +55,22 @@
 		a {
 			font-weight: 400;
 		}
+
+		td {
+		    max-width: 150px;
+		    max-height: 150px;
+		    overflow: hidden;
+		}
 	}
 
 	.transaction-row {
 		.pill-row {
 			padding: 0px;
 		}
+	}
+
+	.provider-pill-wrapper {
+		display: inline;
+		padding-right: 5px;
 	}
 }

@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'dev') {
         }
     })
   );
-} else if (process.env.NODE_ENV !== 'dev') {
+} else {
   // If the ENV isn't set to either dev or prod, then set to local
   process.env.NODE_ENV = 'local'
 }
