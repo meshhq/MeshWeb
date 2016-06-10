@@ -1,13 +1,8 @@
+
 import React, { Component, PropTypes } from 'react'
 import { Modal, Col, Button } from 'react-bootstrap'
 import UserHeader from './UserHeader'
 import _ from 'underscore'
-
-import DataTable from '../../../Shared/DataTable'
-import FixedDataTable from 'fixed-data-table'
-import TextCell from '../../../Shared/DataTableCells/TextCell'
-
-const { Column, Cell } = FixedDataTable;
 
 class UserDetailForm extends Component {
   displayName: 'User Details';
@@ -20,10 +15,6 @@ class UserDetailForm extends Component {
     this.providerForTypeID = this._providerForTypeID.bind(this)
     this.contentForSupportTickets = this._contentForSupportTickets.bind(this)
     this.contentForTransactions = this._contentForTransactions.bind(this)
-  }
-
-  _handleChange(key, event) {
-    this.props.onChange(key, event)
   }
 
   _contentForInfo(label, value, full = false, contentId = '') {
@@ -41,6 +32,7 @@ class UserDetailForm extends Component {
         formattedValue = value.toLocaleString()
       }
 
+      // If theres a value, return html
       if (formattedValue) {
         return (
           <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={formattedValue + contentId}>
@@ -62,8 +54,8 @@ class UserDetailForm extends Component {
           <h5>{list.name}</h5>
         </div>
       )
-      listsContent.push(this.contentForInfo('user count', list.user_count))
-      listsContent.push(this.contentForInfo('description', list.description, true))
+      listsContent.push(this.contentForInfo('user count', list.user_count, list.id))
+      listsContent.push(this.contentForInfo('description', list.description, true, list.id))
       listsContent.push(this.contentForInfo('integration', provider.name, true, list.id))
     }
     return listsContent
@@ -79,7 +71,7 @@ class UserDetailForm extends Component {
           <h5>{'Support Ticket Title'}</h5>
         </div>
       )
-      ticketsContent.push(this.contentForInfo('description', ticket.description, true))
+      ticketsContent.push(this.contentForInfo('description', ticket.description, true, ticket.id))
       ticketsContent.push(this.contentForInfo('integration', provider.name, true, ticket.id))
     }
     return ticketsContent
@@ -95,7 +87,7 @@ class UserDetailForm extends Component {
           <h5>{'Transaction Title'}</h5>
         </div>
       )
-      transactionContent.push(this.contentForInfo('amount', transaction.amount, true))
+      transactionContent.push(this.contentForInfo('amount', transaction.amount, true, transaction.id))
       transactionContent.push(this.contentForInfo('integration', provider.name, true, transaction.id))
     }
     return transactionContent 
@@ -120,6 +112,10 @@ class UserDetailForm extends Component {
 
   render() {
     let user = this.props.user
+
+    /**
+     * Conditional Footer
+     */
     let footer = null
     if (this.props.displayActionButtons) {
       footer = (
@@ -156,6 +152,10 @@ class UserDetailForm extends Component {
     if (user.organization) {
       // Find provider if given
       const provider = this.providerForTypeID(user.organization.origin_provider)
+      let providerContent = null
+      if (provider) {
+        providerContent = this.contentForInfo('integration', provider.name, true)
+      }
 
       orgSection = (
         <div className="row organization">
@@ -171,7 +171,7 @@ class UserDetailForm extends Component {
               {this.contentForInfo('head count', user.organization.size)}
               {this.contentForInfo('mesh users', user.organization.user_count)}
               {this.contentForInfo('website', user.organization.website, true)}
-              {this.contentForInfo('integration', provider.name, true)}
+              {providerContent}
             </dl>
           </div>
         </div>  

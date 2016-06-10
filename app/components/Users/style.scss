@@ -3,20 +3,20 @@
 		margin-bottom: 0px;
 	}
 
-	.example-enter {
+	.user-panel-enter {
 	  right: -40%;
 	}
 
-	.example-enter.example-enter-active {
+	.user-panel-enter.user-panel-enter-active {
 	  right: 0px;
 	  transition: right 500ms ease-in;
 	}
 
-	.example-leave {
+	.user-panel-leave {
 	  right: 0px;
 	}
 
-	.example-leave.example-leave-active {
+	.user-panel-leave.user-panel-leave-active {
 		right: -40%;
 		transition: right 500ms ease-in;
 	}

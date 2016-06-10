@@ -6,7 +6,7 @@
 	z-index: 2;
 	box-shadow: -2px 0px 10px $MeshGreyDark;
 	right: 0px;
-
+	overflow: auto;
 
 	.row {
 		border-bottom: 1px solid $MeshGrey;
@@ -14,7 +14,6 @@
 	
 	// Nav (Top)
 	.nav {
-
 		// Nav Portion
 		.back-button {
 			display: flex;

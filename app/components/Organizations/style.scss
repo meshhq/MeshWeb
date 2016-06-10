@@ -1,3 +1,20 @@
-.organizations-container {
+.organizations-component {
 	
+	.org-panel-enter {
+	  right: -40%;
+	}
+
+	.org-panel-enter.org-panel-enter-active {
+	  right: 0px;
+	  transition: right 500ms ease-in;
+	}
+
+	.org-panel-leave {
+	  right: 0px;
+	}
+
+	.org-panel-leave.org-panel-leave-active {
+		right: -40%;
+		transition: right 500ms ease-in;
+	}
 }

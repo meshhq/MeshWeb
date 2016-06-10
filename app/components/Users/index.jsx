@@ -329,7 +329,6 @@ class UserTable extends React.Component {
      */
      _handleCellClick(idx) {
        let user = this.state.filteredDataList.getObjectAt(idx)
-       //this.props.userActions.getListsForUser(user)
        this.props.userActions.requestDetailUser(user)
        this.setState({
          selectedUser: user,
@@ -462,7 +461,7 @@ class UserTable extends React.Component {
           {forms}
         </div>
         <div className="detail-side-pane">
-          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={500} transitionName="example">
+          <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={500} transitionName="user-panel">
             {sideDetail}
           </ReactCSSTransitionGroup>
         </div>

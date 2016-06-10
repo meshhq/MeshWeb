@@ -7,12 +7,12 @@ class UserHeader extends Component {
     return (
       <div className="user-detail-header">
         <Row className="header-row">
-          <Col md={3} className="initials-bubble-col">
+          <Col className="initials-bubble-col" md={3}>
             <div className={'initials-bubble'}>
               <p>{user.first_name.charAt(0) + user.last_name.charAt(0)}</p>
             </div>
           </Col>
-          <Col md={9} className="user-details">
+          <Col className="user-details" md={9}>
             <h3>{user.first_name + ' ' + user.last_name}</h3>
             <p>{user.title}</p>
           </Col>
