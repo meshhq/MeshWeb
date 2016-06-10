@@ -120,7 +120,6 @@ function users(state = defaultState, action) {
 				isFetchingDetail: true
 			})
 		case RECEIVED_DETAIL_USER_RESPONSE: {
-			console.log(action.detailUser)
 			return Object.assign({}, state, {
 				isFetchingDetail: false,
 				detailUser: action.detailUser

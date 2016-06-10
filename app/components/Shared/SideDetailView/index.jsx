@@ -63,7 +63,6 @@ class SideDetail extends Component {
     // Panel Width Injection
     const panelWidth = this.props.panelRelativeWidth
     const panelStyle = { width: panelWidth }
-    console.log(panelStyle)
 
     return (
       <div className="side-detail" key="side-detail" style={panelStyle} >
@@ -71,7 +70,7 @@ class SideDetail extends Component {
           <div className="row nav">
             <div className="col-xs-3 back-button">
               <div className="back-container">
-                <a href="" onClick={this.handleOnExitClicked} >{'Exit'}</a>
+                <a href="#" onClick={this.handleOnExitClicked} >{'Exit'}</a>
               </div>
             </div>
             <div className="col-xs-6 title">

@@ -454,8 +454,6 @@ class UserTable extends React.Component {
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
 
-    let priorityCell = (<TextCell col="priority" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={priorityCell} header={<Cell>{'Priority'}</Cell>} key={'priority'} width={100}/>)
     return (
       <div className="users-component">
         <div className="modals-container">

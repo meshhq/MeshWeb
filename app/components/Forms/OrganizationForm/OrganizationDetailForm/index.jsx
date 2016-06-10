@@ -121,8 +121,8 @@ class OrganizationDetailForm extends Component {
             {this.contentForInfo('name', organization.name, true)}
             {this.contentForInfo('industry', organization.industry, true)}
             {this.contentForInfo('description', organization.description, true)}
-            {this.contentForInfo('annual rev', organization.annual_revenue)}
-            {this.contentForInfo('head count', organization.size)}
+            {this.contentForInfo('annual rev', organization.annual_revenue, true)}
+            {this.contentForInfo('head count', organization.size, true)}
             {this.contentForInfo('mesh users', organization.user_count)}
             {this.contentForInfo('website', organization.website, true)}
             {providerContent}

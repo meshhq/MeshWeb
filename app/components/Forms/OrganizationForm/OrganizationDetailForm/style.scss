@@ -10,11 +10,15 @@
 
 	dt {
 		width: 80px;
+		text-align: left;
+		font-weight: 300;
 	}
 
 	dd {
 		margin-left: 90px;
+		font-weight: 400;
 	}
+	
 	
 	.header-row {
 		background-color: $MeshWhiteDark;

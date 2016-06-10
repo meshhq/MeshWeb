@@ -1,5 +1,9 @@
 .user-detail-form {
 
+	.user-content {
+		margin-bottom: 2em;
+	}
+
 	.row {
 		padding: 10px 0px;
 	}
@@ -10,10 +14,13 @@
 
 	dt {
 		width: 80px;
+		text-align: left;
+		font-weight: 300;
 	}
 
 	dd {
 		margin-left: 90px;
+		font-weight: 400;
 	}
 	
 	.header-row {
@@ -33,6 +40,22 @@
 	}
 
 	h5 {
-		font-weight: 300;
+		font-weight: 500;
+	}
+
+	a {
+		color: $MeshBlueDark;
+	}
+
+	table {
+		a {
+			font-weight: 400;
+		}
+	}
+
+	.transaction-row {
+		.pill-row {
+			padding: 0px;
+		}
 	}
 }
