@@ -55,10 +55,14 @@
 		a {
 			font-weight: 400;
 		}
+			
+		tr {
+			max-height: 50px;
+		}
 
 		td {
 		    max-width: 150px;
-		    max-height: 150px;
+		    max-height: 50px;
 		    overflow: hidden;
 		}
 	}

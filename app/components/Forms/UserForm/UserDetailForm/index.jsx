@@ -99,10 +99,10 @@ class UserDetailForm extends Component {
     // Standard Tooltip
     const headers = (
       <tr>
-        <th>{'date'}</th>
-        <th>{'origin'}</th>
-        <th>{'number'}</th>
-        <th>{'subject'}</th>
+        <th>{'Date'}</th>
+        <th>{'Origin'}</th>
+        <th>{'Number'}</th>
+        <th>{'Subject'}</th>
       </tr>
     )
 
@@ -119,7 +119,9 @@ class UserDetailForm extends Component {
           <td scope='pill-row'>{this.providerPillsForTypeIDs(providerIDs)}</td>
           <td>
             <OverlayTrigger overlay={tooltip} placement="top" >
-              <p>{'300'}</p>
+              <a href="#" onClick={this.linkClicked}>
+                <p>{'300'}</p>
+              </a>
             </OverlayTrigger>
           </td>
           <td>{ticket.description}</td>
