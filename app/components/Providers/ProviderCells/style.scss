@@ -5,13 +5,19 @@ $ProviderCellHeight: 3em;
 	background-color: white;
 	border-radius: 6px;
 	border-style: solid;
-	border-color: $MeshGreyUltraLight;
+	border-color: $MeshGreyLight;
 	border-width: 1px;
 
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	text-align: center;
+
+	min-height: 180px;
+
+	.provider-container {
+		bottom: 20px;
+	}
 
 	.btn {
 		display: block;
@@ -22,21 +28,14 @@ $ProviderCellHeight: 3em;
 		margin-bottom: 16px;
 	}
 
-	.logo-img {
-		display: block;
-		float: none;
-		margin-top: 16px;
-		margin-left: auto;
-    margin-right: auto;
-
-		border-radius: 10px;
-		padding: 6px;
-
-		min-height:100px;
-		min-width: 100px;
+	img {
+		width: auto;
+		max-width: 100px;
 		height: 100px;
-		width: 100px;
+		margin: auto;
+		padding: 10px 0px;
 	}
+
 }
 
 .provider-row {
