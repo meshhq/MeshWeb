@@ -24,7 +24,7 @@ var buildPlugins = [
 ]
 
 // Production Build Check
-if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'production') {
   buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
