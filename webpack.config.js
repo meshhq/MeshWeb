@@ -12,7 +12,8 @@ var buildPlugins = [
   new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   new webpack.DefinePlugin({
     'process.env': { 
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      ORIGIN: JSON.stringify(process.env.ORIGIN || 'local')
     }
   }),
   new webpack.ProvidePlugin({
@@ -24,7 +25,7 @@ var buildPlugins = [
 ]
 
 // Production Build Check
-if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'production') {
   buildPlugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
@@ -102,6 +103,7 @@ module.exports = {
   plugins: buildPlugins,
   devServer: {
     contentBase: './app',
+    historyApiFallback: true,
     hot: true
   },
   sassLoader: {

@@ -64,7 +64,13 @@ class Providers extends Component {
   }
 
   render() {
-    const providersSections = _.map(this.props.providerState.providers, (provider) => {
+    // Filter Mesh
+    const filteredProviders = _.filter(this.props.providerState.providers, (provider) => {
+      return provider.name !== 'Mesh'
+    })
+
+    // Pack providers into sections
+    const providersSections = _.map(filteredProviders, (provider) => {
       return (
         <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
       )
