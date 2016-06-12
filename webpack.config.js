@@ -103,6 +103,7 @@ module.exports = {
   plugins: buildPlugins,
   devServer: {
     contentBase: './app',
+    historyApiFallback: true,
     hot: true
   },
   sassLoader: {
