@@ -1,7 +1,6 @@
 // Fonts
-$WorkSansFont: 'Roboto', sans-serif;
-$WorkSansFontLight: 'Roboto', sans-serif;
-
+$MeshFont: 'Roboto', sans-serif;
+$MeshFontLight: 'Roboto', sans-serif;
 
 // Black
 $MeshBlack: #16181A;
@@ -165,7 +164,7 @@ $screen-lg: 1200px;
 // Standard CSS Defaults
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $WorkSansFont;
+  font-family: $MeshFont;
 }
 
 // Base CSS
@@ -191,7 +190,7 @@ button {
 }
 
 body {
-  font: 14px $WorkSansFont;
+  font: 14px $MeshFont;
   background: $MeshWhiteDark;
   color: $MeshBlack;
   min-width: 230px;

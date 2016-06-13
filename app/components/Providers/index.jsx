@@ -34,10 +34,11 @@ class Providers extends Component {
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
-      this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
-        this.props.providerActions.requestedOAuthForProvider()
-        window.location = response
-      })
+      this.props.providerActions.requestedOAuthForProvider()
+      // this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
+      //   this.props.providerActions.requestedOAuthForProvider()
+      //   window.location = response
+      // })
     } else {
       this.setState({
         selectedProvider: pro,
@@ -116,7 +117,7 @@ class Providers extends Component {
         <div className="forms">
           {forms}
         </div>
-        <div className="provider-rows">
+        <div className="provider-rows row">
           {providerRowHTML}
         </div>
       </div>

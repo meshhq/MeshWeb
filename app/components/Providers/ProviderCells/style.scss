@@ -5,7 +5,7 @@ $ProviderCellHeight: 3em;
 	background-color: white;
 	border-radius: 6px;
 	border-style: solid;
-	border-color: $MeshGreyLight;
+	border-color: $MeshGrey;
 	border-width: 1px;
 
 	margin-left: 10px;
@@ -20,6 +20,13 @@ $ProviderCellHeight: 3em;
 	}
 
 	.btn {
+		background-color: $MeshGreen;
+		border: none;
+		border-radius: 40px;
+		color: $MeshWhite;
+		font: $MeshFont;
+		font-weight: 500;
+		font-size: 1.25em;
 	}
 
 	img {
@@ -28,6 +35,7 @@ $ProviderCellHeight: 3em;
 		height: 100px;
 		margin: auto;
 		padding: 10px 0px;
+		border-radius: 10px;
 	}
 
 }

@@ -31,6 +31,7 @@ function providers(state = defaultState, action) {
 			})
 		case REQUEST_OAUTH_URL_FOR_PROVIDER:
 			return Object.assign({}, state, {
+				hudMessage: 'Redirecting...',
 				isFetchingOAuth: true,
 				OAuthURL: null,
 				isFetching: false

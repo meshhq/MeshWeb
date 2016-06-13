@@ -32,7 +32,6 @@ export function createIntegration(params) {
 			.then(function(json){
 					dispatch(createdIntegration(json))
 					dispatch(activateIntegration(json))
-
 				}
 			)
 		}
@@ -110,6 +109,7 @@ export function refreshIntegrations() {
 			const appID = getState().app.id
 			return GET(`apps/${appID}/integrations`)
 					.then(function(json){
+						console.log(json)
 						dispatch(receivedIntegrations(json))
 					}
 				)

@@ -82,10 +82,12 @@ class App extends Component {
    * @return {[type]} [description]
    */
   _loadingText() {
-    for (const propKey in this.props) {
-      const prop = this.props[propKey]
-      if (_.isString(prop.hudMessage) && prop.hudMessage.length > 0) {
-        return prop.hudMessage
+    const { userState, providerState } = this.props
+    const appStates = [userState, providerState]
+    for (let i = 0; i < appStates.length; i++) {
+      const appState = appStates[i]
+      if (_.isString(appState.hudMessage) && appState.hudMessage.length > 0) {
+        return appState.hudMessage
       }
     }
     return ''
@@ -149,7 +151,9 @@ App.propTypes = {
   listActions: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
-  userActions: PropTypes.object.isRequired
+  providerState: PropTypes.object.isRequired,
+  userActions: PropTypes.object.isRequired,
+  userState: PropTypes.object.isRequired
 }
 
 App.defaultProps = {
@@ -159,9 +163,9 @@ App.defaultProps = {
 function mapStateToProps(state) {
   return {
     appState: state.app,
-    userState: state.users,
     providerState: state.providers,
-    integrationState: state.integrations
+    integrationState: state.integrations,
+    userState: state.users
   }
 }
 
