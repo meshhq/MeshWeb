@@ -104,12 +104,13 @@ export function receivedIntegrations(json) {
 
 export function refreshIntegrations() {
 	return (dispatch, getState) => {
+		console.log('activate getting called')
 		if (getState().app.id) {
 			dispatch(requestedIntegrations())
 			const appID = getState().app.id
+			console.log('activate dipatching')
 			return GET(`apps/${appID}/integrations`)
 					.then(function(json){
-						console.log(json)
 						dispatch(receivedIntegrations(json))
 					}
 				)

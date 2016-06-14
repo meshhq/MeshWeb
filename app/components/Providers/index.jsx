@@ -2,11 +2,11 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import _ from 'lodash'
 
 // Components
 import ProviderCell from './ProviderCells'
-import { Row } from 'react-bootstrap'
 import CredentialForm from '../Forms/CredentialForm'
 
 // Actions
@@ -20,11 +20,31 @@ class Providers extends Component {
     this.handleActivateClick = this._handleActivateClick.bind(this)
     this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
     this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
-
+    this.registerOAuthProviderCB = this._registerOAuthProviderCB.bind(this)
     this.state = {
       credentialFormDisplayed: false,
       selectedProvider: null
     };
+  }
+
+  componentDidMount() {
+    // Calling the register method here to wait for the full render 
+    // on setup
+    // Check for OAuth Token on entry
+    if (this.props.routeParams.callbackProvider) {
+      this.registerOAuthProviderCB(this.props.routeParams.callbackProvider)
+    }
+  }
+
+  _registerOAuthProviderCB(provider) {
+    const authCode = this.props.location.query.code
+    
+    // Launch Oauth Auth
+    if (provider.length > 0 && authCode.length > 0) {
+      const uri_dec = decodeURIComponent(authCode);
+      this.props.providerActions.registerOAuthCodeWithMesh(provider, uri_dec)
+      browserHistory.push('/integrations')
+    }
   }
 
   _handleActivateClick(providerID) {
@@ -34,11 +54,9 @@ class Providers extends Component {
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
-      this.props.providerActions.requestedOAuthForProvider()
-      // this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
-      //   this.props.providerActions.requestedOAuthForProvider()
-      //   window.location = response
-      // })
+      this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
+        window.location = response
+      })
     } else {
       this.setState({
         selectedProvider: pro,
@@ -72,8 +90,24 @@ class Providers extends Component {
 
     // Pack providers into sections
     const providersSections = _.map(filteredProviders, (provider) => {
+    let integrationsByID = {}
+    for (let i = 0; i < this.props.integrationState.integrations.length; i++) {
+      const integration = this.props.integrationState.integrations[i]
+      integrationsByID[integration.provider_type] = true
+    }
+
+    const providersSections = _.map(this.props.providerState.providers, (provider) => {
+      const active = integrationsByID[provider.type] ? true : false
       return (
-        <ProviderCell key={provider.id} logoSrc={provider.logo_url} onActivateClick={this.handleActivateClick} providerID={provider.id} providerName={provider.name}/>
+        <ProviderCell
+          activeIntegration={active}
+          color={provider.color}
+          key={provider.id} 
+          logoSrc={provider.logo_url} 
+          onActivateClick={this.handleActivateClick} 
+          providerID={provider.id} 
+          providerName={provider.name}
+        />
       )
     })
 
@@ -107,9 +141,9 @@ class Providers extends Component {
     for (let i = 0; i < providerRows.length; i++) {
       const pr = providerRows[i]
       providerRowHTML.push(
-        <Row className={'provider-row'} key={i}>
+        <div className={'provider-row'} key={i}>
           {pr}
-        </Row>
+        </div>
       )
     }
     return (
@@ -135,8 +169,10 @@ Providers.defaultProps = {
 Providers.propTypes = {
   integrationActions: PropTypes.object.isRequired,
   integrationState: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   providerActions: PropTypes.object.isRequired,
-  providerState: PropTypes.object.isRequired
+  providerState: PropTypes.object.isRequired,
+  routeParams: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {

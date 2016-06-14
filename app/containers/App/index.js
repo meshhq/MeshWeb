@@ -9,7 +9,7 @@ import _ from 'underscore'
 // Components
 import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
-import ProgressView from '../../components/Shared/ProgressView'
+import LoadingHud from '../../components/Shared/LoadingHud'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -102,7 +102,7 @@ class App extends Component {
     const loadingText = this.loadingText()
     if (this.state.initialLoad == false) {
       return (
-        <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
+        <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
       )
     } else {
       // Inject props into children
@@ -115,7 +115,7 @@ class App extends Component {
       })
       return (
         <div>
-          <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
+          <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
           {childrenWithProps}
         </div>
       )

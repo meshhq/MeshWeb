@@ -4,8 +4,8 @@ import React, { PropTypes, Component } from 'react'
 // Transitions
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-class Spinner extends Component {
-  displayName: "App Spinner";
+class LoadingHud extends Component {
+  displayName: "App Loading Hud";
   constructor(props) {
     super(props);
     this.state = {
@@ -73,9 +73,9 @@ class Spinner extends Component {
   }
 }
 
-Spinner.propTypes = {
+LoadingHud.propTypes = {
   loadError: PropTypes.bool.isRequired,
   loadText: PropTypes.string
 }
 
-export default Spinner
+export default LoadingHud

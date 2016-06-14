@@ -1,6 +1,6 @@
 
 import { GET, POST } from '../helpers/api'
-import { refreshIntegrations } from './integrations'
+import { refreshIntegrations, activateIntegration } from './integrations'
 
 // This action is to indicate the desired
 // refresh of the user table
@@ -48,8 +48,18 @@ export function refreshProviders() {
 
 // This action is to fetch the OAuth information for a given provider
 export const REQUEST_OAUTH_URL_FOR_PROVIDER = 'REQUEST_OAUTH_URL_FOR_PROVIDER'
-export function requestedOAuthForProvider() {
+export function requestedOAuthURLForProvider() {
 	return {
+		hudMessage: 'Redirecting...',
+		type: REQUEST_OAUTH_URL_FOR_PROVIDER,
+		isFetchingOAuth: true,
+		isFetching: false
+	}
+}
+
+export function exchangingOAuthInfoWithMesh() {
+	return {
+		hudMessage: 'Authorizing...',
 		type: REQUEST_OAUTH_URL_FOR_PROVIDER,
 		isFetchingOAuth: true,
 		isFetching: false
@@ -59,6 +69,7 @@ export function requestedOAuthForProvider() {
 export const RECEIVED_OAUTH_URL_FOR_PROVIDER = 'RECEIVED_OAUTH_URL_FOR_PROVIDER'
 export function receivedOAuthURLForProvider() {
 	return {
+		hudMessage: '',
 		type: RECEIVED_OAUTH_URL_FOR_PROVIDER,
 		isFetchingOAuth: false,
 		receivedAt: Date.now()
@@ -75,7 +86,6 @@ export function receivedOAuthCodeForProvider() {
 	}
 }
 
-// https://app.meshdata.io/oauth/salesforce?code=aPrxtI4fE7jL0iROVGVK78FGYFxwnN0HMewMzuSPXjIw2UsUlSgf0KnWwXmE91Hk2X6y5WwROA%3D%3D
 /**
  * requestOAuthURL is used for fetching the OAuth URL for a given provider
  * @param  {String} providerName
@@ -83,7 +93,7 @@ export function receivedOAuthCodeForProvider() {
  */
 export function requestOAuthURL(providerName) {
 	return (dispatch) => {
-		dispatch(requestedOAuthForProvider())
+		dispatch(requestedOAuthURLForProvider())
 		const oAuthPromise = new Promise((resolve, reject) => {
 				GET('oauth/' + providerName)
 				.then(function(json){
@@ -104,17 +114,18 @@ export function requestOAuthURL(providerName) {
  * @return {Promise} cb promise
  */
 export function registerOAuthCodeWithMesh(providerName, OAuthCode) {
-	return (dispatch) => {
-		dispatch(requestedOAuthForProvider())
-		const oAuthPromise = new Promise((resolve, reject) => {
-				POST('oauth/' + providerName, { code: OAuthCode, provider: providerName })
-				.then(function(){
+	return (dispatch, getState) => {
+		dispatch(exchangingOAuthInfoWithMesh())
+		const oAuthPromise = new Promise((resolve) => {
+				const appID = getState().app.id
+				const params = { code: OAuthCode, provider: providerName }
+				POST(`apps/${appID}/oauth/` + providerName, params)
+				.then(function(integration){
 					dispatch(receivedOAuthURLForProvider())
-					dispatch(refreshIntegrations)
-					resolve()
+					dispatch(refreshIntegrations())
+					dispatch(activateIntegration(integration))
 				}).catch(() => {
 					dispatch(receivedOAuthURLForProvider())
-					reject()
 				})
 		})
 		return oAuthPromise

@@ -12,11 +12,12 @@ $ProviderCellHeight: 3em;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	text-align: center;
+	color: $MeshBlackLight;
 
 	min-height: 180px;
-
-	.provider-container {
-		bottom: 20px;
+	
+	button:focus {
+		outline: none;
 	}
 
 	.btn {
@@ -27,6 +28,23 @@ $ProviderCellHeight: 3em;
 		font: $MeshFont;
 		font-weight: 500;
 		font-size: 1.25em;
+		margin-bottom: 8px;
+	}
+
+	.btn:focus {
+		outline: none;
+	}
+
+	.btn.active {
+		color: $MeshGreen;
+		font-weight: 400;
+		box-shadow: none;
+		background-color: $MeshWhite;
+		border: 2px solid rgba($MeshGreen, .6);		
+	}
+
+	.image-wrapper {
+		padding: 10px;
 	}
 
 	img {
@@ -34,8 +52,14 @@ $ProviderCellHeight: 3em;
 		max-width: 100px;
 		height: 100px;
 		margin: auto;
-		padding: 10px 0px;
-		border-radius: 10px;
+		padding: 5px;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+	}
+
+	img.active {
+		-webkit-filter: none;
+		filter: none;
 	}
 
 }
