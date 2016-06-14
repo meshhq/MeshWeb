@@ -1,26 +1,36 @@
 .loading-text {
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .sk-fading-circle {
     position: relative;
     display: flex;
     align-items: center;
+    flex-direction: row;
+    justify-content: center;
     margin: 10px 10px;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
 
   .progress-text {
     display: inline;
     flex-direction: row;
     align-items: center;
-    margin-left: 30px;
-    height: 100%;
+    font-size: 1.25em;
+    margin-left: 35px;
+    font-weight: 400;
+  }
+
+  .circle-container {
+    position: relative;
+    margin-top: -25px;
   }
 
   .sk-fading-circle .sk-circle {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     position: absolute;
     left: 0;
     top: 0;
@@ -32,7 +42,7 @@
     margin: 0 auto;
     width: 15%;
     height: 15%;
-    background-color: #333;
+    background-color: $MeshBlue;
     border-radius: 100%;
     -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
             animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;

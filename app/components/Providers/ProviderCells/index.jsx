@@ -5,18 +5,41 @@ import { Col, Button } from 'react-bootstrap'
 // Components
 import LoadingText from '../../../components/Shared/LoadingText'
 
+// Helpers
+import { integrationStateDescriptionForType, integrationActivelySyncing } from '../../../constants/integrationState'
+
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
 
-const ProviderCell = ({ activeIntegration, providerID, onActivateClick, providerName, logoSrc }) => {
+const ProviderCell = ({ integration, providerID, onActivateClick, providerName, logoSrc }) => {
   let handleActivateClick = onActivateClick.bind(this, providerID)
+
+  // Integration is active if we have a integration passed in
+  const activeIntegration = integration ? true : false
 
   // If mesh, use the local logo asset
   const imgSrc = providerName.toLowerCase() === 'mesh' ? logo : logoSrc
   const activeClass = activeIntegration ? ' active' : ''
   const btnText = activeIntegration ? 'Activated' : 'Activate'
-  const clickHandler = activeIntegration ? null : handleActivateClick
 
+  // Action content is the action available to take on the provider
+  const clickHandler = activeIntegration ? handleActivateClick : handleActivateClick
+  let actionContent = (
+    <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
+  )
+  
+  // Replace action if the integration is actively syncing
+  let integrationStatus = null
+  if (activeIntegration && integrationActivelySyncing(integration.state)) {
+    integrationStatus = (
+      <LoadingText loadText={'Syncing'} />  
+    )
+    actionContent = null
+  } else if (activeIntegration) {
+    integrationStatus = (
+      <p className='integration-status'>{integrationStateDescriptionForType(integration.state)}</p>
+    )
+  }  
 
   return (
     <Col className={'provider-cell' + activeClass} md={3}>
@@ -25,9 +48,9 @@ const ProviderCell = ({ activeIntegration, providerID, onActivateClick, provider
           <img className={'logo img-responsive' + activeClass} src={imgSrc}/>
         </div>
         <h4>{providerName}</h4>
-        <LoadingText loadText={'Syncing'} />
-        <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
+        {actionContent}
       </div>
+      {integrationStatus}
     </Col>
   );
 }
@@ -39,8 +62,8 @@ ProviderCell.defaultParams = {
 }
 
 ProviderCell.propTypes = {
-  activeIntegration: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
+  integration: PropTypes.object,
   logoSrc: PropTypes.string.isRequired,
   onActivateClick: PropTypes.func.isRequired,
   providerName: PropTypes.string.isRequired

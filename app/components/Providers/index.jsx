@@ -90,21 +90,21 @@ class Providers extends Component {
 
     // Pack providers into sections
     const providersSections = _.map(filteredProviders, (provider) => {
-    let integrationsByID = {}
+    let integrationsByType = {}
     for (let i = 0; i < this.props.integrationState.integrations.length; i++) {
       const integration = this.props.integrationState.integrations[i]
-      integrationsByID[integration.provider_type] = true
+      integrationsByType[integration.provider_type] = integration
     }
 
     const providersSections = _.map(this.props.providerState.providers, (provider) => {
-      const active = integrationsByID[provider.type] ? true : false
+      const itegration = integrationsByType[provider.type]
       return (
         <ProviderCell
-          activeIntegration={active}
           color={provider.color}
-          key={provider.id} 
+          integration={itegration}
+          key={provider.id}
           logoSrc={provider.logo_url} 
-          onActivateClick={this.handleActivateClick} 
+          onActivateClick={this.handleActivateClick}
           providerID={provider.id} 
           providerName={provider.name}
         />

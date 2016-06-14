@@ -122,8 +122,8 @@ export function registerOAuthCodeWithMesh(providerName, OAuthCode) {
 				POST(`apps/${appID}/oauth/` + providerName, params)
 				.then(function(integration){
 					dispatch(receivedOAuthURLForProvider())
-					dispatch(refreshIntegrations())
 					dispatch(activateIntegration(integration))
+					dispatch(refreshIntegrations())
 				}).catch(() => {
 					dispatch(receivedOAuthURLForProvider())
 				})
