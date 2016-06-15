@@ -25,21 +25,23 @@ class App extends Component {
     this.state = {
       width: 500,
       initialLoad: false,
+      mounted: false,
       showLogin: false,
       loadError: false
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
+    this.mounted = false
   }
 
   componentDidMount() {
+    this.mounted = true
     this._performInitialSyncWithMesh()
     this._getWindowWidth()
 
     // TODO: Fix Long Polling with server push.
     // TH - Turning off for now
     // Also, we should be recording interval IDs here
-    // 
     // setInterval(this.props.userActions.refreshUsers, 20000);
     // setInterval(this.props.organizationActions.refreshOrganizations, 20000);
     // setInterval(this.props.listActions.refreshLists, 20000);
@@ -49,6 +51,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -64,7 +67,9 @@ class App extends Component {
     this.props.appActions.fetchAppIdIfNeeded().then(() => {
       this.setState({ initialLoad: true, loadText: 'mesh is loading', loadError: false })
     }, () => {
-      this.setState({ initialLoad: false, loadError: true })
+      if (this.mounted) {
+        this.setState({ initialLoad: false, loadError: true }) 
+      }
     })
   }
 

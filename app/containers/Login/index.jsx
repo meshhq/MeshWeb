@@ -1,6 +1,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import * as SessionActions from '../../actions/session'
@@ -38,9 +39,9 @@ class Login extends Component {
       .then(() => {
         // If we have a next state supplied, route to that
         if (location.state && location.state.nextPathname) {
-          this.props.history.replaceState(null, location.state.nextPathname)
+          this.props.router.replace(location.state.nextPathname)
         } else {
-          this.props.history.replaceState(null, '/')
+          this.props.router.replace('/')
         }
       }, () => {
         this.setState({ loginError: true })
@@ -128,6 +129,7 @@ class Login extends Component {
 Login.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
   sessionActions: PropTypes.object.isRequired
 }
 
@@ -146,7 +148,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+// Using a HOC to inject the router into the login for access
+// to nagivaiton and location
+const wRouterHawkedLogin = withRouter(Login)
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login)
+)(wRouterHawkedLogin)

@@ -23,11 +23,11 @@ class Providers extends Component {
   constructor(props, context) {
     super(props, context)
 
-    console.log("tryin")
     this.handleActivateClick = this._handleActivateClick.bind(this)
     this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
     this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
     this.registerOAuthProviderCB = this._registerOAuthProviderCB.bind(this)
+    this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
     this.state = {
       credentialFormDisplayed: false,
       selectedProvider: null
@@ -38,16 +38,13 @@ class Providers extends Component {
     // Calling the register method here to wait for the full render 
     // on setup
     // Check for OAuth Token on entry
-    
     if (this.props.routeParams.callbackProvider) {
       this.registerOAuthProviderCB(this.props.routeParams.callbackProvider)
     }
-
-    this.props.setInterval("someToken", () => { console.log("Heyyy") })
   }
 
   componentWillUnmount() {
-
+    
   }
 
   _checkForIntegrationsCurrentlySyncing(integrations) {
@@ -57,9 +54,10 @@ class Providers extends Component {
     })
 
     // If we have an integration currently syncing,
-    // begin polling the server
+    // begin polling the server every 3 sec
     if (syncing) {
-      this.props.setInterval("someToken", () => { console.log("Heyyy") })
+      const syncFunc = this.props.integrationActions.refreshIntegrations
+      this.props.setIntervalWithToken('providerSyncPolling', syncFunc, 3000)
     }
   }
 
@@ -200,7 +198,8 @@ Providers.propTypes = {
   location: PropTypes.object.isRequired,
   providerActions: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
-  routeParams: PropTypes.object.isRequired
+  routeParams: PropTypes.object.isRequired,
+  setIntervalWithToken: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
