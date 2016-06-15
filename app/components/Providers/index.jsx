@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import _ from 'lodash'
+import _ from 'underscore'
 
 // Components
 import ProviderCell from './ProviderCells'
@@ -13,10 +13,17 @@ import CredentialForm from '../Forms/CredentialForm'
 import * as IntegrationActions from '../../actions/integrations'
 import * as ProviderActions from '../../actions/providers'
 
+// Helpers
+import { integrationIsSyncing } from '../../constants/integrationSyncStatus'
+
+// HAWKSs
+import { IntervalWrapper } from '../../hawks/interval'
+
 class Providers extends Component {
   constructor(props, context) {
     super(props, context)
 
+    console.log("tryin")
     this.handleActivateClick = this._handleActivateClick.bind(this)
     this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
     this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
@@ -31,8 +38,28 @@ class Providers extends Component {
     // Calling the register method here to wait for the full render 
     // on setup
     // Check for OAuth Token on entry
+    
     if (this.props.routeParams.callbackProvider) {
       this.registerOAuthProviderCB(this.props.routeParams.callbackProvider)
+    }
+
+    this.props.setInterval("someToken", () => { console.log("Heyyy") })
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  _checkForIntegrationsCurrentlySyncing(integrations) {
+    let syncing = false
+    _.each(integrations, (integration) => {
+      syncing = syncing || integrationIsSyncing(integration)
+    })
+
+    // If we have an integration currently syncing,
+    // begin polling the server
+    if (syncing) {
+      this.props.setInterval("someToken", () => { console.log("Heyyy") })
     }
   }
 
@@ -70,6 +97,7 @@ class Providers extends Component {
       'provider_type' : provider.type,
       'credentials' : params
     }
+
     this.props.integrationActions.createIntegration(integration)
     this.setState({
       credentialFormDisplayed: false
@@ -189,8 +217,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+// Wrapping the Provider component in a HOC
+const WrappedProvider = IntervalWrapper(Providers)
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Providers)
-
+)(WrappedProvider)

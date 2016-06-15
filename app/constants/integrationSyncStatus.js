@@ -4,31 +4,31 @@
  * status indicator for the state type
  * @param {Number} stateType
  */
-export function integrationStateDescriptionForType(stateType) {
+export function integrationStateDescription(stateType) {
 	switch(stateType) {
 		case 0:
 			return 'NotActivated'
 		case 1:
-			return 'Activating'
+			return 'Syncing'
 		case 2:
-			return 'Activating Users'
+			return 'Syncing Users'
 		case 3:
-			return 'Activating Organizations'
+			return 'Syncing Organizations'
 		case 4:
-			return 'Activating Transactions'
+			return 'Syncing Transactions'
 		case 5:
-			return 'Activating Tickets'
+			return 'Syncing Tickets'
 		case 6:
-			return 'Activating Lists'
+			return 'Syncing Lists'
 		case 7:
-			return 'Activated'
+			return 'Synced'
 		case 8:
-			return 'Activation Failed'
+			return 'Sync Failed'
 	}
 	return 'Unknown'
 }
 
-export function integrationActivelySyncing(stateType) {
+export function integrationIsSyncing(stateType) {
 	switch(stateType) {
 		case 0:
 			return false

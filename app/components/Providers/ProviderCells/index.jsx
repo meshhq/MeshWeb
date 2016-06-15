@@ -6,7 +6,7 @@ import { Col, Button } from 'react-bootstrap'
 import LoadingText from '../../../components/Shared/LoadingText'
 
 // Helpers
-import { integrationStateDescriptionForType, integrationActivelySyncing } from '../../../constants/integrationState'
+import { integrationStateDescription, integrationIsSyncing } from '../../../constants/integrationSyncStatus'
 
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
@@ -30,14 +30,14 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   
   // Replace action if the integration is actively syncing
   let integrationStatus = null
-  if (activeIntegration && integrationActivelySyncing(integration.state)) {
+  if (activeIntegration && integrationIsSyncing(integration.state)) {
     integrationStatus = (
       <LoadingText loadText={'Syncing'} />  
     )
     actionContent = null
   } else if (activeIntegration) {
     integrationStatus = (
-      <p className='integration-status'>{integrationStateDescriptionForType(integration.state)}</p>
+      <p className='integration-status'>{integrationStateDescription(integration.state)}</p>
     )
   }  
 
@@ -48,9 +48,9 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
           <img className={'logo img-responsive' + activeClass} src={imgSrc}/>
         </div>
         <h4>{providerName}</h4>
+        {integrationStatus}
         {actionContent}
       </div>
-      {integrationStatus}
     </Col>
   );
 }

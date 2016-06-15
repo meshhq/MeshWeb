@@ -38,6 +38,8 @@ class App extends Component {
 
     // TODO: Fix Long Polling with server push.
     // TH - Turning off for now
+    // Also, we should be recording interval IDs here
+    // 
     // setInterval(this.props.userActions.refreshUsers, 20000);
     // setInterval(this.props.organizationActions.refreshOrganizations, 20000);
     // setInterval(this.props.listActions.refreshLists, 20000);
