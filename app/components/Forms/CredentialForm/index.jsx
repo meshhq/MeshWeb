@@ -20,6 +20,7 @@ class CredentialForm extends Component {
   }
 
   render() {
+    const modalTitle = this.props.provider ? this.props.provider.name + ' Credentials' : null
     let handleActivate = this._handleActivate.bind(this, this.props.provider)
 
     let providerName = 'no-name'
@@ -30,6 +31,7 @@ class CredentialForm extends Component {
     }
 
     let credentialRows = []
+    console.log(this.props)
     if (this.props.provider != null) {
       let credentialInfo = this.props.provider.credentials
       for (let key in credentialInfo) {
@@ -49,7 +51,7 @@ class CredentialForm extends Component {
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
           <Modal.Header closeButton>
-            <Modal.Title>{"Hubspot Credentials"}</Modal.Title>
+            <Modal.Title>{modalTitle}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
