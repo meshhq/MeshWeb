@@ -19,4 +19,4 @@ timestamp() {
 }
 
 # Upload new site
-aws s3 sync ./public/ s3://prod.app.meshdata.io --region us-east-1
+aws s3 sync ./public/ s3://prod.app.meshdata.io --region us-west-2
