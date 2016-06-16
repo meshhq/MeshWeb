@@ -91,11 +91,11 @@ export function receivedOAuthCodeForProvider() {
  * @param  {String} providerName
  * @return {Promise} cb promise
  */
-export function requestOAuthURL(providerName) {
+export function requestOAuthURL(providerName, supplementalInfo) {
 	return (dispatch) => {
 		dispatch(requestedOAuthURLForProvider())
 		const oAuthPromise = new Promise((resolve, reject) => {
-				GET('oauth/' + providerName)
+				GET('oauth/' + providerName, supplementalInfo)
 				.then(function(json){
 					dispatch(receivedOAuthURLForProvider())
 					resolve(json.url)

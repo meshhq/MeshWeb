@@ -28,10 +28,11 @@ class Providers extends Component {
     this.handleCloseCredentialForm = this._handleCloseCredentialForm.bind(this)
     this.registerOAuthProviderCB = this._registerOAuthProviderCB.bind(this)
     this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
+    this.handleSupplementalOAuthInfoGiven = this._handleSupplementalOAuthInfoGiven.bind(this)
     this.state = {
       credentialFormDisplayed: false,
       selectedProvider: null
-    };
+    }
   }
 
   componentDidMount() {
@@ -108,6 +109,12 @@ class Providers extends Component {
     });
   }
 
+  _handleSupplementalOAuthInfoGiven(provider, params) {
+    this.props.providerActions.requestOAuthURL(provider.key, params).then((response) => {
+      // window.location = response
+    })
+  }
+
   render() {
     // Filter Mesh
     const filteredProviders = _.filter(this.props.providerState.providers, (provider) => {
@@ -122,7 +129,10 @@ class Providers extends Component {
       integrationsByType[integration.provider_type] = integration
     }
 
-    const providersSections = _.map(this.props.providerState.providers, (provider) => {
+    // Filtering out Mesh
+    const filteredProviders = _.filter(this.props.providerState.providers, (provider) => provider.key !== 'mesh' )
+
+    const providersSections = _.map(filteredProviders, (provider) => {
       const itegration = integrationsByType[provider.type]
       return (
         <ProviderCell
@@ -136,14 +146,17 @@ class Providers extends Component {
         />
       )
     })
+    
+    const hubSpotProvider = _.find(this.props.providerState.providers, (prov) => prov.key === 'hubspot')
 
     let forms = (
       <div className={'forms'}>
         <CredentialForm
-          displayed={this.state.credentialFormDisplayed}
+          displayed={true}//{this.state.credentialFormDisplayed}
           onActivate={this.handleSaveCredentials}
           onCancel={this.handleCloseCredentialForm}
-          provider={this.state.selectedProvider}
+          onSubmitSupplementalOAuth={this.handleSupplementalOAuthInfoGiven}
+          provider={hubSpotProvider}
         />
       </div>
     )
