@@ -12,6 +12,7 @@ import { integrationStateDescription, integrationIsSyncing } from '../../../cons
 import logo from '../../../assets/images/mesh_logo.png'
 
 const ProviderCell = ({ integration, providerID, onActivateClick, providerName, logoSrc }) => {
+  console.log(integration)
   let handleActivateClick = onActivateClick.bind(this, providerID)
 
   // Integration is active if we have a integration passed in

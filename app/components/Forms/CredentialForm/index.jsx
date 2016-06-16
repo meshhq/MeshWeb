@@ -31,7 +31,6 @@ class CredentialForm extends Component {
     }
 
     let credentialRows = []
-    console.log(this.props)
     if (this.props.provider != null) {
       let credentialInfo = this.props.provider.credentials
       for (let key in credentialInfo) {
