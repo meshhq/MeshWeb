@@ -113,17 +113,17 @@ export function requestOAuthURL(providerName, supplementalInfo) {
  * @param  {String} providerName
  * @return {Promise} cb promise
  */
-export function registerOAuthCodeWithMesh(providerName, OAuthCode) {
+export function registerOAuthCodeWithMesh(providerName, params) {
 	return (dispatch, getState) => {
 		dispatch(exchangingOAuthInfoWithMesh())
 		const oAuthPromise = new Promise((resolve) => {
 				const appID = getState().app.id
-				const params = { code: OAuthCode, provider: providerName }
 				POST(`apps/${appID}/oauth/` + providerName, params)
 				.then(function(integration){
 					dispatch(receivedOAuthURLForProvider())
 					dispatch(activateIntegration(integration))
 					dispatch(refreshIntegrations())
+					resolve()
 				}).catch(() => {
 					dispatch(receivedOAuthURLForProvider())
 				})

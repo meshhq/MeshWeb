@@ -7,7 +7,7 @@
 export function integrationStateDescription(stateType) {
 	switch(stateType) {
 		case 0:
-			return 'NotActivated'
+			return 'Not Activated'
 		case 1:
 			return 'Syncing'
 		case 2:

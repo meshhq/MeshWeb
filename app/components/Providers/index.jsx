@@ -63,17 +63,20 @@ class Providers extends Component {
   }
 
   _registerOAuthProviderCB(provider) {
-    const authCode = this.props.location.query.code
-    
     // Launch Oauth Auth
-    if (provider.length > 0 && authCode.length > 0) {
-      const uri_dec = decodeURIComponent(authCode);
-      this.props.providerActions.registerOAuthCodeWithMesh(provider, uri_dec)
+    // Using the `keys` underscore js helper to detemine non-inherited 
+    // key count
+    if (_.keys(this.props.location.query).length > 0) {
+      // URL Decode all Keys/Values
+      let decodedQuery = _.mapObject(this.props.location.query, (val) =>
+        decodeURIComponent(val)
+      )
+      this.props.providerActions.registerOAuthCodeWithMesh(provider, decodedQuery)
       browserHistory.push('/integrations')
     }
   }
 
-  _handleActivateClick(providerID) {
+  _handleActivateClick(providerID) {    
     let pro = this.props.providerState.providers.find(function(provider){
       return provider.id == providerID
     })
@@ -111,7 +114,7 @@ class Providers extends Component {
 
   _handleSupplementalOAuthInfoGiven(provider, params) {
     this.props.providerActions.requestOAuthURL(provider.key, params).then((response) => {
-      // window.location = response
+      window.location = response
     })
   }
 
@@ -147,16 +150,14 @@ class Providers extends Component {
       )
     })
     
-    const hubSpotProvider = _.find(this.props.providerState.providers, (prov) => prov.key === 'hubspot')
-
     let forms = (
       <div className={'forms'}>
         <CredentialForm
-          displayed={true}//{this.state.credentialFormDisplayed}
+          displayed={this.state.credentialFormDisplayed}
           onActivate={this.handleSaveCredentials}
           onCancel={this.handleCloseCredentialForm}
           onSubmitSupplementalOAuth={this.handleSupplementalOAuthInfoGiven}
-          provider={hubSpotProvider}
+          provider={this.state.selectedProvider}
         />
       </div>
     )
