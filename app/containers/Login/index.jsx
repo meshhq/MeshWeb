@@ -89,7 +89,7 @@ class Login extends Component {
                       <div className="col-sm-10">
                         <input className="form-control email-form"  
                           id="inputEmail3" 
-                          placeholder="Email" 
+                          placeholder="Emailsdfsdsdf" 
                           ref={emailRef}
                           type="email" 
                         />
