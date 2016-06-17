@@ -33,6 +33,9 @@ class Providers extends Component {
       credentialFormDisplayed: false,
       selectedProvider: null
     }
+
+    // Check for active syncing integrations
+    this.checkForIntegrationsCurrentlySyncing(props.integrationState.integrations)
   }
 
   componentDidMount() {
@@ -44,14 +47,16 @@ class Providers extends Component {
     }
   }
 
-  componentWillUnmount() {
-    
+  componentDidUpdate() {
+    this.checkForIntegrationsCurrentlySyncing(this.props.integrationState.integrations)
   }
 
   _checkForIntegrationsCurrentlySyncing(integrations) {
     let syncing = false
     _.each(integrations, (integration) => {
-      syncing = syncing || integrationIsSyncing(integration)
+
+      const localSyncing = integrationIsSyncing(integration)
+      syncing = syncing || localSyncing
     })
 
     // If we have an integration currently syncing,
@@ -83,9 +88,18 @@ class Providers extends Component {
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
-      this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
-        window.location = response
-      })
+      if (pro.credentials.oauth_extra) {
+        // We need extra info to accomplish this... uggh
+        this.setState({
+          selectedProvider: pro,
+          credentialFormDisplayed: true
+        });
+      } else {
+        // No extra info needed, let's roll
+        this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
+          window.location = response
+        })        
+      }
     } else {
       this.setState({
         selectedProvider: pro,

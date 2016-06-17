@@ -24,7 +24,7 @@ export const IntervalWrapper = ComposedComponent => class extends Component {
   _setIntervalWithToken(token, func, intervalTime) {
     // Check if there's a token, and if it 
     // is not in the existing collection
-    if (token && !_.contains(this.tokens, token)) {
+    if (token && !this.tokens[token]) {
       const intervalID = this.setInterval(func, intervalTime)
       this.tokens[token] = intervalID
     }
