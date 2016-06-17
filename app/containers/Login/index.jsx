@@ -81,7 +81,7 @@ class Login extends Component {
               <div className="row login-row">
                 {errorFlash}
                 <div className="col-sm-2 vcenter">
-                  <p className='brand'>{'Mesh.io'}</p>
+                  <p className='brand'>{'MeshData.io'}</p>
                 </div>
                 <div className="col-sm-9 col-sm-offset-1 vcenter">
                   <form className="form-horizontal">
@@ -89,7 +89,7 @@ class Login extends Component {
                       <div className="col-sm-10">
                         <input className="form-control email-form"  
                           id="inputEmail3" 
-                          placeholder="Emailsdfsdsdf" 
+                          placeholder="Email" 
                           ref={emailRef}
                           type="email" 
                         />
