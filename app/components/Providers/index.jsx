@@ -134,20 +134,16 @@ class Providers extends Component {
 
   render() {
     // Filter Mesh
-    const filteredProviders = _.filter(this.props.providerState.providers, (provider) => {
-      return provider.name !== 'Mesh'
-    })
+    const filteredProviders = _.filter(this.props.providerState.providers, (provider) => 
+      provider.name !== 'Mesh'
+    )
 
     // Pack providers into sections
-    const providersSections = _.map(filteredProviders, (provider) => {
     let integrationsByType = {}
     for (let i = 0; i < this.props.integrationState.integrations.length; i++) {
       const integration = this.props.integrationState.integrations[i]
       integrationsByType[integration.provider_type] = integration
     }
-
-    // Filtering out Mesh
-    const filteredProviders = _.filter(this.props.providerState.providers, (provider) => provider.key !== 'mesh' )
 
     const providersSections = _.map(filteredProviders, (provider) => {
       const itegration = integrationsByType[provider.type]
