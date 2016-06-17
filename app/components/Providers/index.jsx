@@ -88,7 +88,7 @@ class Providers extends Component {
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
-      if (pro.credentials.oauth_extra) {
+      if (pro.credentials && pro.credentials.oauth_extra) {
         // We need extra info to accomplish this... uggh
         this.setState({
           selectedProvider: pro,
@@ -96,6 +96,7 @@ class Providers extends Component {
         });
       } else {
         // No extra info needed, let's roll
+        
         this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
           window.location = response
         })        

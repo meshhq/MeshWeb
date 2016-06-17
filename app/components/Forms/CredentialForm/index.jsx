@@ -16,7 +16,7 @@ class CredentialForm extends Component {
   }
 
   _handleActivate(provider) {
-    if (this.props.provider.credentials.oauth_extra) {
+    if (this.props.provider.credentials && this.props.provider.credentials.oauth_extra) {
       const extraInfo = this.extraInfoRef.refs.input.value
       if (extraInfo.length > 0) {
         const { oauth_extra_key } = this.props.provider.credentials
@@ -43,7 +43,7 @@ class CredentialForm extends Component {
     let credentialRows = []
     if (this.props.provider != null) {
       // Check if this is being used as a supplemental oauth form
-      if (this.props.provider.credentials.oauth_extra) {
+      if (this.props.provider.credentials && this.props.provider.credentials.oauth_extra) {
         let credentialInfo = this.props.provider.credentials
         const value = this.props.provider.credentials.oauth_extra_prop
         // Making a ref for email and pass
