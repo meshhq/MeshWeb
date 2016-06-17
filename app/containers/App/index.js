@@ -114,12 +114,12 @@ class App extends Component {
     } else {
       // Inject props into children
       const { containerWidth, containerHeight } = this.state
-      const childrenWithProps = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
+      const childrenWithProps = React.Children.map(this.props.children, (child) => 
+        React.cloneElement(child, {
           containerWidth: containerWidth,
           containerHeight: containerHeight
         })
-      })
+      )
       return (
         <div>
           <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
