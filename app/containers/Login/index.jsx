@@ -81,7 +81,7 @@ class Login extends Component {
               <div className="row login-row">
                 {errorFlash}
                 <div className="col-sm-2 vcenter">
-                  <p className='brand'>{'Mesh.io'}</p>
+                  <p className='brand'>{'Mes.io'}</p>
                 </div>
                 <div className="col-sm-9 col-sm-offset-1 vcenter">
                   <form className="form-horizontal">
