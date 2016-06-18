@@ -7,7 +7,6 @@ import React from 'react'
 import App from './containers/App'
 import Login from './containers/Login'
 import { requireAuth } from './helpers/session'
-import { registerOAuthCall } from './helpers/oauth'
 import EventEmitter from './helpers/eventEmitter'
 import { UNAUTHORIZED_ACCESS_NOTIFICATION } from './helpers/api'
 import configureStore from './store'
@@ -19,9 +18,6 @@ import Lists from './components/Lists'
 import Providers from './components/Providers'
 
 const store = configureStore()
-
-// Binding Dispatch To Reg Oauth
-const boundOAuthRegistration = registerOAuthCall.bind(store)
 
 // Style Sheets
 import './assets/base_scripts'
@@ -44,7 +40,7 @@ ReactDOM.render(
         <Route component={Organizations} path={'organizations'} />
         <Route component={Lists} path={'lists'} />
         <Route component={Providers} path={'integrations'} />
-        <Route onEnter={boundOAuthRegistration} path={'oauth/:provider'} />
+        <Route component={Providers} path={'oauth/:callbackProvider'} />
       </Route>
       <Route component={Login} path="/login" />
     </Router>

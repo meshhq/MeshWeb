@@ -2,21 +2,54 @@
 import React, { PropTypes } from 'react'
 import { Col, Button } from 'react-bootstrap'
 
+// Components
+import LoadingText from '../../../components/Shared/LoadingText'
+
+// Helpers
+import { integrationStateDescription, integrationIsSyncing } from '../../../constants/integrationSyncStatus'
+
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
 
-const ProviderCell = ({ providerID, onActivateClick, providerName, logoSrc }) => {
+const ProviderCell = ({ integration, providerID, onActivateClick, providerName, logoSrc }) => {
   let handleActivateClick = onActivateClick.bind(this, providerID)
+
+  // Integration is active if we have a integration passed in
+  const activeIntegration = integration ? true : false
 
   // If mesh, use the local logo asset
   const imgSrc = providerName.toLowerCase() === 'mesh' ? logo : logoSrc
+  const activeClass = activeIntegration ? ' active' : ''
+  const btnText = activeIntegration ? 'Activated' : 'Activate'
+
+  // Action content is the action available to take on the provider
+  const clickHandler = activeIntegration ? handleActivateClick : handleActivateClick
+  let actionContent = (
+    <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
+  )
+  
+  // Replace action if the integration is actively syncing
+  let integrationStatus = null
+  if (activeIntegration && integrationIsSyncing(integration.state)) {
+    integrationStatus = (
+      <LoadingText loadText={'Syncing'} />  
+    )
+    actionContent = null
+  } else if (activeIntegration) {
+    integrationStatus = (
+      <p className='integration-status'>{integrationStateDescription(integration.state)}</p>
+    )
+  }  
 
   return (
-    <Col className={'provider-cell'} md={3}>
-      <div className='provider-container'>
-        <img className="logo img-responsive" src={imgSrc}/>
+    <Col className={'provider-cell' + activeClass} md={3}>
+      <div className={'provider-container' + activeClass}>
+        <div className={'image-wrapper' + activeClass}>
+          <img className={'logo img-responsive' + activeClass} src={imgSrc}/>
+        </div>
         <h4>{providerName}</h4>
-        <Button bsStyle='success' onClick={handleActivateClick}>{"Activate"}</Button>
+        {integrationStatus}
+        {actionContent}
       </div>
     </Col>
   );
@@ -24,7 +57,13 @@ const ProviderCell = ({ providerID, onActivateClick, providerName, logoSrc }) =>
 
 ProviderCell.displayName = 'Provider Cell'
 
+ProviderCell.defaultParams = {
+  activeIntegration: false
+}
+
 ProviderCell.propTypes = {
+  color: PropTypes.string.isRequired,
+  integration: PropTypes.object,
   logoSrc: PropTypes.string.isRequired,
   onActivateClick: PropTypes.func.isRequired,
   providerName: PropTypes.string.isRequired

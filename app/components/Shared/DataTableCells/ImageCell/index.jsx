@@ -2,17 +2,15 @@
 import React, { PropTypes } from 'react'
 import ExampleImage from '../../../helpers/examplePicture'
 
-const ImageCell = ({ rowIndex, data, col }) => {
-  return (  
-    <ExampleImage
-      src={data.getObjectAt(rowIndex)[col]}
-    /> 
-  )
-}
+const ImageCell = ({ rowIndex, data, col }) => (  
+  <ExampleImage
+    src={data.getObjectAt(rowIndex)[col]}
+  /> 
+)
 
 ImageCell.propTypes = {
-	col: PropTypes.number.isRequired,
-	data: PropTypes.object.isRequired,
+  col: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
   rowIndex: PropTypes.number.isRequired
 }
 

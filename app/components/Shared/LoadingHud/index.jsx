@@ -1,18 +1,22 @@
 
 import React, { PropTypes, Component } from 'react'
 
-class Spinner extends Component {
-  displayName: "App Spinner";
+// Transitions
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
+class LoadingHud extends Component {
+  displayName: "App Loading Hud";
   constructor(props) {
     super(props);
     this.state = {
       displayHUD: this.props.loadText.length > 0
     }
+    this.loadingTextWasSet = this._loadingTextWasSet.bind(this)
   }
 
   // Called when an update to the props occurs
   componentWillReceiveProps(nextProps) {
-    this._loadingTextWasSet(nextProps.loadingText)
+    this.loadingTextWasSet(nextProps.loadText)
   }
 
   _loadingTextWasSet(loadingText) {
@@ -54,10 +58,6 @@ class Spinner extends Component {
       content = errorLoading
     } else if (displayHUD) {
       content = normalLoading
-    } else {
-      content = (
-        <div></div>
-      )
     }
 
     return content
@@ -66,14 +66,16 @@ class Spinner extends Component {
   render() {
     const content = this._contentForComponent()
     return (
-      content
+      <ReactCSSTransitionGroup transitionEnterTimeout={900} transitionLeaveTimeout={500} transitionName="loading-hud">
+        {content}
+      </ReactCSSTransitionGroup>
     )  
   }
 }
 
-Spinner.propTypes = {
+LoadingHud.propTypes = {
   loadError: PropTypes.bool.isRequired,
   loadText: PropTypes.string
 }
 
-export default Spinner
+export default LoadingHud

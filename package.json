@@ -6,16 +6,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"TH to setup tests soon 😱\" && exit 0",
-    "start": "NODE_ENV=development ORIGIN=dev webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
-    "local": "NODE_ENV=development ORIGIN=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
-    "lint": "eslint . --ext=jsx --ext=js",
-    "build": "NODE_ENV=production ORIGIN=dev webpack --progress --colors",
+    "start": "NODE_ENV=local ORIGIN=dev webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
+    "local": "NODE_ENV=local ORIGIN=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
+    "lint": "eslint . --ext=jsx --ext=js || true",
+    "build": "ORIGIN=dev webpack --progress --colors",
     "build_prod": "NODE_ENV=production ORIGIN=prod webpack --progress --colors",
     "_deploy": "./lib/deploy.sh",
     "_deploy_aws_prod": "./lib/deploy_aws_production.sh",
     "_deploy_aws_dev": "./lib/deploy_aws_development.sh",
     "deploy-prod": "npm run build_prod && npm run _deploy_aws_prod",
-    "deploy-dev": "npm run build && npm run _deploy_aws_dev"
+    "deploy-dev": "NODE_ENV=production npm run build && npm run _deploy_aws_dev"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",

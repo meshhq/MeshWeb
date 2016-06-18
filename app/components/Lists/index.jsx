@@ -313,9 +313,9 @@ class ListTable extends Component {
   }
 
   _filteredIntegrations() {
-    return _.filter(this.props.integrationState.integrations, (integration) => {
-      return integration.type == this.state.selectedIntegration.type
-    })
+    return _.filter(this.props.integrationState.integrations, (integration) =>
+      integration.type == this.state.selectedIntegration.type
+    )
   }
 
   //----------------------------------------------------------------------------

@@ -23,7 +23,7 @@
     "no-var": 2,
     "quotes": [2, "single"],
     "comma-dangle": [2, "never"],
-    "arrow-body-style": [2, "always"],
+    "arrow-body-style": [2, "as-needed"],
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions (off by default)
     "object-curly-spacing": [2, "always"],
     "strict": 0,

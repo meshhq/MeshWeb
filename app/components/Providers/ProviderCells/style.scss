@@ -5,21 +5,46 @@ $ProviderCellHeight: 3em;
 	background-color: white;
 	border-radius: 6px;
 	border-style: solid;
-	border-color: $MeshGreyLight;
+	border-color: $MeshGrey;
 	border-width: 1px;
 
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	text-align: center;
+	color: $MeshBlackLight;
 
 	min-height: 180px;
-
-	.provider-container {
-		bottom: 20px;
+	
+	button:focus {
+		outline: none;
 	}
 
 	.btn {
+		background-color: $MeshGreen;
+		border: none;
+		border-radius: 40px;
+		color: $MeshWhite;
+		font: $MeshFont;
+		font-weight: 500;
+		font-size: 1.25em;
+		margin-bottom: 8px;
+	}
+
+	.btn:focus {
+		outline: none;
+	}
+
+	.btn.active {
+		color: $MeshGreen;
+		font-weight: 400;
+		box-shadow: none;
+		background-color: $MeshWhite;
+		border: 2px solid rgba($MeshGreen, .6);		
+	}
+
+	.image-wrapper {
+		padding: 10px;
 	}
 
 	img {
@@ -27,7 +52,18 @@ $ProviderCellHeight: 3em;
 		max-width: 100px;
 		height: 100px;
 		margin: auto;
-		padding: 10px 0px;
+		padding: 5px;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+	}
+
+	img.active {
+		-webkit-filter: none;
+		filter: none;
+	}
+
+	.integration-status {
+		font-weight: 400;
 	}
 
 }

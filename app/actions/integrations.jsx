@@ -26,13 +26,12 @@ export function createdIntegration(json) {
 export function createIntegration(params) {
 	return (dispatch, getState) => {
 		if (getState().app.id) {
-			dispatch(creatingIntegration())
 			const appID = getState().app.id
 			return POST(`apps/${appID}/integrations`, params)
 			.then(function(json){
 					dispatch(createdIntegration(json))
+					dispatch(refreshIntegrations())
 					dispatch(activateIntegration(json))
-
 				}
 			)
 		}

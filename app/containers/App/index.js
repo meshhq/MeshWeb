@@ -9,7 +9,7 @@ import _ from 'underscore'
 // Components
 import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
-import ProgressView from '../../components/Shared/ProgressView'
+import LoadingHud from '../../components/Shared/LoadingHud'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -25,19 +25,23 @@ class App extends Component {
     this.state = {
       width: 500,
       initialLoad: false,
+      mounted: false,
       showLogin: false,
       loadError: false
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
+    this.mounted = false
   }
 
   componentDidMount() {
+    this.mounted = true
     this._performInitialSyncWithMesh()
     this._getWindowWidth()
 
     // TODO: Fix Long Polling with server push.
     // TH - Turning off for now
+    // Also, we should be recording interval IDs here
     // setInterval(this.props.userActions.refreshUsers, 20000);
     // setInterval(this.props.organizationActions.refreshOrganizations, 20000);
     // setInterval(this.props.listActions.refreshLists, 20000);
@@ -47,6 +51,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -62,7 +67,9 @@ class App extends Component {
     this.props.appActions.fetchAppIdIfNeeded().then(() => {
       this.setState({ initialLoad: true, loadText: 'mesh is loading', loadError: false })
     }, () => {
-      this.setState({ initialLoad: false, loadError: true })
+      if (this.mounted) {
+        this.setState({ initialLoad: false, loadError: true }) 
+      }
     })
   }
 
@@ -82,10 +89,12 @@ class App extends Component {
    * @return {[type]} [description]
    */
   _loadingText() {
-    for (const propKey in this.props) {
-      const prop = this.props[propKey]
-      if (_.isString(prop.hudMessage) && prop.hudMessage.length > 0) {
-        return prop.hudMessage
+    const { userState, providerState } = this.props
+    const appStates = [userState, providerState]
+    for (let i = 0; i < appStates.length; i++) {
+      const appState = appStates[i]
+      if (_.isString(appState.hudMessage) && appState.hudMessage.length > 0) {
+        return appState.hudMessage
       }
     }
     return ''
@@ -100,20 +109,20 @@ class App extends Component {
     const loadingText = this.loadingText()
     if (this.state.initialLoad == false) {
       return (
-        <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
+        <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
       )
     } else {
       // Inject props into children
       const { containerWidth, containerHeight } = this.state
-      const childrenWithProps = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
+      const childrenWithProps = React.Children.map(this.props.children, (child) => 
+        React.cloneElement(child, {
           containerWidth: containerWidth,
           containerHeight: containerHeight
         })
-      })
+      )
       return (
         <div>
-          <ProgressView loadError={this.state.loadError} loadText={loadingText}/>
+          <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
           {childrenWithProps}
         </div>
       )
@@ -149,7 +158,9 @@ App.propTypes = {
   listActions: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
-  userActions: PropTypes.object.isRequired
+  providerState: PropTypes.object.isRequired,
+  userActions: PropTypes.object.isRequired,
+  userState: PropTypes.object.isRequired
 }
 
 App.defaultProps = {
@@ -159,9 +170,9 @@ App.defaultProps = {
 function mapStateToProps(state) {
   return {
     appState: state.app,
-    userState: state.users,
     providerState: state.providers,
-    integrationState: state.integrations
+    integrationState: state.integrations,
+    userState: state.users
   }
 }
 

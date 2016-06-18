@@ -19,7 +19,4 @@ timestamp() {
 }
 
 # Upload new site
-aws s3 sync ./public/ s3://app.meshdata.io --region us-east-1
-
-# Create Cloudfront Invalidation
-aws cloudfront create-invalidation --distribution-id E2JQQO3SVZQXN7 --paths /*
+aws s3 sync ./public/ s3://app.meshdata.io --region us-west-2

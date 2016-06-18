@@ -1,18 +1,50 @@
 
-.provider-img-row {
-	text-align: center;
-}
+.credentials-form {
 
-.logo-img {
-	display: block;
-	float: none;
-	margin: 0 auto;
+	.modal-title {
+		text-align: center;
+		font-size: 1.5em;
+	}
 
-	border-radius: 10px;
-	padding: 6px;
+	.oauth-instructions {
+		margin: 20px 0px;
+		font-weight: 400;
+		font-size: 1.2em;
+	}
 
-	min-height:80px;
-	min-width: 80px;
-	height: 80px;
-	width: 80px;
+	.instructions-img {
+		border-radius: 5px;
+		border: 2px solid $MeshBlackLight;
+	}
+
+	.form-group {
+		margin: 20px 0px;
+		.control-label {
+			font-weight: 400;
+			font-size: 1.2em;
+		}
+
+		input {
+			font-weight: 300;
+		}
+	}
+
+	.provider-img-row {
+		text-align: center;
+	}
+
+	.logo-img {
+		display: block;
+		float: none;
+		margin: 0 auto;
+
+		border-radius: 10px;
+		padding: 6px;
+
+		min-height:80px;
+		min-width: 80px;
+		height: 80px;
+		width: 80px;
+	}
+	
 }
