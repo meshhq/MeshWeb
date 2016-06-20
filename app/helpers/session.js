@@ -40,8 +40,8 @@ export function clearAuthToken() {
  */
 export function getAuthToken() {
 	// If in DEV, return the static test token
-	console.log(process.env.ORIGIN)
-	if (process.env.ORIGIN == 'dev') {
+	if (process.env.ORIGIN === 'dev') {
+		console.log("returning auth token")
 		return 'testtoken'
 	}
 
