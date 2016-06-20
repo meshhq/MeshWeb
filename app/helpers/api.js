@@ -129,7 +129,6 @@ function defaultHeaders() {
 function appendAuthentication(headers) {
 	const authHeader = getAuthToken()
 	if (authHeader) {
-		console.log("auth token packaged")
 		const bearerHeader = 'bearer ' + authHeader
 		headers.set(AUTHORIZATION_HEADER_KEY, bearerHeader)
 	}
