@@ -13,12 +13,12 @@ class UserDetailForm extends Component {
     // Binding methods
     this.contentForInfo = this._contentForInfo.bind(this)
     this.contentForLists = this._contentForLists.bind(this)
-    this.providerForTypeID = this._providerForTypeID.bind(this)
+    this.providerForKey = this._providerForKey.bind(this)
     this.contentForSupportTickets = this._contentForSupportTickets.bind(this)
     this.contentForTransactions = this._contentForTransactions.bind(this)
     this.linkClicked = this._linkClicked.bind(this)
     this.transactionsTableWithTransactions = this._transactionsTableWithTransactions.bind(this)
-    this.providerPillsForTypeIDs = this._providerPillsForTypeIDs.bind(this)
+    this.providerPillsForProviderKey = this._providerPillsForProviderKey.bind(this)
     this.supportTicketsTableWithTickets = this._supportTicketsTableWithTickets.bind(this)
   }
 
@@ -110,13 +110,13 @@ class UserDetailForm extends Component {
       const tooltip = (
         <Tooltip id={ticket.id}><strong>{'Support Ticket Link'}</strong><br></br>{'Links to your support ticket'}</Tooltip>
       )
-      const providerIDs = _.allKeys(ticket.integration_data)
+      const providerKeys = _.allKeys(ticket.integration_data)
       const createdDate = new Date(ticket.created_at)
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
       return (        
         <tr className='ticket-row' key={idx}>
           <td scope='row'>{createdShortDate}</td>
-          <td scope='pill-row'>{this.providerPillsForTypeIDs(providerIDs)}</td>
+          <td scope='pill-row'>{this.providerPillsForProviderKey(providerKeys)}</td>
           <td>
             <OverlayTrigger overlay={tooltip} placement="top" >
               <a href="#" onClick={this.linkClicked}>
@@ -167,7 +167,7 @@ class UserDetailForm extends Component {
 
       // Providers
       const providerIDs = _.allKeys(transaction.integration_data)
-      const providerPillContent = this.providerPillsForTypeIDs(providerIDs)
+      const providerPillContent = this.providerPillsForProviderKey(providerIDs)
       return (        
         <tr className='transaction-row' key={idx}>
           <td scope='row'>{createdShortDate}</td>
@@ -196,30 +196,26 @@ class UserDetailForm extends Component {
     )
   }
 
-  _providerForTypeID(typeID) {
+  _providerForKey(providerKey) {
     // Type Checking for Number
-    if (!_.isNumber(typeID)) {
-      typeID = Number(typeID)
-    }
-
     return _.find(this.props.providers, (provider) => {
-      if (provider.type === typeID) {
+      if (provider.key === providerKey) {
         return provider
       }
     })
   }
 
-  _providerPillsForTypeIDs(typeIDs) {
-    const pills = _.map(typeIDs, (typeID) => {
-      const provider = this.providerForTypeID(typeID)
+  _providerPillsForProviderKey(prioviderKeys) {
+    const pills = _.map(prioviderKeys, (providerKey) => {
+      const provider = this.providerForKey(providerKey)
       const tooltip = (
-        <Tooltip id={typeID}><strong>{'Provider Link'}</strong><br></br>{' This links out to the resource in the integration.'}</Tooltip>
+        <Tooltip id={providerKey}><strong>{'Provider Link'}</strong><br></br>{' This links out to the resource in the integration.'}</Tooltip>
       )
       if (!provider) {
         return null
       }
       return (
-        <div className='provider-pill-wrapper' key={typeID}>
+        <div className='provider-pill-wrapper' key={providerKey}>
           <OverlayTrigger overlay={tooltip} placement="top" >
             <Pill color={provider.color} title={provider.name}/>
           </OverlayTrigger>
@@ -259,7 +255,7 @@ class UserDetailForm extends Component {
 
     // Find provider if given
     const userProviders = _.allKeys(user.integration_data)
-    const userProviderContent = this.providerPillsForTypeIDs(userProviders)
+    const userProviderContent = this.providerPillsForProviderKey(userProviders)
     const userContent = (
       <div className="row personal-info">
         <div className="col-xs-12">
@@ -286,7 +282,7 @@ class UserDetailForm extends Component {
 
       // Find provider if given
       const orgProviders = _.allKeys(user.organization.integration_data)
-      const orgProviderContent = this.providerPillsForTypeIDs(orgProviders)
+      const orgProviderContent = this.providerPillsForProviderKey(orgProviders)
 
       orgSection = (
         <div className="row organization">
