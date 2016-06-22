@@ -35,9 +35,16 @@ export function clearAuthToken() {
 
 /**
  * Returns the auth token
+ * NOTE: Hard coding the dev token `testtoken` for dev env
  * @param {String} token
  */
 export function getAuthToken() {
+	// If in DEV, return the static test token
+	if (process.env.ORIGIN === 'dev') {
+		return 'testtoken'
+	}
+
+	// Look in window storage for it
 	const val = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
 	if (val === 'null') {
 		return null
