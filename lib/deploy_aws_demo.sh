@@ -4,7 +4,7 @@ echo -e "\n \033[0;32mDeploying updates to AWS Development...\033[0m 🌎"
 git add -A
 
 # Commit changes.
-msg="Deploying Mesh to AWS Development @`date`  🌎"
+msg="Deploying Mesh to AWS DMO @`date`  🌎"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
@@ -19,4 +19,4 @@ timestamp() {
 }
 
 # Upload new site
-aws s3 sync ./public/ s3://dev.app.meshdata.io --region us-west-2
+aws s3 sync ./public/ s3://demo.app.meshdata.io --region us-west-2
