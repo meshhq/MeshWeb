@@ -12,6 +12,7 @@ var buildPlugins = [
   new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
   new webpack.DefinePlugin({
     'process.env': { 
+      MODE: JSON.stringify(process.env.MODE),
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       ORIGIN: JSON.stringify(process.env.ORIGIN || 'local')
     }

@@ -23,6 +23,9 @@ import ErrorForm from '../Forms/ErrorForm'
 // Actions
 import * as ListActions from '../../actions/lists'
 
+// Tracking 
+import Mixpanel from 'mixpanel-browser'
+
 const { Column, Cell } = FixedDataTable;
 
 /**
@@ -31,6 +34,9 @@ const { Column, Cell } = FixedDataTable;
 class ListTable extends Component {
   constructor(props, context) {
     super(props, context)
+
+    // Tracking
+    Mixpanel.track('Visited Lists')
 
     // List Selection
     this.handleSelectOne = this._handleSelectOne.bind(this)

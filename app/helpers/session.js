@@ -1,4 +1,7 @@
 
+import { UNAUTHORIZED_ACCESS_NOTIFICATION } from './api'
+import EventEmitter from './eventEmitter'
+
 // Session Token Key
 const AUTHORIZATION_STOAGE_KEY = 'mesh_key'
 
@@ -10,12 +13,12 @@ const AUTHORIZATION_STOAGE_KEY = 'mesh_key'
  * @return {React.Component} wrapped component
  */
 export function requireAuth(nextState, replace) {
-	if (!userIsLoggedIn()) {
-		replace({
-			pathname: '/login',
-			state: { nextPathname: nextState.location.pathname }			
-		})
-	}
+  if (!userIsLoggedIn()) {
+    replace({
+      pathname: '/login',
+      state: { nextPathname: nextState.location.pathname }      
+    })
+  }
 }
 
 /**
@@ -23,14 +26,25 @@ export function requireAuth(nextState, replace) {
  * @param {String} token
  */
 export function setAuthToken(token) {
-	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, token)
+  window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, token)
+}
+
+/**
+ * Clears the auth token and sends a notification to go back to the
+ * main login screen
+ */
+export function logUserOut() {
+  clearAuthToken()
+  if (this.returnUserToLogin) {
+    this.returnUserToLogin()
+  }
 }
 
 /**
  * Clears the auth token
  */
 export function clearAuthToken() {
-	window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, null)
+  window.localStorage.setItem(AUTHORIZATION_STOAGE_KEY, null)
 }
 
 /**
@@ -39,17 +53,17 @@ export function clearAuthToken() {
  * @param {String} token
  */
 export function getAuthToken() {
-	// If in DEV, return the static test token
-	if (process.env.ORIGIN === 'dev') {
-		return 'testtoken'
-	}
+  // If in DEV, return the static test token
+  if (process.env.ORIGIN === 'dev') {
+    return 'testtoken'
+  }
 
-	// Look in window storage for it
-	const val = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
-	if (val === 'null') {
-		return null
-	}
-	return val
+  // Look in window storage for it
+  const val = window.localStorage.getItem(AUTHORIZATION_STOAGE_KEY)
+  if (val === 'null') {
+    return null
+  }
+  return val
 }
 
 /**
@@ -57,6 +71,23 @@ export function getAuthToken() {
  * @param {String} token
  */
 export function userIsLoggedIn() {
-	const token = getAuthToken()
-	return token !== undefined && token !== null && token !== 'null' && token.length > 0
+  const token = getAuthToken()
+  return token !== undefined && token !== null && token !== 'null' && token.length > 0
+}
+
+/**
+ * Returns whether the app believes we have a session
+ * @param {String} token
+ */
+export function setupSessionEventListeners(browserHistory) {
+  // Listen for 401s
+  EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unauthorized) => {
+    if (unauthorized) {
+      browserHistory.push('/login')
+    }
+  })
+
+  // Setup event for returning user to the login
+  this.returnUserToLogin = () => browserHistory.push('/login')
+  
 }

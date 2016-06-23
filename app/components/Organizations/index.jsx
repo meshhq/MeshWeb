@@ -24,6 +24,9 @@ import ErrorForm from '../Forms/ErrorForm'
 import * as OrganizationActions from '../../actions/organizations'
 import * as UserActions from '../../actions/users'
 
+// Tracking 
+import Mixpanel from 'mixpanel-browser'
+
 // Transitions
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
@@ -32,6 +35,9 @@ const { Column, Cell } = FixedDataTable;
 class OrganizationTable extends Component {
   constructor(props) {
     super(props);
+
+    // Tracking  
+    Mixpanel.track('Visited Orgs')
 
     // Organization Selection
     this.handleSelectOne = this._handleSelectOne.bind(this)
@@ -287,6 +293,7 @@ class OrganizationTable extends Component {
   _handleCellClick(idx) {
     let organization = this.state.filteredDataList.getObjectAt(idx)
     this.props.organizationActions.fetchOrganizationUsers(organization)
+    Mixpanel.track('Clicked Org Row')
     this.setState({
       selectedOrganization: organization,
       organizationFormDisplayed: false,
@@ -305,6 +312,7 @@ class OrganizationTable extends Component {
 
   _handleShowingSelectedUser(user) {
     this.props.userActions.requestDetailUser(user)
+    Mixpanel.track("Clicked User From Org Slideout")
     this.setState({
       userSideDetailDisplayed: true,
       selectedUser: user

@@ -16,12 +16,18 @@ import * as ProviderActions from '../../actions/providers'
 // Helpers
 import { integrationIsSyncing } from '../../constants/integrationSyncStatus'
 
+// Tracking
+import Mixpanel from 'mixpanel-browser'
+
 // HAWKSs
 import { IntervalWrapper } from '../../hawks/interval'
 
 class Providers extends Component {
   constructor(props, context) {
     super(props, context)
+
+    // Tracking
+    Mixpanel.track('Visited Providers')
 
     this.handleActivateClick = this._handleActivateClick.bind(this)
     this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
@@ -85,6 +91,9 @@ class Providers extends Component {
     let pro = this.props.providerState.providers.find(function(provider){
       return provider.id == providerID
     })
+
+    // Track provider click
+    Mixpanel.track('Attempted to activate: ' + pro.key)
     
     // Check for OAuth Ability
     if (pro.oauth === true) {
