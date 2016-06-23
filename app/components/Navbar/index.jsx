@@ -1,5 +1,6 @@
 
 import React, { PropTypes, Component } from 'react'
+import { logUserOut } from '../../helpers/session'
 
 // Assets
 import logo from '../../assets/images/mesh_logo.png'
@@ -11,6 +12,12 @@ const titles = ['Documentation', 'Support']
 class NavBar extends Component {
   constructor(props, context) {
     super(props, context)
+    this.logUserOut = this._logUserOut.bind(this)
+  }
+
+  _logUserOut(e) {
+    e.preventDefault()
+    logUserOut()
   }
 
   render() {
@@ -47,15 +54,20 @@ class NavBar extends Component {
             </div>
           </div>
 
+
           <ul className="nav navbar-nav navbar-right">
             {navItems}
-            <li className="profile-line">
-              <a className="bold"
-                href="#"
-              >
+            <li className="profile-line dropdown">
+              <a className="bold dropdown-toggle" data-toggle="dropdown" href="#" id="right-nav-menu-a" role="button" >
                 {this.props.accountName}
               </a>
               <img className="img-responsive img-circle avatar" src={avatar} />
+              <ul className="dropdown-menu" id="right-nav-menu">
+                <li className="dropdown-line-item"><a href="#">{'Account'}</a></li>
+                <li className="dropdown-line-item"><a href="#">{'Billing'}</a></li>
+                <li className="divider" role="separator"></li>
+                <li className="dropdown-line-item" ><a href="#" onClick={this.logUserOut} >{'Log Out'}</a></li>
+              </ul>
             </li>
           </ul>
 

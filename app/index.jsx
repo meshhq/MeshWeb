@@ -7,8 +7,6 @@ import React from 'react'
 import App from './containers/App'
 import Login from './containers/Login'
 import { requireAuth } from './helpers/session'
-import EventEmitter from './helpers/eventEmitter'
-import { UNAUTHORIZED_ACCESS_NOTIFICATION } from './helpers/api'
 import configureStore from './store'
 
 // Main Components
@@ -17,18 +15,15 @@ import Organizations from './components/Organizations'
 import Lists from './components/Lists'
 import Providers from './components/Providers'
 
-const store = configureStore()
-
 // Style Sheets
-import './assets/base_scripts'
+import RegisterVendorServices from './assets/base_scripts'
 import './assets/base_assets.scss'
 
-// Listen for 401s
-EventEmitter.sharedEmitter().addListener(UNAUTHORIZED_ACCESS_NOTIFICATION, (unauthorized) => {
-  if (unauthorized) {
-    browserHistory.push('/login')
-  }
-})
+// Register Services
+RegisterVendorServices()
+
+// Configuring the app store
+const store = configureStore()
 
 // Render the component
 ReactDOM.render(

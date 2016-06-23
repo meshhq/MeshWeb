@@ -1,11 +1,17 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import mixpanel from 'mixpanel-browser'
 
 class NavItem extends Component {
 
   constructor(props, context) {
     super(props, context)
+    this.trackClick = this._trackClick.bind(this)
+  }
+
+  _trackClick() {
+    mixpanel.track(this.props.title + ' Nav Clicked');
   }
 
   render() {
@@ -19,7 +25,7 @@ class NavItem extends Component {
         </div>
         <div className="nav-item-container">
           <span aria-hidden="true" className={this.props.glyph} />
-          <Link to={`/${lowercaseName}`} >{this.props.title}</Link>
+          <Link onClick={this.trackClick} to={`/${lowercaseName}`} >{this.props.title}</Link>
         </div>
       </div>
     )

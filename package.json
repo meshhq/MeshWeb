@@ -15,9 +15,9 @@
     "_deploy_aws_prod": "./lib/deploy_aws_production.sh",
     "_deploy_aws_dev": "./lib/deploy_aws_development.sh",
     "_deploy_aws_demo": "./lib/deploy_aws_demo.sh",
-    "deploy-prod": "npm run build_prod && npm run _deploy_aws_prod",
+    "deploy-prod": "MODE=production MODE=production npm run build_prod && npm run _deploy_aws_prod",
     "deploy-dev": "NODE_ENV=production npm run build && npm run _deploy_aws_dev",
-    "deploy-demo": "NODE_ENV=production npm run build && npm run _deploy_aws_demo"
+    "deploy-demo": "NODE_ENV=production MODE=demo npm run build && npm run _deploy_aws_demo"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -57,6 +57,7 @@
     "isomorphic-fetch": "git+https://github.com/meshhq/isomorphic-fetch.git",
     "jquery": "^2.2.0",
     "linkifyjs": "^2.0.3",
+    "mixpanel-browser": "^2.8.1",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.8",
     "react-bootstrap": "^0.28.5",
