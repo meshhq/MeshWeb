@@ -31,6 +31,7 @@ class App extends Component {
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
+    this.handleResize = this._handleResize.bind(this)
     this.mounted = false
   }
 
@@ -55,7 +56,7 @@ class App extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  handleResize() {
+  _handleResize() {
     this.getWindowWidth()
   }
 

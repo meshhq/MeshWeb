@@ -162,6 +162,13 @@ $screen-lg: 1200px;
        url('/assets/fonts/roboto-v15-latin-900.svg#Roboto') format('svg'); /* Legacy iOS */
 }
 
+/* roboto-900 - latin */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('/assets/bowerComponents/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('/assets/bowerComponents/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/bowerComponents/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/assets/bowerComponents/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/bowerComponents/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
 // Standard CSS Defaults
 
 h1, h2, h3, h4, h5, h6 {
