@@ -312,7 +312,7 @@ class OrganizationTable extends Component {
 
   _handleShowingSelectedUser(user) {
     this.props.userActions.requestDetailUser(user)
-    Mixpanel.track("Clicked User From Org Slideout")
+    Mixpanel.track('Clicked User From Org Slideout')
     this.setState({
       userSideDetailDisplayed: true,
       selectedUser: user
