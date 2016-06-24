@@ -19,6 +19,23 @@
 	  display: table-cell;
 	  vertical-align: middle;
 	}
+	
+	.flash-container {
+		position: absolute;
+		top: -80px;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		.alert {
+			position: relative;
+			width: inherit;
+		}
+	}
+
+	.glyphicon {
+		margin-right: 5px;
+	}
 
 	.form-group {
 		margin: 0px;
@@ -26,6 +43,10 @@
 		input {
 			background-color: $MeshWhite;
 			border-radius: 0px;
+		}
+
+		#signUpForm {
+			margin: 5px 0px;
 		}
 		
 		.email-form {
@@ -46,6 +67,19 @@
 		}
 	}
 
+	.button-group {
+		margin-top: 10px;
+	}
+
+	.login-a:focus {
+		text-decoration: none;
+		outline-width: 0px;
+	}
+
+	.login-button {
+		font-weight: 400;
+	}
+
 	.sign-in {
 		color: $MeshBlack;
 		font-size: 1em;
@@ -56,4 +90,32 @@
 		border-radius: 0px;
 
 	}
+
+	.or-span {
+		margin: 0px 5px;
+	}
+
+	// Flash Animation
+	.example-enter {
+	  opacity: 0.01;
+	}
+
+}
+
+.error-flash-enter {
+  opacity: 0.01;
+}
+
+.error-flash-enter.error-flash-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.error-flash-leave {
+  opacity: 1;
+}
+
+.error-flash-leave.error-flash-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

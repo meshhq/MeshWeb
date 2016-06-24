@@ -41,11 +41,45 @@ export function submitLogin(email, pass) {
 				.then((response) => {
 					setAuthToken(response.token)
 					return Promise.resolve()
-				}, () => {
+				}, (err) => {
 					clearAuthToken()
-					return Promise.reject()
+					return Promise.reject(err)
 				}
 			)		
 	}
 }
 
+/**
+ * submitSignUp signs the user up
+ * @param  {string} email
+ * @param  {string} pass 
+ * @param  {string} firstName 
+ * @param  {string} lastName
+ * @param  {string} companyName
+ * @param  {string} companySite
+ */
+export function submitSignUp(email, pass, firstName, lastName, companyName, companySite) {
+	return (dispatch) => {
+		dispatch(submitedLogin())
+
+		const payload = {
+			'user' : {
+				'email' : email, 
+				'password' : pass,				
+				'first_name' : firstName,
+				'last_name' : lastName
+			},
+			'organization' : {
+				'name' : companyName,
+				'website' : companySite				
+			}
+		}
+		
+		return POST('signup', payload)
+				.then((response) => {
+					setAuthToken(response.token)
+					return Promise.resolve()
+				}, (err) => Promise.reject(err)
+			)		
+	}
+}

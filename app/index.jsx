@@ -6,7 +6,7 @@ import React from 'react'
 
 import App from './containers/App'
 import Login from './containers/Login'
-import { requireAuth } from './helpers/session'
+import { requireAuth, setupSessionEventListeners } from './helpers/session'
 import configureStore from './store'
 
 // Main Components
@@ -21,6 +21,9 @@ import './assets/base_assets.scss'
 
 // Register Services
 RegisterVendorServices()
+
+// Register Auth Services
+setupSessionEventListeners(browserHistory)
 
 // Configuring the app store
 const store = configureStore()

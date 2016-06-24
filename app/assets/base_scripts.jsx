@@ -16,5 +16,7 @@ export default function RegisterVendorServices() {
 		mixpanel.init('65eb9f9aa9524ab62fc9871ebc16f399')
 	} else if (process.env.MODE == 'production') {
 		mixpanel.init('004840a9aa88c30a6f333be2fa5b63cc')
+	} else {
+		mixpanel.init('fakeToken')
 	}
 }
