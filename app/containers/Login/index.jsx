@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import LoadingText from '../../components/Shared/LoadingText'
 import validator from 'validator'
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import * as SessionActions from '../../actions/session'
@@ -282,6 +283,31 @@ class Login extends Component {
       )
     } else {
       // Sign In
+      let actionButtons = null
+      if (this.props.sessionState.isLoading) {
+        actionButtons = (
+          <LoadingText loadText='Signing Up'/>
+        )
+      } else {
+        actionButtons = (
+          <div className="action-buttons">
+            <a className="login-a" 
+              href=""
+              onClick={this.handleSignIn}
+            >
+              <span className="login-button">{'Sign In'}</span>
+            </a>
+            <span className="or-span">{' - or - '}</span>
+            <a className="login-a" 
+              href=""
+              onClick={this.handleSignUpUserMode}
+            >
+              <span className="login-button">{'Sign Up'}</span>
+            </a>
+          </div>
+        )
+      }
+
       loginContent = (
         <div className="col-sm-9 col-sm-offset-1 vcenter">
           <form className="form-horizontal">
@@ -308,19 +334,7 @@ class Login extends Component {
           </form>
           <div className="form-group">
             <div className="col-sm-10 button-group">
-              <a className="login-a" 
-                href=""
-                onClick={this.handleSignIn}
-              >
-                <span className="login-button">{'Sign In'}</span>
-              </a>
-              <span className="or-span">{' - or - '}</span>
-              <a className="login-a" 
-                href=""
-                onClick={this.handleSignUpUserMode}
-              >
-                <span className="login-button">{'Sign Up'}</span>
-              </a>
+              {actionButtons}
             </div>
           </div>
         </div>
@@ -353,7 +367,8 @@ Login.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  sessionActions: PropTypes.object.isRequired
+  sessionActions: PropTypes.object.isRequired,
+  sessionState: PropTypes.object.isRequired
 }
 
 Login.defaultProps = {

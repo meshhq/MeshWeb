@@ -4,10 +4,10 @@ import { setAuthToken, clearAuthToken } from '../helpers/session'
 
 // This action is to indicate the user
 // attempted to login
-export const SUBMITED_LOGIN = 'SUBMITED_LOGIN'
+export const SUBMITTED_LOGIN = 'SUBMITTED_LOGIN'
 export function submitedLogin() {
 	return {
-		type: SUBMITED_LOGIN
+		type: SUBMITTED_LOGIN
 	}
 }
 
@@ -44,6 +44,7 @@ export function submitLogin(email, pass) {
 					dispatch(loginSuccess())
 					return Promise.resolve()
 				}, (err) => {
+					dispatch(receivedChallenge())
 					clearAuthToken()
 					return Promise.reject(err)
 				}
@@ -83,7 +84,10 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 					dispatch(refreshMe())
 					dispatch(loginSuccess())
 					return Promise.resolve()
-				}, (err) => Promise.reject(err)
+				}, (err) =>  {
+					dispatch(receivedChallenge())
+					Promise.reject(err)
+				}
 			)		
 	}
 }
