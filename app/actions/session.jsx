@@ -1,5 +1,5 @@
 
-import { POST } from '../helpers/api'
+import { POST, GET } from '../helpers/api'
 import { setAuthToken, clearAuthToken } from '../helpers/session'
 
 // This action is to indicate the user
@@ -40,6 +40,8 @@ export function submitLogin(email, pass) {
 		return POST('signin', payload)
 				.then((response) => {
 					setAuthToken(response.token)
+					dispatch(refreshMe())
+					dispatch(loginSuccess())
 					return Promise.resolve()
 				}, (err) => {
 					clearAuthToken()
@@ -78,8 +80,40 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 		return POST('signup', payload)
 				.then((response) => {
 					setAuthToken(response.token)
+					dispatch(refreshMe())
+					dispatch(loginSuccess())
 					return Promise.resolve()
 				}, (err) => Promise.reject(err)
 			)		
 	}
+}
+
+/**
+ * User / Me
+ */
+export const REFRESHED_ME = 'REFRESHED_ME'
+export function refreshedMe(user) {
+	return {
+		type: REFRESHED_ME,
+		user: user,
+		receivedAt: Date.now()
+	}
+}
+
+/**
+* refreshMe refreshes the logged in user
+* @return {[type]}       [description]
+*/
+export function refreshMe() {
+	return (dispatch) => 
+		GET('users/me')
+		.then((response) => {
+			dispatch(refreshedMe(response))
+			return Promise.resolve()
+		}, (err) => {
+			clearAuthToken()
+			return Promise.reject(err)
+		}
+	)		
+
 }

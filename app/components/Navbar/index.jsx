@@ -59,7 +59,7 @@ class NavBar extends Component {
             {navItems}
             <li className="profile-line dropdown">
               <a className="bold dropdown-toggle" data-toggle="dropdown" href="#" id="right-nav-menu-a" role="button" >
-                {this.props.accountName}
+                {this.props.user.first_name}
               </a>
               <img className="img-responsive img-circle avatar" src={avatar} />
               <ul className="dropdown-menu" id="right-nav-menu">
@@ -80,7 +80,7 @@ class NavBar extends Component {
 // navTitles [Array<String>] is the section titles
 // activeSection [Number] is the current selection
 NavBar.propTypes = {
-  accountName: PropTypes.string.isRequired
+  user: PropTypes.object.isRequired
 }
 
 // Display Name

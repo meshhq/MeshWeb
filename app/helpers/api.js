@@ -50,7 +50,6 @@ function performFetch(request) {
 			if (response.status === 204) {
 				return null
 			} else {
-				console.log("ok")
 				return response.json()
 			}
 		} else {

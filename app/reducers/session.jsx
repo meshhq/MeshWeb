@@ -1,10 +1,12 @@
 
 import { SUBMITTED_LOGIN, RECEIVED_CHALLENGE, LOGIN_SUCCESS } from '../actions/users'
+import { REFRESHED_ME } from '../actions/session'
 
 const defaultState = {
 	isLoggingIn: false,
 	challenge: false,
-	hudMessage: ''
+	hudMessage: '',
+	user: null
 }
 
 function session(state = defaultState, action) {
@@ -23,6 +25,10 @@ function session(state = defaultState, action) {
 			return Object.assign({}, state, {
 				isLoggingIn: false,
 				challenge: false
+			})
+		case REFRESHED_ME:
+			return Object.assign({}, state, {
+				user: action.user
 			})
 		default:
 			return state

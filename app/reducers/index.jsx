@@ -6,6 +6,7 @@ import providers from './providers'
 import lists from './lists'
 import organizations from './organizations'
 import integrations from './integrations'
+import session from './session'
 
 const meshApp = combineReducers({
 	app,
@@ -13,7 +14,8 @@ const meshApp = combineReducers({
 	integrations,
 	users,
   lists,
-  organizations
+  organizations,
+  session
 })
 
 export default meshApp
