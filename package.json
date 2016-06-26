@@ -73,7 +73,8 @@
     "redux-actions": "^0.9.0",
     "redux-thunk": "^1.0.3",
     "underscore": "^1.8.3",
-    "urijs": "^1.17.0"
+    "urijs": "^1.17.0",
+    "validator": "^5.4.0"
   },
   "repository": {
     "type": "git",

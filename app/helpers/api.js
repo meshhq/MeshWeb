@@ -62,9 +62,7 @@ function performFetch(request) {
 				return Promise.reject(respJSON)
 			})
 		}
-	}, (error) =>
-		Promise.reject(error)
-	)
+	}, () => Promise.reject())
 }
 /**
  * Creates the base request object for the operation

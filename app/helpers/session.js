@@ -5,6 +5,9 @@ import EventEmitter from './eventEmitter'
 // Session Token Key
 const AUTHORIZATION_STOAGE_KEY = 'mesh_key'
 
+// Stored local func for logout
+let returnUserToLogin = null
+
 /**
  * RequireAuth wraps a React Component and intercepts
  * a routing to it. If the app is not authenticated, it
@@ -35,8 +38,8 @@ export function setAuthToken(token) {
  */
 export function logUserOut() {
   clearAuthToken()
-  if (this.returnUserToLogin) {
-    this.returnUserToLogin()
+  if (returnUserToLogin) {
+    returnUserToLogin()
   }
 }
 
@@ -88,6 +91,7 @@ export function setupSessionEventListeners(browserHistory) {
   })
 
   // Setup event for returning user to the login
-  this.returnUserToLogin = () => browserHistory.push('/login')
-  
+  returnUserToLogin = () => {
+    browserHistory.push('/login')
+  }
 }

@@ -4,6 +4,7 @@
   justify-content: center;
 
   .sk-fading-circle {
+    left: -35px;
     position: relative;
     display: flex;
     align-items: center;
@@ -18,9 +19,11 @@
     display: inline;
     flex-direction: row;
     align-items: center;
-    font-size: 1.25em;
-    margin-left: 35px;
+    font-size: 1.2em;
+    white-space: nowrap;
+    margin-left: 40px;
     font-weight: 400;
+    width: 100%;
   }
 
   .circle-container {

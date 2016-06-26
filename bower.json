@@ -1,5 +1,5 @@
 {
-  "name": "Mesh",
+  "name": "mesh",
   "description": "Mesh Web App",
   "main": "index.js",
   "authors": [
@@ -19,7 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.6",
-    "SpinKit": "spinkit#^1.2.5"
+    "SpinKit": "spinkit#^1.2.5",
+    "bootstrap": "^3.3.6"
   }
 }

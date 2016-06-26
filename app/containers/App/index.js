@@ -137,7 +137,7 @@ class App extends Component {
     return (
       <div className="react-root">
         <div className='top-nav-wrapper'>
-          <NavBar accountName="Kevin" onNavChange={this.handleNavBarClick} />
+          <NavBar onNavChange={this.handleNavBarClick} user={this.props.sessionState.user} />
         </div>
         <div className='content-wrapper'>
           <NavPane currentPath={pathname} />
@@ -160,6 +160,7 @@ App.propTypes = {
   location: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
+  sessionState: PropTypes.object.isRequired,
   userActions: PropTypes.object.isRequired,
   userState: PropTypes.object.isRequired
 }
@@ -173,6 +174,7 @@ function mapStateToProps(state) {
     appState: state.app,
     providerState: state.providers,
     integrationState: state.integrations,
+    sessionState: state.session,
     userState: state.users
   }
 }

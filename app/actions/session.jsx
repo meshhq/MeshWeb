@@ -1,13 +1,13 @@
 
-import { POST } from '../helpers/api'
+import { POST, GET } from '../helpers/api'
 import { setAuthToken, clearAuthToken } from '../helpers/session'
 
 // This action is to indicate the user
 // attempted to login
-export const SUBMITED_LOGIN = 'SUBMITED_LOGIN'
+export const SUBMITTED_LOGIN = 'SUBMITTED_LOGIN'
 export function submitedLogin() {
 	return {
-		type: SUBMITED_LOGIN
+		type: SUBMITTED_LOGIN
 	}
 }
 
@@ -40,12 +40,84 @@ export function submitLogin(email, pass) {
 		return POST('signin', payload)
 				.then((response) => {
 					setAuthToken(response.token)
+					dispatch(refreshMe())
+					dispatch(loginSuccess())
 					return Promise.resolve()
-				}, () => {
+				}, (err) => {
+					dispatch(receivedChallenge())
 					clearAuthToken()
-					return Promise.reject()
+					return Promise.reject(err)
 				}
 			)		
 	}
 }
 
+/**
+ * submitSignUp signs the user up
+ * @param  {string} email
+ * @param  {string} pass 
+ * @param  {string} firstName 
+ * @param  {string} lastName
+ * @param  {string} companyName
+ * @param  {string} companySite
+ */
+export function submitSignUp(email, pass, firstName, lastName, companyName, companySite) {
+	return (dispatch) => {
+		dispatch(submitedLogin())
+
+		const payload = {
+			'user' : {
+				'email' : email, 
+				'password' : pass,				
+				'first_name' : firstName,
+				'last_name' : lastName
+			},
+			'organization' : {
+				'name' : companyName,
+				'website' : companySite				
+			}
+		}
+		
+		return POST('signup', payload)
+				.then((response) => {
+					setAuthToken(response.token)
+					dispatch(refreshMe())
+					dispatch(loginSuccess())
+					return Promise.resolve()
+				}, (err) =>  {
+					dispatch(receivedChallenge())
+					Promise.reject(err)
+				}
+			)		
+	}
+}
+
+/**
+ * User / Me
+ */
+export const REFRESHED_ME = 'REFRESHED_ME'
+export function refreshedMe(user) {
+	return {
+		type: REFRESHED_ME,
+		user: user,
+		receivedAt: Date.now()
+	}
+}
+
+/**
+* refreshMe refreshes the logged in user
+* @return {[type]}       [description]
+*/
+export function refreshMe() {
+	return (dispatch) => 
+		GET('users/me')
+		.then((response) => {
+			dispatch(refreshedMe(response))
+			return Promise.resolve()
+		}, (err) => {
+			clearAuthToken()
+			return Promise.reject(err)
+		}
+	)		
+
+}

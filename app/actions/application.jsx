@@ -5,6 +5,7 @@ import { refreshProviders } from './providers'
 import { refreshLists } from './lists'
 import { refreshOrganizations } from './organizations'
 import { refreshIntegrations } from './integrations'
+import { refreshMe } from './session'
 
 // This action is to indicate the desired
 // refresh of the user table
@@ -28,6 +29,7 @@ function fetchFirstAppId(dispatch) {
 			let appInfo = json[0]
 			let appId = appInfo['id']
 			dispatch(resolvedAppId(appId))
+			dispatch(refreshMe())
 
 			// After a app id is resolved, dispatch refreshes of all
 			// user, providers, etc
@@ -36,7 +38,13 @@ function fetchFirstAppId(dispatch) {
 			const listsFetchPromise = dispatch(refreshLists())
 			const orgFetchPromise = dispatch(refreshOrganizations())
 			const integrationsFetchPromise = dispatch(refreshIntegrations())
-			return Promise.all([userFetchPromise, providerFetchPromise, listsFetchPromise, orgFetchPromise, integrationsFetchPromise])
+			return Promise.all([
+				userFetchPromise, 
+				providerFetchPromise, 
+				listsFetchPromise, 
+				orgFetchPromise, 
+				integrationsFetchPromise]
+			)
 		}
 	)
 }
