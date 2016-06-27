@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -13,6 +14,7 @@ import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import DataTable from '../Shared/DataTable'
 import SideDetailView from '../Shared/SideDetailView'
+import { Button } from 'react-bootstrap'
 
 // Forms
 import UserForm from '../Forms/UserForm'
@@ -71,6 +73,10 @@ class UserTable extends React.Component {
 
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
+
+    // No Content
+    this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Setup our data source
     
@@ -355,6 +361,30 @@ class UserTable extends React.Component {
   }
 
   //----------------------------------------------------------------------------
+  // No Content... Content
+  //----------------------------------------------------------------------------
+  
+  _navToIntegrations(e) {
+    e.preventDefault()
+    browserHistory.push('/integrations')
+  }
+
+  _contentForNoIntegrations() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'Welcome to Mesh!'}</h2>
+            <p>{'It looks like you don\'t have any users'}</p>
+            <p className="bottom-instruction">{'because no integrations are turned on yet.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  //----------------------------------------------------------------------------
   // Filtering Action
   //----------------------------------------------------------------------------
 
@@ -382,6 +412,7 @@ class UserTable extends React.Component {
 
   render() {
     const { filteredDataList, selectedList, sideDetailDisplayed } = this.state
+    const { integrationState } = this.props
 
     // Revised container Height for Table
     const tableContainerHeight = this.props.containerHeight - this.state.actionBarHeight
@@ -461,6 +492,35 @@ class UserTable extends React.Component {
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
 
+
+    // Get integration count to determine whether to show content
+    const integraitonCount = integrationState.integrations.length
+    let tableContent = null
+    if (integraitonCount) {
+      tableContent = (
+        <div className="active-table-content">
+          <div className="action-bar">
+            <ActionBar
+              actions={actions}
+              onSearchInput={this.handleSearch}
+              providers={this.props.providerState.providers}
+            />
+          </div>
+          <div className="table">
+            <DataTable
+              columns={columns}
+              containerHeight={tableContainerHeight}
+              maxHeight={tableContainerHeight}
+              rowCount={filteredDataList.getSize()}
+              {...this.props}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      tableContent = this.contentForNoIntegrations()
+    }
+
     return (
       <div className="users-component">
         <div className="modals-container">
@@ -471,22 +531,7 @@ class UserTable extends React.Component {
             {sideDetail}
           </ReactCSSTransitionGroup>
         </div>
-        <div className="action-bar">
-          <ActionBar
-            actions={actions}
-            onSearchInput={this.handleSearch}
-            providers={this.props.providerState.providers}
-          />
-        </div>
-        <div className="table">
-          <DataTable
-            columns={columns}
-            containerHeight={tableContainerHeight}
-            maxHeight={tableContainerHeight}
-            rowCount={filteredDataList.getSize()}
-            {...this.props}
-          />
-        </div>
+        {tableContent}
       </div>
     );
   }

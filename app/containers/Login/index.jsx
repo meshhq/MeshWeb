@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+
 import LoadingText from '../../components/Shared/LoadingText'
 import validator from 'validator'
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -181,7 +182,7 @@ class Login extends Component {
               aria-hidden="true" 
               className="glyphicon glyphicon-exclamation-sign"
             />
-            <span className="sr-only">{'Error:'}</span>{' ' + this.state.loginErrorText}
+            <span className="sr-only">{'Error:'}</span><span>{' ' + this.state.loginErrorText}</span>
           </div>
         </div>
       )

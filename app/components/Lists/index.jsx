@@ -3,6 +3,7 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'underscore'
+import { browserHistory } from 'react-router'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -13,6 +14,7 @@ import PillCell from '../Shared/DataTableCells/PillCell'
 import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import DataTable from '../Shared/DataTable'
+import { Button } from 'react-bootstrap'
 
 // Forms
 import ListForm from '../Forms/ListForm'
@@ -69,6 +71,10 @@ class ListTable extends Component {
 
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
+
+    // No Content
+    this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Generate the Dta wrapper for the lists.
     this.dataList = new DataListWrapper(this.props.listState.lists)
@@ -346,10 +352,36 @@ class ListTable extends Component {
     });
   }
 
+  //----------------------------------------------------------------------------
+  // No Content... Content
+  //----------------------------------------------------------------------------
+  
+  _navToIntegrations(e) {
+    e.preventDefault()
+    browserHistory.push('/integrations')
+  }
+
+  _contentForNoIntegrations() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'Welcome to Mesh!'}</h2>
+            <p>{'It looks like you don\'t have any lists'}</p>
+            <p className="bottom-instruction">{'because no integrations are turned on yet.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
   render() {
 
     // Data sources.
     const { selectedList, filteredDataList } = this.state
+    const { integrationState } = this.props
   
     let forms = (
       <div className={'forms'}>
@@ -403,28 +435,42 @@ class ListTable extends Component {
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>} key={'description'} width={600} />)
 
+    // No Content determination
+    // Get integration count to determine whether to show content
+    const integraitonCount = integrationState.integrations.length
+    let tableContent = null
+    if (integraitonCount) {
+      tableContent = (
+        <div className="active-table-content">
+          <div className="action-bar">
+            <ActionBar
+              actions={actions}
+              onSearchInput={this.handleSearch}
+              providers={this.props.integrationState.integrations}
+            />
+          </div>
+          <div className="table">
+            <DataTable
+              columns={columns}
+              maxHeight={680}
+              rowCount={filteredDataList.getSize()}
+              width={this.props.width}
+              {...this.props}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      tableContent = this.contentForNoIntegrations()
+    }
+
     // Layout the providers table.
     return (
       <div className="users-component">
         <div className="modals-container">
           {forms}
         </div>
-        <div className="action-bar">
-          <ActionBar
-            actions={actions}
-            onSearchInput={this.handleSearch}
-            providers={this.props.integrationState.integrations}
-          />
-        </div>
-        <div className="table">
-          <DataTable
-            columns={columns}
-            maxHeight={680}
-            rowCount={filteredDataList.getSize()}
-            width={this.props.width}
-            {...this.props}
-          />
-        </div>
+        {tableContent}
       </div>
     );
   }
