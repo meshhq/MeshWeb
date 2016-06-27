@@ -374,7 +374,7 @@ class UserTable extends React.Component {
       <div className="row">
         <div className="no-content col-xs-12">
           <div className="text-container">
-            <h2>{'Welcome to Mesh!'}</h2>
+            <h2>{'Welcome to Mesh'}</h2>
             <p>{'It looks like you don\'t have any users'}</p>
             <p className="bottom-instruction">{'because no integrations are turned on yet.'}</p>
             <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
@@ -492,7 +492,7 @@ class UserTable extends React.Component {
     let organizationCell = (<TextCell col="organization_name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={organizationCell} header={<Cell>{'Organization'}</Cell>} key={'organization_name'} width={200}/>)
 
-
+    // No Content determination
     // Get integration count to determine whether to show content
     const integraitonCount = integrationState.integrations.length
     let tableContent = null

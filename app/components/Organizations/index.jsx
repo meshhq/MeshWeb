@@ -339,7 +339,7 @@ class OrganizationTable extends Component {
       <div className="row">
         <div className="no-content col-xs-12">
           <div className="text-container">
-            <h2>{'Welcome to Mesh!'}</h2>
+            <h2>{'Welcome to Mesh'}</h2>
             <p>{'It looks like you don\'t have any organizations'}</p>
             <p className="bottom-instruction">{'because no integrations are turned on yet.'}</p>
             <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
