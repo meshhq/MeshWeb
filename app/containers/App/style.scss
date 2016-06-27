@@ -66,3 +66,62 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     font-weight: 400;
 
 }
+
+// No Content Styling
+// Note: This should be refactored into its own component
+// leacing for now. Affects Users/Orgs/Lists
+.no-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	.btn {
+		padding: 10px 20px;
+		background-color: $MeshGreen;
+		border: none;
+		border-radius: 40px;
+		color: $MeshWhite;
+		font: $MeshFont;
+		font-weight: 500;
+		font-size: 1.25em;
+		margin-bottom: 8px;
+	}
+
+	.btn:focus {
+		outline: none;
+	}
+
+	.btn.active {
+		color: $MeshGreen;
+		font-weight: 400;
+		box-shadow: none;
+		background-color: $MeshWhite;
+		border: 2px solid rgba($MeshGreen, .6);		
+	}
+
+	.text-container {
+		text-align: center;
+		margin-top: 1em;
+		color: $MeshGreyDark;
+
+		.bottom-instruction {
+			margin-bottom: 20px;
+		}
+
+		h4 {
+			text-align: center;
+			display: block;
+		}
+		p {
+			display: block;
+			font-size: 1.5em;
+		}
+
+		a {
+			font-weight: 500;
+			font-size: 3em;
+			color: $MeshBlueDark;
+		}
+	}
+}
+

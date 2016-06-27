@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -13,6 +14,7 @@ import DataListWrapper from '../Shared/DataListWrapper'
 import ActionBar from '../ActionBar'
 import DataTable from '../Shared/DataTable'
 import SideDetailView from '../Shared/SideDetailView'
+import { Button } from 'react-bootstrap'
 
 // Forms
 import OrganizationForm from '../Forms/OrganizationForm'
@@ -66,6 +68,10 @@ class OrganizationTable extends Component {
 
     // Searching
     this.handleSearch = this._handleSearch.bind(this)
+    
+    // No Content
+    this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
@@ -320,6 +326,30 @@ class OrganizationTable extends Component {
   }
 
   //----------------------------------------------------------------------------
+  // No Content... Content
+  //----------------------------------------------------------------------------
+  
+  _navToIntegrations(e) {
+    e.preventDefault()
+    browserHistory.push('/integrations')
+  }
+
+  _contentForNoIntegrations() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'Welcome to Mesh'}</h2>
+            <p>{'It looks like you don\'t have any organizations'}</p>
+            <p className="bottom-instruction">{'because no integrations are turned on yet.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  //----------------------------------------------------------------------------
   // Filtering Action
   //----------------------------------------------------------------------------
 
@@ -348,6 +378,7 @@ class OrganizationTable extends Component {
   render() {
     // Data sources.
     const { selectedList, filteredDataList, orgSideDetailDisplayed, userSideDetailDisplayed } = this.state
+    const { integrationState } = this.props
 
     let forms = (
       <div className={'forms'}>
@@ -447,6 +478,34 @@ class OrganizationTable extends Component {
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>}key={'description'} width={400}/>)
 
+    // Get integration count to determine whether to show content
+    const integraitonCount = integrationState.integrations.length
+    let tableContent = null
+    if (integraitonCount) {
+      tableContent = (
+        <div className="active-table-content">
+          <div className="action-bar">
+            <ActionBar
+              actions={actions}
+              onSearchInput={this.handleSearch}
+              providers={this.props.providerState.providers}
+            />
+          </div>
+          <div className="table">
+            <DataTable
+              columns={columns}
+              maxHeight={680}
+              rowCount={filteredDataList.getSize()}
+              width={this.props.width}
+              {...this.props}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      tableContent = this.contentForNoIntegrations()
+    }
+
     return (
       <div className="organizations-component">
         <div className="modals-container">
@@ -460,22 +519,7 @@ class OrganizationTable extends Component {
             {userSideDetail}
           </ReactCSSTransitionGroup>
         </div>
-        <div className="action-bar">
-          <ActionBar
-            actions={actions}
-            onSearchInput={this.handleSearch}
-            providers={this.props.providerState.providers}
-          />
-        </div>
-        <div className="table">
-          <DataTable
-            columns={columns}
-            maxHeight={680}
-            rowCount={filteredDataList.getSize()}
-            width={this.props.width}
-            {...this.props}
-          />
-        </div>
+        {tableContent}
       </div>
     )
   }
