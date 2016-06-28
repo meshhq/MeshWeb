@@ -1,6 +1,6 @@
 
 import { POST, GET } from '../helpers/api'
-import { setAuthToken, clearAuthToken } from '../helpers/session'
+import { setAuthToken, clearAuthToken, logUserOut } from '../helpers/session'
 
 // This action is to indicate the user
 // attempted to login
@@ -114,10 +114,7 @@ export function refreshMe() {
 		.then((response) => {
 			dispatch(refreshedMe(response))
 			return Promise.resolve()
-		}, (err) => {
-			clearAuthToken()
-			return Promise.reject(err)
-		}
+		}, (err) => Promise.reject(err)
 	)		
 
 }

@@ -57,6 +57,7 @@
     "isomorphic-fetch": "git+https://github.com/meshhq/isomorphic-fetch.git",
     "jquery": "^2.2.0",
     "linkifyjs": "^2.0.3",
+    "lunr": "^0.7.1",
     "mixpanel-browser": "^2.8.1",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.8",

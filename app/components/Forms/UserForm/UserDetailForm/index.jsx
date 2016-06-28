@@ -354,7 +354,7 @@ class UserDetailForm extends Component {
     let transactionsSection = null
     if (user.tickets) {
       const transactionsContent = this.contentForTransactions(user.transactions)
-      if (transactionsContent && user.transactions) {
+      if (transactionsContent && user.transactions.length) {
         transactionsSection = (
           <div className="row transactions">
             <div className="col-xs-12">

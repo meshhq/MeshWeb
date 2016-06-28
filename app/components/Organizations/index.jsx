@@ -118,12 +118,15 @@ class OrganizationTable extends Component {
     let dataList;
     if (e.target.value) {
       let filterBy = e.target.value.toLowerCase();
+      const regex = new RegExp(filterBy, 'i');
       let size = this.dataList.getSize();
       let filteredIndexes = [];
       for (let index = 0; index < size; index++) {
         let { name } = this.dataList.getObjectAt(index);
-        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+        // First Name
+        if (name.search(regex) != -1) {
           filteredIndexes.push(index);
+          continue
         }
       }
       dataList = new DataListWrapper(this.props.organizationState.organizations, filteredIndexes)
