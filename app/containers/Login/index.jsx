@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
+import { Button } from 'react-bootstrap'
 
 import LoadingText from '../../components/Shared/LoadingText'
 import validator from 'validator'
@@ -114,14 +115,14 @@ class Login extends Component {
     const pass = this.passInput.value
     const firstName = this.firstNameInput.value
     const lastName = this.lastNameInput.value
-    if (!validator.isEmail(email)) {
-      this.setLoginError('Please enter a valid email')
-    } else if (pass.length < 4) {
-      this.setLoginError('Please enter a password with at least 4 characters')
-    } else if (firstName.length == 0) {
+    if (firstName.length == 0) {
       this.setLoginError('Please enter a first name')
     } else if (lastName.length == 0) {
       this.setLoginError('Please enter a last name')
+    } else if (!validator.isEmail(email)) {
+      this.setLoginError('Please enter a valid email')
+    } else if (pass.length < 4) {
+      this.setLoginError('Please enter a password with at least 4 characters')
     } else {
       this.email = email
       this.pass = pass
@@ -190,171 +191,176 @@ class Login extends Component {
 
     const { signUpUserMode, signUpCompanyMode } = this.state
     let loginContent = null
+    let actionButtons = null
     if (signUpUserMode) {
       loginContent = (
-        <div className="col-sm-9 col-sm-offset-1 vcenter">
+        <div>
           <form className="form-horizontal">
             <div className="form-group">
-              <div className="col-sm-10">
+              <div className="col-xs-12 form-column">
+                <input className="form-control firstname-form"  
+                  id="signUpFirstName" 
+                  key="firstName"
+                  placeholder="First Name"
+                  ref={firstNameRef}
+                  value={this.firstName}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-xs-12 form-column">
+                <input className="form-control lastname-form"  
+                  id="signUpLastName" 
+                  key="lastName"
+                  placeholder="Last Name"
+                  ref={lastNameRef}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-xs-12 form-column">
                 <input className="form-control email-form"  
-                  id="inputEmail3" 
+                  id="signUpEmail"
+                  key="signUpEmail" 
                   placeholder="Email" 
                   ref={emailRef}
-                  type="email" 
                 />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-xs-12 form-column">
                 <input className="form-control pass-form" 
-                  id="signUpForm" 
-                  placeholder="Password" 
+                  id="signUpPass" 
+                  key="signUpPass" 
+                  placeholder="Password"
                   ref={passRef}
                   type="password" 
                 />
-                <input className="form-control firstname-form"  
-                  id="signUpForm" 
-                  placeholder="First Name" 
-                  ref={firstNameRef}
-                  type="firstName" 
-                />
-                <input className="form-control lastname-form"  
-                  id="signUpForm" 
-                  placeholder="Last Name" 
-                  ref={lastNameRef}
-                  type="lastName" 
-                />
               </div>
             </div>
           </form>
-          <div className="form-group">
-            <div className="col-sm-10 button-group">
-              <a className="login-a" 
-                href=""
-                onClick={this.handleBackPressed}
-              >
-                <span className="login-button">{'Back'}</span>
-              </a>
-              <span className="or-span">{' - or - '}</span>
-              <a className="login-a" 
-                href=""
-                onClick={this.handleSignUpCompanyMode}
-              >
-                <span className="login-button">{'Next'}</span>
-              </a>
-            </div>
-          </div>
         </div>
       )
-    } else if (signUpCompanyMode) {
-      loginContent = (
-        <div className="col-sm-9 col-sm-offset-1 vcenter">
-          <form className="form-horizontal">
-            <div className="form-group">
-              <div className="col-sm-10">
-                <input className="form-control name-form"  
-                  id="signUpForm" 
-                  placeholder="Company Name" 
-                  ref={companyNameRef}
-                  type="companyName" 
-                />
-                <input className="form-control name-form"  
-                  id="signUpForm" 
-                  placeholder="Company Site" 
-                  ref={comanySiteRef}
-                  type="companySite" 
-                />
-              </div>
-            </div>
-          </form>
-          <div className="form-group">
-            <div className="col-sm-10 button-group">
-              <a className="login-a"
-                href=""
-                onClick={this.handleBackPressed}
-              >
-                <span className="login-button">{'Back'}</span>
-              </a>
-              <span className="or-span">{' - or - '}</span>
-              <a a className="login-a" 
-                href=""
-                onClick={this.handleSignUp}
-              >
-                <span className="login-button">{'Sign Up'}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      // Sign In
-      let actionButtons = null
+      
+      // Action Buttons
       if (this.props.sessionState.isLoading) {
         actionButtons = (
           <LoadingText loadText='Signing Up'/>
         )
       } else {
         actionButtons = (
-          <div className="action-buttons">
-            <a className="login-a" 
-              href=""
-              onClick={this.handleSignIn}
-            >
-              <span className="login-button">{'Sign In'}</span>
-            </a>
-            <span className="or-span">{' - or - '}</span>
-            <a className="login-a" 
-              href=""
-              onClick={this.handleSignUpUserMode}
-            >
-              <span className="login-button">{'Sign Up'}</span>
-            </a>
+          <div>
+            <Button className="login-btn-left back-btn" id={'back-btn'} onClick={this.handleBackPressed}>{'Back'}</Button>
+            <Button className="login-btn-right" onClick={this.handleSignUpCompanyMode}>{'Continue'}</Button>
           </div>
         )
       }
 
+    } else if (signUpCompanyMode) {
       loginContent = (
-        <div className="col-sm-9 col-sm-offset-1 vcenter">
+        <div>
           <form className="form-horizontal">
             <div className="form-group">
-              <div className="col-sm-10">
-                <input className="form-control email-form"  
-                  id="inputEmail3" 
-                  placeholder="Email" 
-                  ref={emailRef}
-                  type="email" 
+              <div className="col-xs-12 form-column">
+                <input className="form-control company-name-form"  
+                  id="signUpCompanyName"
+                  placeholder="Company Name" 
+                  ref={companyNameRef}
                 />
               </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-10">
-                <input className="form-control pass-form" 
-                  id="inputPassword3" 
-                  placeholder="Password" 
-                  ref={passRef}
-                  type="password" 
+              <div className="col-xs-12 form-column">
+                <input className="form-control company-site-form"  
+                  id="signUpCompanySite"
+                  placeholder="Company Site"
+                  ref={comanySiteRef}
                 />
               </div>
             </div>
           </form>
-          <div className="form-group">
-            <div className="col-sm-10 button-group">
-              {actionButtons}
-            </div>
-          </div>
         </div>
       )
+
+      // Action Buttons
+      actionButtons = (
+        <div>
+          <Button className="login-btn-left back-btn" id={'back-btn'} onClick={this.handleBackPressed}>{'Back'}</Button>
+          <Button className="login-btn-right" onClick={this.handleSignUp}>{'Sign Up'}</Button>
+        </div>
+      )
+    } else {
+      // Form Content
+      loginContent = (
+        <div>
+          <form className="form-horizontal">
+            <div className="form-group">
+              <div className="col-xs-12 form-column">
+                <input className="form-control email-form"  
+                  id="signInEmail" 
+                  key="signInEmail"
+                  placeholder="Email" 
+                  ref={emailRef}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="col-xs-12 form-column">
+                <input className="form-control pass-form" 
+                  id="signInPass" 
+                  key="signInPass"
+                  placeholder="Password"
+                  ref={passRef}
+                  type="password"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      )
+      
+      // Action Buttons
+      if (this.props.sessionState.isLoading) {
+        actionButtons = (
+          <LoadingText loadText='Signing Up'/>
+        )
+      } else {
+        actionButtons = (
+          <div>
+            <Button className="login-btn-left" onClick={this.handleSignUpUserMode}>{'Sign Up'}</Button>
+            <Button className="login-btn-right" onClick={this.handleSignIn}>{'Sign In'}</Button>
+          </div>
+        )
+      }
+      
     }
 
     return (
       <div className="react-root">
         <div className="container login-container">
           <div className="row vertical-center-row">
-            <div className="text-center col-md-4 col-md-offset-4">
-              <div className="row login-row">
-                <ReactCSSTransitionGroup transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionName="error-flash">
-                  {errorFlash}
-                </ReactCSSTransitionGroup>
-                <div className="col-sm-2 vcenter">
-                  <p className='brand'>{'Mesh.io'}</p>
+            <div className="text-center col-md-6 col-md-offset-3">
+              <div className="row flash-row">
+                <div className="col-xs-12">
+                  <ReactCSSTransitionGroup transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionName="error-flash">
+                    {errorFlash}
+                  </ReactCSSTransitionGroup>
                 </div>
-                {loginContent}
+              </div>
+              <div className="row login-row">
+                <div className="col-xs-12 brand-column">
+                  <div>
+                    <span className='brand'>{'Mesh Data'}</span>
+                  </div>
+                </div>
+                <div className="col-xs-12">
+                  {loginContent}
+                </div>
+              </div>
+              <div className="row action-button-row">
+                <div className="col-xs-12">
+                  {actionButtons}
+                </div>
               </div>
             </div>
           </div>
@@ -387,7 +393,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-// Using a HOC to inject the router into the login for access
+// Using a HOC to inject the router into the login for access 
 // to nagivaiton and location
 const wRouterHawkedLogin = withRouter(Login)
 

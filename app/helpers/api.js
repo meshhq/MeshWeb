@@ -1,8 +1,7 @@
 
 import { BASE_URL } from '../constants/api'
 import { Fetch, Headers, Request } from 'isomorphic-fetch'
-import { getAuthToken, clearAuthToken } from './session'
-import EventEmitter from './eventEmitter'
+import { getAuthToken, logUserOut } from './session'
 import URI from 'urijs'
 
 const AUTHORIZATION_HEADER_KEY = 'Authorization'
@@ -53,14 +52,10 @@ function performFetch(request) {
 				return response.json()
 			}
 		} else {
-			return response.json().then((respJSON) => {
-				// Look for 401s
-				if (response.status == 401) {
-					clearAuthToken()
-					EventEmitter.sharedEmitter().emit(UNAUTHORIZED_ACCESS_NOTIFICATION, true)
-				}
-				return Promise.reject(respJSON)
-			})
+			if (response.status == 401) {
+				logUserOut()
+			}
+			return response.json().then((respJSON) => Promise.reject(respJSON))
 		}
 	}, () => Promise.reject())
 }

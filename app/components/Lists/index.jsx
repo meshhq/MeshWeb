@@ -74,6 +74,7 @@ class ListTable extends Component {
 
     // No Content
     this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.contentForNoLists = this._contentForNoLists.bind(this)
     this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Generate the Dta wrapper for the lists.
@@ -189,7 +190,7 @@ class ListTable extends Component {
     this.props.listActions.createList(params)
     this.setState({
       listFormDisplayed: false
-    });
+    })
   }
 
   _handleCloseListForm() {
@@ -197,7 +198,7 @@ class ListTable extends Component {
       selectedObject: null,
       selectedListUsers: null,
       listFormDisplayed: false
-    });
+    })
   }
 
   //----------------------------------------------------------------------------
@@ -211,11 +212,11 @@ class ListTable extends Component {
     if (this.state.selectedList.length == 0) {
       this.setState({
         errorFormDisplayed: true
-      });
+      })
     } else {
       this.setState({
         integrationFormDisplayed: true
-      });
+      })
     }
   }
 
@@ -227,7 +228,7 @@ class ListTable extends Component {
       if (shouldPublish === true) {
         integrations.push(integration.name)
       }
-    });
+    })
 
     for (let idx in this.state.selectedList) {
       let list = this.state.selectedList[idx]
@@ -237,13 +238,13 @@ class ListTable extends Component {
     this.setState({
       selectedList: [],
       integrationFormDisplayed: false
-    });
+    })
   }
 
   _handleCloseIntegrationForm() {
     this.setState({
       integrationFormDisplayed: false
-    });
+    })
   }
 
   //----------------------------------------------------------------------------
@@ -376,12 +377,30 @@ class ListTable extends Component {
     )
   }
 
+  _contentForNoLists() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'No Lists Yet'}</h2>
+            <p>{'It looks like you don\'t have any lists associated'}</p>
+            <p className="bottom-instruction">{'with the integration you have activated, or they\'re still syncing.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  //----------------------------------------------------------------------------
+  // Render
+  //----------------------------------------------------------------------------
 
   render() {
 
     // Data sources.
     const { selectedList, filteredDataList } = this.state
-    const { integrationState } = this.props
+    const { integrationState, listState } = this.props
   
     let forms = (
       <div className={'forms'}>
@@ -438,8 +457,9 @@ class ListTable extends Component {
     // No Content determination
     // Get integration count to determine whether to show content
     const integraitonCount = integrationState.integrations.length
+    const listCount = listState.lists.length
     let tableContent = null
-    if (integraitonCount) {
+    if (integraitonCount && listCount) {
       tableContent = (
         <div className="active-table-content">
           <div className="action-bar">
@@ -460,6 +480,8 @@ class ListTable extends Component {
           </div>
         </div>
       )
+    } else if (integraitonCount) {
+      tableContent = this.contentForNoLists()
     } else {
       tableContent = this.contentForNoIntegrations()
     }

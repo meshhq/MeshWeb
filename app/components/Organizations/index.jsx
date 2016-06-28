@@ -72,6 +72,7 @@ class OrganizationTable extends Component {
     // No Content
     this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
     this.navToIntegrations = this._navToIntegrations.bind(this)
+    this.contentForNoOrgs = this._contentForNoOrgs.bind(this)
 
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
@@ -117,12 +118,15 @@ class OrganizationTable extends Component {
     let dataList;
     if (e.target.value) {
       let filterBy = e.target.value.toLowerCase();
+      const regex = new RegExp(filterBy, 'i');
       let size = this.dataList.getSize();
       let filteredIndexes = [];
       for (let index = 0; index < size; index++) {
         let { name } = this.dataList.getObjectAt(index);
-        if (name.toLowerCase().indexOf(filterBy) !== -1) {
+        // First Name
+        if (name.search(regex) != -1) {
           filteredIndexes.push(index);
+          continue
         }
       }
       dataList = new DataListWrapper(this.props.organizationState.organizations, filteredIndexes)
@@ -349,6 +353,22 @@ class OrganizationTable extends Component {
     )
   }
 
+
+  _contentForNoOrgs() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'No Users Yet'}</h2>
+            <p>{'It looks like you don\'t have any organizations associated'}</p>
+            <p className="bottom-instruction">{'with the integration you have activated, or they\'re still syncing.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   //----------------------------------------------------------------------------
   // Filtering Action
   //----------------------------------------------------------------------------
@@ -378,7 +398,7 @@ class OrganizationTable extends Component {
   render() {
     // Data sources.
     const { selectedList, filteredDataList, orgSideDetailDisplayed, userSideDetailDisplayed } = this.state
-    const { integrationState } = this.props
+    const { integrationState, organizationState } = this.props
 
     let forms = (
       <div className={'forms'}>
@@ -480,8 +500,9 @@ class OrganizationTable extends Component {
 
     // Get integration count to determine whether to show content
     const integraitonCount = integrationState.integrations.length
+    const orgCount = organizationState.organizations.length
     let tableContent = null
-    if (integraitonCount) {
+    if (integraitonCount && orgCount) {
       tableContent = (
         <div className="active-table-content">
           <div className="action-bar">
@@ -502,6 +523,8 @@ class OrganizationTable extends Component {
           </div>
         </div>
       )
+    } else if (integraitonCount) {
+      tableContent = this.contentForNoOrgs()
     } else {
       tableContent = this.contentForNoIntegrations()
     }

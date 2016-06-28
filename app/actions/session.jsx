@@ -114,10 +114,7 @@ export function refreshMe() {
 		.then((response) => {
 			dispatch(refreshedMe(response))
 			return Promise.resolve()
-		}, (err) => {
-			clearAuthToken()
-			return Promise.reject(err)
-		}
+		}, (err) => Promise.reject(err)
 	)		
 
 }

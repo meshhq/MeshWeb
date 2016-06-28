@@ -67,7 +67,7 @@ class IntegrationForm extends Component {
       if (providers.length > 0) {
         let provider = providers[0]
         colums.push(
-          <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
+          <Col className='provider-column' key={provider.provider_type} md={6} ref={provider['id']}>
             <input aria-label="..." className='provider-radio'  id={provider['name']} onChange={test} type={'radio'} />
             <img className="logo-img" src={provider['logo_url']} />
             <p className='provider-name'>{provider['name']}</p>
@@ -77,7 +77,7 @@ class IntegrationForm extends Component {
       if (providers.length > 1) {
         let provider = providers[1]
         colums.push(
-          <Col className='provider-column' key={provider.name} md={6} ref={provider['id']}>
+          <Col className='provider-column' key={provider.provider_type} md={6} ref={provider['id']}>
             <input aria-label="..." className='provider-radio' id={provider['name']} onChange={test} type={'radio'} />
             <img className="logo-img" src={provider['logo_url']} />
             <p className='provider-name'>{provider['name']}</p>

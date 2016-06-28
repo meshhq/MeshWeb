@@ -31,7 +31,7 @@ class OrganizationDetailForm extends Component {
         formattedValue = value.toLocaleString()
       }
 
-      // If theres a value, return html
+      // If theres a value, return html 
       if (formattedValue) {
         return (
           <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={formattedValue + contentId}>
@@ -132,7 +132,7 @@ class OrganizationDetailForm extends Component {
     )
 
     let usersTable = null
-    if (this.props.users) {
+    if (this.props.users.length) {
       const table = this.usersTableWithUsers(this.props.users)
       usersTable = (
         <div className="row lists">

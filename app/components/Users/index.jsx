@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
+import Lunr from 'lunr'
+import _ from 'underscore'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
@@ -76,11 +78,20 @@ class UserTable extends React.Component {
 
     // No Content
     this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.contentForNoUsers = this._contentForNoUsers.bind(this)
     this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Setup our data source
-    
     this.dataList = new DataListWrapper(this.props.userState.users)
+    this.indexer = Lunr(function () {
+      this.field('first_name')
+      this.field('last_name')
+      this.field('email')
+    })    
+    _.each(this.props.userState.users, (user) => {
+      this.indexer.add(user)
+    })
+
     this.state = {
       selectedList: [],
       selectedIntegration: null,
@@ -106,6 +117,14 @@ class UserTable extends React.Component {
     this.setState({
       filteredDataList: this.dataList
     });
+    this.indexer = Lunr(function () {
+      this.field('first_name')
+      this.field('last_name')
+      this.field('email')
+    })    
+    _.each(this.props.userState.users, (user) => {
+      this.indexer.add(user)
+    })
   }
 
   /**
@@ -136,13 +155,28 @@ class UserTable extends React.Component {
     let dataList;
     if (e.target.value) {
       let filterBy = e.target.value.toLowerCase();
+      const regex = new RegExp(filterBy, 'i');
       let size = this.dataList.getSize();
       let filteredIndexes = [];
       for (let index = 0; index < size; index++) {
-        let { first_name } = this.dataList.getObjectAt(index);
-        if (first_name.toLowerCase().indexOf(filterBy) !== -1) {
+        let { first_name, last_name, email } = this.dataList.getObjectAt(index);
+        // First Name
+        if (first_name.search(regex) != -1) {
           filteredIndexes.push(index);
+          continue
         }
+
+        // Last Name
+        if (last_name.search(regex) != -1) {
+          filteredIndexes.push(index);
+          continue
+        }
+
+        // Email
+        if (email.search(regex) != -1) {
+          filteredIndexes.push(index);
+          continue
+        }        
       }
       dataList = new DataListWrapper(this.props.userState.users, filteredIndexes)
     } else {
@@ -384,6 +418,21 @@ class UserTable extends React.Component {
     )
   }
 
+  _contentForNoUsers() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'No Users Yet'}</h2>
+            <p>{'It looks like you don\'t have any users associated'}</p>
+            <p className="bottom-instruction">{'with the integration you have activated, or they\'re still syncing.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   //----------------------------------------------------------------------------
   // Filtering Action
   //----------------------------------------------------------------------------
@@ -412,7 +461,7 @@ class UserTable extends React.Component {
 
   render() {
     const { filteredDataList, selectedList, sideDetailDisplayed } = this.state
-    const { integrationState } = this.props
+    const { integrationState, userState } = this.props
 
     // Revised container Height for Table
     const tableContainerHeight = this.props.containerHeight - this.state.actionBarHeight
@@ -495,8 +544,9 @@ class UserTable extends React.Component {
     // No Content determination
     // Get integration count to determine whether to show content
     const integraitonCount = integrationState.integrations.length
+    const usersCount = userState.users.length
     let tableContent = null
-    if (integraitonCount) {
+    if (integraitonCount || usersCount) {
       tableContent = (
         <div className="active-table-content">
           <div className="action-bar">
@@ -517,6 +567,8 @@ class UserTable extends React.Component {
           </div>
         </div>
       )
+    } else if (integraitonCount) {
+      tableContent = this.contentForNoUsers()
     } else {
       tableContent = this.contentForNoIntegrations()
     }

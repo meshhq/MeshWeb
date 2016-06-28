@@ -30,16 +30,25 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   
   // Replace action if the integration is actively syncing
   let integrationStatus = null
-  if (activeIntegration && integrationIsSyncing(integration.state)) {
-    integrationStatus = (
-      <LoadingText loadText={'Syncing'} />  
-    )
+  if (integration) {
+    const syncing = integrationIsSyncing(integration.state)
+    const syncDesc = integrationStateDescription(integration.state)
+    if (activeIntegration && syncing) {
+      integrationStatus = (
+        <LoadingText loadText={'Syncing'} />  
+      )
+      actionContent = null
+    } else if (activeIntegration && syncDesc != 'Synced') {
+      integrationStatus = (
+        <p className='integration-status'>{syncDesc}</p>
+      )
+    }    
+  }
+
+  // If there's an integration status, only show one
+  if (integrationStatus) {
     actionContent = null
-  } else if (activeIntegration) {
-    integrationStatus = (
-      <p className='integration-status'>{integrationStateDescription(integration.state)}</p>
-    )
-  }  
+  }
 
   return (
     <Col className={'provider-cell' + activeClass} md={3}>

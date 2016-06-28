@@ -4,17 +4,17 @@
 }
 
 .react-root {
-	background: $MeshWhiteDark;
+	background: $MeshWhite;
 	height: 100%;
-}
-
-.brand {
-	font-size: 1.5em;
-	padding-bottom: 25px;
 }
 
 .login-container {
 	display: table;
+	
+	.login-row {
+		height: 100%;
+	}
+
 	.vertical-center-row {
 	  display: table-cell;
 	  vertical-align: middle;
@@ -33,6 +33,25 @@
 		}
 	}
 
+	.brand-column {
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-direction: row;
+		flex-direction: row;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-justify-content: center;
+		justify-content: center;
+		margin-bottom: 1em;
+
+	  .brand {
+	  	font-size: 2em;
+	  	color: $MeshBlackUltraLight;
+	  	font-weight: 600;
+	  }
+
+	}
+
 	.glyphicon {
 		margin-right: 5px;
 	}
@@ -44,9 +63,24 @@
 	.form-group {
 		margin: 0px;
 
+		.form-column {
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-direction: row;
+			flex-direction: row;
+			-webkit-align-items: center;
+			align-items: center;
+			-webkit-justify-content: center;
+			justify-content: center;			
+		}
+
 		input {
 			background-color: $MeshWhite;
-			border-radius: 0px;
+			border-radius: 5px;
+		}
+
+		#inputEmail3 {
+			background-color: #fff;
 		}
 
 		#signUpForm {
@@ -58,17 +92,20 @@
 		}
 
 		.pass-form {
-			margin-bottom: 10px;
+			margin-bottom: 5px;
 		}
 
 		.form-control {
 			background-color: $MeshWhite;
 			font-weight: 300;
+			max-width: 200px;
+			margin-bottom: 5px;
 		}
 
 		.form-control:focus {
-			border-color: $MeshBlue;
+			border-color: $MeshBlueLight;
 		}
+
 	}
 
 	.button-group {
@@ -102,6 +139,50 @@
 	// Flash Animation
 	.example-enter {
 	  opacity: 0.01;
+	}
+
+	// Button
+	.btn {
+		margin-top: 10px;
+		min-width: 150px;
+		padding: 10px 20px;
+		background-color: $MeshGreen;
+		border: none;
+		border-radius: 40px;
+		color: $MeshWhite;
+		font: $MeshFont;
+		font-weight: 500;
+		font-size: 1.25em;
+		margin-bottom: 8px;
+	}
+
+	.btn:active {
+		background-color: $MeshGreenDark;
+		color: $MeshWhite;
+	}
+
+	.btn:focus {
+		outline: none;
+	}
+
+	.btn.active {
+		color: $MeshGreen;
+		font-weight: 400;
+		box-shadow: none;
+		background-color: $MeshWhite;
+		border: 2px solid rgba($MeshGreen, .6);		
+	}
+	
+	.back-btn {
+		background-color: $MeshBlueLight;
+	}
+	
+	.login-btn-left {
+		margin-right: 20px;
+	}
+
+	.login-btn-right {
+		margin-left: 20px;
 	}
 
 }
