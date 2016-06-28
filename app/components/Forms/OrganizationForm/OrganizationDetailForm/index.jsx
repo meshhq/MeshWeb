@@ -31,7 +31,7 @@ class OrganizationDetailForm extends Component {
         formattedValue = value.toLocaleString()
       }
 
-      // If theres a value, return html
+      // If theres a value, return html 
       if (formattedValue) {
         return (
           <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={formattedValue + contentId}>
