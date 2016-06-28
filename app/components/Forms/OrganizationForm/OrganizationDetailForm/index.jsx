@@ -132,7 +132,7 @@ class OrganizationDetailForm extends Component {
     )
 
     let usersTable = null
-    if (this.props.users) {
+    if (this.props.users.length) {
       const table = this.usersTableWithUsers(this.props.users)
       usersTable = (
         <div className="row lists">

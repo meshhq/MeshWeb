@@ -310,7 +310,7 @@ class UserDetailForm extends Component {
     let listSection = null
     if (user.lists) {
       const listsContent = this.contentForLists(user.lists)
-      if (listsContent && listsContent.length) {
+      if (listsContent && user.lists.length) {
         listSection = (
           <div className="row lists">
             <div className="col-xs-12">
@@ -332,7 +332,7 @@ class UserDetailForm extends Component {
     let ticketsSection = null
     if (user.tickets) {
       const ticketsContent = this.contentForSupportTickets(user.tickets)
-      if (ticketsContent) {
+      if (ticketsContent && user.tickets.length) {
         ticketsSection = (
           <div className="row tickets">
             <div className="col-xs-12">
@@ -354,7 +354,7 @@ class UserDetailForm extends Component {
     let transactionsSection = null
     if (user.tickets) {
       const transactionsContent = this.contentForTransactions(user.transactions)
-      if (transactionsContent) {
+      if (transactionsContent && user.transactions) {
         transactionsSection = (
           <div className="row transactions">
             <div className="col-xs-12">
