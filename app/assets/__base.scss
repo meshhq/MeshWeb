@@ -168,6 +168,16 @@ input[type="checkbox"] {
   text-rendering: optimizeLegibility;
 }
 
+// Form BG Color Override
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $MeshWhite inset;
+}
+
+// Form BG Color Override
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px $MeshWhite inset;
+}
+
 /**
  * FixedDataTable v0.6.0
  *
