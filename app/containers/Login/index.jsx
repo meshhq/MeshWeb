@@ -393,7 +393,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-// Using a HOC to inject the router into the login for access
+// Using a HOC to inject the router into the login for access 
 // to nagivaiton and location
 const wRouterHawkedLogin = withRouter(Login)
 
