@@ -88,9 +88,18 @@ class Providers extends Component {
   }
 
   _handleActivateClick(providerID) {    
+    // Find the provider
     let pro = this.props.providerState.providers.find(function(provider){
       return provider.id == providerID
     })
+
+    // Don't proceed for now if there's an exsiting integration
+    for (let i = 0; i < this.props.integrationState.integrations.length; i++) {
+      const integration = this.props.integrationState.integrations[i]
+      if (integration.provider_type == pro.type) {
+        return
+      }
+    }
 
     // Track provider click
     Mixpanel.track('Attempted to activate: ' + pro.key)
@@ -105,7 +114,6 @@ class Providers extends Component {
         });
       } else {
         // No extra info needed, let's roll
-        
         this.props.providerActions.requestOAuthURL(pro.key).then((response) => {
           window.location = response
         })        

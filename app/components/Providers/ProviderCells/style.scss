@@ -14,7 +14,8 @@ $ProviderCellHeight: 3em;
 	text-align: center;
 	color: $MeshBlackLight;
 
-	min-height: 180px;
+	height: 200px;
+	overflow: hidden;
 	
 	button:focus {
 		outline: none;
@@ -63,7 +64,8 @@ $ProviderCellHeight: 3em;
 	}
 
 	.integration-status {
-		font-weight: 400;
+		font-weight: 300;
+		font-size: 2em;
 	}
 
 }
