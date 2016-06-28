@@ -76,6 +76,7 @@ class UserTable extends React.Component {
 
     // No Content
     this.contentForNoIntegrations = this._contentForNoIntegrations.bind(this)
+    this.contentForNoUsers = this._contentForNoUsers.bind(this)
     this.navToIntegrations = this._navToIntegrations.bind(this)
 
     // Setup our data source
@@ -384,6 +385,21 @@ class UserTable extends React.Component {
     )
   }
 
+  _contentForNoUsers() {
+    return (
+      <div className="row">
+        <div className="no-content col-xs-12">
+          <div className="text-container">
+            <h2>{'No Users Yet'}</h2>
+            <p>{'It looks like you don\'t have any users associated'}</p>
+            <p className="bottom-instruction">{'with the integration you have activated, or they\'re still syncing.'}</p>
+            <Button bsStyle={'success'} className={'integrations-button'} onClick={this.navToIntegrations}>{'Take Me To Integrations'}</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   //----------------------------------------------------------------------------
   // Filtering Action
   //----------------------------------------------------------------------------
@@ -412,7 +428,7 @@ class UserTable extends React.Component {
 
   render() {
     const { filteredDataList, selectedList, sideDetailDisplayed } = this.state
-    const { integrationState } = this.props
+    const { integrationState, userState } = this.props
 
     // Revised container Height for Table
     const tableContainerHeight = this.props.containerHeight - this.state.actionBarHeight
@@ -495,8 +511,9 @@ class UserTable extends React.Component {
     // No Content determination
     // Get integration count to determine whether to show content
     const integraitonCount = integrationState.integrations.length
+    const usersCount = userState.users.length
     let tableContent = null
-    if (integraitonCount) {
+    if (integraitonCount && usersCount) {
       tableContent = (
         <div className="active-table-content">
           <div className="action-bar">
@@ -517,6 +534,8 @@ class UserTable extends React.Component {
           </div>
         </div>
       )
+    } else if (integraitonCount) {
+      tableContent = this.contentForNoUsers()
     } else {
       tableContent = this.contentForNoIntegrations()
     }
