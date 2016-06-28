@@ -1,8 +1,7 @@
 
 import { BASE_URL } from '../constants/api'
 import { Fetch, Headers, Request } from 'isomorphic-fetch'
-import { getAuthToken, clearAuthToken, logUserOut } from './session'
-import EventEmitter from './eventEmitter'
+import { getAuthToken, logUserOut } from './session'
 import URI from 'urijs'
 
 const AUTHORIZATION_HEADER_KEY = 'Authorization'

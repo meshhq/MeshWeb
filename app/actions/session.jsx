@@ -1,6 +1,6 @@
 
 import { POST, GET } from '../helpers/api'
-import { setAuthToken, clearAuthToken, logUserOut } from '../helpers/session'
+import { setAuthToken, clearAuthToken } from '../helpers/session'
 
 // This action is to indicate the user
 // attempted to login
