@@ -430,9 +430,8 @@ class OrganizationTable extends Component {
 
     // Building Organization Actions
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
-    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
     let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
-    let actions = [newAction, publishAction, deleteAction];
+    let actions = [newAction, deleteAction];
 
     /**
      * Organization Side Panel
