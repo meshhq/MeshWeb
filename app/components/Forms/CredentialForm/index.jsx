@@ -46,6 +46,7 @@ class CredentialForm extends Component {
       if (this.props.provider.credentials && this.props.provider.credentials.oauth_extra) {
         let credentialInfo = this.props.provider.credentials
         const value = this.props.provider.credentials.oauth_extra_prop
+        
         // Making a ref for email and pass
         const extraInfoRef = (ref) => this.extraInfoRef = ref
         credentialRows.push(
