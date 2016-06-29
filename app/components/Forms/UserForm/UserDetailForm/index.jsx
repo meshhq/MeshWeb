@@ -33,7 +33,11 @@ class UserDetailForm extends Component {
       if (_.isString(value) && value.length > 0) {
 
         // Look for email or site labels
-        if (label === 'email') {
+        if (Validator.isEmail(value)) {
+          formattedValue = (
+            <a href={'mailto:' + value}>{value}</a>
+          )
+        } else if (label === 'email') {
           formattedValue = (
             <a href="#" onClick={this.linkClicked}>{value}</a>
           )
@@ -113,24 +117,20 @@ class UserDetailForm extends Component {
     )
 
     const rows = _.map(tickets, (ticket, idx) => {
-      const tooltip = (
-        <Tooltip id={ticket.id}><strong>{'Support Ticket Link'}</strong><br></br>{'Links to your support ticket'}</Tooltip>
-      )
-
       const createdDate = new Date(ticket.created_at)
+      const integraitonKey = _.keys(ticket.integration_data)[0]
+      const integrationLink = ticket.integration_data[integraitonKey].url
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
       return (        
         <tr className='ticket-row' key={idx}>
-          <td scope='row'>{createdShortDate}</td>
-          <td scope='pill-row'>{this.providerPillsForProviderKey(ticket.integration_data)}</td>
-          <td>
-            <OverlayTrigger overlay={tooltip} placement="top" >
-              <a href="#" onClick={this.linkClicked}>
-                <p>{'300'}</p>
-              </a>
-            </OverlayTrigger>
+          <td className='td-first' scope='row'>{createdShortDate}</td>
+          <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(ticket.integration_data)}</td>
+          <td className='td-third'>
+            <a href={'http://' + integrationLink}>
+              <p>{'300'}</p>
+            </a>
           </td>
-          <td>{ticket.description}</td>
+          <td className='td-forth'>{ticket.description}</td>
         </tr>
       )
     })
@@ -155,35 +155,34 @@ class UserDetailForm extends Component {
     // Standard Tooltip
     const headers = (
       <tr>
-        <th>{'Date'}</th>
-        <th>{'Origin'}</th>
-        <th>{'Description'}</th>
-        <th>{'Amount'}</th>
+        <th className='td-first'>{'Date'}</th>
+        <th className='td-second'>{'Origin'}</th>
+        <th className='td-third'>{'Amount'}</th>
+        <th className='td-forth'>{'Description'}</th>
       </tr>
     )
 
     const rows = _.map(transactions, (transaction, idx) => {
-      const tooltip = (
-        <Tooltip id={transaction.id}><strong>{'Transaction Link'}</strong><br></br>{'Links to your transaction'}</Tooltip>
-      )
 
       // Date
       const createdDate = new Date(transaction.created_at)
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
 
-      // Providers
+      // Providers (Assuming one only)
       const providerPillContent = this.providerPillsForProviderKey(transaction.integration_data)
+      const integraitonKey = _.keys(transaction.integration_data)[0]
+      const integrationLink = transaction.integration_data[integraitonKey].url
       return (        
         <tr className='transaction-row' key={idx}>
-          <td scope='row'>{createdShortDate}</td>
-          <td scope='pill-row'>{providerPillContent}</td>
-          <td>{transaction.amount}</td>
-          <td>
-            <OverlayTrigger overlay={tooltip} placement="top" >
-              <a href="#" onClick={this.linkClicked}>
-                {transaction.description}
-              </a>
-            </OverlayTrigger>
+          <td className='td-first' scope='row'>{createdShortDate}</td>
+          <td className='td-second' scope='pill-row'>{providerPillContent}</td>
+          <td className='td-third'>
+            {transaction.amount}
+          </td>
+          <td className='td-forth'>
+            <a href={'http://' + integrationLink}>
+              {transaction.description}
+            </a>
           </td>
         </tr>
       )

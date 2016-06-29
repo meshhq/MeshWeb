@@ -27,7 +27,11 @@ class OrganizationDetailForm extends Component {
       if (_.isString(value) && value.length > 0) {
 
         // URL Check
-        if (Validator.isURL(value)) {
+        if (Validator.isEmail(value)) {
+          formattedValue = (
+            <a href={value} target='_blank'>{'value'}</a>
+          )
+        } else if (Validator.isURL(value)) {
           formattedValue = (
             <a href={'http://www.' + value} target='_blank'>{value}</a>
           )
