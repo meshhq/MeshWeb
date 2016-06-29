@@ -1,9 +1,11 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Modal, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import Pill from '../../../Shared/Pill'
 import UserHeader from './UserHeader'
 import _ from 'underscore'
+import Pill from '../../../Shared/Pill'
+import Validator from 'validator'
+
 
 class UserDetailForm extends Component {
   displayName: 'User Details';
@@ -13,7 +15,6 @@ class UserDetailForm extends Component {
     // Binding methods
     this.contentForInfo = this._contentForInfo.bind(this)
     this.contentForLists = this._contentForLists.bind(this)
-    this.providerForKey = this._providerForKey.bind(this)
     this.contentForSupportTickets = this._contentForSupportTickets.bind(this)
     this.contentForTransactions = this._contentForTransactions.bind(this)
     this.linkClicked = this._linkClicked.bind(this)
@@ -32,13 +33,18 @@ class UserDetailForm extends Component {
       if (_.isString(value) && value.length > 0) {
 
         // Look for email or site labels
-        if (label === 'email' || label === 'website') {
+        if (label === 'email') {
           formattedValue = (
             <a href="#" onClick={this.linkClicked}>{value}</a>
+          )
+        } else if (Validator.isURL(value)) {
+          formattedValue = (
+            <a href={'http://www.' + value} target='_blank'>{value}</a>
           )
         } else {
           formattedValue = value
         }
+
       }
 
       // Number check
@@ -47,14 +53,14 @@ class UserDetailForm extends Component {
       }
 
       // Object
-      if (value) {
+      if (value && !formattedValue) {
         formattedValue = value
       }
 
       // If theres a value, return html
       if (formattedValue) {
         return (
-          <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={label + contentId}>
+          <div className={(full ? 'col-xs-12' : 'col-xs-6') + ' info-field'} key={label + contentId + label}>
             <dt>{label}</dt>
             <dd>{formattedValue}</dd>
           </div>
@@ -110,13 +116,13 @@ class UserDetailForm extends Component {
       const tooltip = (
         <Tooltip id={ticket.id}><strong>{'Support Ticket Link'}</strong><br></br>{'Links to your support ticket'}</Tooltip>
       )
-      const providerKeys = _.allKeys(ticket.integration_data)
+
       const createdDate = new Date(ticket.created_at)
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
       return (        
         <tr className='ticket-row' key={idx}>
           <td scope='row'>{createdShortDate}</td>
-          <td scope='pill-row'>{this.providerPillsForProviderKey(providerKeys)}</td>
+          <td scope='pill-row'>{this.providerPillsForProviderKey(ticket.integration_data)}</td>
           <td>
             <OverlayTrigger overlay={tooltip} placement="top" >
               <a href="#" onClick={this.linkClicked}>
@@ -166,8 +172,7 @@ class UserDetailForm extends Component {
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
 
       // Providers
-      const providerIDs = _.allKeys(transaction.integration_data)
-      const providerPillContent = this.providerPillsForProviderKey(providerIDs)
+      const providerPillContent = this.providerPillsForProviderKey(transaction.integration_data)
       return (        
         <tr className='transaction-row' key={idx}>
           <td scope='row'>{createdShortDate}</td>
@@ -196,33 +201,17 @@ class UserDetailForm extends Component {
     )
   }
 
-  _providerForKey(providerKey) {
-    // Type Checking for Number
-    return _.find(this.props.providers, (provider) => {
-      if (provider.key === providerKey) {
-        return provider
-      }
-    })
-  }
-
-  _providerPillsForProviderKey(prioviderKeys) {
-    const pills = _.map(prioviderKeys, (providerKey) => {
-      const provider = this.providerForKey(providerKey)
-      const tooltip = (
-        <Tooltip id={providerKey}><strong>{'Provider Link'}</strong><br></br>{' This links out to the resource in the integration.'}</Tooltip>
-      )
-      if (!provider) {
-        return null
-      }
+  _providerPillsForProviderKey(integrationData) {
+    const providerKeys = _.keys(integrationData)
+    const pills = _.map(providerKeys, (providerKey) => {
+      const provider = this.props.providersByKey[providerKey]
+      const integration = integrationData[providerKey]
       return (
-        <div className='provider-pill-wrapper' key={providerKey}>
-          <OverlayTrigger overlay={tooltip} placement="top" >
-            <Pill color={provider.color} title={provider.name}/>
-          </OverlayTrigger>
-        </div>
+        <Pill color={provider.color} key={providerKey} linkURL={integration.url} title={provider.name}/>
       )
     })
     return pills
+
   }
 
   _seperator(title) {
@@ -254,8 +243,7 @@ class UserDetailForm extends Component {
      */
 
     // Find provider if given
-    const userProviders = _.allKeys(user.integration_data)
-    const userProviderContent = this.providerPillsForProviderKey(userProviders)
+    const userProviderContent = this.providerPillsForProviderKey(user.integration_data)
     const userContent = (
       <div className="row personal-info">
         <div className="col-xs-12">
@@ -281,8 +269,7 @@ class UserDetailForm extends Component {
     if (user.organization) {
 
       // Find provider if given
-      const orgProviders = _.allKeys(user.organization.integration_data)
-      const orgProviderContent = this.providerPillsForProviderKey(orgProviders)
+      const orgProviderContent = this.providerPillsForProviderKey(user.organization.integration_data)
 
       orgSection = (
         <div className="row organization">
@@ -405,7 +392,7 @@ UserDetailForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  providers: PropTypes.array.isRequired,
+  providersByKey: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 }
 

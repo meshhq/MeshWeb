@@ -53,7 +53,7 @@ class OrganizationForm extends Component {
           onSelectOrgUser={this.orgUserSelected}
           onUpdate={this.handleUpdate}
           organization={this.props.organization}
-          providers={[]}
+          providersByKey={{}}
           users={[]}
         />
       </Modal>

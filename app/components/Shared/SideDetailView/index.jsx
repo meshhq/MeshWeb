@@ -40,7 +40,7 @@ class SideDetail extends Component {
           onCancel={function(){}} 
           onChange={function(){}} 
           onUpdate={function(){}} 
-          providers={this.props.providers}
+          providersByKey={this.props.providersByKey}
           user={this.props.detailUser}
         />
       )
@@ -54,7 +54,7 @@ class SideDetail extends Component {
           onSelectOrgUser={this.props.onSelectOrgUser} 
           onUpdate={function(){}}
           organization={this.props.detailOrg}
-          providers={this.props.providers}
+          providersByKey={this.props.providersByKey}
           users={this.props.users}
         />
       )
@@ -63,7 +63,6 @@ class SideDetail extends Component {
     // Panel Width Injection
     const panelWidth = this.props.panelRelativeWidth
     const panelStyle = { width: panelWidth }
-
     return (
       <div className="side-detail" key="side-detail" style={panelStyle} >
         <div className="container-fluid">
@@ -106,7 +105,7 @@ SideDetail.propTypes = {
   onExit: PropTypes.func.isRequired,
   onSelectOrgUser: PropTypes.func,
   panelRelativeWidth: PropTypes.string.isRequired,
-  providers: PropTypes.array.isRequired,
+  providersByKey: PropTypes.object.isRequired,
   refreshResource: PropTypes.func,
   users: PropTypes.array
 }

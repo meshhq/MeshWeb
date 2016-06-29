@@ -16,7 +16,7 @@ class Pill extends Component {
     
     return (
       <div className="pill-container" style={pillStyle}>
-        <p style={pillTextStyle}>{this.props.title}</p>
+        <a href={'http://' + this.props.linkURL} target='_blank'><p style={pillTextStyle}>{this.props.title}</p></a>
       </div>
     )
   }
@@ -24,6 +24,7 @@ class Pill extends Component {
 
 Pill.propTypes = {
   color: PropTypes.string.isRequired,
+  linkURL: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 }
 

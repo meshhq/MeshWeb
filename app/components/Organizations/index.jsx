@@ -447,7 +447,7 @@ class OrganizationTable extends Component {
           onExit={this.handleCloseOrganizationForm}
           onSelectOrgUser={this.handleShowingSelectedUser}
           panelRelativeWidth="40%"
-          providers={this.props.providerState.providers}
+          providersByKey={this.props.providerState.providersByKey}
           users={this.state.selectedOrganizationUsers}
         />
       )
@@ -469,7 +469,7 @@ class OrganizationTable extends Component {
           key="user-side-detail" 
           onExit={this.handleCloseUserForm}
           panelRelativeWidth="39%"
-          providers={this.props.providerState.providers}
+          providersByKey={this.props.providerState.providersByKey}
           style={{ width: '90%' }}
         />
       )
@@ -491,8 +491,14 @@ class OrganizationTable extends Component {
 
     let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} key={'industry'} width={200}/>)
-
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providerState.providers}/>)
+    let originCell = (
+      <PillCell {...this.props} 
+        col="origin_provider" 
+        data={filteredDataList} 
+        onClick={this.handleCellClick} 
+        providersByKey={this.props.providerState.providersByKey}
+      />
+    )
     columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/>)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
@@ -502,7 +508,7 @@ class OrganizationTable extends Component {
     const integraitonCount = integrationState.integrations.length
     const orgCount = organizationState.organizations.length
     let tableContent = null
-    if (integraitonCount && orgCount) {
+    if (integraitonCount || orgCount) {
       tableContent = (
         <div className="active-table-content">
           <div className="action-bar">
