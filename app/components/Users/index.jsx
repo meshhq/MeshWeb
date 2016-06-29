@@ -516,7 +516,7 @@ class UserTable extends React.Component {
           key="side-detail" 
           onExit={this.handleCloseUserForm}
           panelRelativeWidth="40%"
-          providers={this.props.providerState.providers}
+          providersByKey={this.props.providerState.providersByKey}
         />
       )
     }

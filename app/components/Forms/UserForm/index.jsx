@@ -39,7 +39,7 @@ class UserForm extends Component {
   _userDetailModal() {
     return (
       <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-        <UserDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} providers={[]} user={this.props.user}/>
+        <UserDetailForm onCancel={this.props.onCancel} onChange={this.handleChange} onUpdate={this.handleUpdate} providersByKey={{}} user={this.props.user}/>
       </Modal>
     );
   }

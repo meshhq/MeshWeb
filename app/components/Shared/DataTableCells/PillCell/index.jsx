@@ -1,33 +1,30 @@
 
 import React, { PropTypes } from 'react'
 import FixedDataTable from 'fixed-data-table'
+import Pill from '../../Pill'
+import _ from 'underscore'
 
 const { Cell } = FixedDataTable;
 
-const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
-  let providerType = data.getObjectAt(rowIndex)[col]
-  if (providerType == 0) {
-    providerType = 1000
-  }
+const PillCell = ({ rowIndex, data, providersByKey, ...props }) => {
+  const integraitons = data.getObjectAt(rowIndex).integration_data
   
-  let provider = providers.find(function(provider) {
-    return provider.type == providerType
-  });
-
-  const pillDivStyle = {
-    color: provider.color
-  }
-
-  const pillStyle = {
-    borderColor: provider.color
-  }
+  let pills = []
+  _.each(integraitons, (integraitonInfo, key) => {
+    const provider = providersByKey[key]
+    pills.push(
+      <Pill color={provider.color}
+        key={key}
+        linkURL={integraitonInfo.url} 
+        title={provider.name} 
+      />
+    )
+  })
 
   return (
     <div className="pill-cell">
       <Cell {...props}>
-        <div className="provider-pill" style={pillDivStyle} >
-          <p style={pillStyle}>{provider.name}</p>
-        </div>
+        {pills}
       </Cell>
     </div>
     )
@@ -36,7 +33,7 @@ const PillCell = ({ rowIndex, data, providers, col, ...props }) => {
 PillCell.propTypes = {
 	col: PropTypes.string.isRequired,
 	data: PropTypes.object.isRequired,
-  providers: PropTypes.array.isRequired,
+  providersByKey: PropTypes.object.isRequired,
   rowIndex: PropTypes.number
 }
 
