@@ -1,6 +1,7 @@
 
 import React, { PropTypes, Component } from 'react'
 import { logUserOut } from '../../helpers/session'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Assets
 import logo from '../../assets/images/mesh_logo.png'
@@ -25,16 +26,40 @@ class NavBar extends Component {
     const navItems = []
     for(let count = 0; count < titles.length; count++) {
       let title = titles[count]
-      // let glyph = glyphs[count]
-      let item = (
-        <li className="top-nav-link" key={title}>
-          <a className="light"
-            href="#"
-          >
-          {title}
-          </a>
-        </li>
-      )
+
+      // Dynamic
+      let item
+      if (title == 'Documentation') {
+        const tooltip = (
+          <Tooltip id={count}><strong>{'Documentation'}</strong><br></br>{'Coming Soon'}</Tooltip>
+        )
+        item = (
+          <OverlayTrigger key={title} overlay={tooltip} placement="bottom" >
+            <li className="top-nav-link" key={title}>
+              <a className="light"
+                href='#'
+              >
+              {title}
+              </a>
+            </li>
+          </OverlayTrigger>
+        )
+      } else {
+        let link = '#'
+        if (title == 'Support') {
+          link = 'mailto:support@meshdata.io'
+        }
+        item = (
+          <li className="top-nav-link" key={title}>
+            <a className="light"
+              href={link}
+            >
+            {title}
+            </a>
+          </li>
+        )
+      }
+
       navItems.push(item)
     }
 
@@ -68,9 +93,6 @@ class NavBar extends Component {
               </a>
               <img className="img-responsive img-circle avatar" src={avatar} />
               <ul className="dropdown-menu" id="right-nav-menu">
-                <li className="dropdown-line-item"><a href="#">{'Account'}</a></li>
-                <li className="dropdown-line-item"><a href="#">{'Billing'}</a></li>
-                <li className="divider" role="separator"></li>
                 <li className="dropdown-line-item" ><a href="#" onClick={this.logUserOut} >{'Log Out'}</a></li>
               </ul>
             </li>
