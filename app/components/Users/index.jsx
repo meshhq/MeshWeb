@@ -468,10 +468,8 @@ class UserTable extends React.Component {
 
     // Setting up our action bar.
     let newAction = { handler: this.handleNewClick, title: 'New', type: 0, glyph:'glyphicon glyphicon-plus' };
-    let publishAction = { handler: this.handlePublishClick, title: 'Publish', type: 0, glyph:'glyphicon glyphicon-refresh' };
     let deleteAction = { handler: this.handleDeleteClick, title: 'Delete', type: 0, glyph: 'glyphicon glyphicon-remove' };
-    let addToAction = { handler: this.handleAddToClick, title: 'Add To', type: 0, glyph: 'glyphicon glyphicon-asterisk' };
-    let actions = [newAction, publishAction, deleteAction, addToAction];
+    let actions = [newAction, deleteAction];
 
     let forms = (
       <div className={'forms'}>
