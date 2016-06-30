@@ -34,7 +34,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   // Demo Override
   if (process.env.MODE === 'demo') {
     const tooltip = (
-      <Tooltip id={providerID}><strong>{'Demo Move'}</strong><br></br>{'Sign up for mesh at https://app.meshdata.io to activate integrations'}</Tooltip>
+      <Tooltip id={providerID}><strong>{'Demo Mode'}</strong><br></br>{'Sign up for mesh at https://app.meshdata.io to activate integrations'}</Tooltip>
     )
     actionContent = (
       <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
