@@ -133,8 +133,11 @@ class UserTable extends React.Component {
    */
   _getActionBarHeight() {
     let dom = ReactDOM.findDOMNode(this)
-    const height = dom.querySelectorAll('div.action-bar')[0].clientHeight
-    this.setState({ actionBarHeight: height })
+    const actionBarDoms = dom.querySelectorAll('div.action-bar')
+    if (actionBarDoms.length) {
+      const height = dom.querySelectorAll('div.action-bar')[0].clientHeight
+      this.setState({ actionBarHeight: height })      
+    }
   }
 
   //----------------------------------------------------------------------------

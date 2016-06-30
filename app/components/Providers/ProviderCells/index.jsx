@@ -1,6 +1,7 @@
 
 import React, { PropTypes } from 'react'
 import { Col, Button } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Components
 import LoadingText from '../../../components/Shared/LoadingText'
@@ -23,10 +24,24 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   const btnText = activeIntegration ? 'Activated' : 'Activate'
 
   // Action content is the action available to take on the provider
+  
   const clickHandler = activeIntegration ? handleActivateClick : handleActivateClick
+
   let actionContent = (
     <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
   )
+
+  // Demo Override
+  if (process.env.MODE === 'demo') {
+    const tooltip = (
+      <Tooltip id={providerID}><strong>{'Demo Mode'}</strong><br></br>{'Sign up for Mesh at https://app.meshdata.io to activate integrations'}</Tooltip>
+    )
+    actionContent = (
+      <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
+        <Button bsStyle={'success'} className={'activate-btn' + activeClass}>{btnText}</Button>
+      </OverlayTrigger>
+    )
+  }
   
   // Replace action if the integration is actively syncing
   let integrationStatus = null
