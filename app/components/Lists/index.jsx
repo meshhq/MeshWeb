@@ -448,7 +448,7 @@ class ListTable extends Component {
     let userCountCell = (<TextCell col="user_count" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={userCountCell} header={<Cell>{'User Count'}</Cell>} key={'user_count'} width={100}/>)
 
-    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providers={this.props.providerState.providers}/>)
+    let originCell = (<PillCell {...this.props} col="origin_provider" data={filteredDataList} onClick={this.handleCellClick} providersByKey={this.props.providerState.providersByKey}/>)
     columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={120}/>)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
