@@ -131,10 +131,8 @@ class OrganizationTable extends Component {
     if (this.props.integrationState.isSyncing) {
       const syncFunc = this.props.userActions.refreshOrganizations
       this.props.setIntervalWithToken(ORGANIZATION_POLLING_TOKEN, syncFunc, 3000)
-      console.log("Org Polling")
     } else {
       this.props.removeIntervalWithToken(ORGANIZATION_POLLING_TOKEN)
-      console.log("org Polling Stopped")
     }
   }
 

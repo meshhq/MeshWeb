@@ -142,10 +142,8 @@ class UserTable extends React.Component {
     if (this.props.integrationState.isSyncing) {
       const syncFunc = this.props.userActions.refreshUsers
       this.props.setIntervalWithToken(USER_POLLING_TOKEN, syncFunc, 3000)
-      console.log("Users Polling")
     } else {
       this.props.removeIntervalWithToken(USER_POLLING_TOKEN)
-      console.log("Users Polling Stopped")
     }
   }
 

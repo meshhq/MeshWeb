@@ -78,10 +78,8 @@ class Providers extends Component {
     if (this.props.integrationState.isSyncing) {
       const syncFunc = this.props.integrationActions.refreshIntegrations
       this.props.setIntervalWithToken(PROVIDER_POLLING_TOKEN, syncFunc, 3000)
-      console.log("Providers Polling")
     } else {
       this.props.removeIntervalWithToken(PROVIDER_POLLING_TOKEN)
-      console.log("Providers Polling Stopped")
     }
   }
 

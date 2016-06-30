@@ -52,13 +52,10 @@ function performFetch(request) {
 				return response.json()
 			}
 		} else {
-			console.log('(Tay Debug) Bad Request:', request)
-			console.log('(Tay Debug) Bad Response:', response)
 			if (response.status == 401) {
 				logUserOut()
 			}
 			return response.json().then((respJSON) => {
-				console.log('(Tay Debug) Bad Request Promise Result:', respJSON)
 				Promise.reject(respJSON)
 			})
 		}
