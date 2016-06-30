@@ -350,7 +350,7 @@ class Login extends Component {
               <div className="row login-row">
                 <div className="col-xs-12 brand-column">
                   <div>
-                    <span className='brand'>{'Mesh Data'}</span>
+                    <span className='brand'>{'Mesh'}</span>
                   </div>
                 </div>
                 <div className="col-xs-12">
