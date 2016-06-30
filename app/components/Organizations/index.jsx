@@ -23,11 +23,21 @@ import IntegrationForm from '../Forms/IntegrationForm'
 import ErrorForm from '../Forms/ErrorForm'
 
 // Actions
+import * as IntegrationActions from '../../actions/integrations'
 import * as OrganizationActions from '../../actions/organizations'
 import * as UserActions from '../../actions/users'
 
 // Tracking 
 import Mixpanel from 'mixpanel-browser'
+
+// HAWKSs
+import { IntervalWrapper } from '../../hawks/interval'
+
+// Underscore
+import _ from 'underscore'
+
+// ID for tracking the polling w/ the token
+const ORGANIZATION_POLLING_TOKEN = 'ORGANIZATION_POLLING_TOKEN'
 
 // Transitions
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -74,6 +84,9 @@ class OrganizationTable extends Component {
     this.navToIntegrations = this._navToIntegrations.bind(this)
     this.contentForNoOrgs = this._contentForNoOrgs.bind(this)
 
+    // Integration Syncing
+    this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
+
     // Errors
     this.handleCloseErrorForm = this._handleCloseErrorForm.bind(this)
 
@@ -85,7 +98,7 @@ class OrganizationTable extends Component {
       filteredDataList: this.dataList,
       organizationFormDisplayed: false,
       providerFormDisplayed: false,
-      selectedList: [],
+      selectedList: {},
       selectedOrganization: null,
       selectedOrganizationUsers: [],
       selectedProvider: null,
@@ -108,6 +121,19 @@ class OrganizationTable extends Component {
     this.setState({
       errorFormDisplayed: false
     });
+  }
+
+  //----------------------------------------------------------------------------
+  // Integration Syncing
+  //----------------------------------------------------------------------------
+  
+  _checkForIntegrationsCurrentlySyncing() {
+    if (this.props.integrationState.isSyncing) {
+      const syncFunc = this.props.userActions.refreshOrganizations
+      this.props.setIntervalWithToken(ORGANIZATION_POLLING_TOKEN, syncFunc, 3000)
+    } else {
+      this.props.removeIntervalWithToken(ORGANIZATION_POLLING_TOKEN)
+    }
   }
 
   //----------------------------------------------------------------------------
@@ -149,15 +175,13 @@ class OrganizationTable extends Component {
    */
   _handleSelectOne(e, idx) {
     let selectedList = this.state.selectedList
-    const id = this.state.filteredDataList.getObjectAt(idx)
+    const org = this.state.filteredDataList.getObjectAt(idx)
     if (e.target.checked) {
-      selectedList.push(id)
+      selectedList[org.id] = true
     } else {
-      selectedList.pop(id)
+      delete selectedList[org.id]
     }
-    this.setState({
-      selectedList: selectedList
-    });
+    this.setState({ selectedList: selectedList })
   }
 
   /**
@@ -165,16 +189,14 @@ class OrganizationTable extends Component {
    * @param  {[type]} e The event
    */
   _handleSelectAll(e) {
-    let selectedList = []
+    let selectedList = {}
     if (e.target.checked) {
       for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
-        const id = this.state.filteredDataList.getObjectAt(idx)
-        selectedList.push(id)
+        const org = this.state.filteredDataList.getObjectAt(idx)
+        selectedList[org.id] = true
       }
     }
-    this.setState({
-      selectedList: selectedList
-    });
+    this.setState({ selectedList: selectedList })
   }
 
   //----------------------------------------------------------------------------
@@ -267,7 +289,7 @@ class OrganizationTable extends Component {
    * _handleDeleteList handles a click to the `Delete` action bar button.
    */
   _handleDeleteClick() {
-    if (this.state.selectedList.length == 0) {
+    if (_.keys(this.state.selectedList).length == 0) {
       this.setState({
         errorFormDisplayed: true
       });
@@ -279,13 +301,13 @@ class OrganizationTable extends Component {
   }
 
   _handleDeleteOrganization() {
-    for (let idx in this.state.selectedList) {
-      let organization = this.state.selectedList[idx]
+    _.each(this.state.selectedList, (userId) => {
+      let organization = this.state.selectedList[userId]
       this.props.organizationActions.deleteOrganization(organization)
-    }
+    })
 
     this.setState({
-      selectedList: [],
+      selectedList: {},
       deleteFormDisplayed: false
     });
   }
@@ -474,10 +496,13 @@ class OrganizationTable extends Component {
       )
     }
 
+    // Determine if all are selected
+    const allSelected = _.keys(selectedList).length == filteredDataList.getSize()
+
     let columns = []
 
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
+    columns.push(<Column cell={radioCell} header={<RadioHeader allAreSelected={allSelected} onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
 
     let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={nameCell} header={<Cell>{'Name'}</Cell>} key={'name'} width={150}/>)
@@ -563,10 +588,13 @@ OrganizationTable.defaultProps = {
 
 OrganizationTable.propTypes = {
   containerHeight: PropTypes.number,
+  integrationActions : PropTypes.object.isRequired,
   integrationState: PropTypes.object.isRequired,
   organizationActions: PropTypes.object.isRequired,
   organizationState: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
+  removeIntervalWithToken: PropTypes.func.isRequired,
+  setIntervalWithToken: PropTypes.func.isRequired,
   userActions: PropTypes.object.isRequired,
   userState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
@@ -583,12 +611,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    integrationActions: bindActionCreators(IntegrationActions, dispatch),
     organizationActions: bindActionCreators(OrganizationActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
   }
 }
 
+// Wrapping the Provider component in a HOC
+const WrappedOrganizationTable = IntervalWrapper(OrganizationTable)
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(OrganizationTable)
+)(WrappedOrganizationTable)

@@ -1,6 +1,7 @@
 
 import { SUBMITTED_LOGIN, RECEIVED_CHALLENGE, LOGIN_SUCCESS } from '../actions/session'
 import { REFRESHED_ME } from '../actions/session'
+import raven from 'raven-js'
 
 const defaultState = {
 	isLoading: false,
@@ -29,11 +30,13 @@ function session(state = defaultState, action) {
 				isLoggingIn: false,
 				challenge: false
 			})
-		case REFRESHED_ME:
+		case REFRESHED_ME: {
+			raven.setUserContext(action.user)
 			return Object.assign({}, state, {
 				isLoading: false,
 				user: action.user
 			})
+		}
 		default:
 			return state
 	}

@@ -55,7 +55,9 @@ function performFetch(request) {
 			if (response.status == 401) {
 				logUserOut()
 			}
-			return response.json().then((respJSON) => Promise.reject(respJSON))
+			return response.json().then((respJSON) => {
+				Promise.reject(respJSON)
+			})
 		}
 	}, () => Promise.reject())
 }

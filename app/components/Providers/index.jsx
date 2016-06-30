@@ -13,14 +13,14 @@ import CredentialForm from '../Forms/CredentialForm'
 import * as IntegrationActions from '../../actions/integrations'
 import * as ProviderActions from '../../actions/providers'
 
-// Helpers
-import { integrationIsSyncing } from '../../constants/integrationSyncStatus'
-
 // Tracking
 import Mixpanel from 'mixpanel-browser'
 
 // HAWKSs
 import { IntervalWrapper } from '../../hawks/interval'
+
+// ID for tracking the polling w/ the token
+const PROVIDER_POLLING_TOKEN = 'PROVIDER_POLLING_TOKEN'
 
 class Providers extends Component {
   constructor(props, context) {
@@ -51,26 +51,13 @@ class Providers extends Component {
     if (this.props.routeParams.callbackProvider) {
       this.registerOAuthProviderCB(this.props.routeParams.callbackProvider)
     }
+
+    // Check for syncing
+    this.checkForIntegrationsCurrentlySyncing()
   }
 
   componentDidUpdate() {
-    this.checkForIntegrationsCurrentlySyncing(this.props.integrationState.integrations)
-  }
-
-  _checkForIntegrationsCurrentlySyncing(integrations) {
-    let syncing = false
-    _.each(integrations, (integration) => {
-
-      const localSyncing = integrationIsSyncing(integration)
-      syncing = syncing || localSyncing
-    })
-
-    // If we have an integration currently syncing,
-    // begin polling the server every 3 sec
-    if (syncing) {
-      const syncFunc = this.props.integrationActions.refreshIntegrations
-      this.props.setIntervalWithToken('providerSyncPolling', syncFunc, 3000)
-    }
+    this.checkForIntegrationsCurrentlySyncing()
   }
 
   _registerOAuthProviderCB(provider) {
@@ -84,6 +71,15 @@ class Providers extends Component {
       )
       this.props.providerActions.registerOAuthCodeWithMesh(provider, decodedQuery)
       browserHistory.push('/integrations')
+    }
+  }
+
+  _checkForIntegrationsCurrentlySyncing() {
+    if (this.props.integrationState.isSyncing) {
+      const syncFunc = this.props.integrationActions.refreshIntegrations
+      this.props.setIntervalWithToken(PROVIDER_POLLING_TOKEN, syncFunc, 3000)
+    } else {
+      this.props.removeIntervalWithToken(PROVIDER_POLLING_TOKEN)
     }
   }
 
@@ -240,6 +236,7 @@ Providers.propTypes = {
   location: PropTypes.object.isRequired,
   providerActions: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
+  removeIntervalWithToken: PropTypes.func.isRequired,
   routeParams: PropTypes.object.isRequired,
   setIntervalWithToken: PropTypes.func.isRequired
 }

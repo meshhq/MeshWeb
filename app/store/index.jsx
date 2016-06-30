@@ -1,20 +1,33 @@
 
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-// import createLogger from 'redux-logger'
+//import createLogger from 'redux-logger'
+import raven from 'raven-js'
 import rootReducer from '../reducers'
 
-export default function configureStore(initialState) {
-  const create = window.devToolsExtension
-    ? window.devToolsExtension()(createStore)
-    : createStore
+function ravenIntercept() {
+  return (next) => (action) => {
+    // Call the next dispatch method in the middleware chain.
+    let returnValue
+    try {
+        returnValue = next(action)
+    }
+    catch(err) {
+        raven.captureException(err)
+    }
 
-  const store = create(
+    // This will likely be the action itself, unless
+    // a middleware further in chain changed it.
+    return returnValue
+  }
+}
+
+export default function configureStore(initialState) {
+  const store = createStore(
     rootReducer,
     initialState,
-    // Taking out the logger
-    // applyMiddleware(thunk, createLogger())
-    applyMiddleware(thunk)
+    // Taking out the ravenIntercept
+    applyMiddleware(ravenIntercept, thunk)
   )
 
   if (module.hot) {

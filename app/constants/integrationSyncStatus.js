@@ -30,8 +30,6 @@ export function integrationStateDescription(stateType) {
 
 export function integrationIsSyncing(stateType) {
 	switch(stateType) {
-		case 0:
-			return false
 		case 7:
 			return false
 		case 8:

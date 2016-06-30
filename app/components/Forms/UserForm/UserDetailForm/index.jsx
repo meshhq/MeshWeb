@@ -89,7 +89,7 @@ class UserDetailForm extends Component {
       const provider = this.providerForTypeID(list.origin_provider)
       listsContent.push(
         <OverlayTrigger key={list.id} overlay={tooltip} placement="top" >
-          <a href="#" onClick={this.linkClicked}>
+          <a href="#" onClick={this.linkClicked} target='_blank'>
             {this.contentForInfo('title', list.name, list.id)}
           </a>
         </OverlayTrigger>
@@ -126,7 +126,7 @@ class UserDetailForm extends Component {
           <td className='td-first' scope='row'>{createdShortDate}</td>
           <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(ticket.integration_data)}</td>
           <td className='td-third'>
-            <a href={'http://' + integrationLink}>
+            <a href={'http://' + integrationLink} target='_blank'>
               <p>{'300'}</p>
             </a>
           </td>
@@ -180,7 +180,7 @@ class UserDetailForm extends Component {
             {transaction.amount}
           </td>
           <td className='td-forth'>
-            <a href={'http://' + integrationLink}>
+            <a href={'http://' + integrationLink} target='_blank'>
               {transaction.description}
             </a>
           </td>
