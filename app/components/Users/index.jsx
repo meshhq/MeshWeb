@@ -27,8 +27,15 @@ import ErrorForm from '../Forms/ErrorForm'
 // Tracking
 import Mixpanel from 'mixpanel-browser'
 
+// HAWKSs
+import { IntervalWrapper } from '../../hawks/interval'
+
 // Actions
 import * as UserActions from '../../actions/users'
+import * as IntegrationActions from '../../actions/integrations'
+
+// ID for tracking the polling w/ the token
+const USER_POLLING_TOKEN = 'USER_POLLING_TOKEN'
 
 // Transitions
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -81,6 +88,9 @@ class UserTable extends React.Component {
     this.contentForNoUsers = this._contentForNoUsers.bind(this)
     this.navToIntegrations = this._navToIntegrations.bind(this)
 
+    // Integration Sync State
+    this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
+
     // Setup our data source
     this.dataList = new DataListWrapper(this.props.userState.users)
     this.indexer = Lunr(function () {
@@ -93,7 +103,7 @@ class UserTable extends React.Component {
     })
 
     this.state = {
-      selectedList: [],
+      selectedList: {},
       selectedIntegration: null,
       selectedUser: null,
       filteredDataList: this.dataList,
@@ -125,6 +135,18 @@ class UserTable extends React.Component {
     _.each(this.props.userState.users, (user) => {
       this.indexer.add(user)
     })
+  }
+
+  // Checks for currently syncing integrations
+  _checkForIntegrationsCurrentlySyncing() {
+    if (this.props.integrationState.isSyncing) {
+      const syncFunc = this.props.userActions.refreshUsers
+      this.props.setIntervalWithToken(USER_POLLING_TOKEN, syncFunc, 3000)
+      console.log("Users Polling")
+    } else {
+      this.props.removeIntervalWithToken(USER_POLLING_TOKEN)
+      console.log("Users Polling Stopped")
+    }
   }
 
   /**
@@ -203,13 +225,11 @@ class UserTable extends React.Component {
     let selectedList = this.state.selectedList
     const user = this.state.filteredDataList.getObjectAt(idx)
     if (e.target.checked) {
-      selectedList.push(user)
+      selectedList[user.id] = true
     } else {
-      selectedList.pop(user)
+      delete selectedList[user.id]
     }
-    this.setState({
-      selectedList: selectedList
-    });
+    this.setState({ selectedList: selectedList })
   }
 
   /**
@@ -217,16 +237,14 @@ class UserTable extends React.Component {
    * @param  {[type]} e The event
    */
   _handleSelectAll(e) {
-    let selectedList = []
+    let selectedList = {}
     if (e.target.checked) {
       for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
         const user = this.state.filteredDataList.getObjectAt(idx)
-        selectedList.push(user)
+        selectedList[user.id] = true
       }
     }
-    this.setState({
-      selectedList: selectedList
-    });
+    this.setState({ selectedList: selectedList })
   }
 
   //----------------------------------------------------------------------------
@@ -269,7 +287,7 @@ class UserTable extends React.Component {
    * _handlePublishClick handles a click to the `Publish` action bar button.
    */
   _handlePublishClick() {
-    if (this.state.selectedList.length == 0) {
+    if (_.keys(this.state.selectedList) == 0) {
       this.setState({
         errorFormDisplayed: true
       });
@@ -289,13 +307,14 @@ class UserTable extends React.Component {
         providers.push(provider.key)
       }
     });
-    for (let idx in this.state.selectedList) {
-      let user = this.state.selectedList[idx]
+    
+    _.each(this.state.selectedList, (userId) => {
+      let user = this.state.selectedList[userId]
       this.props.userActions.publishUser(user, providers)
-    }
+    })
 
     this.setState({
-      selectedList: [],
+      selectedList: {},
       providerFormDisplayed: false
     });
   }
@@ -314,7 +333,7 @@ class UserTable extends React.Component {
    * _handleDeleteClick handles a click to the `Delete` action bar button.
    */
   _handleDeleteClick() {
-    if (this.state.selectedList.length == 0) {
+    if (_.keys(this.state.selectedList) == 0) {
       this.setState({
         errorFormDisplayed: true
       });
@@ -326,13 +345,13 @@ class UserTable extends React.Component {
   }
 
   _handleDeleteUser() {
-    for (let idx in this.state.selectedList) {
-      let user = this.state.selectedList[idx]
+    _.each(this.state.selectedList, (userID) => {
+      let user = this.state.selectedList[userID]
       this.props.userActions.deleteUser(user)
-    }
+    })
 
     this.setState({
-      selectedList: [],
+      selectedList: {},
       deleteFormDisplayed: false
     });
   }
@@ -522,10 +541,13 @@ class UserTable extends React.Component {
       )
     }
 
+    // Determine if all are selected
+    const allSelected = _.keys(selectedList).length == filteredDataList.getSize()
+
     let columns = []
 
     let radioCell = (<RadioCell col="radio" data={filteredDataList} onChange={this.handleSelectOne} selectedList={selectedList} />)
-    columns.push(<Column cell={radioCell} header={<RadioHeader onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
+    columns.push(<Column cell={radioCell} header={<RadioHeader allAreSelected={allSelected} onSelectAll={this.handleSelectAll}/>} key={'radio'} width={32}/>)
 
     let emailCell = (<TextCell col="email" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={emailCell} header={<Cell>{'Email'}</Cell>} key={'email'} width={250}/>)
@@ -599,9 +621,12 @@ UserTable.defaultProps = {
 
 UserTable.propTypes = {
   containerHeight: PropTypes.number,
+  integrationActions: PropTypes.object.isRequired,
   integrationState: PropTypes.object.isRequired,
   listState: PropTypes.object.isRequired,
   providerState: PropTypes.object.isRequired,
+  removeIntervalWithToken: PropTypes.func.isRequired,
+  setIntervalWithToken: PropTypes.func.isRequired,
   userActions: PropTypes.object.isRequired,
   userState: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired
@@ -618,11 +643,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    integrationActions: bindActionCreators(IntegrationActions, dispatch),
     userActions: bindActionCreators(UserActions, dispatch)
   }
 }
 
+// Wrapping the Provider component in a HOC
+const WrappedUserTable = IntervalWrapper(UserTable)
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserTable)
+)(WrappedUserTable)

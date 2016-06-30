@@ -1,22 +1,27 @@
 
 import React, { PropTypes } from 'react'
-import FixedDataTable from 'fixed-data-table'
-const { Cell } = FixedDataTable;
 
 const RadioHeader = ({ ...props }) => {
   let onSelectAll = props.onSelectAll.bind(this)
+
+  let inputUI
+  if (props.allAreSelected) {
+    inputUI = (<input aria-label="..." checked onChange={onSelectAll} type="checkbox" />)
+  } else {
+    inputUI = (<input aria-label="..." onChange={onSelectAll} type="checkbox" />)
+  }
+
   return (
-    <Cell>
-      <div className="radio-table-header">
-        <div className="input-group">
-          <input aria-label="..." className='radio-header-input' onChange={onSelectAll} type="checkbox"/>
-        </div>
+    <div className="radio-table-header">
+      <div className="input-group">
+        {inputUI}
       </div>
-    </Cell>
+    </div>
   );
 }
 
 RadioHeader.propTypes = {
+  allAreSelected: PropTypes.bool.isRequired,
   onSelectAll: PropTypes.func.isRequired
 }
 

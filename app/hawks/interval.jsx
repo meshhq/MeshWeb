@@ -39,6 +39,7 @@ export const IntervalWrapper = ComposedComponent => class extends Component {
     const intervalID = this.tokens[token]
     if (intervalID) {
       clearInterval(intervalID)
+      this.tokens[token] = undefined
     }
   }
 
@@ -65,6 +66,7 @@ export const IntervalWrapper = ComposedComponent => class extends Component {
   render() {
     return (
       <ComposedComponent {...this.props} 
+        removeIntervalWithToken={this.removeIntervalWithToken}
         setInterval={this.setInterval}
         setIntervalWithToken={this.setIntervalWithToken} 
       />
