@@ -60382,12 +60382,32 @@ webpackJsonp([1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function logger(_ref) {
+	  var getState = _ref.getState;
+
+	  return function (next) {
+	    return function (action) {
+	      console.log('(Tay Debug) Attempt to dispatch:', action);
+	      console.log('(Tay Debug) State prior to dispatch:', getState());
+
+	      // Call the next dispatch method in the middleware chain.
+	      var returnValue = next(action);
+	      console.log('(Tay Debug) PostDispath. Result:', returnValue);
+	      console.log('(Tay Debug) PostDispath. Current State:', getState());
+
+	      // This will likely be the action itself, unless
+	      // a middleware further in chain changed it.
+	      return returnValue;
+	    };
+	  };
+	}
+
 	function configureStore(initialState) {
 	  var create = window.devToolsExtension ? window.devToolsExtension()(_redux.createStore) : _redux.createStore;
 
 	  var store = create(_reducers2.default, initialState,
 	  // Taking out the logger
-	  (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()), (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	  (0, _redux.applyMiddleware)(logger, _reduxThunk2.default));
 
 	  if (false) {
 	    module.hot.accept('../reducers', function () {
