@@ -72492,7 +72492,7 @@ webpackJsonp([1],[
 	          { key: list.id, overlay: tooltip, placement: 'top' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: '#', onClick: this.linkClicked },
+	            { href: '#', onClick: this.linkClicked, target: '_blank' },
 	            this.contentForInfo('title', list.name, list.id)
 	          )
 	        ));
@@ -72561,7 +72561,7 @@ webpackJsonp([1],[
 	            { className: 'td-third' },
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'http://' + integrationLink },
+	              { href: 'http://' + integrationLink, target: '_blank' },
 	              _react2.default.createElement(
 	                'p',
 	                null,
@@ -72661,7 +72661,7 @@ webpackJsonp([1],[
 	            { className: 'td-forth' },
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'http://' + integrationLink },
+	              { href: 'http://' + integrationLink, target: '_blank' },
 	              transaction.description
 	            )
 	          )
