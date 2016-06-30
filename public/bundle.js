@@ -60391,7 +60391,14 @@ webpackJsonp([1],[
 	      console.log('(Tay Debug) State prior to dispatch:', getState());
 
 	      // Call the next dispatch method in the middleware chain.
-	      var returnValue = next(action);
+	      var returnValue = void 0;
+	      try {
+	        returnValue = next(action);
+	      } catch (err) {
+	        console.log('(Tay Debug) Recovered middleware pipeline exception:', err);
+	        console.log('(Tay Debug) Offending Action:', action);
+	      }
+
 	      console.log('(Tay Debug) PostDispath. Result:', returnValue);
 	      console.log('(Tay Debug) PostDispath. Current State:', getState());
 

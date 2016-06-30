@@ -10,7 +10,16 @@ function logger({ getState }) {
     console.log('(Tay Debug) State prior to dispatch:', getState())
 
     // Call the next dispatch method in the middleware chain.
-    let returnValue = next(action)
+    let returnValue
+    try {
+        returnValue = next(action)
+    }
+    catch(err) {
+        console.log('(Tay Debug) Recovered middleware pipeline exception:', err)
+        console.log('(Tay Debug) Offending Action:', action)
+    }
+    
+
     console.log('(Tay Debug) PostDispath. Result:', returnValue)
     console.log('(Tay Debug) PostDispath. Current State:', getState())
 
