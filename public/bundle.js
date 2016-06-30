@@ -60410,9 +60410,7 @@ webpackJsonp([1],[
 	}
 
 	function configureStore(initialState) {
-	  var create = window.devToolsExtension ? window.devToolsExtension()(_redux.createStore) : _redux.createStore;
-
-	  var store = create(_reducers2.default, initialState,
+	  var store = (0, _redux.createStore)(_reducers2.default, initialState,
 	  // Taking out the logger
 	  (0, _redux.applyMiddleware)(logger, _reduxThunk2.default));
 

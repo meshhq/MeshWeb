@@ -30,11 +30,7 @@ function logger({ getState }) {
 }
 
 export default function configureStore(initialState) {
-  const create = window.devToolsExtension
-    ? window.devToolsExtension()(createStore)
-    : createStore
-
-  const store = create(
+  const store = createStore(
     rootReducer,
     initialState,
     // Taking out the logger
