@@ -26987,11 +26987,14 @@ webpackJsonp([1],[
 					return response.json();
 				}
 			} else {
+				console.log('(Tay Debug) Bad Request:', request);
+				console.log('(Tay Debug) Bad Response:', response);
 				if (response.status == 401) {
 					(0, _session.logUserOut)();
 				}
 				return response.json().then(function (respJSON) {
-					return _promise2.default.reject(respJSON);
+					console.log('(Tay Debug) Bad Request Promise Result:', respJSON);
+					_promise2.default.reject(respJSON);
 				});
 			}
 		}, function () {
