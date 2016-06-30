@@ -17,7 +17,7 @@
     "_deploy_aws_demo": "./lib/deploy_aws_demo.sh",
     "deploy-prod": "MODE=production MODE=production npm run build_prod && npm run _deploy_aws_prod",
     "deploy-dev": "NODE_ENV=production npm run build && npm run _deploy_aws_dev",
-    "deploy-demo": "NODE_ENV=production MODE=demo npm run build && npm run _deploy_aws_demo"
+    "deploy-demo": "MODE=demo npm run build && npm run _deploy_aws_demo"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
