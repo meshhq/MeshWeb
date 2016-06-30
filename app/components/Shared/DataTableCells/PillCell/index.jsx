@@ -10,17 +10,20 @@ const PillCell = ({ rowIndex, data, providersByKey, ...props }) => {
   const integraitons = data.getObjectAt(rowIndex).integration_data
   
   let pills = []
-  _.each(integraitons, (integraitonInfo, key) => {
+  const integrationKeys = _.keys(integraitons)
+  if (integrationKeys.length > 0) {
+    const key = integrationKeys[0]
+    const integrationInfo = integraitons[key]
     const provider = providersByKey[key]
     pills.push(
       <Pill color={provider.color}
         key={key}
-        linkURL={integraitonInfo.url} 
+        linkURL={integrationInfo.url} 
         title={provider.name} 
       />
     )
-  })
-
+  }
+  
   return (
     <div className="pill-cell">
       <Cell {...props}>

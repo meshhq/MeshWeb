@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
+import _ from 'underscore'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
