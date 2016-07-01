@@ -22,11 +22,11 @@ import DeleteForm from '../Forms/DeleteForm'
 import IntegrationForm from '../Forms/IntegrationForm'
 import ErrorForm from '../Forms/ErrorForm'
 
+// Tracking 
+import { trackVisitedLists } from '../../helpers/tracking'
+
 // Actions
 import * as ListActions from '../../actions/lists'
-
-// Tracking 
-import Mixpanel from 'mixpanel-browser'
 
 const { Column, Cell } = FixedDataTable;
 
@@ -38,7 +38,7 @@ class ListTable extends Component {
     super(props, context)
 
     // Tracking
-    Mixpanel.track('Visited Lists')
+    trackVisitedLists()
 
     // List Selection
     this.handleSelectOne = this._handleSelectOne.bind(this)

@@ -10,15 +10,22 @@ import validator from 'validator'
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import * as SessionActions from '../../actions/session'
 
+import { trackVisitedLogin, trackSuccessfulSignIn, trackClickedSignUpUser } from '../../helpers/tracking'
+import { trackClickedSignUpCompany, trackSuccessfulSignUp } from '../../helpers/tracking'
+
 class Login extends Component {
   displayName: "Login Component";
   constructor(props) {
     super(props);
+    const signUpUserMode = props.startInSignupMode == true
     this.state = {
-      signUpUserMode: false,
+      signUpUserMode: signUpUserMode,
       signUpCompanyMode: false,
       loginErrorText: ''
     };
+
+    // Tracking
+    trackVisitedLogin()
 
     // Binding these to the current class
     this.handleSignIn = this._handleSignIn.bind(this)
@@ -52,6 +59,9 @@ class Login extends Component {
       // Only handling a successful signin now
       this.props.sessionActions.submitLogin(email, pass)
       .then(() => {
+        // Tracking
+        trackSuccessfulSignIn()
+
         // If we have a next state supplied, route to that
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)
@@ -82,6 +92,9 @@ class Login extends Component {
       // Only handling a successful signin now
       this.props.sessionActions.submitSignUp(email, pass, firstName, lastName, companyName, companySite)
       .then(() => {
+        // Tracking
+        trackSuccessfulSignUp()
+        
         // If we have a next state supplied, route to that
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)
@@ -99,6 +112,9 @@ class Login extends Component {
    * @param {e} event
    */
   _handleSignUpUserMode(e) {
+    // Tracking
+    trackClickedSignUpUser()
+
     // Prevent the redirect
     e.preventDefault()    
     this.setState({ signUpUserMode: true })
@@ -109,6 +125,9 @@ class Login extends Component {
    * @param {e} event
    */
   _handleSignUpCompanyMode(e) {
+    // Tracking
+    trackClickedSignUpCompany()
+
     // Prevent the redirect
     e.preventDefault()
     const email = this.emailInput.value
@@ -388,7 +407,8 @@ Login.propTypes = {
   location: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   sessionActions: PropTypes.object.isRequired,
-  sessionState: PropTypes.object.isRequired
+  sessionState: PropTypes.object.isRequired,
+  startInSignupMode: PropTypes.bool
 }
 
 Login.defaultProps = {

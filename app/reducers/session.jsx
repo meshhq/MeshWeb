@@ -1,6 +1,7 @@
 
 import { SUBMITTED_LOGIN, RECEIVED_CHALLENGE, LOGIN_SUCCESS } from '../actions/session'
 import { REFRESHED_ME } from '../actions/session'
+import { identifyUser } from '../helpers/tracking'
 import raven from 'raven-js'
 
 const defaultState = {
@@ -32,6 +33,7 @@ function session(state = defaultState, action) {
 			})
 		case REFRESHED_ME: {
 			raven.setUserContext(action.user)
+			identifyUser(action.user)
 			return Object.assign({}, state, {
 				isLoading: false,
 				user: action.user

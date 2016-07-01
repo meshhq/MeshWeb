@@ -28,7 +28,7 @@ import * as OrganizationActions from '../../actions/organizations'
 import * as UserActions from '../../actions/users'
 
 // Tracking 
-import Mixpanel from 'mixpanel-browser'
+import { trackVisitedOrganizations, trackClickedOrganization, trackVisitedAUserFromOrgPanel } from '../../helpers/tracking'
 
 // HAWKSs
 import { IntervalWrapper } from '../../hawks/interval'
@@ -49,7 +49,7 @@ class OrganizationTable extends Component {
     super(props);
 
     // Tracking  
-    Mixpanel.track('Visited Orgs')
+    trackVisitedOrganizations()
 
     // Organization Selection
     this.handleSelectOne = this._handleSelectOne.bind(this)
@@ -323,9 +323,11 @@ class OrganizationTable extends Component {
   //----------------------------------------------------------------------------
 
   _handleCellClick(idx) {
+    // Tracking
+    trackClickedOrganization(organization)
+
     let organization = this.state.filteredDataList.getObjectAt(idx)
     this.props.organizationActions.fetchOrganizationUsers(organization)
-    Mixpanel.track('Clicked Org Row')
     this.setState({
       selectedOrganization: organization,
       organizationFormDisplayed: false,
@@ -343,8 +345,10 @@ class OrganizationTable extends Component {
   }
 
   _handleShowingSelectedUser(user) {
+    // Tracking
+    trackVisitedAUserFromOrgPanel(user)
+    
     this.props.userActions.requestDetailUser(user)
-    Mixpanel.track('Clicked User From Org Slideout')
     this.setState({
       userSideDetailDisplayed: true,
       selectedUser: user
@@ -507,14 +511,12 @@ class OrganizationTable extends Component {
     let nameCell = (<TextCell col="name" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={nameCell} header={<Cell>{'Name'}</Cell>} key={'name'} width={150}/>)
 
-    let sizeCell = (<TextCell col="size" data={filteredDataList} onClick={this.handleCellClick}/>)
-    columns.push(<Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} key={'size'} width={60}/>)
-
     let websiteCell = (<TextCell col="website" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={websiteCell} header={<Cell>{'Website'}</Cell>} key={'website'} width={180}/>)
 
     let industryCell = (<TextCell col="industry" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={industryCell} header={<Cell>{'Industry'}</Cell>} key={'industry'} width={200}/>)
+
     let originCell = (
       <PillCell {...this.props} 
         col="origin_provider" 
@@ -523,7 +525,10 @@ class OrganizationTable extends Component {
         providersByKey={this.props.providerState.providersByKey}
       />
     )
-    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={140}/>)
+    columns.push(<Column cell={originCell} header={<Cell>{'Provider'}</Cell>} key={'origin_provider'} width={150}/>)
+
+    let sizeCell = (<TextCell col="size" data={filteredDataList} onClick={this.handleCellClick}/>)
+    columns.push(<Column cell={sizeCell} header={<Cell>{'Size'}</Cell>} key={'size'} width={100}/>)
 
     let descriptionCell = (<TextCell col="description" data={filteredDataList} onClick={this.handleCellClick}/>)
     columns.push(<Column cell={descriptionCell} header={<Cell>{'Description'}</Cell>}key={'description'} width={400}/>)

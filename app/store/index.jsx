@@ -1,7 +1,6 @@
 
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import createLogger from 'redux-logger'
 import raven from 'raven-js'
 import rootReducer from '../reducers'
 
@@ -27,7 +26,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     // Taking out the ravenIntercept
-    applyMiddleware(ravenIntercept, createLogger(), thunk)
+    applyMiddleware(ravenIntercept, thunk)
   )
 
   if (module.hot) {
