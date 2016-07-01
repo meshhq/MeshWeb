@@ -12,7 +12,7 @@ import { integrationStateDescription, integrationIsSyncing } from '../../../cons
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
 
-const ProviderCell = ({ integration, providerID, onActivateClick, providerName, logoSrc }) => {
+const ProviderCell = ({ integration, providerID, onActivateClick, providerName, live, logoSrc }) => {
   let handleActivateClick = onActivateClick.bind(this, providerID)
 
   // Integration is active if we have a integration passed in
@@ -27,9 +27,25 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   
   const clickHandler = activeIntegration ? handleActivateClick : handleActivateClick
 
-  let actionContent = (
-    <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
-  )
+  let actionContent
+  if (live) {
+    actionContent = (
+      <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
+    ) 
+  } else {
+    const tooltip = (
+      <Tooltip id={providerID}>
+        <strong>{'Comming Soon'}</strong><br></br>
+        {'We\'re actively working on this integraiton. Find out more by contacting us at:'}<br></br>
+        <strong>{'info@meshdata.io'}</strong>
+      </Tooltip>
+    )
+    actionContent = (
+      <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
+        <Button bsStyle={'success'} className={'activate-btn not-live'}>{'Info'}</Button>
+      </OverlayTrigger>
+    )
+  }
 
   // Demo Override
   if (process.env.MODE === 'demo') {
@@ -38,7 +54,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
     )
     actionContent = (
       <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
-        <Button bsStyle={'success'} className={'activate-btn' + activeClass}>{btnText}</Button>
+        {actionContent}
       </OverlayTrigger>
     )
   }
@@ -66,7 +82,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   }
 
   return (
-    <Col className={'provider-cell' + activeClass} md={3}>
+    <Col className={'provider-cell' + activeClass} xs={12}>
       <div className={'provider-container' + activeClass}>
         <div className={'image-wrapper' + activeClass}>
           <img className={'logo img-responsive' + activeClass} src={imgSrc}/>

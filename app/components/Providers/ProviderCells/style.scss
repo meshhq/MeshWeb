@@ -8,8 +8,6 @@ $ProviderCellHeight: 3em;
 	border-color: $MeshGrey;
 	border-width: 1px;
 
-	margin-left: 10px;
-	margin-right: 10px;
 	margin-bottom: 10px;
 	text-align: center;
 	color: $MeshBlackLight;
@@ -30,6 +28,7 @@ $ProviderCellHeight: 3em;
 		font-weight: 500;
 		font-size: 1.25em;
 		margin-bottom: 8px;
+		min-width: 100px;
 	}
 
 	.btn:focus {
@@ -44,8 +43,17 @@ $ProviderCellHeight: 3em;
 		border: 2px solid rgba($MeshGreen, .6);		
 	}
 
+	.btn.not-live {
+		color: $MeshWhite;
+		font-weight: 500;
+		box-shadow: none;
+		background-color: $MeshBlue;
+		border: 2px solid rgba($MeshBlue, .6);		
+	}
+
 	.image-wrapper {
 		padding: 10px;
+		border-radius: 5px;
 	}
 
 	img {
@@ -56,6 +64,7 @@ $ProviderCellHeight: 3em;
 		padding: 5px;
 		-webkit-filter: grayscale(100%);
 		filter: grayscale(100%);
+		border-radius: 10px;
 	}
 
 	img.active {

@@ -148,9 +148,16 @@ class Providers extends Component {
 
   render() {
     // Filter Mesh
-    console.log(this.props.providerState.providers)
     const filteredProviders = _.filter(this.props.providerState.providers, (provider) => 
       provider.name !== 'Mesh'
+    )
+
+    const filteredActiveProviders = _.filter(filteredProviders, (provider) => 
+      provider.live === true
+    )
+
+    const filteredInactiveProviders = _.filter(filteredProviders, (provider) => 
+      provider.live === false
     )
 
     // Pack providers into sections
@@ -160,20 +167,26 @@ class Providers extends Component {
       integrationsByType[integration.provider_type] = integration
     }
 
-    const providersSections = _.map(filteredProviders, (provider) => {
+    const providerCellGenerator = (provider) => {
       const itegration = integrationsByType[provider.type]
       return (
-        <ProviderCell
-          color={provider.color}
-          integration={itegration}
-          key={provider.id}
-          logoSrc={provider.logo_url} 
-          onActivateClick={this.handleActivateClick}
-          providerID={provider.id} 
-          providerName={provider.name}
-        />
+        <div className="provider-cell-container col-xs-3" key={provider.id}>
+          <ProviderCell
+            color={provider.color}
+            integration={itegration}
+            key={provider.id}
+            live={provider.live}
+            logoSrc={provider.logo_url} 
+            onActivateClick={this.handleActivateClick}
+            providerID={provider.id} 
+            providerName={provider.name}
+          />
+        </div>
       )
-    })
+    }
+
+    const activeProviderCells = _.map(filteredActiveProviders, providerCellGenerator)
+    const inactiveProviderCells = _.map(filteredInactiveProviders, providerCellGenerator)
     
     let forms = (
       <div className={'forms'}>
@@ -187,37 +200,27 @@ class Providers extends Component {
       </div>
     )
 
-    // Pack the providers into 4 per row
-    const providerRows = []
-    const rowCount = (providersSections.length / 4) + 1
-    for (let i = 0; i < rowCount; i++) {
-      const providerBaseIdx = (i * 4)
-      const rowContainer = []
-      for (let x = 0; x < 4; x++) {
-        const providerIdx = providerBaseIdx + x
-        if (providerIdx < providersSections.length) {
-          rowContainer.push(providersSections[providerIdx])
-        }
-      }
-      providerRows.push(rowContainer)
-    }
+    let liveProviderSeparator = (
+      <div className="col-xs-12">
+        <p className='comming-soon-separator'>
+          {'Comming Soon'}
+        </p>
+      </div>
+    )
 
-    const providerRowHTML = []
-    for (let i = 0; i < providerRows.length; i++) {
-      const pr = providerRows[i]
-      providerRowHTML.push(
-        <div className={'provider-row'} key={i}>
-          {pr}
-        </div>
-      )
-    }
     return (
       <div className="providers-component">
         <div className="forms">
           {forms}
         </div>
         <div className="provider-rows row">
-          {providerRowHTML}
+          {activeProviderCells}
+        </div>
+        <div className="separator-rows row">
+          {liveProviderSeparator}
+        </div>        
+        <div className="provider-rows row">
+          {inactiveProviderCells}
         </div>
       </div>
     )
