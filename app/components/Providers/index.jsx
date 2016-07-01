@@ -202,8 +202,8 @@ class Providers extends Component {
 
     let liveProviderSeparator = (
       <div className="col-xs-12">
-        <p className='comming-soon-separator'>
-          {'Comming Soon'}
+        <p className='coming-soon-separator'>
+          {'Coming Soon'}
         </p>
       </div>
     )
