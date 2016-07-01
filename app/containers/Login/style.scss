@@ -141,6 +141,10 @@
 	  opacity: 0.01;
 	}
 
+	#sign-in-button {
+		margin-right: 0px;
+	}
+
 	// Button
 	.btn {
 		margin-top: 10px;
@@ -154,6 +158,8 @@
 		font-weight: 500;
 		font-size: 1.25em;
 		margin-bottom: 8px;
+		width: 100%;
+		max-width: 200px;
 	}
 
 	.btn:active {
@@ -176,15 +182,18 @@
 	.back-btn {
 		background-color: $MeshBlueLight;
 	}
+
+	.sign-up-block {
+		margin-top: 10px;
+		color: $MeshBlackUltraLight;
+		font-size: 1.2em;
+		font-weight: 400;
+		a {
+			margin-left: 5px;
+			color: $MeshBlueDark;
+		}
+	}
 	
-	.login-btn-left {
-		margin-right: 20px;
-	}
-
-	.login-btn-right {
-		margin-left: 20px;
-	}
-
 }
 
 .error-flash-enter {

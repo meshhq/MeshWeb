@@ -327,8 +327,11 @@ class Login extends Component {
       } else {
         actionButtons = (
           <div>
-            <Button className="login-btn-left" onClick={this.handleSignUpUserMode}>{'Sign Up'}</Button>
-            <Button className="login-btn-right" onClick={this.handleSignIn}>{'Sign In'}</Button>
+            <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignIn}>{'Sign In'}</Button>
+            <p className="sign-up-block">
+              {'Don\'t have an account?  '}<a href="" onClick={this.handleSignUpUserMode}>{'Sign Up'}</a>
+            </p>
+            
           </div>
         )
       }
