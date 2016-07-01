@@ -52,11 +52,14 @@ function performFetch(request) {
 				return response.json()
 			}
 		} else {
+			// Kick out 401s
 			if (response.status == 401) {
 				logUserOut()
 				return Promise.reject('Invalid email or password')
 			}
-			return Promise.reject('Something went wrong. Please try again.')
+			
+			// Return Error Msg
+			return response.json().then((respJSON) => Promise.reject(respJSON))
 		}
 	}, () => Promise.reject())
 }

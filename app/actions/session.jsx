@@ -86,7 +86,7 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 					return Promise.resolve()
 				}, (err) =>  {
 					dispatch(receivedChallenge())
-					Promise.reject(err)
+					return Promise.reject(err)
 				}
 			)		
 	}
