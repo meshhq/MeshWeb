@@ -148,6 +148,7 @@ class Providers extends Component {
 
   render() {
     // Filter Mesh
+    console.log(this.props.providerState.providers)
     const filteredProviders = _.filter(this.props.providerState.providers, (provider) => 
       provider.name !== 'Mesh'
     )
@@ -186,7 +187,7 @@ class Providers extends Component {
       </div>
     )
 
-    // Pack the providers into 3 per row
+    // Pack the providers into 4 per row
     const providerRows = []
     const rowCount = (providersSections.length / 4) + 1
     for (let i = 0; i < rowCount; i++) {
