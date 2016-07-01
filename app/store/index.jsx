@@ -27,7 +27,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     // Taking out the ravenIntercept
-    applyMiddleware(ravenIntercept, createLogger(), thunk)
+    applyMiddleware(ravenIntercept, thunk)
   )
 
   if (module.hot) {
