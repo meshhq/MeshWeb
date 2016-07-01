@@ -337,7 +337,7 @@ class ListTable extends Component {
 
   _handleCellClick(idx) {
    let list = this.state.filteredDataList.getObjectAt(idx)
-   this.props.listActions.getListUsers(list)
+   this.props.listActions.fetchListUsers(list)
    this.setState({
      selectedObject: list,
      listFormDisplayed: true
