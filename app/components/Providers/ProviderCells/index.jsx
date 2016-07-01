@@ -9,6 +9,9 @@ import LoadingText from '../../../components/Shared/LoadingText'
 // Helpers
 import { integrationStateDescription, integrationIsSyncing } from '../../../constants/integrationSyncStatus'
 
+// Tracking 
+import { trackClickedInfoOnInactiveProvider } from '../../helpers/tracking'
+
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
 
@@ -24,9 +27,14 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   const btnText = activeIntegration ? 'Activated' : 'Activate'
 
   // Action content is the action available to take on the provider
-  
   const clickHandler = activeIntegration ? handleActivateClick : handleActivateClick
 
+  // Info (Not Live) Handler
+  const notLiveProviderClickHandler = () => {
+    trackClickedInfoOnInactiveProvider(providerName)
+  }
+
+  // Action content is the cell actionable content (button / sync status)
   let actionContent
   if (live) {
     actionContent = (
@@ -42,7 +50,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
     )
     actionContent = (
       <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
-        <Button bsStyle={'success'} className={'activate-btn not-live'}>{'Info'}</Button>
+        <Button bsStyle={'success'} className={'activate-btn not-live'} onClick={notLiveProviderClickHandler}>{'Info'}</Button>
       </OverlayTrigger>
     )
   }

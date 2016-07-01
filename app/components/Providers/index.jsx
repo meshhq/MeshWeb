@@ -13,11 +13,11 @@ import CredentialForm from '../Forms/CredentialForm'
 import * as IntegrationActions from '../../actions/integrations'
 import * as ProviderActions from '../../actions/providers'
 
-// Tracking
-import Mixpanel from 'mixpanel-browser'
-
 // HAWKSs
 import { IntervalWrapper } from '../../hawks/interval'
+
+// Tracking 
+import { trackVisitedProviders, trackClickedActivateLiveProvider } from '../../helpers/tracking'
 
 // ID for tracking the polling w/ the token
 const PROVIDER_POLLING_TOKEN = 'PROVIDER_POLLING_TOKEN'
@@ -27,7 +27,7 @@ class Providers extends Component {
     super(props, context)
 
     // Tracking
-    Mixpanel.track('Visited Providers')
+    trackVisitedProviders()
 
     this.handleActivateClick = this._handleActivateClick.bind(this)
     this.handleSaveCredentials = this._handleSaveCredentials.bind(this)
@@ -89,6 +89,9 @@ class Providers extends Component {
       return provider.id == providerID
     })
 
+    // Tracking
+    trackClickedActivateLiveProvider(pro)
+
     // Don't proceed for now if there's an exsiting integration
     for (let i = 0; i < this.props.integrationState.integrations.length; i++) {
       const integration = this.props.integrationState.integrations[i]
@@ -97,9 +100,6 @@ class Providers extends Component {
       }
     }
 
-    // Track provider click
-    Mixpanel.track('Attempted to activate: ' + pro.key)
-    
     // Check for OAuth Ability
     if (pro.oauth === true) {
       if (pro.credentials && pro.credentials.oauth_extra) {
