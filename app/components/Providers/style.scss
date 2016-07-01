@@ -4,4 +4,20 @@
 	padding-right: 1em;
 	float:left;
 	width: 100%;
+
+	.provider-cell-container {
+		padding: 0px 10px;
+	}
+	
+	.separator-rows {
+		margin: 10px 0px;
+		margin-top: 50px;
+		.comming-soon-separator {
+			letter-spacing: 2px;
+			text-align: center;
+			font-size: 2em;
+			font-weight: 500;
+			color: $MeshGreyDark;
+		}
+	}
 }

@@ -54,10 +54,9 @@ function performFetch(request) {
 		} else {
 			if (response.status == 401) {
 				logUserOut()
+				return Promise.reject('Invalid email or password')
 			}
-			return response.json().then((respJSON) => {
-				Promise.reject(respJSON)
-			})
+			return Promise.reject('Something went wrong. Please try again.')
 		}
 	}, () => Promise.reject())
 }

@@ -241,20 +241,17 @@ class Login extends Component {
           </form>
         </div>
       )
-      
-      // Action Buttons
-      if (this.props.sessionState.isLoading) {
-        actionButtons = (
-          <LoadingText loadText='Signing Up'/>
-        )
-      } else {
-        actionButtons = (
-          <div>
-            <Button className="login-btn-left back-btn" id={'back-btn'} onClick={this.handleBackPressed}>{'Back'}</Button>
-            <Button className="login-btn-right" onClick={this.handleSignUpCompanyMode}>{'Continue'}</Button>
+
+      actionButtons = (
+        <div className="login-button-container">
+          <div className="btn-container">
+            <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignUpCompanyMode}>{'Continue'}</Button>
           </div>
-        )
-      }
+          <div className="btn-container">
+            <Button className="login-btn-left back-btn" id="sign-in-button" onClick={this.handleBackPressed}>{'Back'}</Button>
+          </div>
+        </div>
+      )
 
     } else if (signUpCompanyMode) {
       loginContent = (
@@ -283,12 +280,24 @@ class Login extends Component {
       )
 
       // Action Buttons
-      actionButtons = (
-        <div>
-          <Button className="login-btn-left back-btn" id={'back-btn'} onClick={this.handleBackPressed}>{'Back'}</Button>
-          <Button className="login-btn-right" onClick={this.handleSignUp}>{'Sign Up'}</Button>
-        </div>
-      )
+      if (this.props.sessionState.isLoading) {
+        actionButtons = (
+          <LoadingText loadText='Signing Up'/>
+        )
+      } else {
+        // Action Buttons
+        actionButtons = (
+          <div className="login-button-container">
+            <div className="btn-container">
+              <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignUp}>{'Sign Up'}</Button>
+            </div>
+            <div className="btn-container">
+              <Button className="login-btn-left back-btn" id="sign-in-button" onClick={this.handleBackPressed}>{'Back'}</Button>
+            </div>
+          </div>
+        )
+      }
+
     } else {
       // Form Content
       loginContent = (
@@ -326,9 +335,13 @@ class Login extends Component {
         )
       } else {
         actionButtons = (
-          <div>
-            <Button className="login-btn-left" onClick={this.handleSignUpUserMode}>{'Sign Up'}</Button>
-            <Button className="login-btn-right" onClick={this.handleSignIn}>{'Sign In'}</Button>
+          <div className="login-button-container">
+            <div className="btn-container">
+              <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignIn}>{'Sign In'}</Button>
+            </div>
+            <p className="sign-up-block">
+              {'Don\'t have an account?  '}<a href="" onClick={this.handleSignUpUserMode}>{'Sign Up'}</a>
+            </p>
           </div>
         )
       }
