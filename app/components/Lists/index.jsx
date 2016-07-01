@@ -28,9 +28,6 @@ import { trackVisitedLists } from '../../helpers/tracking'
 // Actions
 import * as ListActions from '../../actions/lists'
 
-// Tracking 
-import { trackVisitedLists } from '../../actions/helpers'
-
 const { Column, Cell } = FixedDataTable;
 
 /**

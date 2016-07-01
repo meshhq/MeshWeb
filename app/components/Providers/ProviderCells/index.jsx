@@ -10,7 +10,7 @@ import LoadingText from '../../../components/Shared/LoadingText'
 import { integrationStateDescription, integrationIsSyncing } from '../../../constants/integrationSyncStatus'
 
 // Tracking 
-import { trackClickedInfoOnInactiveProvider } from '../../helpers/tracking'
+import { trackClickedInfoOnInactiveProvider } from '../../../helpers/tracking'
 
 // Assets
 import logo from '../../../assets/images/mesh_logo.png'
