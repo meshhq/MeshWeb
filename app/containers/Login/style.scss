@@ -147,7 +147,8 @@
 
 	// Button
 	.btn {
-		margin-top: 10px;
+		margin-top: 0px;
+		margin-bottom: 0px;
 		min-width: 150px;
 		padding: 10px 20px;
 		background-color: $MeshGreen;
@@ -178,9 +179,17 @@
 		background-color: $MeshWhite;
 		border: 2px solid rgba($MeshGreen, .6);		
 	}
+
+	.login-button-container {
+		margin-top: 10px;
+	}
 	
 	.back-btn {
 		background-color: $MeshBlueLight;
+	}
+
+	.btn-container {
+		display: block;
 	}
 
 	.sign-up-block {
