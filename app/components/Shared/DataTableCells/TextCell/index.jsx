@@ -7,10 +7,25 @@ const { Cell } = FixedDataTable;
 const TextCell = ({ rowIndex, data, col, ...props }) => {
   let object = data.getObjectAt(rowIndex)
   let onClick = props.onClick.bind(this, rowIndex)
+  const text = object[col]
+
+  // Render a appropriate blank state
+  let content
+  if (!text || !text.length) {
+    const deSnaked = col.replace('_', ' ')
+    content = (
+      <p className="blank-content">{'Unknown ' + deSnaked}</p>
+    )
+  } else {
+    content = (
+      <p>{text}</p>
+    )
+  }
+
   return (
     <div className="text-cell">
       <Cell {...props} onClick={onClick}>
-        <p> {object[col]}</p>
+        {content}
       </Cell>
     </div>
     )
