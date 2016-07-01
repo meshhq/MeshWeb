@@ -28,6 +28,9 @@ setupSessionEventListeners(browserHistory)
 // Configuring the app store
 const store = configureStore()
 
+// Injecting signup param
+const signUpLoginComponent = (children) => <Login startInSignupMode={true}>{children}</Login>
+
 // Render the component
 ReactDOM.render(
   <Provider store={store}>
@@ -40,7 +43,8 @@ ReactDOM.render(
         <Route component={Providers} path={'integrations'} />
         <Route component={Providers} path={'oauth/:callbackProvider'} />
       </Route>
-      <Route component={Login} path="/login" />
+      <Route component={Login} path="/login"/>
+      <Route component={signUpLoginComponent} path="/signup"/>
     </Router>
   </Provider>,
   document.getElementById('root')

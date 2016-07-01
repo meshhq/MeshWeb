@@ -17,8 +17,9 @@ class Login extends Component {
   displayName: "Login Component";
   constructor(props) {
     super(props);
+    const signUpUserMode = props.startInSignupMode == true
     this.state = {
-      signUpUserMode: false,
+      signUpUserMode: signUpUserMode,
       signUpCompanyMode: false,
       loginErrorText: ''
     };
@@ -406,7 +407,8 @@ Login.propTypes = {
   location: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   sessionActions: PropTypes.object.isRequired,
-  sessionState: PropTypes.object.isRequired
+  sessionState: PropTypes.object.isRequired,
+  startInSignupMode: PropTypes.bool
 }
 
 Login.defaultProps = {
