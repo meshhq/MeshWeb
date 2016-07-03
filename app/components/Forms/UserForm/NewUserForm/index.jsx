@@ -19,12 +19,12 @@ class NewUserForm extends Component {
   render() {
     return (
       <div>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>{"New User"}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Grid fluid>
+          <Grid fluid={true}>
             <Row>
               {this._inputColumn('first_name', 'First Name')}
               {this._inputColumn('last_name', 'Last Name')}

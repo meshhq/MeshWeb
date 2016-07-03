@@ -99,12 +99,12 @@ class IntegrationForm extends Component {
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton={true}>
             <Modal.Title>{"Publish List"}</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <Grid fluid>
+            <Grid fluid={true}>
               {integrationColumns}
             </Grid>
           </Modal.Body>

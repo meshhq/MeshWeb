@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"TH to setup tests soon 😱\" && exit 0",
-    "start": "NODE_ENV=local ORIGIN=prod webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
+    "start": "NODE_ENV=local ORIGIN=dev webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "local": "NODE_ENV=local ORIGIN=local webpack-dev-server --display-error-details --history-api-fallback --hot --inline --progress --colors --port 5000",
     "lint": "eslint . --ext=jsx --ext=js || true",
     "build": "ORIGIN=dev webpack --progress --colors",

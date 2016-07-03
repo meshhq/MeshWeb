@@ -6,7 +6,7 @@ const RadioHeader = ({ ...props }) => {
 
   let inputUI
   if (props.allAreSelected) {
-    inputUI = (<input aria-label="..." checked onChange={onSelectAll} type="checkbox" />)
+    inputUI = (<input aria-label="..." checked={true} onChange={onSelectAll} type="checkbox" />)
   } else {
     inputUI = (<input aria-label="..." onChange={onSelectAll} type="checkbox" />)
   }

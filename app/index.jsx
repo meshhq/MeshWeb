@@ -29,7 +29,10 @@ setupSessionEventListeners(browserHistory)
 const store = configureStore()
 
 // Injecting signup param
+/*eslint-disable */
 const signUpLoginComponent = (children) => <Login startInSignupMode={true}>{children}</Login>
+/*eslint-enable */
+
 
 // Render the component
 ReactDOM.render(
