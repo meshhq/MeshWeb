@@ -31,7 +31,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
 
   // Info (Not Live) Handler
   const notLiveProviderClickHandler = () => {
-    trackClickedInfoOnInactiveProvider(providerName)
+    trackClickedInfoOnInactiveProvider({ name: providerName })
   }
 
   // Action content is the cell actionable content (button / sync status)
