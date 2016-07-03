@@ -31,7 +31,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
 
   // Info (Not Live) Handler
   const notLiveProviderClickHandler = () => {
-    trackClickedInfoOnInactiveProvider(providerName)
+    trackClickedInfoOnInactiveProvider({ name: providerName })
   }
 
   // Action content is the cell actionable content (button / sync status)
@@ -43,7 +43,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   } else {
     const tooltip = (
       <Tooltip id={providerID}>
-        <strong>{'Comming Soon'}</strong><br></br>
+        <strong>{'Coming Soon'}</strong><br></br>
         {'We\'re actively working on this integraiton. Find out more by contacting us at:'}<br></br>
         <strong>{'info@meshdata.io'}</strong>
       </Tooltip>
