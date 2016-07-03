@@ -6,6 +6,14 @@
 	height:100vh;
 	margin: 0px;
 	padding: 0px;
+
+	.container-fluid {
+		height: 100%;
+	}
+
+	.inner-content-container {
+		height: 100%;	
+	}
 }
 
 // Standard Header
@@ -35,10 +43,6 @@
 
 	// Todo, change to $NavBarHeight;
 	height: calc(100vh; - 60px);
-}
-
-.container-fluid {
-	
 }
 
 input::-webkit-input-placeholder { /* WebKit, Blink, Edge */

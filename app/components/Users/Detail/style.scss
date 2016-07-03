@@ -1,0 +1,24 @@
+.user-detail-component {
+	height: 100%;
+	background-color: $MeshGreyLight;
+	
+	.container-row {
+		height: 100%;
+	}
+
+	.leading-continer {
+		height: 100%;
+		background-color: $MeshBlue;
+	}
+
+	.main-continer {
+		height: 100%;
+		background-color: $MeshGreen;
+	}
+
+	.trailing-container {
+		height: 100%;
+		background-color: red;
+	}
+
+}

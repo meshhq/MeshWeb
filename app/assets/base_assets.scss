@@ -15,7 +15,11 @@
 @import '../components/NavPane/style';
 @import '../components/NavPane/NavItem/style';
 
-@import '../components/Users/style';
+// Users
+@import '../components/Users/Index/style';
+@import '../components/Users/Detail/style';
+
+// Main Components
 @import '../components/Organizations/style';
 @import '../components/Lists/style';
 

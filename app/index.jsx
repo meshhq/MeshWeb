@@ -10,7 +10,8 @@ import { requireAuth, setupSessionEventListeners } from './helpers/session'
 import configureStore from './store'
 
 // Main Components
-import Users from './components/Users'
+import Users from './components/Users/Index'
+import UserDetail from './components/Users/Detail'
 import Organizations from './components/Organizations'
 import Lists from './components/Lists'
 import Providers from './components/Providers'
@@ -41,6 +42,7 @@ ReactDOM.render(
       <Route component={App} onEnter={requireAuth} path={'/'} >
         <IndexRedirect to="/users" />
         <Route component={Users} path={'users'} />
+        <Route component={UserDetail} path={'user/:userID'} />
         <Route component={Organizations} path={'organizations'} />
         <Route component={Lists} path={'lists'} />
         <Route component={Providers} path={'integrations'} />

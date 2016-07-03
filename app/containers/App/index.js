@@ -122,7 +122,7 @@ class App extends Component {
         })
       )
       return (
-        <div>
+        <div className="inner-content-container">
           <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
           {childrenWithProps}
         </div>
