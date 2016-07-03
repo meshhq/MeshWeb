@@ -28,12 +28,12 @@ class NewOrganizationForm extends Component {
   render() {
     return (
       <div>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>{"New Organization"}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Grid fluid>
+          <Grid fluid={true}>
             <Row>
               {this._inputColumn('name', 'Organization Name')}
               {this._inputColumn('website', 'Website')}

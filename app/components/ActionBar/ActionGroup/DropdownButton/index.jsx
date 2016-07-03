@@ -22,9 +22,9 @@ class Dropdown extends Component {
 
     let onSelection = this._onSelection.bind(this)
     return (
-      <DropdownButton bsStyle={'default'} id={'dropdown-size-medium'} onSelect={onSelection} pullRight title={this.props.title} >
+      <DropdownButton bsStyle={'default'} id={'dropdown-size-medium'} onSelect={onSelection} pullRight={true} title={this.props.title} >
         {providers}
-        <MenuItem divider />
+        <MenuItem divider={true} />
         <MenuItem eventKey={'All'}>{'All'}</MenuItem>
       </DropdownButton>
     )

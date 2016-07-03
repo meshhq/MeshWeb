@@ -73,7 +73,7 @@ class ListDetailForm extends Component {
         </Modal.Body>
 
         <Modal.Body>
-          <Grid fluid>
+          <Grid fluid={true}>
             <Row>
               {this._listColumn('description', 'Descrition', list.description)}
             </Row>

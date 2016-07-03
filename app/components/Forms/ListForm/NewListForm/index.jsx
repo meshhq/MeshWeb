@@ -19,12 +19,12 @@ class NewListForm extends Component {
   render() {
     return (
       <div>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>{"New List"}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Grid fluid>
+          <Grid fluid={true}>
             <Row>
               {this._inputColumn('name', 'Name')}
             </Row>
