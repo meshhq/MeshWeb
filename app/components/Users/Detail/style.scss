@@ -1,9 +1,10 @@
 .user-detail-component {
 	height: 100%;
-	background-color: $MeshGreyLight;
+	background-color: $MeshWhiteDark;
 	
 	.container-row {
 		height: 100%;
+		padding: 10px 0px;
 	}
 
 	.leading-continer {
@@ -14,11 +15,31 @@
 	.main-continer {
 		height: 100%;
 		background-color: $MeshGreen;
+		@media(min-width: $screen-sm) {
+			padding: 0px;
+		}
 	}
 
 	.trailing-container {
 		height: 100%;
 		background-color: red;
 	}
+
+	.content-container {
+		height: 100%;
+		background-color: $MeshWhite;
+		border: solid $MeshGrey 1px;
+		border-radius: 3px;
+		.row {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+	}
+
+	.graph-continer {
+		height: 300px;
+	}
+
+	
 
 }

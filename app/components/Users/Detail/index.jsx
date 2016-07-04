@@ -5,6 +5,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import _ from 'underscore'
 
+// Components
+import ProfileHeroWidget from './Widgets/ProfileHeroWidget'
+import InfoWidget from './Widgets/InfoWidget'
+import Pill from '../../Shared/Pill'
 
 // HAWKSs
 import { IntervalWrapper } from '../../../hawks/interval'
@@ -25,6 +29,7 @@ class UserDetail extends React.Component {
 
     // Integration Sync State
     this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
+    this.providerPillsForProviderIntegrationData = this._providerPillsForProviderIntegrationData.bind(this)
 
     // Setup our data
     this.state = {
@@ -52,15 +57,132 @@ class UserDetail extends React.Component {
     }
   }
 
+  _providerPillsForProviderIntegrationData(integrationData) {
+    const providerKeys = _.keys(integrationData)
+    const pills = _.map(providerKeys, (providerKey) => {
+      const provider = this.props.providerState.providersByKey[providerKey]
+      const integration = integrationData[providerKey]
+      return (
+        <Pill color={provider.color} key={providerKey} linkURL={integration.url} title={provider.name}/>
+      )
+    })
+    return pills
+  }
+
   render() {
+
+    /**
+     * TEMP DATA STRUCTURE BEGIN
+     */
+
+    const payload = {
+      user: {
+        imgURL: 'https://avatars3.githubusercontent.com/u/1266416?v=3&s=460',
+        first_name: 'Taylor',
+        last_name: 'Halliday',
+        phone: '206-920-8108',
+        email: 'taylor@meshsdfsdfsdfdata.io',
+        title: 'Baller',
+        extraInfo: 'Member Since October 2007',
+        integration_info: {
+          hubspot: {
+            url: 'seattletimes.com'
+          },
+          zendesk: {
+            url: 'gohuskies.com'
+          }
+        }
+      },
+      organization: {
+        name: 'Mesh Data',
+        website: 'meshdata.io',
+        users: "100",
+        annual_revenue: '$100M',
+        head_count: "300",
+        industry: 'Kicking Ass',
+        integration_info: {
+          hubspot: {
+            url: 'seattletimes.com'
+          },
+          zendesk: {
+            url: 'gohuskies.com'
+          }
+        }
+      }
+    }
+
+   /**
+    * TEMP DATA STRUCTURE END
+    */
+    
+    // User Info
+    const { imgURL, title, extraInfo, phone, first_name, last_name, email } = payload.user
+    const userIntegrationInfo = payload.user.integration_info
+    const userIntegrationPills = this.providerPillsForProviderIntegrationData(userIntegrationInfo)
+
+    // Org Info
+    const { name, website, users, annual_revenue, head_count, industry } = payload.organization
+    const orgIntegrationInfo = payload.organization.integration_info
+    const orgIntegrationPills = this.providerPillsForProviderIntegrationData(orgIntegrationInfo)
+
+    // Info Pairs for User
+    const userInfoPairs = [
+      { title:'First Name', value: first_name },
+      { title:'Last Name', value: last_name },
+      { title:'Title', value: title },
+      { title:'Phone', value: phone },
+      { title:'Email', value: email },
+      { title:'Integrations', value: userIntegrationPills }
+    ]
+
+    // Info Pairs for Company
+    const orgInfoPairs = [
+      { title:'Name', value: name },
+      { title:'Website', value: website },
+      { title:'Users', value: users },
+      { title:'Annual Rev', value: annual_revenue },
+      { title:'Head Count', value: head_count },
+      { title:'Industry', value: industry },
+      { title:'Integrations', value: orgIntegrationPills }
+    ]
+
     return (
       <div className="user-detail-component">
         <div className="container-row row">
           <div className="col-xs-12 col-sm-3 leading-continer">
+            <div className="content-container">
+              <ProfileHeroWidget extraInfo={extraInfo} imgURL={imgURL} name={name} title={title} />
+              <InfoWidget infoPairs={userInfoPairs} title={'User Information'} />
+              <InfoWidget infoPairs={orgInfoPairs} title={'Company Information'} />
+            </div>
           </div>
           <div className="col-xs-12 col-sm-6 main-continer">
+            <div className="graph row">
+              
+              <div className="col-xs-12 col-sm-4 graph-continer">
+                
+              </div>
+
+              <div className="col-xs-12 col-sm-4 graph-continer">
+                
+              </div>
+
+              <div className="col-xs-12 col-sm-4 graph-continer">
+                
+              </div>
+
+            </div>
+
+            <div className="lifecycle row">
+              <div className="col-xs-12 lifecycle-continer">
+                
+              </div>
+            </div>
+
           </div>
           <div className="col-xs-12 col-sm-3 trailing-container">
+            <div className="content-container">
+            </div>
           </div>
         </div>
       </div>
