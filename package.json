@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.3.19",
+    "chart.js": "^2.1.6",
     "classnames": "^2.1.2",
     "fbemitter": "^2.0.2",
     "fixed-data-table": "^0.6.1",
