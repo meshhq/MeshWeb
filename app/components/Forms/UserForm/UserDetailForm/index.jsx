@@ -101,11 +101,11 @@ class UserDetailForm extends Component {
     return listsContent
   }
 
-  _contentForSupportTickets(tickets) {
-    return this.supportTicketsTableWithTickets(tickets)
+  _contentForSupportTickets(threads) {
+    return this.supportTicketsTableWithTickets(threads)
   }
 
-  _supportTicketsTableWithTickets(tickets) {
+  _supportTicketsTableWithTickets(threads) {
     // Standard Tooltip
     const headers = (
       <tr>
@@ -116,21 +116,21 @@ class UserDetailForm extends Component {
       </tr>
     )
 
-    const rows = _.map(tickets, (ticket, idx) => {
-      const createdDate = new Date(ticket.created_at)
-      const integraitonKey = _.keys(ticket.integration_data)[0]
-      const integrationLink = ticket.integration_data[integraitonKey].url
+    const rows = _.map(threads, (thread, idx) => {
+      const createdDate = new Date(thread.created_at)
+      const integraitonKey = _.keys(thread.integration_data)[0]
+      const integrationLink = thread.integration_data[integraitonKey].url
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
-      return (        
-        <tr className='ticket-row' key={idx}>
+      return (
+        <tr className='thread-row' key={idx}>
           <td className='td-first' scope='row'>{createdShortDate}</td>
-          <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(ticket.integration_data)}</td>
+          <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(thread.integration_data)}</td>
           <td className='td-third'>
             <a href={'http://' + integrationLink} target='_blank'>
               <p>{'300'}</p>
             </a>
           </td>
-          <td className='td-forth'>{ticket.description}</td>
+          <td className='td-forth'>{thread.description}</td>
         </tr>
       )
     })
@@ -172,7 +172,7 @@ class UserDetailForm extends Component {
       const providerPillContent = this.providerPillsForProviderKey(transaction.integration_data)
       const integraitonKey = _.keys(transaction.integration_data)[0]
       const integrationLink = transaction.integration_data[integraitonKey].url
-      return (        
+      return (
         <tr className='transaction-row' key={idx}>
           <td className='td-first' scope='row'>{createdShortDate}</td>
           <td className='td-second' scope='pill-row'>{providerPillContent}</td>
@@ -286,8 +286,8 @@ class UserDetailForm extends Component {
               {this.contentForInfo('Integrations', orgProviderContent, true)}
             </dl>
           </div>
-        </div>  
-      )    
+        </div>
+      )
     }
 
     /**
@@ -309,36 +309,37 @@ class UserDetailForm extends Component {
             </div>
           </div>
         )
-      }  
+      }
     }
 
     /**
      * Tickets
      */
-    let ticketsSection = null
-    if (user.tickets) {
-      const ticketsContent = this.contentForSupportTickets(user.tickets)
-      if (ticketsContent && user.tickets.length) {
-        ticketsSection = (
-          <div className="row tickets">
+    let threadsSection = null
+
+    if (user.threads) {
+      const threadsContent = this.contentForSupportTickets(user.threads)
+      if (threadsContent && user.threads.length) {
+        threadsSection = (
+          <div className="row threads">
             <div className="col-xs-12">
               <h4>{'Support Tickets'}</h4>
             </div>
             <div className="col-xs-12">
               <dl className="dl-horizontal">
-                {ticketsContent}
+                {threadsContent}
               </dl>
             </div>
           </div>
         )
-      }      
+      }
     }
 
     /**
      * Transactions
      */
     let transactionsSection = null
-    if (user.tickets) {
+    if (user.transactions) {
       const transactionsContent = this.contentForTransactions(user.transactions)
       if (transactionsContent && user.transactions.length) {
         transactionsSection = (
@@ -353,7 +354,7 @@ class UserDetailForm extends Component {
             </div>
           </div>
         )
-      }      
+      }
     }
 
     return (
@@ -363,12 +364,12 @@ class UserDetailForm extends Component {
         </div>
 
         <div className="user-content">
-          
+
           {userContent}
 
           {orgSection}
 
-          {ticketsSection}
+          {threadsSection}
 
           {transactionsSection}
 
