@@ -8,6 +8,7 @@ import _ from 'underscore'
 // Components
 import ProfileHeroWidget from './Widgets/ProfileHeroWidget'
 import InfoWidget from './Widgets/InfoWidget'
+import GraphWidget from './Widgets/GraphWidget'
 import Pill from '../../Shared/Pill'
 
 // HAWKSs
@@ -30,21 +31,43 @@ class UserDetail extends React.Component {
     // Integration Sync State
     this.checkForIntegrationsCurrentlySyncing = this._checkForIntegrationsCurrentlySyncing.bind(this)
     this.providerPillsForProviderIntegrationData = this._providerPillsForProviderIntegrationData.bind(this)
+    this.handleResize = this._handleResize.bind(this)
 
     // Setup our data
     this.state = {
-      detailUser: {}
+      detailUser: {},
+      graphContainerHeight: 0,
+      graphContainerWidth: 0
     };
   }
 
   // First: Mounted
   componentDidMount() {
-    
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize()
   }
 
   // First: Received props
   componentWillReceiveProps() {
     
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  // Watches for resizing to alert the graphs
+  _handleResize() {
+    let dom = ReactDOM.findDOMNode(this)
+    const width = dom.querySelectorAll('div.graph-continer')[0].clientWidth
+    const height = dom.querySelectorAll('div.graph-continer')[0].clientHeight
+    console.log(dom.querySelectorAll('div.graph-continer'))
+    if (this.state.graphContainerWidth !== width) {
+      this.setState({
+        graphContainerHeight: height,
+        graphContainerWidth: width
+      }) 
+    }
   }
 
   // Checks for currently syncing integrations
@@ -74,6 +97,53 @@ class UserDetail extends React.Component {
     /**
      * TEMP DATA STRUCTURE BEGIN
      */
+    
+    /**
+     * Testing Data
+     */
+    const chartData = {
+      labels: ['April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label: 'My First dataset',
+          fillColor: 'rgba(220,220,220,0.2)',
+          strokeColor: 'rgba(220,220,220,1)',
+          pointColor: 'rgba(220,220,220,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data: [81, 56, 55, 40]
+        },
+        {
+          label: 'My Second dataset',
+          fillColor: 'rgba(151,187,205,0.2)',
+          strokeColor: 'rgba(151,187,205,1)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          data: [19, 86, 27, 90]
+        }
+      ]
+    }
+
+    const chartOptions = {
+      scaleShowGridLines: true,
+      scaleGridLineColor: 'rgba(0,0,0,.05)',
+      scaleGridLineWidth: 1,
+      scaleShowHorizontalLines: true,
+      scaleShowVerticalLines: true,
+      bezierCurve: true,
+      bezierCurveTension: 0.4,
+      pointDot: true,
+      pointDotRadius: 4,
+      pointDotStrokeWidth: 1,
+      pointHitDetectionRadius: 20,
+      datasetStroke: true,
+      datasetStrokeWidth: 2,
+      datasetFill: true,
+      legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+    }
 
     const payload = {
       user: {
@@ -96,9 +166,9 @@ class UserDetail extends React.Component {
       organization: {
         name: 'Mesh Data',
         website: 'meshdata.io',
-        users: "100",
+        users: '100',
         annual_revenue: '$100M',
-        head_count: "300",
+        head_count: '300',
         industry: 'Kicking Ass',
         integration_info: {
           hubspot: {
@@ -108,7 +178,21 @@ class UserDetail extends React.Component {
             url: 'gohuskies.com'
           }
         }
-      }
+      },
+      data_analytics : [
+        {
+          title: 'Total MRR',
+          subTitle: 'Alot of money'
+        },
+        {
+          title: 'Life Time Value (LTV)',
+          subTitle: 'Alot of value'
+        },
+        {
+          title: 'Some Other Metric (SOM)',
+          subTitle: 'Pump Da Numbers'
+        }
+      ]
     }
 
    /**
@@ -146,6 +230,28 @@ class UserDetail extends React.Component {
       { title:'Integrations', value: orgIntegrationPills }
     ]
 
+    // Analytics Info
+    let graphs = _.map(payload.data_analytics, (data, idx) => {
+      let spacerStyle = {}
+      if (idx == 0) {
+        spacerStyle['padding-left'] = 40
+      }
+      return (
+        <div className="col-xs-12 col-sm-4" key={data.title}>
+          <div className='content-container graph-continer'>
+            <GraphWidget 
+              graphData={chartData} 
+              graphOptions={chartOptions} 
+              height={this.state.graphContainerHeight} 
+              subTitle={data.subTitle} 
+              title={data.title} 
+              width={this.state.graphContainerWidth}
+            />
+          </div>
+        </div>
+      )}
+    )
+
     return (
       <div className="user-detail-component">
         <div className="container-row row">
@@ -157,20 +263,9 @@ class UserDetail extends React.Component {
             </div>
           </div>
           <div className="col-xs-12 col-sm-6 main-continer">
+
             <div className="graph row">
-              
-              <div className="col-xs-12 col-sm-4 graph-continer">
-                
-              </div>
-
-              <div className="col-xs-12 col-sm-4 graph-continer">
-                
-              </div>
-
-              <div className="col-xs-12 col-sm-4 graph-continer">
-                
-              </div>
-
+              {graphs}
             </div>
 
             <div className="lifecycle row">
@@ -230,3 +325,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WrappedUserDetail)
+
