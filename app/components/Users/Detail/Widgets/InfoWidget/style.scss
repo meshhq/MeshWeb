@@ -1,4 +1,8 @@
 .info-widget {
+  
+  padding-left: 15px;
+  padding-right: 15px;
+
   .separator {
     padding: 0px 10px;
     margin-bottom: 10px;
@@ -9,9 +13,10 @@
 
   .title {
     padding: 0px;
-    font-weight: 700;
-    font-size: 14px;
-    color: $MeshGreyLightDark;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: $MeshGreyDark;
   }
 
   dt {
@@ -25,7 +30,7 @@
   dd {
     color: $MeshBlackLight;
     margin-left: 90px;
-    font-size: 1.25em;
+    font-size: 1.1em;
     font-weight: 400;
   }
 

@@ -333,25 +333,19 @@ class UserDetail extends React.Component {
     ]
 
     // Analytics Info
-    let graphs = _.map(payload.data_analytics, (data, idx) => {
-      let spacerStyle = {}
-      if (idx == 0) {
-        spacerStyle['padding-left'] = 40
-      }
-      return (
-        <div className='col-xs-12 col-sm-4' key={data.title}>
-          <div className='content-container graph-continer'>
-            <GraphWidget 
-              graphData={chartData} 
-              graphOptions={chartOptions} 
-              height={this.state.graphContainerHeight} 
-              subTitle={data.subTitle} 
-              title={data.title} 
-              width={this.state.graphContainerWidth}
-            />
-          </div>
+    let graphs = _.map(payload.data_analytics, (data) =>
+      <div className='col-xs-12 col-sm-4 graph-col' key={data.title}>
+        <div className='content-container graph-continer'>
+          <GraphWidget 
+            graphData={chartData} 
+            graphOptions={chartOptions} 
+            height={this.state.graphContainerHeight} 
+            subTitle={data.subTitle} 
+            title={data.title} 
+            width={this.state.graphContainerWidth}
+          />
         </div>
-      )}
+      </div>
     )
 
     return (
