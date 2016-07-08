@@ -134,8 +134,8 @@ const TabsForSectionTitles = ({ lifetimeDataSource, providersByKey }) => {
   
     const titleForTab = (
       <div className="tab-title-container">
-        <span>{title}</span>
         <img className="tab-title-glyph" src={glyph} />
+        <span>{title}</span>
       </div>
     )    
 

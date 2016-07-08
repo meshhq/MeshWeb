@@ -51,6 +51,14 @@
     background-color: $MeshGrey;
   }
 
+  .nav-tabs {
+    .active {
+      span {
+        color: $MeshBlue;
+      }
+    }
+  }
+
   .tab-title-container {
     span {
       font-size: 1.3em;
@@ -60,10 +68,11 @@
 
     img {
       color: $MeshBlue;
-      max-height: 18px;
+      height: 20px;
       width: auto;
+      
       margin-bottom: 5px;
-      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 
