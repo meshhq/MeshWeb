@@ -1,18 +1,15 @@
 
 import React, { PropTypes } from 'react'
 import { Line as LineChart } from 'react-chartjs';
-import _ from 'underscore'
 
 /**
  * Graph Widget...
  * @param  {String}         options.title     Title of Widget
  * @param  {Array[Object]}  options.infoPairs Array of infoPairs
  */
-const GraphWidget = ({ height, title, subTitle, graphData, graphOptions, width }) => {
-  const adjustedWidth = width - 20
-  const adjustedHeight = height - 40
-  console.log(adjustedHeight, adjustedWidth)
-  const chart = <LineChart data={graphData} height={adjustedHeight} options={graphOptions} width={adjustedWidth}/>
+const GraphWidget = ({ title, subTitle, graphData, graphOptions }) => {
+  const styleOverride = { height: '100%', width: '100%' }
+  const chart = <LineChart data={graphData} options={graphOptions} style={styleOverride} />
   return (
     <div className="chart-widget row">
       <div className="col-xs-12 title">
@@ -32,10 +29,8 @@ const GraphWidget = ({ height, title, subTitle, graphData, graphOptions, width }
 GraphWidget.propTypes = {
   graphData: PropTypes.object.isRequired,
   graphOptions: PropTypes.object.isRequired,
-  height: PropTypes.number.isRequired,
   subTitle: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired
+  title: PropTypes.string.isRequired
 }
 
 // Display Name

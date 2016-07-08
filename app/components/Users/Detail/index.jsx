@@ -9,6 +9,7 @@ import _ from 'underscore'
 import ProfileHeroWidget from './Widgets/ProfileHeroWidget'
 import InfoWidget from './Widgets/InfoWidget'
 import GraphWidget from './Widgets/GraphWidget'
+import CustomerLifetimeWidget from './Widgets/CustomerLifetimeWidget'
 import Pill from '../../Shared/Pill'
 
 // HAWKSs
@@ -61,7 +62,6 @@ class UserDetail extends React.Component {
     let dom = ReactDOM.findDOMNode(this)
     const width = dom.querySelectorAll('div.graph-continer')[0].clientWidth
     const height = dom.querySelectorAll('div.graph-continer')[0].clientHeight
-    console.log(dom.querySelectorAll('div.graph-continer'))
     if (this.state.graphContainerWidth !== width) {
       this.setState({
         graphContainerHeight: height,
@@ -142,7 +142,7 @@ class UserDetail extends React.Component {
       datasetStroke: true,
       datasetStrokeWidth: 2,
       datasetFill: true,
-      legendTemplate: '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+      legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].strokeColor%>\'></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
     }
 
     const payload = {
@@ -179,6 +179,74 @@ class UserDetail extends React.Component {
           }
         }
       },
+      'timeline': [
+          {
+              'amount': '499.99',
+              'created_at': 1467909403163,
+              'description': 'Growth Plan',
+              'email': 'emily.thomas@snapchat.com',
+              'id': '577e851b791e4b6a92c868aa',
+              'integration_data': {
+                  'pardot': {
+                      'url': 'https://www.pardot.com/'
+                  }
+              },
+              'origin_provider': 2003,
+              'type': 'transaction',
+              'updated_at': 1467909403163,
+              'user_id': '577e851b791e4b6a92c868a7'
+          },
+          {
+              'amount': '499.99',
+              'created_at': 1467909403163,
+              'description': 'Growth Plan',
+              'email': 'emily.thomas@snapchat.com',
+              'id': '577e851b791e4b6a92c868ab',
+              'integration_data': {
+                  'mixpanel': {
+                      'url': 'https://www.mixpanel.com/'
+                  }
+              },
+              'origin_provider': 6001,
+              'type': 'transaction',
+              'updated_at': 1467909403163,
+              'user_id': '577e851b791e4b6a92c868a7'
+          },
+          {
+              'application_id': '577e851a791e4b6a92c8688f',
+              'created_at': 1467909403139,
+              'description': 'Quia at incidunt nulla adipisci rem autem nesciunt quisquam aspernatur omnis sunt consequatur ipsam.',
+              'email': 'emily.thomas@snapchat.com',
+              'id': '577e851b791e4b6a92c868a8',
+              'integration_data': {
+                  'mesh': {
+                      'url': 'www.mesh.com'
+                  }
+              },
+              'origin_provider': 1000,
+              'subject': 'I Need Help!',
+              'type': 'email',
+              'updated_at': 1467909403139,
+              'user_id': '577e851b791e4b6a92c868a7'
+          },
+          {
+              'application_id': '577e851a791e4b6a92c8688f',
+              'created_at': 1467909403139,
+              'description': 'Quos voluptas eum earum dolores maiores provident doloribus labore aspernatur enim est ab.',
+              'email': 'emily.thomas@snapchat.com',
+              'id': '577e851b791e4b6a92c868a9',
+              'integration_data': {
+                  'pardot': {
+                      'url': 'https://www.pardot.com/'
+                  }
+              },
+              'origin_provider': 2003,
+              'subject': 'I Need Help!',
+              'type': 'ticket',
+              'updated_at': 1467909403139,
+              'user_id': '577e851b791e4b6a92c868a7'
+          }
+      ],
       data_analytics : [
         {
           title: 'Total MRR',
@@ -209,6 +277,12 @@ class UserDetail extends React.Component {
     const orgIntegrationInfo = payload.organization.integration_info
     const orgIntegrationPills = this.providerPillsForProviderIntegrationData(orgIntegrationInfo)
 
+    // Timeline Info
+    const { timeline } = payload
+
+    // Providers
+    const { providersByKey } = this.props.providerState
+
     // Info Pairs for User
     const userInfoPairs = [
       { title:'First Name', value: first_name },
@@ -237,7 +311,7 @@ class UserDetail extends React.Component {
         spacerStyle['padding-left'] = 40
       }
       return (
-        <div className="col-xs-12 col-sm-4" key={data.title}>
+        <div className='col-xs-12 col-sm-4' key={data.title}>
           <div className='content-container graph-continer'>
             <GraphWidget 
               graphData={chartData} 
@@ -253,30 +327,37 @@ class UserDetail extends React.Component {
     )
 
     return (
-      <div className="user-detail-component">
-        <div className="container-row row">
-          <div className="col-xs-12 col-sm-3 leading-continer">
-            <div className="content-container">
+      <div className='user-detail-component'>
+        <div className='container-row row'>
+          <div className='col-xs-12 col-sm-3 leading-continer'>
+            <div className='content-container'>
               <ProfileHeroWidget extraInfo={extraInfo} imgURL={imgURL} name={name} title={title} />
               <InfoWidget infoPairs={userInfoPairs} title={'User Information'} />
               <InfoWidget infoPairs={orgInfoPairs} title={'Company Information'} />
             </div>
           </div>
-          <div className="col-xs-12 col-sm-6 main-continer">
+          <div className='col-xs-12 col-sm-6 main-continer'>
 
-            <div className="graph row">
+            <div className='graph row'>
               {graphs}
             </div>
 
-            <div className="lifecycle row">
-              <div className="col-xs-12 lifecycle-continer">
-                
+            <div className='lifecycle row'>
+              <div className='col-xs-12 lifecycle-continer'>
+                <div className='content-container'>
+                  <CustomerLifetimeWidget
+                    providersByKey={providersByKey}
+                    subTitle={'Customer Lifetime'} 
+                    timelineData={timeline}
+                    title={payload.user.first_name + ' ' + payload.user.last_name} 
+                  />
+                </div>
               </div>
             </div>
 
           </div>
-          <div className="col-xs-12 col-sm-3 trailing-container">
-            <div className="content-container">
+          <div className='col-xs-12 col-sm-3 trailing-container'>
+            <div className='content-container'>
             </div>
           </div>
         </div>

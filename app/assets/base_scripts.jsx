@@ -2,6 +2,7 @@
 import './bowerComponents/bootstrap/js/collapse.js'
 import './bowerComponents/bootstrap/js/dropdown.js'
 import './bowerComponents/bootstrap/js/modal.js'
+import './bowerComponents/bootstrap/js/tab.js'
 
 // Vendor loads
 import mixpanel from 'mixpanel-browser'
