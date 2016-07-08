@@ -1,4 +1,5 @@
-.info-widget {
+.tracking-info-widget {
+
   .separator {
     padding: 0px 10px;
     margin-bottom: 10px;
@@ -7,16 +8,39 @@
     border-bottom: none;
   }
 
+  .title-block {
+    border-bottom: 2px solid $MeshGrey;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: $MeshGreyDark;
+  }
+
+  .tracking-block:not(:first-child) {
+    margin-top: 20px;
+  }
+
   .title {
     padding: 0px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 22px;
+    color: $MeshBlackUltraLight;
+    margin-bottom: 0px;
+  }
+
+  .sub-title {
+    padding: 0px;
+    font-weight: 500;
+    font-size: 16px;
     color: $MeshGreyLightDark;
   }
 
   dt {
     color: $MeshBlackLight;
-    width: 85px;
+    width: 80px;
     font-size: 1.1em;
     text-align: left;
     font-weight: 300;

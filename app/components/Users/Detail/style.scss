@@ -13,6 +13,8 @@
 	}
 
 	.main-continer {
+		display: flex;
+    flex-direction: column;
 		height: 100%;
 		background-color: $MeshGreen;
 		@media(min-width: $screen-sm) {
@@ -49,9 +51,15 @@
 	.graph-continer {
 		padding: 0px;
 	}
+
+	.lifecycle {
+		flex-grow: 1;
+		display: flex;
+	}
 	
 	.lifecycle-continer {
 		padding: 0px;
+		flex-grow: 1;
 	}
 
 }

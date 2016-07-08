@@ -8,6 +8,7 @@ import _ from 'underscore'
 // Components
 import ProfileHeroWidget from './Widgets/ProfileHeroWidget'
 import InfoWidget from './Widgets/InfoWidget'
+import TrackingInfoWidget from './Widgets/TrackingInfoWidget'
 import GraphWidget from './Widgets/GraphWidget'
 import CustomerLifetimeWidget from './Widgets/CustomerLifetimeWidget'
 import Pill from '../../Shared/Pill'
@@ -247,6 +248,30 @@ class UserDetail extends React.Component {
               'user_id': '577e851b791e4b6a92c868a7'
           }
       ],
+      usage_data : [
+        {
+          title: 'Subscription Information',
+          data: [
+            { title: 'Product', value: 'Sweet Product' },
+            { title: 'Plan', value: 'Hacker Plan' }
+          ]
+        },
+        {
+          title: 'Usage Info',
+          data: [
+            { title: 'Uses', value: 'Sweet Product' },
+            { title: 'Plan', value: 'Hacker Plan' },
+            { title: 'Visits', value: '320 Views' }
+          ]
+        },
+        {
+          title: 'Subscription Information',
+          data: [
+            { title: 'Product', value: 'Sweet Product' },
+            { title: 'Plan', value: 'Hacker Plan' }
+          ]
+        }
+      ],
       data_analytics : [
         {
           title: 'Total MRR',
@@ -279,6 +304,9 @@ class UserDetail extends React.Component {
 
     // Timeline Info
     const { timeline } = payload
+
+    // Usage Data
+    const { usage_data } = payload
 
     // Providers
     const { providersByKey } = this.props.providerState
@@ -358,6 +386,11 @@ class UserDetail extends React.Component {
           </div>
           <div className='col-xs-12 col-sm-3 trailing-container'>
             <div className='content-container'>
+              <TrackingInfoWidget 
+                subtitle={'Custom Events You Tell Us About'}
+                title={'Event Tracking'} 
+                trackingData={usage_data} 
+              />
             </div>
           </div>
         </div>

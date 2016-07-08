@@ -11,12 +11,9 @@ import liferingGlyph from '../../../../../assets/images/liferingGlyph.png'
 import purchaseGlyph from '../../../../../assets/images/purchaseGlyph.png'
 
 // Event SVGs
-import announcementEventSVG from '../../../../../assets/images/announcementEvent.svg'
 import conversationEventSVG from '../../../../../assets/images/conversationEvent.svg'
-import funnelEventSVG from '../../../../../assets/images/funnelEvent.svg'
 import mailEventSVG from '../../../../../assets/images/mailEvent.svg'
 import purchaseEventSVG from '../../../../../assets/images/purchaseEvent.svg'
-import supportEventSVG from '../../../../../assets/images/supportEvent.svg'
 
 // Inliner
 import InlineSVG from 'svg-inline-react'
