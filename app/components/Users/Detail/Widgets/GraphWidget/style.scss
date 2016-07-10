@@ -1,4 +1,15 @@
+#chart-id-group {
+  margin-top: 0px;
+}
+
 .chart-widget {
+  margin-top: 0px;
+  
+  .separator {
+    height: 1px;
+    background-color: $MeshGreyLight;
+    border-bottom: none;
+  }
   
   .title {
     padding: 0px;
@@ -14,7 +25,8 @@
     p {
       color: $MeshGreyUltraDark;
       font-size: 1.1em;
-      font-weight: 400;      
+      font-weight: 400;
+      margin-bottom: 5px;
     }
   }
 

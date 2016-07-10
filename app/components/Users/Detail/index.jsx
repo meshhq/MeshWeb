@@ -103,47 +103,61 @@ class UserDetail extends React.Component {
      * Testing Data
      */
     const chartData = {
-      labels: ['April', 'May', 'June', 'July'],
+      labels: ['6/5', '6/12', '6/19', '6/26', '7/3', '7/10'],
       datasets: [
         {
-          label: 'My First dataset',
-          fillColor: 'rgba(220,220,220,0.2)',
-          strokeColor: 'rgba(220,220,220,1)',
-          pointColor: 'rgba(220,220,220,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data: [81, 56, 55, 40]
-        },
-        {
-          label: 'My Second dataset',
-          fillColor: 'rgba(151,187,205,0.2)',
-          strokeColor: 'rgba(151,187,205,1)',
-          pointColor: 'rgba(151,187,205,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(151,187,205,1)',
-          data: [19, 86, 27, 90]
+          label: 'Aggregrate API Calls',
+          fill: true,
+          data: [4500, 5000, 6200, 6300, 6500, 7000],
+          lineTension: 0.1,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 3,
+          pointHitRadius: 10,
+          borderWidth: 1
         }
       ]
     }
 
     const chartOptions = {
-      scaleShowGridLines: true,
-      scaleGridLineColor: 'rgba(0,0,0,.05)',
-      scaleGridLineWidth: 1,
-      scaleShowHorizontalLines: true,
-      scaleShowVerticalLines: true,
       bezierCurve: true,
       bezierCurveTension: 0.4,
-      pointDot: true,
-      pointDotRadius: 4,
-      pointDotStrokeWidth: 1,
-      pointHitDetectionRadius: 20,
       datasetStroke: true,
       datasetStrokeWidth: 2,
       datasetFill: true,
-      legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<datasets.length; i++){%><li><span style=\'background-color:<%=datasets[i].strokeColor%>\'></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>'
+      pointDot: false,
+      pointDotRadius: 4,
+      pointDotStrokeWidth: 1,
+      pointHitDetectionRadius: 20,
+      maintainAspectRatio: false,
+      responsive: true,
+      scaleShowGridLines: true,
+      scaleGridLineColor: 'rgba(1,1,1,.05)',
+      scaleGridLineWidth: 1,
+      scaleShowHorizontalLines: true,
+      scaleShowVerticalLines: true,
+      showScale: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
     }
 
     const payload = {
@@ -276,14 +290,6 @@ class UserDetail extends React.Component {
         {
           title: 'Total MRR',
           subTitle: 'Alot of money'
-        },
-        {
-          title: 'Life Time Value (LTV)',
-          subTitle: 'Alot of value'
-        },
-        {
-          title: 'Some Other Metric (SOM)',
-          subTitle: 'Pump Da Numbers'
         }
       ]
     }
@@ -333,16 +339,17 @@ class UserDetail extends React.Component {
     ]
 
     // Analytics Info
+    const graphCount = payload.data_analytics.length
+    const responsiveClassName = 'col-sm-' + 12 / graphCount
     let graphs = _.map(payload.data_analytics, (data) =>
-      <div className='col-xs-12 col-sm-4 graph-col' key={data.title}>
+      <div className={'col-xs-12 ' + responsiveClassName + ' graph-col'} key={data.title}>
         <div className='content-container graph-continer'>
           <GraphWidget 
+            containerWidth={this.state.graphContainerWidth}
             graphData={chartData} 
             graphOptions={chartOptions} 
-            height={this.state.graphContainerHeight} 
             subTitle={data.subTitle} 
             title={data.title} 
-            width={this.state.graphContainerWidth}
           />
         </div>
       </div>

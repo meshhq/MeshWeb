@@ -82,7 +82,8 @@
     }
     a:hover {
       background-color: $MeshWhite;
-      border-bottom: none;
+      border-bottom-width: 1px;
+      border-bottom-color: $MeshWhite;
     }
 
     ul {

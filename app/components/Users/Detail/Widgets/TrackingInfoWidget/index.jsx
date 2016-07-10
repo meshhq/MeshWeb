@@ -21,7 +21,7 @@ const TrackingInfoWidget = ({ title, subtitle, trackingData }) => {
 
   // Build rows. Ignore null/undefined values
   let rows = []
-  _.each(trackingData, (trackingInstance) => {
+  _.each(trackingData, (trackingInstance, idx) => {
     const { title: sectionTitle, data } = trackingInstance
     let trackingDataRows = _.map(data, (trackingData) => {
         if (trackingData) {
@@ -52,9 +52,9 @@ const TrackingInfoWidget = ({ title, subtitle, trackingData }) => {
       })
 
       rows.push(
-        <div className="col-xs-12 tracking-block">
+        <div className="col-xs-12 tracking-block" key={sectionTitle + idx}>
           <dl className="dl-horizontal">
-            <div className={'tracking-group'} key={sectionTitle}>
+            <div className={'tracking-group'}>
               <p className="section-title">{sectionTitle}</p>
               {trackingDataRows}
             </div>
@@ -68,6 +68,8 @@ const TrackingInfoWidget = ({ title, subtitle, trackingData }) => {
       <div className="col-xs-12 title-block">
         <p className="title">{title}</p>
         <p className="sub-title">{subtitle}</p>
+        <div className="col-xs-12 separator">
+        </div>
       </div>
       {rows}
     </div>
