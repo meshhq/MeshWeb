@@ -9,6 +9,11 @@
 
 	.leading-continer {
 		height: 100%;
+
+		.content-container:last-child {
+			height: 100%;
+		}
+
 	}
 
 	.main-continer {
@@ -22,6 +27,10 @@
 		.row {
 			margin-left: 0px;
 			margin-right: 0px;
+		}
+
+		.content-container:last-child {
+			height: 100%;
 		}
 
 		.graph {
@@ -47,13 +56,24 @@
 
 	.trailing-container {
 		height: 100%;
+		display: flex;
+    flex-direction: column;
+
+    .content-container {
+    	margin-bottom: 10px;
+    }
+
+		.content-container:last-child {
+			height: 100%;
+			margin-bottom: 0px;
+		}
 	}
 
 	.content-container {
-		height: 100%;
 		background-color: $MeshWhite;
 		border: solid $MeshGrey 1px;
 		border-radius: 3px;
+		padding-bottom: 20px;
 		.row {
 			margin-left: 0px;
 			margin-right: 0px;

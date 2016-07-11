@@ -17,6 +17,10 @@
     margin-top: 20px;
   }
 
+  .tracking-block:last-child {
+    margin-bottom: 20px;
+  }
+
   .title {
     padding: 0px;
     font-weight: 700;
@@ -34,7 +38,7 @@
 
   dt {
     color: $MeshBlackLight;
-    width: 80px;
+    width: 40%;
     font-size: 1.1em;
     text-align: left;
     font-weight: 300;

@@ -291,6 +291,16 @@ class UserDetail extends React.Component {
           title: 'Total MRR',
           subTitle: 'Alot of money'
         }
+      ],
+      financial_data : [
+        {
+          title: 'LTV / Monthly Spend',
+          data: [
+            { title: 'LTV', value: '$18,204' },
+            { title: 'YTD Charges', value: '$9,283.00' },
+            { title: 'Org Spend', value: '$25,283.00' }
+          ]
+        }
       ]
     }
 
@@ -312,7 +322,7 @@ class UserDetail extends React.Component {
     const { timeline } = payload
 
     // Usage Data
-    const { usage_data } = payload
+    const { usage_data, financial_data } = payload
 
     // Providers
     const { providersByKey } = this.props.providerState
@@ -386,6 +396,13 @@ class UserDetail extends React.Component {
 
           </div>
           <div className='col-xs-12 col-sm-3 trailing-container'>
+            <div className='content-container'>
+              <TrackingInfoWidget 
+                subtitle={'Customer Financial Info'}
+                title={'Financial Metrics'} 
+                trackingData={financial_data} 
+              />
+            </div>
             <div className='content-container'>
               <TrackingInfoWidget 
                 subtitle={'Custom Events You Tell Us About'}
