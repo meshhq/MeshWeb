@@ -25,7 +25,7 @@ class GraphWidget extends React.Component {
 
     // Get canvas ctx
     const ctx = this.chart.getContext('2d');
-    
+
     // Generate the gradient
     const gradient = ctx.createLinearGradient(0, 0, 0, 170);
     gradient.addColorStop(0, '#43cea2');
@@ -33,7 +33,7 @@ class GraphWidget extends React.Component {
 
     // Inject the Gradient
     graphData.datasets[0].backgroundColor = gradient
-      
+
     // Set the Chart info
     const myLineChart = new Chart(ctx, { // eslint-disable-line no-unused-vars
       type: 'line',

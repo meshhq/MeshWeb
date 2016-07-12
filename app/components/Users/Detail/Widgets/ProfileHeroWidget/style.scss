@@ -10,9 +10,11 @@
   }
 
   .profileName {
-    font-weight: 500;
-    font-size: 1.3em;
+    padding: 0px;
+    font-weight: 700;
+    font-size: 22px;
     color: $MeshBlackUltraLight;
+    margin-bottom: 0px;
   }
 
   .profileTitle {
@@ -33,7 +35,7 @@
     padding-right: 5px;
     max-height: 100px;
     max-width: 100px;
-    
+
     .avatar {
       min-height: 25px;
       min-width: 25px;

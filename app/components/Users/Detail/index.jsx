@@ -51,7 +51,7 @@ class UserDetail extends React.Component {
 
   // First: Received props
   componentWillReceiveProps() {
-    
+
   }
 
   componentWillUnmount() {
@@ -67,7 +67,7 @@ class UserDetail extends React.Component {
       this.setState({
         graphContainerHeight: height,
         graphContainerWidth: width
-      }) 
+      })
     }
   }
 
@@ -98,17 +98,17 @@ class UserDetail extends React.Component {
     /**
      * TEMP DATA STRUCTURE BEGIN
      */
-    
+
     /**
      * Testing Data
      */
     const chartData = {
-      labels: ['6/5', '6/12', '6/19', '6/26', '7/3', '7/10'],
+      labels: ['7/1', '7/2', '7/3', '7/4', '7/5', '7/6', '7/7', '7/8', '7/9', '7/10'],
       datasets: [
         {
           label: 'Aggregrate API Calls',
           fill: true,
-          data: [4500, 5000, 6200, 6300, 6500, 7000],
+          data: [2, 3, 6, 5, 2, 4, 7, 10, 3, 5],
           lineTension: 0.1,
           backgroundColor: 'rgba(75,192,192,0.4)',
           borderColor: 'rgba(75,192,192,1)',
@@ -166,50 +166,67 @@ class UserDetail extends React.Component {
         first_name: 'Taylor',
         last_name: 'Halliday',
         phone: '206-920-8108',
-        email: 'taylor@meshsdfsdfsdfdata.io',
-        title: 'Baller',
-        extraInfo: 'Member Since October 2007',
+        email: 'taylor@meshdata.io',
+        title: 'CTO',
+        extraInfo: 'Sign Up Date: July 1, 2016',
         integration_info: {
           hubspot: {
-            url: 'seattletimes.com'
+            url: 'www.hubspot.com'
           },
           zendesk: {
-            url: 'gohuskies.com'
+            url: 'www.zendesk.com'
           }
         }
       },
       organization: {
         name: 'Mesh Data',
-        website: 'meshdata.io',
-        users: '100',
+        website: 'www.meshdata.io',
+        users: '10',
         annual_revenue: '$100M',
-        head_count: '300',
-        industry: 'Kicking Ass',
+        head_count: '150-200',
+        industry: 'Technology - SaaS',
         integration_info: {
           hubspot: {
-            url: 'seattletimes.com'
+            url: 'www.hubspot.com'
           },
           zendesk: {
-            url: 'gohuskies.com'
+            url: 'www.zendesk.com'
           }
         }
       },
       data_analytics : [
         {
-          title: 'Total MRR',
-          subTitle: 'Alot of money'
+          title: 'Active Sessions',
+          subTitle: 'Total Number of Sessions per Day'
         }
       ],
       'timeline': [
           {
+              'application_id': '577e851a791e4b6a92c8688f',
+              'created_at': 1467909403139,
+              'description': 'Hi Mesh, we would like to upgrade our plan to a production plan. How can we make that happen?',
+              'email': 'emily.thomas@snapchat.com',
+              'id': '577e851b791e4b6a92c868a8',
+              'integration_data': {
+                  'gmail': {
+                      'url': 'www.gmail.com'
+                  }
+              },
+              'origin_provider': 1000,
+              'subject': 'Plan Updgrade',
+              'type': 'email',
+              'updated_at': 1467909403139,
+              'user_id': '577e851b791e4b6a92c868a7'
+          },
+          {
               'amount': '499.99',
               'created_at': 1467909403163,
-              'description': 'Growth Plan',
+              'description': 'Plan: Growth ',
               'email': 'emily.thomas@snapchat.com',
               'id': '577e851b791e4b6a92c868aa',
               'integration_data': {
-                  'pardot': {
-                      'url': 'https://www.pardot.com/'
+                  'stripe': {
+                      'url': 'https://www.stripe.com/'
                   }
               },
               'origin_provider': 2003,
@@ -220,12 +237,12 @@ class UserDetail extends React.Component {
           {
               'amount': '499.99',
               'created_at': 1467909403163,
-              'description': 'Growth Plan',
+              'description': 'Plan: Growth ',
               'email': 'emily.thomas@snapchat.com',
               'id': '577e851b791e4b6a92c868ab',
               'integration_data': {
-                  'mixpanel': {
-                      'url': 'https://www.mixpanel.com/'
+                  'stripe': {
+                      'url': 'https://www.stripe.com/'
                   }
               },
               'origin_provider': 6001,
@@ -236,33 +253,33 @@ class UserDetail extends React.Component {
           {
               'application_id': '577e851a791e4b6a92c8688f',
               'created_at': 1467909403139,
-              'description': 'Quia at incidunt nulla adipisci rem autem nesciunt quisquam aspernatur omnis sunt consequatur ipsam.',
+              'description': 'Hi Mesh, we are having an issue accessing our account. Can someone help us reset our password?',
               'email': 'emily.thomas@snapchat.com',
-              'id': '577e851b791e4b6a92c868a8',
+              'id': '577e852b791e4b6a92c868a8',
               'integration_data': {
-                  'mesh': {
-                      'url': 'www.mesh.com'
+                  'zendesk': {
+                      'url': 'www.zendesk.com'
                   }
               },
               'origin_provider': 1000,
-              'subject': 'I Need Help!',
-              'type': 'email',
+              'subject': 'Password reset?',
+              'type': 'ticket',
               'updated_at': 1467909403139,
               'user_id': '577e851b791e4b6a92c868a7'
           },
           {
               'application_id': '577e851a791e4b6a92c8688f',
               'created_at': 1467909403139,
-              'description': 'Quos voluptas eum earum dolores maiores provident doloribus labore aspernatur enim est ab.',
+              'description': 'Hi Mesh, is there any way we can combine two of our accounts?',
               'email': 'emily.thomas@snapchat.com',
               'id': '577e851b791e4b6a92c868a9',
               'integration_data': {
-                  'pardot': {
-                      'url': 'https://www.pardot.com/'
+                  'zendesk': {
+                      'url': 'https://www.zendesk.com/'
                   }
               },
               'origin_provider': 2003,
-              'subject': 'I Need Help!',
+              'subject': 'Combine Accounts?',
               'type': 'ticket',
               'updated_at': 1467909403139,
               'user_id': '577e851b791e4b6a92c868a7'
@@ -270,35 +287,46 @@ class UserDetail extends React.Component {
       ],
       financial_data : [
         {
-          title: 'LTV / Monthly Spend',
+          title: 'Plan Information',
           data: [
-            { title: 'LTV', value: '$18,204' },
-            { title: 'YTD Charges', value: '$9,283.00' },
-            { title: 'Org Spend', value: '$25,283.00' }
+            { title: 'Name:', value: 'Growth' },
+            { title: 'Value:', value: '$499.00' },
+            { title: 'Subscription Date:', value: '6/4/2016' },
+            { title: 'Renewal Date:', value: '6/4/2017' }
+          ]
+        },
+        {
+          title: 'Recurring Revenue',
+          data: [
+            { title: 'MRR:', value: '$499.00' },
+            { title: 'ARR:', value: '$5988.00' },
+            { title: 'YTD:', value: '$998.00' },
+            { title: 'LTV:', value: '$998.00' }
           ]
         }
       ],
       usage_data : [
         {
-          title: 'Subscription Information',
-          data: [
-            { title: 'Product', value: 'Sweet Product' },
-            { title: 'Plan', value: 'Hacker Plan' }
-          ]
-        },
-        {
           title: 'Usage Info',
           data: [
-            { title: 'Uses', value: 'Sweet Product' },
-            { title: 'Plan', value: 'Hacker Plan' },
-            { title: 'Visits', value: '320 Views' }
+            { title: 'Last Login', value: '12:07PM, 07/24/16' }
           ]
         },
         {
-          title: 'Subscription Information',
+          title: 'Product Info',
           data: [
-            { title: 'Product', value: 'Sweet Product' },
-            { title: 'Plan', value: 'Hacker Plan' }
+            { title: 'User Count:', value: '1,245' },
+            { title: 'Organizations Count:', value: '25' },
+            { title: 'Integration Count:', value: '4' }
+          ]
+        },
+        {
+          title: 'Support Information',
+          data: [
+            { title: 'Last Ticket', value: 'Ticket #3078' },
+            { title: 'Ticket Count', value: '4' },
+            { title: 'Resolved Count', value: '4' },
+            { title: 'Satisfaction', value: '9/10' }
           ]
         }
       ]
@@ -307,7 +335,7 @@ class UserDetail extends React.Component {
    /**
     * TEMP DATA STRUCTURE END
     */
-    
+
     // User Info
     const { imgURL, title, extraInfo, phone, first_name, last_name, email } = payload.user
     const userIntegrationInfo = payload.user.integration_info
@@ -354,12 +382,12 @@ class UserDetail extends React.Component {
     let graphs = _.map(payload.data_analytics, (data) =>
       <div className={'col-xs-12 ' + responsiveClassName + ' graph-col'} key={data.title}>
         <div className='content-container graph-continer'>
-          <GraphWidget 
+          <GraphWidget
             containerWidth={this.state.graphContainerWidth}
-            graphData={chartData} 
-            graphOptions={chartOptions} 
-            subTitle={data.subTitle} 
-            title={data.title} 
+            graphData={chartData}
+            graphOptions={chartOptions}
+            subTitle={data.subTitle}
+            title={data.title}
           />
         </div>
       </div>
@@ -370,7 +398,7 @@ class UserDetail extends React.Component {
         <div className='container-row row'>
           <div className='col-xs-12 col-sm-3 leading-continer'>
             <div className='content-container'>
-              <ProfileHeroWidget extraInfo={extraInfo} imgURL={imgURL} name={name} title={title} />
+              <ProfileHeroWidget extraInfo={extraInfo} imgURL={imgURL} name={first_name + ' ' + last_name} title={title} />
               <InfoWidget infoPairs={userInfoPairs} title={'User Information'} />
               <InfoWidget infoPairs={orgInfoPairs} title={'Company Information'} />
             </div>
@@ -386,9 +414,9 @@ class UserDetail extends React.Component {
                 <div className='content-container'>
                   <CustomerLifetimeWidget
                     providersByKey={providersByKey}
-                    subTitle={'Customer Lifetime'} 
+                    subTitle={'Customer Lifetime'}
                     timelineData={timeline}
-                    title={payload.user.first_name + ' ' + payload.user.last_name} 
+                    title={payload.user.first_name + ' ' + payload.user.last_name}
                   />
                 </div>
               </div>
@@ -397,17 +425,17 @@ class UserDetail extends React.Component {
           </div>
           <div className='col-xs-12 col-sm-3 trailing-container'>
             <div className='content-container'>
-              <TrackingInfoWidget 
-                subtitle={'Customer Financial Info'}
-                title={'Financial Metrics'} 
-                trackingData={financial_data} 
+              <TrackingInfoWidget
+                subtitle={'Customer Financial Information'}
+                title={'Financial Metrics'}
+                trackingData={financial_data}
               />
             </div>
             <div className='content-container'>
-              <TrackingInfoWidget 
-                subtitle={'Custom Events You Tell Us About'}
-                title={'Event Tracking'} 
-                trackingData={usage_data} 
+              <TrackingInfoWidget
+                subtitle={'Custom Usage Information'}
+                title={'Usage Metrics'}
+                trackingData={usage_data}
               />
             </div>
           </div>
@@ -457,4 +485,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WrappedUserDetail)
-

@@ -62,7 +62,7 @@ const TrackingInfoWidget = ({ title, subtitle, trackingData }) => {
         </div>
       )
     })
-    
+
   return (
     <div className="tracking-info-widget row">
       <div className="col-xs-12 title-block">

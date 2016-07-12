@@ -6,7 +6,7 @@ const ProfileHeroWidget = ({ imgURL, name, title, extraInfo }) => {
 
   // Set pic to URL if available
   let picSrc = imgURL ? imgURL : avatar
-  
+
   return (
     <div className="profile-widget row row-eq-height">
       <div className="col-xs-4 profile-pic flex-center">
