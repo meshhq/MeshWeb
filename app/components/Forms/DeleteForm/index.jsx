@@ -26,7 +26,7 @@ class DeleteForm extends Component {
     return (
       <div>
         <Modal onHide={this.handleCloseClick} show={this.props.displayed}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton={true}>
             <Modal.Title>{"Delete List?"}</Modal.Title>
           </Modal.Header>
 

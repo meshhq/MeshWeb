@@ -210,7 +210,6 @@ class UserDetailForm extends Component {
       )
     })
     return pills
-
   }
 
   _seperator(title) {

@@ -1,0 +1,58 @@
+.info-widget {
+  
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .separator {
+    padding: 0px 10px;
+    margin-bottom: 10px;
+    height: 1px;
+    background-color: $MeshGreyLight;
+    border-bottom: none;
+  }
+
+  .title {
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: $MeshGreyDark;
+  }
+
+  dt {
+    color: $MeshBlackLight;
+    width: 85px;
+    font-size: 1.1em;
+    text-align: left;
+    font-weight: 300;
+  }
+
+  dd {
+    color: $MeshBlackLight;
+    margin-left: 90px;
+    font-size: 1.1em;
+    font-weight: 400;
+  }
+
+  .value-email {
+    white-space: nowrap;              
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .value-url {
+    white-space: nowrap;              
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .info-field {
+    padding: 2px;
+  }
+  
+  .pill-container {
+    margin: 2px 0px;
+    margin-right: 5px;
+  }
+
+}

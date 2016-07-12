@@ -82,7 +82,9 @@ class App extends Component {
     let dom = ReactDOM.findDOMNode(this)
     const height = dom.querySelectorAll('div.container-wrapper')[0].clientHeight
     const width = dom.querySelectorAll('div.container-wrapper')[0].clientWidth
-    this.setState({ containerWidth: width, containerHeight: height })
+    if (this.state.containerWidth !== width || this.state.containerHeight !== height) {
+      this.setState({ containerWidth: width, containerHeight: height }) 
+    }
   }
 
   /**
@@ -122,7 +124,7 @@ class App extends Component {
         })
       )
       return (
-        <div>
+        <div className="inner-content-container">
           <LoadingHud loadError={this.state.loadError} loadText={loadingText}/>
           {childrenWithProps}
         </div>

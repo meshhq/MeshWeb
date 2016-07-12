@@ -80,7 +80,7 @@ class ListTable extends Component {
     // Generate the Dta wrapper for the lists.
     this.dataList = new DataListWrapper(this.props.listState.lists)
     this.state = {
-      selectedList: [],
+      selectedList: {},
       selectedObject: null,
       selectedIntegration: null,
       filteredDataList: this.dataList,
@@ -146,11 +146,7 @@ class ListTable extends Component {
   _handleSelectOne(e, idx) {
     let selectedList = this.state.selectedList
     const id = this.state.filteredDataList.getObjectAt(idx)
-    if (e.target.checked) {
-      selectedList.push(id)
-    } else {
-      selectedList.pop(id)
-    }
+    selectedList[id] = true
     this.setState({
       selectedList: selectedList
     });
@@ -161,11 +157,11 @@ class ListTable extends Component {
    * @param  {[type]} e The event
    */
   _handleSelectAll(e) {
-    let selectedList = []
+    let selectedList = {}
     if (e.target.checked) {
       for (let idx = 0; idx < this.state.filteredDataList.getSize(); idx++) {
         const id = this.state.filteredDataList.getObjectAt(idx)
-        selectedList.push(id)
+        selectedList[id] = true
       }
     }
     this.setState({
@@ -273,7 +269,7 @@ class ListTable extends Component {
     }
 
     this.setState({
-      selectedList: [],
+      selectedList: {},
       deleteFormDisplayed: false
     });
   }

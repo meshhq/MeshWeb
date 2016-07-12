@@ -1,0 +1,44 @@
+#chart-id-group {
+  margin-top: 0px;
+}
+
+.chart-widget {
+  margin-top: 0px;
+
+  .chart {
+    margin-top: 5px;
+  }
+  
+  .separator {
+    height: 1px;
+    background-color: $MeshGreyLight;
+    border-bottom: none;
+  }
+  
+  .title {
+    padding: 0px;
+    h5 {
+      color: $MeshBlackUltraLight;
+      font-size: 1.2em;
+      font-weight: 500;      
+    }
+  }
+
+  .subtitle {
+    padding: 0px;
+    p {
+      color: $MeshGreyUltraDark;
+      font-size: 1.1em;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+  }
+
+  .chart {
+    padding: 0px;
+  }
+
+  h5 {
+    margin: 0px;
+  }
+}

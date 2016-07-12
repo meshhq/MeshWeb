@@ -5,7 +5,7 @@ class ListHeader extends Component {
   render() {
     let list = this.props.list
     return (
-      <Grid fluid>
+      <Grid fluid={true}>
         <Row>
           <Col md={2}>
             <div className={'initials-bubble'}>

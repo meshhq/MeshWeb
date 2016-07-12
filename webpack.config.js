@@ -5,6 +5,7 @@ var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var staticPath = path.resolve(__dirname, 'static');
 var appPath = path.resolve(__dirname, 'app');
 var assetsPath = path.resolve(__dirname, 'app', 'assets');
+var imagesPath = path.resolve(assetsPath, 'images');
 var staticPath = path.resolve(__dirname, 'public');
 
 // Base plugin set
@@ -84,14 +85,15 @@ module.exports = {
       { test: require.resolve('jquery'), loader: 'imports?jQuery=jquery' },
 
       // Assets
+      { test: /\.svg$/, loader: 'svg-inline' },
       { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
-      { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: 'file-loader?name=[path][name].[ext]' }
+      { test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
+      { test: /\.jpe?g$|\.gif$|\.png$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: 'file-loader?name=[path][name].[ext]' }
     ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    root: [path.resolve('./app'), path.resolve('./app/assets/bowerComponents')],
+    root: [path.resolve('./app'), path.resolve('./app/assets/bowerComponents'), path.resolve('./app/assets/images')],
     moduleDirectories: [path.resolve('./node_modules'), path.resolve('./app/assets/bowerComponents')],
     alias: {
         jquery: 'jquery/dist/jquery.min.js'

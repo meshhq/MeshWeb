@@ -15,7 +15,16 @@
 @import '../components/NavPane/style';
 @import '../components/NavPane/NavItem/style';
 
-@import '../components/Users/style';
+// Users
+@import '../components/Users/Index/style';
+@import '../components/Users/Detail/style';
+@import '../components/Users/Detail/Widgets/ProfileHeroWidget/style';
+@import '../components/Users/Detail/Widgets/InfoWidget/style';
+@import '../components/Users/Detail/Widgets/TrackingInfoWidget/style';
+@import '../components/Users/Detail/Widgets/GraphWidget/style';
+@import '../components/Users/Detail/Widgets/CustomerLifetimeWidget/style';
+
+// Main Components
 @import '../components/Organizations/style';
 @import '../components/Lists/style';
 

@@ -11,19 +11,19 @@ $MeshBlackUltraLight: #616466;
 $MeshBlueLight: #74CCFC;
 $MeshBlue: #44BCFC;
 $MeshBlueDark: #03A7FF;
-$MeshBlueSuperDark: #3cbbfa;
+$MeshBlueSuperDark: #3CBBFA;
 
 // Whites
 $MeshWhiteLight: #FFF;
 $MeshWhite: #fff;
 $MeshWhiteDark: #F8F9FB;
-$MeshOffWhiteBlue: #F9FAFB;
 
 // Greys
-$MeshGrey: #E4E8EB;
 $MeshGreyLight: #ECF0F3;
+$MeshGrey: #E4E8EB;
 $MeshGreySuperLight: #F1F4F7;
 $MeshGreyUltraLight: #F4F7FA;
+$MeshGreyLightDark: #C1C4C7;
 $MeshGreyDark: #A5A7AA;
 $MeshGreyUltraDark: #76777A;
 
@@ -45,8 +45,64 @@ $screen-md: 992px;
 $screen-lg: 1200px;
 
 /**
- * Helpers
+ * HELPER
  */
+
+/**
+ * FlexBox Helpers
+ */
+
+.flex-row-vcenter {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.flex-row-hcenter {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.flex-col-vcenter {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.flex-col-hcenter {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.flex-center {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+/**
+ * Inline Center Helper
+ */
+
 .vcenter {
   display: inline-block;
   vertical-align: middle;
@@ -687,3 +743,81 @@ body[dir="rtl"] .fixedDataTableColumnResizerLineLayout_main {
   position: absolute;
   top: 0;
 }
+
+/**
+ * Flex Helpers
+ */
+
+ /*
+  * Row with equal height columns
+  * --------------------------------------------------
+  */
+ .row-eq-height {
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -ms-flexbox;
+   display:         flex;
+ }
+
+ /*
+  * Styles copied from the Grid example to make grid rows & columns visible.
+  */
+ .container {
+   padding-right: 15px;
+   padding-left: 15px;
+ }
+
+ h4 {
+   margin-top: 25px;
+ }
+ .row {
+   margin-bottom: 20px;
+ }
+ .row .row {
+   margin-top: 10px;
+   margin-bottom: 0;
+ }
+ 
+
+ /*
+  * Callout styles copied from Bootstrap's main docs.
+  */
+ /* Common styles for all types */
+ .bs-callout {
+   padding: 20px;
+   margin: 20px 0;
+   border-left: 3px solid #eee;
+ }
+ .bs-callout h4 {
+   margin-top: 0;
+   margin-bottom: 5px;
+ }
+ .bs-callout p:last-child {
+   margin-bottom: 0;
+ }
+ .bs-callout code {
+   background-color: #fff;
+   border-radius: 3px;
+ }
+ /* Variations */
+ .bs-callout-danger {
+   background-color: #fdf7f7;
+   border-color: #d9534f;
+ }
+ .bs-callout-danger h4 {
+   color: #d9534f;
+ }
+ .bs-callout-warning {
+   background-color: #fcf8f2;
+   border-color: #f0ad4e;
+ }
+ .bs-callout-warning h4 {
+   color: #f0ad4e;
+ }
+ .bs-callout-info {
+   background-color: #f4f8fa;
+   border-color: #5bc0de;
+ }
+ .bs-callout-info h4 {
+   color: #5bc0de;
+ }

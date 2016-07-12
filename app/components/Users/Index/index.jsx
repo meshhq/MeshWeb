@@ -9,30 +9,30 @@ import _ from 'underscore'
 
 // Components
 import FixedDataTable from 'fixed-data-table'
-import TextCell from '../Shared/DataTableCells/TextCell'
-import RadioCell from '../Shared/DataTableCells/RadioCell'
-import RadioHeader from '../Shared/DataTableHeaders/RadioHeader'
-import DataListWrapper from '../Shared/DataListWrapper'
-import ActionBar from '../ActionBar'
-import DataTable from '../Shared/DataTable'
-import SideDetailView from '../Shared/SideDetailView'
+import TextCell from '../../Shared/DataTableCells/TextCell'
+import RadioCell from '../../Shared/DataTableCells/RadioCell'
+import RadioHeader from '../../Shared/DataTableHeaders/RadioHeader'
+import DataListWrapper from '../../Shared/DataListWrapper'
+import ActionBar from '../../ActionBar'
+import DataTable from '../../Shared/DataTable'
+import SideDetailView from '../../Shared/SideDetailView'
 import { Button } from 'react-bootstrap'
 
 // Forms
-import UserForm from '../Forms/UserForm'
-import DeleteForm from '../Forms/DeleteForm'
-import IntegrationForm from '../Forms/IntegrationForm'
-import ErrorForm from '../Forms/ErrorForm'
+import UserForm from '../../Forms/UserForm'
+import DeleteForm from '../../Forms/DeleteForm'
+import IntegrationForm from '../../Forms/IntegrationForm'
+import ErrorForm from '../../Forms/ErrorForm'
 
 // Tracking
 import Mixpanel from 'mixpanel-browser'
 
 // HAWKSs
-import { IntervalWrapper } from '../../hawks/interval'
+import { IntervalWrapper } from '../../../hawks/interval'
 
 // Actions
-import * as UserActions from '../../actions/users'
-import * as IntegrationActions from '../../actions/integrations'
+import * as UserActions from '../../../actions/users'
+import * as IntegrationActions from '../../../actions/integrations'
 
 // ID for tracking the polling w/ the token
 const USER_POLLING_TOKEN = 'USER_POLLING_TOKEN'

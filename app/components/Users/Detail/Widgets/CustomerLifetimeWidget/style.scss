@@ -1,0 +1,158 @@
+.customer-lifetime-widget {
+
+  .tabs-container {
+    margin-top: 10px;
+  }
+
+  .title {
+    padding: 0px;
+    color: $MeshBlackUltraLight;
+    font-weight: 500;
+    font-size: 20px;
+    p {
+      margin-left: 10px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+  }
+
+  .subtitle {
+    padding: 0px;
+    color: $MeshGreyDark;
+    font-weight: 400;
+    font-size: 16px;
+    p {
+      margin-left: 10px;
+      margin-bottom: 0px;
+      margin-top: 0px;
+    }
+  }
+
+  svg {
+    width: 35px;
+    position: absolute;
+    left: 8px;
+    z-index: 5;
+    border: 5px solid $MeshWhite;
+    border-radius: 100px;
+    padding-top: 0px;
+    margin-top: -8px;
+  }
+
+  .tab-row-content-container::before {
+    position: absolute;
+    top: 75px;
+    bottom: 60px;
+    left: 25px;
+    z-index: 3;
+    display: block;
+    width: 2px;
+    content: "";
+    background-color: $MeshGrey;
+  }
+
+  .nav-tabs {
+    .active {
+      span {
+        color: $MeshBlue;
+      }
+    }
+  }
+
+  .tab-title-container {
+    span {
+      font-size: 1.3em;
+      font-weight: 400;
+      color: $MeshBlackUltraLight;
+    }
+
+    img {
+      color: $MeshBlue;
+      height: 20px;
+      width: auto;
+        
+      margin-bottom: 5px;
+      margin-right: 10px;
+    }
+  }
+
+  #timeline-tab-unit {
+    a {
+      outline: none;
+    }
+    a:hover {
+      background-color: $MeshWhite;
+      border-bottom-width: 1px;
+      border-bottom-color: $MeshWhite;
+    }
+
+    ul {
+      li:focus {
+        outline: none;
+
+      }
+    }
+  }
+
+  #timeline-row {
+    border-bottom: 2px dashed $MeshGrey;
+    margin-left: 20px;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    padding-top: 10px;
+
+    .right-content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 0px;
+
+      p {
+        text-align: right;
+        float: bottom;
+      }
+    }
+
+    .created-at {
+      font-size: 1em;
+      font-style: italic;
+      font-weight: 500;
+      color: $MeshGreyDark;
+    } 
+
+    .left-content {
+      padding: 0px;
+    }
+
+    p {
+      margin:0px;
+    }
+
+    .title {
+      color: $MeshBlackUltraLight;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .sub-title {
+      color: $MeshBlackUltraLight;
+      font-size: 12px;
+      font-weight: 400;
+      margin-bottom: 2px;
+    }
+
+    .provider-link {
+      font-size: 1.2em;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .provider-link:hover {
+      color: $MeshBlue;
+    }
+  }
+
+  #timeline-row:last-child {
+    border-bottom: none;
+  }
+}

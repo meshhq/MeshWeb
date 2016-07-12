@@ -182,6 +182,7 @@ class Login extends Component {
     const firstNameRef = (ref) => {
       this.firstNameInput = ref
     }
+
     const lastNameRef = (ref) => {
       this.lastNameInput = ref
     }

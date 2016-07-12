@@ -78,12 +78,12 @@ class CredentialForm extends Component {
 
     return (
       <Modal className="credentials-form" onHide={this.handleCloseClick} show={this.props.displayed}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Grid fluid>
+          <Grid fluid={true}>
             <Row className='provider-img-row' key={providerName}>
               <Col className='provider-img-column' key={providerName} md={12}>
                 <img className="logo-img" src={logoURL} />

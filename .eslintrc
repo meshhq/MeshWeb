@@ -23,7 +23,7 @@
     "no-var": 2,
     "quotes": [2, "single"],
     "comma-dangle": [2, "never"],
-    "arrow-body-style": [2, "as-needed"],
+    "arrow-body-style": [1, "as-needed"],
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions (off by default)
     "object-curly-spacing": [2, "always"],
     "strict": 0,
@@ -36,7 +36,7 @@
     //
 
     // JSX Rules
-    "react/display-name": 1,
+    "react/display-name": [1, { "acceptTranspilerName": true }],
     "react/forbid-prop-types": 0,
     "react/jsx-boolean-value": [1, "always"],
     "react/jsx-closing-bracket-location": 1,
@@ -60,7 +60,7 @@
     "react/no-did-update-set-state": 1,
     "react/no-direct-mutation-state": 1,
     "react/no-is-mounted": 1,
-    "react/no-multi-comp": 1,
+    "react/no-multi-comp": [1, { "ignoreStateless": true }],
     "react/no-set-state": 0,
     "react/no-string-refs": 1,
     "react/no-unknown-property": 1,
