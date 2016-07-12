@@ -7,8 +7,8 @@ import _ from 'underscore'
 const { Cell } = FixedDataTable;
 
 const PillCell = ({ rowIndex, data, providersByKey, ...props }) => {
-  const integraitons = data.getObjectAt(rowIndex).integration_data
-  
+  const integraitons = data.getObjectAt(rowIndex).provider_data
+
   let pills = []
   const integrationKeys = _.keys(integraitons)
   if (integrationKeys.length > 0) {
@@ -18,12 +18,12 @@ const PillCell = ({ rowIndex, data, providersByKey, ...props }) => {
     pills.push(
       <Pill color={provider.color}
         key={key}
-        linkURL={integrationInfo.url} 
-        title={provider.name} 
+        linkURL={integrationInfo.url}
+        title={provider.name}
       />
     )
   }
-  
+
   return (
     <div className="pill-cell">
       <Cell {...props}>

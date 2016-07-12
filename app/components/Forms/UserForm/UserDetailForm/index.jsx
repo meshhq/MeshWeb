@@ -118,13 +118,13 @@ class UserDetailForm extends Component {
 
     const rows = _.map(threads, (thread, idx) => {
       const createdDate = new Date(thread.created_at)
-      const integraitonKey = _.keys(thread.integration_data)[0]
-      const integrationLink = thread.integration_data[integraitonKey].url
+      const integraitonKey = _.keys(thread.provider_data)[0]
+      const integrationLink = thread.provider_data[integraitonKey].url
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
       return (
         <tr className='thread-row' key={idx}>
           <td className='td-first' scope='row'>{createdShortDate}</td>
-          <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(thread.integration_data)}</td>
+          <td className='td-second' scope='pill-row'>{this.providerPillsForProviderKey(thread.provider_data)}</td>
           <td className='td-third'>
             <a href={'http://' + integrationLink} target='_blank'>
               <p>{'300'}</p>
@@ -169,9 +169,9 @@ class UserDetailForm extends Component {
       const createdShortDate = createdDate.getMonth() + '/' + createdDate.getDay() + '/' + createdDate.getFullYear()
 
       // Providers (Assuming one only)
-      const providerPillContent = this.providerPillsForProviderKey(transaction.integration_data)
-      const integraitonKey = _.keys(transaction.integration_data)[0]
-      const integrationLink = transaction.integration_data[integraitonKey].url
+      const providerPillContent = this.providerPillsForProviderKey(transaction.provider_data)
+      const integraitonKey = _.keys(transaction.provider_data)[0]
+      const integrationLink = transaction.provider_data[integraitonKey].url
       return (
         <tr className='transaction-row' key={idx}>
           <td className='td-first' scope='row'>{createdShortDate}</td>
@@ -242,7 +242,7 @@ class UserDetailForm extends Component {
      */
 
     // Find provider if given
-    const userProviderContent = this.providerPillsForProviderKey(user.integration_data)
+    const userProviderContent = this.providerPillsForProviderKey(user.provider_data)
     const userContent = (
       <div className="row personal-info">
         <div className="col-xs-12">
@@ -268,7 +268,7 @@ class UserDetailForm extends Component {
     if (user.organization) {
 
       // Find provider if given
-      const orgProviderContent = this.providerPillsForProviderKey(user.organization.integration_data)
+      const orgProviderContent = this.providerPillsForProviderKey(user.organization.provider_data)
 
       orgSection = (
         <div className="row organization">
