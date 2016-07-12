@@ -10,8 +10,7 @@
     "Promise": true
   },
   "plugins": [
-    "react",
-    "you-dont-need-lodash-underscore"
+    "react"
   ],
   "env": {
     "commonjs": true,

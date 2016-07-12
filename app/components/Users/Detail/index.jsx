@@ -194,6 +194,12 @@ class UserDetail extends React.Component {
           }
         }
       },
+      data_analytics : [
+        {
+          title: 'Total MRR',
+          subTitle: 'Alot of money'
+        }
+      ],
       'timeline': [
           {
               'amount': '499.99',
@@ -262,6 +268,16 @@ class UserDetail extends React.Component {
               'user_id': '577e851b791e4b6a92c868a7'
           }
       ],
+      financial_data : [
+        {
+          title: 'LTV / Monthly Spend',
+          data: [
+            { title: 'LTV', value: '$18,204' },
+            { title: 'YTD Charges', value: '$9,283.00' },
+            { title: 'Org Spend', value: '$25,283.00' }
+          ]
+        }
+      ],
       usage_data : [
         {
           title: 'Subscription Information',
@@ -283,22 +299,6 @@ class UserDetail extends React.Component {
           data: [
             { title: 'Product', value: 'Sweet Product' },
             { title: 'Plan', value: 'Hacker Plan' }
-          ]
-        }
-      ],
-      data_analytics : [
-        {
-          title: 'Total MRR',
-          subTitle: 'Alot of money'
-        }
-      ],
-      financial_data : [
-        {
-          title: 'LTV / Monthly Spend',
-          data: [
-            { title: 'LTV', value: '$18,204' },
-            { title: 'YTD Charges', value: '$9,283.00' },
-            { title: 'Org Spend', value: '$25,283.00' }
           ]
         }
       ]
