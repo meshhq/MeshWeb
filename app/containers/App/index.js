@@ -13,6 +13,7 @@ import LoadingHud from '../../components/Shared/LoadingHud'
 
 // App Modal Components
 import AccountInfo from '../../components/Modals/AccountInfo'
+import OnBoardingModal from '../../components/Modals/OnBoarding'
 
 // Actions
 import * as AppActions from '../../actions/application'
@@ -30,11 +31,14 @@ class App extends Component {
       initialLoad: false,
       mounted: false,
       showLogin: false,
-      loadError: false
+      loadError: false,
+      onBoardingShow: true
+      //onBoardingShow: props.location.state.newSignUp
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
     this.handleResize = this._handleResize.bind(this)
+    this.appModals = this._appModals.bind(this)
     this.mounted = false
   }
 
@@ -135,14 +139,23 @@ class App extends Component {
     }
   }
 
-  render() {
+  /**
+   * Contains the app's modals. 
+   */
+  _appModals() {
     /**
      * App Modals
      */
-    const displayAccountInfo = () => this.setState({ accountInfoShow: true })
     const accountInfoClose = () => this.setState({ accountInfoShow: false })
-    const appModals = (
+    const onBoardingHide = () => this.setState({ onBoardingShow: false })
+    const showAccountModal = () => this.setState({ accountInfoShow: true, onBoardingShow: false })
+    return (
       <div className="app-modal-container">
+        <OnBoardingModal 
+          onHide={onBoardingHide}
+          onShowAccountModal={showAccountModal}
+          show={this.state.onBoardingShow}
+        />
         <AccountInfo 
           appToken={this.props.appState.token} 
           onHide={accountInfoClose} 
@@ -150,10 +163,16 @@ class App extends Component {
         />
       </div>
     )
+  }
 
+  render() {
+    
+    const displayAccountInfo = () => this.setState({ accountInfoShow: true })
+    const appModals = this.appModals()
     const { location } = this.props
     const { pathname } = location
     const appContent = this._contentForApp()
+
     return (
       <div className="react-root">
         {appModals}

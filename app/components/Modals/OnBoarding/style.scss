@@ -1,0 +1,125 @@
+.on-boarding {
+  color: $MeshWhite;
+
+  .modal-dialog {
+    border-radius: 5px;
+  }
+
+  h4 {
+    color: $MeshWhite;
+    font-size: 3.5em;
+    font-weight: 300;
+  }
+
+  .modal-header {
+    color: $MeshWhite;
+    background: linear-gradient(-12deg, $MeshBlueLight, $MeshGreen);
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: -10px;
+    h4 {
+      
+    }
+  }
+
+  .section-title {
+    color: $MeshWhite;
+    text-align: center;
+  }
+  
+  .modal-body {
+    background-color: $MeshWhite;
+    padding: 15px 45px;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .title-section-info {
+    margin-top: 10px;
+    color: $MeshBlackLight;
+    text-align: center;
+    font-weight: 300;
+    font-size: 2.0em;
+  }
+
+  .section-sub-title {
+    margin-top: 10px;
+    color: $MeshBlackLight;
+    font-size: 1.5em;
+  }
+
+  .section-info { 
+    color: $MeshBlackLight;
+    text-align: left;   
+    margin-bottom: 0px;
+    font-size: 1.25em;
+  }
+
+  .btn-col {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin-bottom: 1em;
+
+    .btn {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      min-width: 150px;
+      padding: 10px 20px;
+      background-color: $MeshGreen;
+      border: none;
+      border-radius: 40px;
+      color: $MeshWhite;
+      font: $MeshFont;
+      font-weight: 500;
+      font-size: 1.75em;
+      margin-bottom: 8px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .btn:focus {
+      outline: none;
+    }
+  }
+
+  .info-row {
+    margin-bottom: 40px;
+  }
+
+  .links-row {
+    margin-top: 20px;
+  }
+
+  .take-me-text {
+    color: $MeshGreyDark;
+    margin-bottom: 20px;
+    margin-left: -10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 2.75em;
+  }
+
+  .or-text {
+    color: $MeshGreyDark;
+    margin-bottom: 20px;
+    margin-left: -10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 2.75em;
+
+  }
+
+  #api-button {
+    background-color: $MeshBlueLight;
+  }
+
+}

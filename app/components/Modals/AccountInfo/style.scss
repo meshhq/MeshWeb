@@ -18,12 +18,19 @@
     h4 {
       color: $MeshBlackLight;
       font-size: 2em;
-      font-weight: 300;
+      font-weight: 400;
     }
   }
 
+  .modal-body {
+    background-color: $MeshWhite;
+    padding: 15px 45px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
   .section-title {
-    font-weight: 400;
+    font-weight: 500;
     color: $MeshBlackLight;
   }
 
@@ -97,7 +104,7 @@
 
   .coppied-success-enter.coppied-success-enter-active {
     opacity: 1;
-    transition: opacity 300ms ease-in;
+    transition: opacity 200ms ease-in;
   }
 
   .coppied-success-leave {
@@ -106,7 +113,7 @@
 
   .coppied-success-leave.coppied-success-leave-active {
     opacity: 0.01;
-    transition: opacity 300ms ease-in;
+    transition: opacity 200ms ease-in;
   }
 
 }
