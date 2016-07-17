@@ -30,7 +30,6 @@ function fetchFirstAppId(dispatch) {
 			let appInfo = json[0]
 			let appId = appInfo['id']
 			const appAuthToken = appInfo['token']
-			console.log(appInfo)
 			dispatch(resolvedAppIdAndToken(appId, appAuthToken))
 			dispatch(refreshMe())
 
