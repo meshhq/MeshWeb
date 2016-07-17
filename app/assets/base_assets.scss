@@ -17,6 +17,7 @@
 
 // App Modals
 @import '../components/Modals/AccountInfo/style';
+@import '../components/Modals/OnBoarding/style';
 
 // Users
 @import '../components/Users/Index/style';
@@ -31,6 +32,7 @@
 @import '../components/Organizations/style';
 @import '../components/Lists/style';
 
+// Shared
 @import '../components/Shared/LoadingHud/style';
 @import '../components/Shared/LoadingText/style';
 @import '../components/Shared/DataTableCells/TextCell/style';

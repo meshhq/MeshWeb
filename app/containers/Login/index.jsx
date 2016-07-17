@@ -87,7 +87,10 @@ class Login extends Component {
       if (location.state && location.state.nextPathname) {
         this.props.router.replace(location.state.nextPathname)
       } else {
-        this.props.router.replace('/integrations')
+        this.props.router.replace({
+          pathname: '/integrations',
+          state: { newSignUp: true }
+        })
       }
     }, (err) => {
       this.setLoginError('There was an issue signing you up: ' + err)
