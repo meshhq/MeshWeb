@@ -1,4 +1,5 @@
 .radio-table-header {
+	height: 100%;
 	display: -webkit-flex;
 	display: flex;
 	-webkit-flex-direction: row;
@@ -9,7 +10,6 @@
 	justify-content: center;
 
 	input {
-		display: inline;
-		margin-left: 6px; 
+		display: inline; 
 	}
 }
