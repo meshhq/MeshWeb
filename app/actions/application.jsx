@@ -10,9 +10,10 @@ import { refreshMe } from './session'
 // This action is to indicate the desired
 // refresh of the user table
 export const RESOLVED_APP_ID = 'RESOLVED_APP_ID'
-export function resolvedAppId(appId) {
+export function resolvedAppIdAndToken(appId, token) {
 	return {
 		type: RESOLVED_APP_ID,
+		token: token,
 		id: appId
 	}
 }
@@ -28,7 +29,9 @@ function fetchFirstAppId(dispatch) {
 	return GET('applications').then(function(json) {
 			let appInfo = json[0]
 			let appId = appInfo['id']
-			dispatch(resolvedAppId(appId))
+			const appAuthToken = appInfo['token']
+			console.log(appInfo)
+			dispatch(resolvedAppIdAndToken(appId, appAuthToken))
 			dispatch(refreshMe())
 
 			// After a app id is resolved, dispatch refreshes of all

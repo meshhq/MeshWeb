@@ -1,63 +1,65 @@
-.input-group {
-	width: 100%;
-	max-width: 300px;
-	border: none;
-
-	input {
-		-webkit-transition: background-color .5s;
-		-webkit-transition: color .5s;
-		background-color: $MeshGreyDark;
-		border: none;
-		padding: 0px 12px;
-		height: 34px;
-		box-shadow: none;
+.search-box {
+	.input-group {
 		width: 100%;
+		max-width: 300px;
+		border: none;
 
-		font-size: 1.1em;
-		font-weight: 300;
-		color: $MeshWhite;
+		input {
+			-webkit-transition: background-color .5s;
+			-webkit-transition: color .5s;
+			background-color: $MeshGreyDark;
+			border: none;
+			padding: 0px 12px;
+			height: 34px;
+			box-shadow: none;
+			width: 100%;
 
-		border: 1px solid $MeshGreyDark;
-		border-radius: 20px !important;
-	}
+			font-size: 1.1em;
+			font-weight: 300;
+			color: $MeshWhite;
 
-	::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-	  color: $MeshWhite;
-	}
-	::-moz-placeholder { /* Firefox 19+ */
-	  color: $MeshWhite;
-	}
-	:-ms-input-placeholder { /* IE 10+ */
-	  color: $MeshWhite;
-	}
-	:-moz-placeholder { /* Firefox 18- */
-	  color: $MeshWhite;
-	}
-
-	input:focus {
-		background-color: $MeshWhite;
-		color: $MeshBlackLight;
-		border-color: $MeshGrey;
-	}
-
-	input:hover {
-		background-color: $MeshWhite;
-		color: $MeshBlackLight;
-		border-color: $MeshGrey;
+			border: 1px solid $MeshGreyDark;
+			border-radius: 20px !important;
+		}
 
 		::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-		  color: $MeshBlack;
+		  color: $MeshWhite;
 		}
 		::-moz-placeholder { /* Firefox 19+ */
-		  color: $MeshBlack;
+		  color: $MeshWhite;
 		}
 		:-ms-input-placeholder { /* IE 10+ */
-		  color: $MeshBlack;
+		  color: $MeshWhite;
 		}
 		:-moz-placeholder { /* Firefox 18- */
-		  color: $MeshBlack;
+		  color: $MeshWhite;
 		}
 
-	}
-}
+		input:focus {
+			background-color: $MeshWhite;
+			color: $MeshBlackLight;
+			border-color: $MeshGrey;
+		}
 
+		input:hover {
+			background-color: $MeshWhite;
+			color: $MeshBlackLight;
+			border-color: $MeshGrey;
+
+			::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+			  color: $MeshBlack;
+			}
+			::-moz-placeholder { /* Firefox 19+ */
+			  color: $MeshBlack;
+			}
+			:-ms-input-placeholder { /* IE 10+ */
+			  color: $MeshBlack;
+			}
+			:-moz-placeholder { /* Firefox 18- */
+			  color: $MeshBlack;
+			}
+
+		}
+	}
+
+}

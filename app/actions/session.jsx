@@ -65,6 +65,7 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 	return (dispatch) => {
 		dispatch(submitedLogin())
 
+		// Form base payload. Only append org on if the orgsite is present
 		const payload = {
 			'user' : {
 				'email' : email, 
@@ -76,7 +77,7 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 				'name' : companyName,
 				'website' : companySite				
 			}
-		}
+		}	
 		
 		return POST('signup', payload)
 				.then((response) => {
@@ -91,6 +92,38 @@ export function submitSignUp(email, pass, firstName, lastName, companyName, comp
 			)		
 	}
 }
+
+/**
+ * submitSignUpWithoutOrg signs the user up
+ * @param  {string} email
+ * @param  {string} pass 
+ */
+export function submitSignUpWithoutOrg(email, pass) {
+	return (dispatch) => {
+		dispatch(submitedLogin())
+
+		// Form base payload. Only append org on if the orgsite is present
+		let payload = {
+			'user' : {
+				'email' : email,
+				'password' : pass
+			}
+		}
+		
+		return POST('signup_api', payload)
+				.then((response) => {
+					setAuthToken(response.token)
+					dispatch(refreshMe())
+					dispatch(loginSuccess())
+					return Promise.resolve()
+				}, (err) =>  {
+					dispatch(receivedChallenge())
+					return Promise.reject(err)
+				}
+			)		
+	}
+}
+
 
 /**
  * User / Me

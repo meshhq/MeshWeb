@@ -38,7 +38,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
   let actionContent
   if (live) {
     actionContent = (
-      <Button bsStyle={'success'} className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
+      <Button className={'activate-btn' + activeClass} onClick={clickHandler}>{btnText}</Button>
     ) 
   } else {
     const tooltip = (
@@ -50,7 +50,7 @@ const ProviderCell = ({ integration, providerID, onActivateClick, providerName, 
     )
     actionContent = (
       <OverlayTrigger key={providerID} overlay={tooltip} placement="bottom" >
-        <Button bsStyle={'success'} className={'activate-btn not-live'} onClick={notLiveProviderClickHandler}>{'Info'}</Button>
+        <Button className={'activate-btn not-live'} onClick={notLiveProviderClickHandler}>{'Info'}</Button>
       </OverlayTrigger>
     )
   }

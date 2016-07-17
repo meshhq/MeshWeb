@@ -76,35 +76,56 @@ class Login extends Component {
 
   _handleSignUp(e) {
     e.preventDefault()
-    const email = this.email
-    const pass = this.pass
-    const firstName = this.firstName
-    const lastName = this.lastName
-    const companyName = this.companyNameInput.value
-    const companySite = this.companySiteInput.value
-    if (companyName.length == 0) {
-      this.setLoginError('Please enter a valid company name')
-    } else if (companySite.length == 0) {
-      this.setLoginError('Please enter a valid url for your company')
-    } else if (!validator.isURL(companySite)) {
-      this.setLoginError('Please enter a valid url for your company')
-    } else {
-      // Only handling a successful signin now
-      this.props.sessionActions.submitSignUp(email, pass, firstName, lastName, companyName, companySite)
-      .then(() => {
-        // Tracking
-        trackSuccessfulSignUp()
+    const email = this.emailInput.value
+    const pass = this.passInput.value
+    this.props.sessionActions.submitSignUpWithoutOrg(email, pass)
+    .then(() => {
+      // Tracking
+      trackSuccessfulSignUp()
+      
+      // If we have a next state supplied, route to that
+      if (location.state && location.state.nextPathname) {
+        this.props.router.replace(location.state.nextPathname)
+      } else {
+        this.props.router.replace('/integrations')
+      }
+    }, (err) => {
+      this.setLoginError('There was an issue signing you up: ' + err)
+    })
+
+    /**
+     * TEMP OVERRIDE
+     */
+    // e.preventDefault()
+    // const email = this.emailInput.value
+    // const pass = this.passInput.value
+    // const firstName = this.firstName
+    // const lastName = this.lastName
+    // const companyName = this.companyNameInput.value
+    // const companySite = this.companySiteInput.value
+    // if (companyName.length == 0) {
+    //   this.setLoginError('Please enter a valid company name')
+    // } else if (companySite.length == 0) {
+    //   this.setLoginError('Please enter a valid url for your company')
+    // } else if (!validator.isURL(companySite)) {
+    //   this.setLoginError('Please enter a valid url for your company')
+    // } else {
+    //   // Only handling a successful signin now
+    //   this.props.sessionActions.submitSignUp(email, pass, firstName, lastName, companyName, companySite)
+    //   .then(() => {
+    //     // Tracking
+    //     trackSuccessfulSignUp()
         
-        // If we have a next state supplied, route to that
-        if (location.state && location.state.nextPathname) {
-          this.props.router.replace(location.state.nextPathname)
-        } else {
-          this.props.router.replace('/')
-        }
-      }, (err) => {
-        this.setLoginError('There was an issue signing you up: ' + err)
-      })
-    }
+    //     // If we have a next state supplied, route to that
+    //     if (location.state && location.state.nextPathname) {
+    //       this.props.router.replace(location.state.nextPathname)
+    //     } else {
+    //       this.props.router.replace('/providers')
+    //     }
+    //   }, (err) => {
+    //     this.setLoginError('There was an issue signing you up: ' + err)
+    //   })
+    // }
   }
 
   /**
@@ -179,13 +200,13 @@ class Login extends Component {
       this.passInput = ref
     }
 
-    const firstNameRef = (ref) => {
-      this.firstNameInput = ref
-    }
+    // const firstNameRef = (ref) => {
+    //   this.firstNameInput = ref
+    // }
 
-    const lastNameRef = (ref) => {
-      this.lastNameInput = ref
-    }
+    // const lastNameRef = (ref) => {
+    //   this.lastNameInput = ref
+    // }
 
     const companyNameRef = (ref) => {
       this.companyNameInput = ref
@@ -218,27 +239,6 @@ class Login extends Component {
           <form className="form-horizontal">
             <div className="form-group">
               <div className="col-xs-12 form-column">
-                <input className="form-control firstname-form"  
-                  id="signUpFirstName" 
-                  key="firstName"
-                  placeholder="First Name"
-                  ref={firstNameRef}
-                  value={this.firstName}
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="col-xs-12 form-column">
-                <input className="form-control lastname-form"  
-                  id="signUpLastName" 
-                  key="lastName"
-                  placeholder="Last Name"
-                  ref={lastNameRef}
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="col-xs-12 form-column">
                 <input className="form-control email-form"  
                   id="signUpEmail"
                   key="signUpEmail" 
@@ -262,16 +262,23 @@ class Login extends Component {
         </div>
       )
 
-      actionButtons = (
-        <div className="login-button-container">
-          <div className="btn-container">
-            <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignUpCompanyMode}>{'Continue'}</Button>
+      if (this.props.sessionState.isLoading) {
+        actionButtons = (
+          <LoadingText loadText='Signing Up'/>
+        )
+      } else {
+        // Action Buttons
+        actionButtons = (
+          <div className="login-button-container">
+            <div className="btn-container">
+              <Button className="login-btn-right" id="sign-in-button" onClick={this.handleSignUp}>{'Continue'}</Button>
+            </div>
+            <div className="btn-container">
+              <Button className="login-btn-left back-btn" id="sign-in-button" onClick={this.handleBackPressed}>{'Back'}</Button>
+            </div>
           </div>
-          <div className="btn-container">
-            <Button className="login-btn-left back-btn" id="sign-in-button" onClick={this.handleBackPressed}>{'Back'}</Button>
-          </div>
-        </div>
-      )
+        )
+      }
 
     } else if (signUpCompanyMode) {
       loginContent = (
