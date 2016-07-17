@@ -1,11 +1,17 @@
 
 import { RESOLVED_APP_ID } from '../actions/application'
 
-function app(state = {}, action) {
+const defaultState = {
+  id: '',
+  token: ''
+}
+
+function app(state = defaultState, action) {
 	switch(action.type) {
 		case RESOLVED_APP_ID:
 			return Object.assign({}, state, {
-				id: action.id
+				id: action.id,
+        token: action.token
 			})
 		default:
 			return state

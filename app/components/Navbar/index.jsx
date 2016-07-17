@@ -63,10 +63,16 @@ class NavBar extends Component {
       navItems.push(item)
     }
 
-    let firstName = ''
+    let displayName = ''
     if (this.props.user) {
-      firstName = this.props.user.first_name
+      displayName = this.props.user.first_name || this.props.user.email
     }
+
+    /**
+     * Account Modal Activation
+     */
+    const { onDisplayAccountModal } = this.props
+    let onAccountDisplay = () => onDisplayAccountModal()
 
     return (
       <nav className="navbar-default">
@@ -89,10 +95,11 @@ class NavBar extends Component {
             {navItems}
             <li className="profile-line dropdown">
               <a className="bold dropdown-toggle" data-toggle="dropdown" href="#" id="right-nav-menu-a" role="button" >
-                {firstName}
+                {displayName}
               </a>
               <img className="img-responsive img-circle avatar" src={avatar} />
               <ul className="dropdown-menu" id="right-nav-menu">
+                <li className="dropdown-line-item" ><a href="#" onClick={onAccountDisplay} >{'Account'}</a></li>
                 <li className="dropdown-line-item" ><a href="#" onClick={this.logUserOut} >{'Log Out'}</a></li>
               </ul>
             </li>
@@ -107,6 +114,7 @@ class NavBar extends Component {
 // navTitles [Array<String>] is the section titles
 // activeSection [Number] is the current selection
 NavBar.propTypes = {
+  onDisplayAccountModal: PropTypes.func.isRequired,
   user: PropTypes.object
 }
 

@@ -11,6 +11,9 @@ import NavBar from '../../components/NavBar'
 import NavPane from '../../components/NavPane'
 import LoadingHud from '../../components/Shared/LoadingHud'
 
+// App Modal Components
+import AccountInfo from '../../components/Modals/AccountInfo'
+
 // Actions
 import * as AppActions from '../../actions/application'
 import * as ListActions from '../../actions/lists'
@@ -133,13 +136,29 @@ class App extends Component {
   }
 
   render() {
+    /**
+     * App Modals
+     */
+    const displayAccountInfo = () => this.setState({ accountInfoShow: true })
+    const accountInfoClose = () => this.setState({ accountInfoShow: false })
+    const appModals = (
+      <div className="app-modal-container">
+        <AccountInfo 
+          appToken={this.props.appState.token} 
+          onHide={accountInfoClose} 
+          show={this.state.accountInfoShow} 
+        />
+      </div>
+    )
+
     const { location } = this.props
     const { pathname } = location
     const appContent = this._contentForApp()
     return (
       <div className="react-root">
+        {appModals}
         <div className='top-nav-wrapper'>
-          <NavBar onNavChange={this.handleNavBarClick} user={this.props.sessionState.user} />
+          <NavBar onDisplayAccountModal={displayAccountInfo} user={this.props.sessionState.user} />
         </div>
         <div className='content-wrapper'>
           <NavPane currentPath={pathname} />
@@ -156,6 +175,7 @@ class App extends Component {
 
 App.propTypes = {
   appActions: PropTypes.object.isRequired,
+  appState: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
   integrationActions: PropTypes.object.isRequired,
   listActions: PropTypes.object.isRequired,
