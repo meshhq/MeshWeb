@@ -10,14 +10,6 @@ class OnBoarding extends Component {
 
   render() {
 
-    const showAccountModalHit = () => {
-      setTimeout(() => this.setState({ showCopiedText: false }), 3000)
-    }
-
-    const showIntegrationsHit = () => {
-      setTimeout(() => this.setState({ showCopiedText: false }), 3000)
-    }
-
     return (
       <Modal 
         aria-labelledby="contained-modal-title-lg" 
