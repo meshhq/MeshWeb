@@ -2,6 +2,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import Clipboard from 'clipboard'
+
+// Assets
+import clippy from '../../assets/images/clippy.svg'
+
+// Transition Group
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 class AccountInfo extends Component {
@@ -57,7 +62,7 @@ class AccountInfo extends Component {
           <div className="input-group api-token-input-group">
             <span className="input-group-addon">
               <button className="btn" data-clipboard-target="#disabledTextInput" onClick={copyTextHit}>
-                <img alt="Copy to clipboard" src="assets/images/clippy.svg" style={clipboardWidth} />
+                <img alt="Copy to clipboard" src={clippy} style={clipboardWidth} />
               </button>
             </span>
             <input 
