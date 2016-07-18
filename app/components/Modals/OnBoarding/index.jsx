@@ -30,12 +30,7 @@ class OnBoarding extends Component {
 
           <div className="row info-row">
             <div className="col-xs-12">
-              <h4 className="section-sub-title">{'How To Get Started'}</h4>
-            </div>
-            <div className="col-xs-12">
-              <div className="instuctions">
-                <p className="section-info">{'When you sign up for mesh, you get access to both the API and a dashboard to explore all of your data. The first step is to activate integrations with your SaaS providers. From there, you can either use our dashboard to see all of your customer data, or use the API to query it in a consistent manor.'}</p>
-              </div>
+              <h4 className="section-sub-title">{'Take Me To'}</h4>
             </div>
           </div>
           <div className="row links-row">
@@ -47,7 +42,7 @@ class OnBoarding extends Component {
               <p className="or-text">{'or'}</p>
             </div>
             <div className="col-xs-4 btn-col">
-              <Button className="login-btn-left back-btn" id="api-button" onClick={this.props.onShowAccountModal}>{'API Access'}</Button>
+              <Button className="login-btn-left back-btn" id="api-button" onClick={this.props.onShowAccountModal}>{'API Token'}</Button>
             </div>
           </div>
         </Modal.Body>

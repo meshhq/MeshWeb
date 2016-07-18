@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap'
 import Clipboard from 'clipboard'
 
 // Assets
-import clippy from '../../assets/images/clippy.svg'
+import clippy from '../../../assets/images/clippy.png'
 
 // Transition Group
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
