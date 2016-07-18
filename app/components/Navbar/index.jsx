@@ -7,7 +7,7 @@ import logo from '../../assets/images/mesh_logo.png'
 import avatar from '../../assets/images/default-avatar-1.png'
 
 // Nav Item Titles
-const titles = ['Documentation', 'Support']
+const titles = ['Documentation', 'Account', 'Support']
 
 class NavBar extends Component {
   constructor(props, context) {
@@ -21,6 +21,8 @@ class NavBar extends Component {
   }
 
   render() {
+
+    const { onDisplayAccountModal } = this.props
 
     const navItems = []
     for(let count = 0; count < titles.length; count++) {
@@ -36,6 +38,17 @@ class NavBar extends Component {
               target='_blank'
             >
             {title}
+            </a>
+          </li>
+        )
+      } else if (title == 'Account') {
+        item = (
+          <li className="top-nav-link" key={title}>
+            <a className="light"
+              href='#'
+              onClick={onDisplayAccountModal}
+            >
+            {'API'}
             </a>
           </li>
         )
@@ -66,7 +79,6 @@ class NavBar extends Component {
     /**
      * Account Modal Activation
      */
-    const { onDisplayAccountModal } = this.props
     let onAccountDisplay = () => onDisplayAccountModal()
 
     return (
