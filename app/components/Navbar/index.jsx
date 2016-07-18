@@ -1,7 +1,6 @@
 
 import React, { PropTypes, Component } from 'react'
 import { logUserOut } from '../../helpers/session'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Assets
 import logo from '../../assets/images/mesh_logo.png'
@@ -30,19 +29,15 @@ class NavBar extends Component {
       // Dynamic
       let item
       if (title == 'Documentation') {
-        const tooltip = (
-          <Tooltip id={count}><strong>{'Documentation'}</strong><br></br>{'Coming Soon'}</Tooltip>
-        )
         item = (
-          <OverlayTrigger key={title} overlay={tooltip} placement="bottom" >
-            <li className="top-nav-link" key={title}>
-              <a className="light"
-                href='#'
-              >
-              {title}
-              </a>
-            </li>
-          </OverlayTrigger>
+          <li className="top-nav-link" key={title}>
+            <a className="light"
+              href='http://docs.meshdata.io'
+              target='_blank'
+            >
+            {title}
+            </a>
+          </li>
         )
       } else {
         let link = '#'

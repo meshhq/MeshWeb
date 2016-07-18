@@ -53,7 +53,7 @@ class AccountInfo extends Component {
           </div>
           <div className="link">
             <blockquote>
-              <a href="http://docs.meshdata.io">{'Mesh API Documentation'}</a>
+              <a href="http://docs.meshdata.io" target='_blank'>{'Mesh API Documentation'}</a>
             </blockquote>
           </div>
           <div className="instuctions">
@@ -66,12 +66,12 @@ class AccountInfo extends Component {
               </button>
             </span>
             <input 
-              aria-describedby="inputGroupSuccess4Status" 
-              className="form-control" 
-              id="disabledTextInput" 
-              readOnly={true} 
-              type="text" 
-              value={this.props.appToken} 
+              aria-describedby="inputGroupSuccess4Status"
+              className="form-control"
+              id="disabledTextInput"
+              readOnly={true}
+              type="text"
+              value={this.props.appToken}
             />
             <ReactCSSTransitionGroup transitionEnterTimeout={500} transitionLeaveTimeout={300} transitionName="coppied-success">
               {copiedText}

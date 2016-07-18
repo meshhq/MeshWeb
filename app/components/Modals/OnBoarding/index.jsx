@@ -22,17 +22,7 @@ class OnBoarding extends Component {
           <Modal.Title id="contained-modal-title-lg">{'Welcome To Mesh'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row">
-            <div className="col-xs-12">
-              <p className="title-section-info">{'Mesh is a dashboard and an API that allows you to connect your all of your customer data across all of your SaaS integrations.'}</p>
-            </div>
-          </div>
 
-          <div className="row info-row">
-            <div className="col-xs-12">
-              <h4 className="section-sub-title">{'Take Me To'}</h4>
-            </div>
-          </div>
           <div className="row links-row">
             
             <div className="col-xs-4 btn-col col-xs-offset-1">
