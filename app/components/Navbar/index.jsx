@@ -1,14 +1,13 @@
 
 import React, { PropTypes, Component } from 'react'
 import { logUserOut } from '../../helpers/session'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 // Assets
 import logo from '../../assets/images/mesh_logo.png'
 import avatar from '../../assets/images/default-avatar-1.png'
 
 // Nav Item Titles
-const titles = ['Documentation', 'Support']
+const titles = ['Documentation', 'Account', 'Support']
 
 class NavBar extends Component {
   constructor(props, context) {
@@ -23,6 +22,8 @@ class NavBar extends Component {
 
   render() {
 
+    const { onDisplayAccountModal } = this.props
+
     const navItems = []
     for(let count = 0; count < titles.length; count++) {
       let title = titles[count]
@@ -30,19 +31,26 @@ class NavBar extends Component {
       // Dynamic
       let item
       if (title == 'Documentation') {
-        const tooltip = (
-          <Tooltip id={count}><strong>{'Documentation'}</strong><br></br>{'Coming Soon'}</Tooltip>
-        )
         item = (
-          <OverlayTrigger key={title} overlay={tooltip} placement="bottom" >
-            <li className="top-nav-link" key={title}>
-              <a className="light"
-                href='#'
-              >
-              {title}
-              </a>
-            </li>
-          </OverlayTrigger>
+          <li className="top-nav-link" key={title}>
+            <a className="light"
+              href='http://docs.meshdata.io'
+              target='_blank'
+            >
+            {title}
+            </a>
+          </li>
+        )
+      } else if (title == 'Account') {
+        item = (
+          <li className="top-nav-link" key={title}>
+            <a className="light"
+              href='#'
+              onClick={onDisplayAccountModal}
+            >
+            {'API'}
+            </a>
+          </li>
         )
       } else {
         let link = '#'
@@ -71,7 +79,6 @@ class NavBar extends Component {
     /**
      * Account Modal Activation
      */
-    const { onDisplayAccountModal } = this.props
     let onAccountDisplay = () => onDisplayAccountModal()
 
     return (

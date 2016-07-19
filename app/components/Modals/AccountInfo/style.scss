@@ -45,6 +45,7 @@
     a {
       font-size: 1.25em;
       font-weight: 400;
+      color: $MeshBlueDark;
     }
 
     a:focus {
@@ -86,6 +87,19 @@
       user-select: none;
       -webkit-appearance: none;
       border-right: none;
+
+    }
+    svg {
+      path {
+        width: 35px;  
+      }
+      width: 35px;
+      position: absolute;
+      left: 8px;
+      z-index: 5;
+      border-radius: 100px;
+      padding-top: 0px;
+      margin-top: -8px;
     }
   }
 

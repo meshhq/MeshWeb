@@ -27,6 +27,14 @@
 		}
 	}
 
+	a {
+		font-weight: 400;
+	}
+
+	a:focus {
+		outline: none;
+	}
+
 	.right-links-wrapper {
 		height: 100%;
 	}

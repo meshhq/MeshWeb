@@ -41,14 +41,16 @@
     margin-top: 10px;
     color: $MeshBlackLight;
     text-align: center;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 2.0em;
   }
 
   .section-sub-title {
+    text-align: center;
     margin-top: 10px;
     color: $MeshBlackLight;
-    font-size: 1.5em;
+    font-size: 2.0em;
+    font-weight: 400;
   }
 
   .section-info { 
@@ -109,7 +111,7 @@
   }
 
   .or-text {
-    color: $MeshGreyDark;
+    color: $MeshGreyLightDark;
     margin-bottom: 20px;
     margin-left: -10px;
     text-align: center;
