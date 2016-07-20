@@ -32,8 +32,7 @@ class App extends Component {
       mounted: false,
       showLogin: false,
       loadError: false,
-      onBoardingShow: true
-      //onBoardingShow: props.location.state.newSignUp
+      onBoardingShow: props.location.state.newSignUp
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
