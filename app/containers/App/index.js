@@ -26,13 +26,14 @@ class App extends Component {
   displayName: "Main App Component";
   constructor(props, context) {
     super(props, context);
+    const showIntroModal = props.location.state ? props.location.state.newSignUp : false
     this.state = {
       width: 500,
       initialLoad: false,
       mounted: false,
       showLogin: false,
       loadError: false,
-      onBoardingShow: props.location.state.newSignUp
+      onBoardingShow: showIntroModal
     };
     this.getWindowWidth = this._getWindowWidth.bind(this)
     this.loadingText = this._loadingText.bind(this)
