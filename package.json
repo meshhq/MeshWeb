@@ -31,6 +31,7 @@
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^5.0.0",
     "eslint-plugin-react": "^3.16.1",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^5.0.0",
     "faker": "^3.0.1",
     "file-loader": "^0.8.4",
     "node-sass": "^3.4.2",
