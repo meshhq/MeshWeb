@@ -34,6 +34,7 @@ const store = configureStore()
 const signUpLoginComponent = (children) => <Login startInSignupMode={true}>{children}</Login>
 /*eslint-enable */
 
+console.log(browserHistory)
 
 // Render the component
 ReactDOM.render(
